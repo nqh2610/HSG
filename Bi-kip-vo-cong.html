@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -59,7 +59,7 @@
             .tang small { font-size: 9pt; }
             h2 { font-size: 12pt; padding: 5px 8px; }
             h3 { font-size: 11pt; }
-            pre { font-size: 8.5pt; padding: 8px; white-space: pre-wrap; word-wrap: break-word; }
+            pre { font-size: 8.5pt; padding: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             code { font-size: 9pt; padding: 1px 3px; }
             table { font-size: 9pt; display: block; overflow-x: auto; white-space: nowrap; }
             th, td { padding: 4px 6px; }
@@ -68,7 +68,10 @@
             .warn, .good, .bad, .tip { padding: 8px; font-size: 10pt; }
             .nhom-label { font-size: 8pt; padding: 2px 5px; }
         }
+        /* highlight.js override — giữ nền đen */
+        pre code.hljs { background: transparent; padding: 0; }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
 </head>
 <body>
 
@@ -215,7 +218,7 @@ if (b == 0) { out &lt;&lt; -1; return 0; }
 <h2 class="orange">2.1. ĐỘ PHỨC TẠP LÀ GÌ? (Big-O)</h2>
 
 <div class="tip">
-<strong>💡 GIẢI THÍCH ĐƠN GIẢN:</strong> Độ phức tạp cho biết chương trình chạy <strong>bao nhiêu bước</strong> khi dữ liệu có N phần tử.<br>
+<strong>💡 Độ phức tạp:</strong>  cho biết chương trình chạy <strong>bao nhiêu bước</strong> khi dữ liệu có N phần tử.<br>
 Hãy tưởng tượng bạn có N cuốn sách trên kệ:
 <table>
 <tr><th>Ký hiệu</th><th>Nghĩa là</th><th>Ví dụ đời thường</th><th>N = 100.000 → số bước</th></tr>
@@ -231,7 +234,7 @@ Hãy tưởng tượng bạn có N cuốn sách trên kệ:
 <h2 class="orange">2.2. BẢNG CHỌN THUẬT TOÁN THEO N</h2>
 
 <div class="warn">
-<strong>QUY TẮC VÀNG:</strong> Máy tính chạy ~<strong>10⁸ phép tính/giây</strong>. Nhân N × số vòng lặp, nếu > 10⁸ → TLE!
+<strong>QUY TẮC:</strong> Máy tính chạy ~<strong>10⁸ phép tính/giây</strong>. Nhân N × số vòng lặp, nếu > 10⁸ → TLE!
 </div>
 
 <table>
@@ -302,7 +305,7 @@ for (int i = 0; i &lt; n; i++) dem[a[i]]++;
 
 <!-- A1 -->
 <h3>A1. Prefix Sum — Tổng tiền tố</h3>
-<p><em>💡 Hình dung: Em có 1 cuốn sổ ghi "tổng tiền từ ngày 1 đến hôm nay" mỗi ngày. Khi sếp hỏi "tổng tiền từ ngày 3 đến ngày 7", thay vì cộng lại 5 ngày, em chỉ cần lấy: tổng_đến_ngày_7 − tổng_đến_ngày_2 = ra ngay! Tính trước 1 lần → trả lời bao nhiêu câu hỏi cũng chỉ cần 1 phép trừ.</em></p>
+<p><em>💡 Hình dung: Bạn có 1 cuốn sổ ghi "tổng tiền từ ngày 1 đến hôm nay" mỗi ngày. Khi sếp hỏi "tổng tiền từ ngày 3 đến ngày 7", thay vì cộng lại 5 ngày, bạn chỉ cần lấy: tổng_đến_ngày_7 − tổng_đến_ngày_2 = ra ngay! Tính trước 1 lần → trả lời bao nhiêu câu hỏi cũng chỉ cần 1 phép trừ.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]", "trung bình đoạn", "đoạn con có tổng = k" → truy vấn nhiều lần</div>
 <pre>
 // ═══ PREFIX SUM 1D ═══
@@ -317,7 +320,7 @@ long long tong = prefix[r] - prefix[l-1];
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong>
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 Mảng:    a[] = { 3,  1,  4,  1,  5 }   (đánh số từ 1)
               a[1] a[2] a[3] a[4] a[5]
 
@@ -380,7 +383,7 @@ while (L &lt; R) {
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Tìm đoạn con dài nhất có tổng ≤ 7
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 a[] = { 2, 3, 1, 2, 4, 3 },  K = 7
 
 Bước  L  R  sum   Giải thích                           maxLen
@@ -401,7 +404,7 @@ Bước  L  R  sum   Giải thích                           maxLen
 
 <!-- A3 -->
 <h3>A3. Sliding Window — Cửa sổ trượt</h3>
-<p><em>💡 Hình dung: Em nhìn qua một cái cửa sổ chỉ thấy được k ngôi nhà liên tiếp trên phố. Em đi bộ — cửa sổ trượt sang phải: mất 1 nhà bên trái, thêm 1 nhà bên phải. Em muốn biết "nhà cao nhất đang thấy" nhưng không muốn đếm lại k nhà mỗi bước. Mẹo: ghi nhớ thông minh — chỉ giữ lại "ứng viên" có thể là nhà cao nhất, bỏ những nhà chắc chắn thấp hơn.</em></p>
+<p><em>💡 Hình dung: Bạn nhìn qua một cái cửa sổ chỉ thấy được k ngôi nhà liên tiếp trên phố. Bạn đi bộ — cửa sổ trượt sang phải: mất 1 nhà bên trái, thêm 1 nhà bên phải. Bạn muốn biết "nhà cao nhất đang thấy" nhưng không muốn đếm lại k nhà mỗi bước. Mẹo: ghi nhớ thông minh — chỉ giữ lại "ứng viên" có thể là nhà cao nhất, bỏ những nhà chắc chắn thấp hơn.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "max/min trong cửa sổ kích thước k", "đoạn có max - min ≤ K"</div>
 <div class="tip"><strong>Khác Two Pointers:</strong> Sliding Window thường duy trì thêm trạng thái (deque, map, tần suất) bên trong cửa sổ.</div>
 <pre>
@@ -422,7 +425,7 @@ for (int i = 0; i &lt; n; i++) {
 
 <!-- A4 -->
 <h3>A4. Binary Search — Tìm kiếm nhị phân</h3>
-<p><em>💡 Hình dung trò chơi "Đoán số": bạn nghĩ 1 số từ 1 đến 1.000.000, em đoán và được trả lời "lớn hơn" hoặc "nhỏ hơn". Thay vì đoán từ 1, 2, 3... em luôn đoán SỐ GIỮA → mỗi lần loại bỏ NỬA số còn lại. 1 triệu số → chỉ cần ~20 lần đoán! <br>"Chặt nhị phân đáp án" cùng ý tưởng: thử đáp án ở giữa, kiểm tra có được không, rồi thu hẹp phạm vi.</em></p>
+<p><em>💡 Hình dung trò chơi "Đoán số": bạn nghĩ 1 số từ 1 đến 1.000.000, bạn đoán và được trả lời "lớn hơn" hoặc "nhỏ hơn". Thay vì đoán từ 1, 2, 3... bạn luôn đoán SỐ GIỮA → mỗi lần loại bỏ NỬA số còn lại. 1 triệu số → chỉ cần ~20 lần đoán! <br>"Chặt nhị phân đáp án" cùng ý tưởng: thử đáp án ở giữa, kiểm tra có được không, rồi thu hẹp phạm vi.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
 <li>"tìm x trong dãy đã sort" → <code>lower_bound</code>, <code>upper_bound</code></li>
@@ -456,7 +459,7 @@ while (lo &lt;= hi) {
 
 <!-- A5 -->
 <h3>A5. Sorting — Sắp xếp</h3>
-<p><em>💡 Hình dung: Bài tú lơ khơ — khi xòe tay không xếp, tìm 1 lá bài rất lâu. Nhưng nếu xếp theo số  (1, 2, 3...), tìm hay ghép cặp đều nhanh. Trong lập trình, sắp xếp mảng trước thường giúp bài toán dễ giải hơn rất nhiều. C++ có sẵn hàm <code>sort()</code> chạy rất nhanh.</em></p>
+<p><em>💡 Hình dung: Khi đánh bài tiến lên xoè bài nhưng không xếp, tìm 1 lá bài rất lâu. Nhưng nếu xếp theo số  (1, 2, 3...), tìm hay ghép cặp đều nhanh. Trong lập trình, sắp xếp mảng trước thường giúp bài toán dễ giải hơn rất nhiều. C++ có sẵn hàm <code>sort()</code> chạy rất nhanh.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "ghép cặp tối ưu", "|a[i]-a[j]| ≤ k", "sắp xếp theo nhiều tiêu chí"
 <br><strong>MẸO:</strong> Sort trước → nhiều bài giải được bằng Greedy hoặc Two Pointers</div>
 <pre>
@@ -496,7 +499,7 @@ for (int i = 0; i &lt;= 1000000; i++)
 
 <!-- A7 -->
 <h3>A7. Kadane — Đoạn con tổng lớn nhất</h3>
-<p><em>💡 Hình dung: Em đi dọc dãy số, tay cầm một cái túi. Mỗi lần gặp số mới, em quyết định: "Bỏ vào túi cũ" (cộng thêm) hay "Vứt túi cũ, bắt đầu túi mới từ số này". Nếu túi cũ đang âm (tổng < 0) thì vứt đi cho rồi! Luôn ghi nhớ túi nặng nhất từng có. Chỉ đi 1 lượt là xong.</em></p>
+<p><em>💡 Hình dung: Bạn đi dọc dãy số, tay cầm một cái túi. Mỗi lần gặp số mới, bạn quyết định: "Bỏ vào túi cũ" (cộng thêm) hay "Vứt túi cũ, bắt đầu túi mới từ số này". Nếu túi cũ đang âm (tổng < 0) thì vứt đi cho rồi! Luôn ghi nhớ túi nặng nhất từng có. Chỉ đi 1 lượt là xong.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con liên tiếp có tổng lớn nhất", "max subarray sum"</div>
 <pre>
 long long maxSum = a[0], cur = a[0];
@@ -513,7 +516,7 @@ for (int i = 1; i &lt; n; i++) {
 
 <!-- B1 -->
 <h3>B1. Dynamic Programming (DP) — Quy hoạch động</h3>
-<p><em>💡 Hình dung: Bài toán giống xếp gạch lên cầu thang. Muốn lên bậc 10, em cần biết kết quả ở bậc 9 (hoặc bậc 8, 7...). Thay vì tính đi tính lại, em ghi kết quả mỗi bậc vào 1 bảng (mảng dp[]). Giải từ bậc 1, rồi bậc 2, dần lên bậc n. Kết quả cuối cùng nằm ở ô cuối cùng của bảng.</em></p>
+<p><em>💡 Hình dung: Bài toán giống xếp gạch lên cầu thang. Muốn lên bậc 10, bạn cần biết kết quả ở bậc 9 (hoặc bậc 8, 7...). Thay vì tính đi tính lại, bạn ghi kết quả mỗi bậc vào 1 bảng (mảng dp[]). Giải từ bậc 1, rồi bậc 2, dần lên bậc n. Kết quả cuối cùng nằm ở ô cuối cùng của bảng.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đếm số cách", "tìm max/min", "có bao nhiêu phương án"
 <br>Bài có đặc điểm: kết quả bước lớn dựa vào kết quả các bước nhỏ hơn đã tính</div>
 
@@ -556,7 +559,7 @@ for (int val = 1; val &lt;= k; val++)
 </div>
 
 <h3>B1b. LIS — Dãy con tăng dài nhất</h3>
-<p><em>💡 Hình dung: Có dãy học sinh xếp hàng lộn xộn: 3 1 4 1 5 9. Em muốn chọn ra nhiều bạn nhất sao cho chiều cao TĂNG DẦN (không cần đứng cạnh nhau). Chọn: 1, 4, 5, 9 → được 4 bạn. Đó là dãy con tăng dài nhất.</em></p>
+<p><em>💡 Hình dung: Có dãy học sinh xếp hàng lộn xộn: 3 1 4 1 5 9. Bạn muốn chọn ra nhiều bạn nhất sao cho chiều cao TĂNG DẦN (không cần đứng cạnh nhau). Chọn: 1, 4, 5, 9 → được 4 bạn. Đó là dãy con tăng dài nhất.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "dãy con tăng dài nhất", "chọn nhiều nhất sao cho tăng dần"</div>
 <pre>
 // ═══ LIS — O(n log n) dùng Binary Search ═══
@@ -585,7 +588,7 @@ for (int i = 0; i &lt; n; i++) {
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY DP Balo 0/1:</strong>
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 3 vật: w[]={2,3,4}, v[]={3,4,5}.  Balo chứa W=5.
 
 dp[] ban đầu = {0, 0, 0, 0, 0, 0}   (chỉ số 0..5)
@@ -631,7 +634,7 @@ for (int i = 0; i &lt; n; i++) {
 
 <!-- B3 -->
 <h3>B3. Bitmask — Duyệt tập con</h3>
-<p><em>💡 Hình dung: Có 4 món: cơm, phở, bún, mì. Em muốn liệt kê TẤT CẢ các cách chọn (chọn hoặc không chọn mỗi món). Mỗi món gán 1 công tắc: bật = chọn, tắt = không. Ví dụ: cơm-BẬ̀T, phở-TẬ́T, bún-BẬ̀T, mì-TẬ́T = 1010₂ = số 10 → chọn cơm và bún. Duyệt số từ 0 đến 15 (= 2⁴−1) là duyệt hết mọi cách chọn!</em></p>
+<p><em>💡 Hình dung: Có 4 món: cơm, phở, bún, mì. Bạn muốn liệt kê TẤT CẢ các cách chọn (chọn hoặc không chọn mỗi món). Mỗi món gán 1 công tắc: bật = chọn, tắt = không. Ví dụ: cơm-BẬ̀T, phở-TẬ́T, bún-BẬ̀T, mì-TẬ́T = 1010₂ = số 10 → chọn cơm và bún. Duyệt số từ 0 đến 15 (= 2⁴−1) là duyệt hết mọi cách chọn!</em></p>
 
 <div class="tip"><strong>📖 PHÉP TOÁN BIT LÀ GÌ?</strong> (Cần biết trước khi học Bitmask)
 <table>
@@ -666,7 +669,7 @@ int cntBit   = __builtin_popcount(mask);  // Đếm bit 1
 
 <!-- B4 -->
 <h3>B4. Sinh hoán vị (Backtracking)</h3>
-<p><em>💡 Hình dung: Có 3 bạn A, B, C và em muốn thử TẤT CẢ thứ tự xếp hàng: ABC, ACB, BAC, BCA, CAB, CBA = 3! = 6 cách. C++ có sẵn lệnh <code>next_permutation</code> tự sinh thứ tự tiếp theo. Chỉ dùng khi số phần tử nhỏ (≤ 10) vì 10 phần tử = 3.628.800 cách — nhiều hơn thì máy tính cũng không kịp.</em></p>
+<p><em>💡 Hình dung: Có 3 bạn A, B, C và bạn muốn thử TẤT CẢ thứ tự xếp hàng: ABC, ACB, BAC, BCA, CAB, CBA = 3! = 6 cách. C++ có sẵn lệnh <code>next_permutation</code> tự sinh thứ tự tiếp theo. Chỉ dùng khi số phần tử nhỏ (≤ 10) vì 10 phần tử = 3.628.800 cách — nhiều hơn thì máy tính cũng không kịp.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "liệt kê tất cả thứ tự", N ≤ 10 (vì N! tăng rất nhanh)</div>
 <pre>
 vector&lt;int&gt; a = {1, 2, 3};
@@ -810,7 +813,7 @@ for (int i = 1; i &lt;= n; i++)
 
 <!-- C4 -->
 <h3>C4. BIT (Fenwick Tree) — Cây chỉ số nhị phân</h3>
-<p><em>💡 Hình dung: Prefix Sum giống bảng tính Excel — tính xong rồi không sửa được. BIT giống một bảng tính thông minh hơn: em vừa hỏi "tổng từ cột 3 đến cột 7", vừa có thể sửa số ở cột 5 và bảng tự cập nhật. Cả hỏi và sửa đều rất nhanh.</em></p>
+<p><em>💡 Hình dung: Prefix Sum giống bảng tính Excel — tính xong rồi không sửa được. BIT giống một bảng tính thông minh hơn: bạn vừa hỏi "tổng từ cột 3 đến cột 7", vừa có thể sửa số ở cột 5 và bảng tự cập nhật. Cả hỏi và sửa đều rất nhanh.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]" <strong>+ cập nhật</strong> (Prefix Sum thường không cập nhật được), "đếm nghịch thế"</div>
 <pre>
 long long bit[100005];
@@ -961,7 +964,7 @@ void TruyVet(int S, int F) {
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY BFS:</strong> Tìm đường đi ngắn nhất từ đỉnh 1 đến đỉnh 5
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 Đồ thị: 1--2, 1--3, 2--4, 3--4, 4--5
 
     1
@@ -1011,7 +1014,7 @@ for (int i = 1; i &lt;= n; i++) {
 
 <!-- D1b -->
 <h3>D1b. BFS trên lưới 2D (Mê cung)</h3>
-<p><em>💡 Hình dung: Bản đồ ô vuông, có tường ('#') và đường đi ('.'). Em đứng ở ô xuất phát, mỗi bước đi sang ô kề bên (lên/xuống/trái/phải). Hỏi: cần ít nhất bao nhiêu bước để đến ô đích? → Dùng BFS, sóng lan từ ô xuất phát ra 4 hướng.</em></p>
+<p><em>💡 Hình dung: Bản đồ ô vuông, có tường ('#') và đường đi ('.'). Bạn đứng ở ô xuất phát, mỗi bước đi sang ô kề bên (lên/xuống/trái/phải). Hỏi: cần ít nhất bao nhiêu bước để đến ô đích? → Dùng BFS, sóng lan từ ô xuất phát ra 4 hướng.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "lưới ô vuông", "mê cung", "số bước ít nhất từ ô (r1,c1) đến (r2,c2)"</div>
 <pre>
 // ═══ BFS trên lưới m×n ═══
@@ -1212,7 +1215,7 @@ void TruyVet(int S, int F) {
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY DIJKSTRA:</strong> Tìm đường ngắn nhất từ đỉnh 1 đến đỉnh 5
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 Đồ thị có hướng, 5 đỉnh:
 1→2 (w=2), 1→3 (w=5), 2→3 (w=1), 2→4 (w=7), 3→4 (w=3), 4→5 (w=1)
 
@@ -1349,7 +1352,7 @@ int main() {
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY BELLMAN-FORD:</strong> Tìm đường ngắn nhất từ đỉnh 1 đến đỉnh 4
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 Đồ thị có hướng, 4 đỉnh, 5 cạnh:
 1→2 (w=2), 1→3 (w=4), 2→3 (w=-3), 2→4 (w=3), 3→4 (w=2)
 
@@ -1430,7 +1433,7 @@ int main() {
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY PRIM:</strong> Tìm cây khung nhỏ nhất
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 Đồ thị vô hướng: 4 đỉnh, 5 cạnh
 1-2 (w=1), 1-3 (w=4), 2-3 (w=2), 2-4 (w=6), 3-4 (w=3)
 
@@ -1523,7 +1526,7 @@ int main() {
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY FORD-FULKERSON:</strong>
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 Mạng: S=1, F=4, 4 đỉnh
 Cap: 1→2 (3), 1→3 (2), 2→4 (2), 3→4 (3), 2→3 (1)
 
@@ -1687,7 +1690,7 @@ int main() {
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY TOPO SORT:</strong>
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 5 môn học, 6 tiên quyết:
 1→2, 1→3, 2→4, 3→4, 2→5, 4→5
 
@@ -1758,7 +1761,7 @@ long long power(long long a, long long n, long long mod) {
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Tính 3¹³ mod 1000000007
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 a = 3, n = 13 (nhị phân: 1101), mod = 10⁹+7
 res = 1
 
@@ -2395,7 +2398,7 @@ for (int i = 0; i &lt;= n; i++) {
 <hr class="section">
 <h2 class="dark">PHỤ LỤC A: SƠ ĐỒ NHẬN DẠNG BÀI TOÁN</h2>
 
-<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #333; font-size: 11pt;">
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #333; font-size: 11pt;">
 Đề bài hỏi gì?
 │
 ├── "Tổng đoạn [L,R]" (chỉ hỏi) ───────── → <strong>Prefix Sum</strong>
@@ -2449,5 +2452,19 @@ for (int i = 0; i &lt;= n; i++) {
 <p style="text-align: center; font-style: italic; font-size: 13pt;">
     <strong>"Thà code lụi còn hơn code bug!"</strong>
 </p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script>
+document.querySelectorAll('pre').forEach(function(pre) {
+    if (!pre.querySelector('code')) {
+        var code = document.createElement('code');
+        code.className = 'language-cpp';
+        code.innerHTML = pre.innerHTML;
+        pre.innerHTML = '';
+        pre.appendChild(code);
+    }
+});
+hljs.highlightAll();
+</script>
 </body>
 </html>
