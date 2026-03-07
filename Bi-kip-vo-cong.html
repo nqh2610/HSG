@@ -1,0 +1,2431 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bí Kíp Võ Lâm - Cửu Âm Bạch Code Chưởng</title>
+    <style>
+        body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: #000; }
+        h1 { text-align: center; font-size: 20pt; border-bottom: 3px solid #1a5276; padding-bottom: 12px; color: #1a5276; }
+        h1 small { display: block; font-size: 11pt; color: #555; font-weight: normal; margin-top: 5px; }
+
+        /* Tầng headers */
+        .tang { font-size: 16pt; text-align: center; padding: 10px; margin: 30px 0 5px 0; border-radius: 6px; color: #fff; }
+        .tang-1 { background: #c0392b; }
+        .tang-2 { background: #e67e22; }
+        .tang-3 { background: #27ae60; }
+        .tang-4 { background: #2980b9; }
+        .tang-5 { background: #8e44ad; }
+        .tang small { font-size: 10pt; display: block; font-weight: normal; opacity: 0.9; }
+
+        h2 { font-size: 14pt; padding: 6px 12px; margin-top: 25px; border-radius: 4px; }
+        h2.red { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+        h2.blue { background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8; }
+        h2.green { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+        h2.orange { background: #fff3cd; color: #856404; border-left: 4px solid #ffc107; }
+        h2.purple { background: #e2d9f3; color: #4a235a; border-left: 4px solid #8e44ad; }
+        h2.dark { background: #343a40; color: #fff; border-left: 4px solid #000; }
+
+        h3 { font-size: 12pt; margin: 12px 0 5px 0; color: #2c3e50; border-left: 3px solid #3498db; padding-left: 8px; }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 12px; font-size: 10pt; margin: 8px 0; border-radius: 5px; overflow-x: auto; border-left: 4px solid #007acc; }
+        code { font-family: Consolas, 'Courier New', monospace; background: #e8e8e8; color: #c7254e; padding: 2px 5px; border-radius: 3px; }
+        .warn { background: #fff3cd; padding: 10px; margin: 8px 0; border-left: 3px solid #ffc107; }
+        .good { background: #d4edda; padding: 10px; margin: 8px 0; border-left: 3px solid #28a745; }
+        .bad { background: #f8d7da; padding: 10px; margin: 8px 0; border-left: 3px solid #dc3545; }
+        .tip { background: #d1ecf1; padding: 10px; margin: 8px 0; border-left: 3px solid #17a2b8; }
+        table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 11pt; }
+        th, td { border: 1px solid #333; padding: 6px 10px; }
+        th { background: #ddd; font-weight: bold; }
+        .nhom-label { display: inline-block; padding: 2px 8px; border-radius: 3px; color: #fff; font-size: 10pt; font-weight: bold; margin-right: 5px; }
+        .nhom-A { background: #3498db; }
+        .nhom-B { background: #e67e22; }
+        .nhom-C { background: #9b59b6; }
+        .nhom-D { background: #1abc9c; }
+        .nhom-E { background: #e74c3c; }
+        .toc-box { background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 8px; padding: 15px 20px; margin: 15px 0; }
+        .toc-box h3 { border: none; padding: 0; margin: 0 0 8px 0; font-size: 13pt; }
+        .toc-box ol { margin: 0; padding-left: 20px; }
+        .toc-box li { margin-bottom: 3px; }
+        .toc-box a { text-decoration: none; color: #2980b9; }
+        .toc-box a:hover { text-decoration: underline; }
+        hr.section { border: none; border-top: 2px dashed #ccc; margin: 30px 0; }
+    </style>
+</head>
+<body>
+
+<h1>BÍ KÍP VÕ LÂM - CỬU ÂM BẠCH CODE CHƯỞNG
+<small>Luyện công từ zero đến hero: Thuật toán + Tối ưu + Tránh bẫy + Chiến thuật phòng thi</small>
+</h1>
+
+<!-- ===================== MỤC LỤC ===================== -->
+<div class="toc-box">
+<h3>📑 MỤC LỤC</h3>
+<ol>
+    <li><a href="#tang1">TẦNG 1: KHÔNG MẤT ĐIỂM OAN</a> — Sai tên file, tràn số, lỗi biên → mất 50-100% test</li>
+    <li><a href="#tang2">TẦNG 2: TỐI ƯU TỐC ĐỘ</a> — Độ phức tạp là gì, chọn thuật theo N, tối ưu I/O, tránh TLE</li>
+    <li><a href="#tang3">TẦNG 3: CÁC KỸ THUẬT CỐT LÕI</a> — Thuật toán + Code mẫu + Ví dụ chạy tay (5 nhóm A-E)</li>
+    <li><a href="#tang4">TẦNG 4: KỸ THUẬT NÂNG CAO</a> — Biến đổi bài toán, nén tọa độ, tối ưu DP</li>
+    <li><a href="#tang5">TẦNG 5: CHIẾN THUẬT PHÒNG THI</a> — Phân bổ thời gian, gỡ điểm, debug, checklist</li>
+</ol>
+</div>
+
+<!-- ██████████████████████████████████████████████████████ -->
+<!-- TẦNG 1 -->
+<!-- ██████████████████████████████████████████████████████ -->
+<div class="tang tang-1" id="tang1">TẦNG 1: KHÔNG MẤT ĐIỂM OAN<small>Sai ở đây = mất 50-100% điểm mà không biết tại sao</small></div>
+
+<h2 class="red">1.1. ĐỌC/GHI FILE — Sai = 0 điểm toàn bài</h2>
+
+<div class="bad">
+<strong>⚠ 99% đề thi HSG yêu cầu đọc/ghi file. Sai tên file = 0 điểm!</strong>
+</div>
+
+<pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+
+int main() {
+    ifstream in("TENBAI.INP");   // ← PHẢI đúng chính xác tên, HOA/thường
+    ofstream out("TENBAI.OUT");  // ← Kiểm tra kỹ .INP vs .OUT
+
+    // CODE Ở ĐÂY
+
+    in.close();                  // ← Đóng file input
+    out.close();                 // ← Đóng file output
+    return 0;
+}
+</pre>
+
+<div class="bad">
+<strong>4 LỖI HAY GẶP NHẤT:</strong>
+<ul>
+<li>Sai HOA/thường: <code>"bai.inp"</code> ≠ <code>"BAI.INP"</code></li>
+<li>Quên đổi tên file khi copy code từ bài khác</li>
+<li>Ghi nhầm <code>.INP</code> thành <code>.OUT</code></li>
+<li>Quên <code>in.close()</code> / <code>out.close()</code> — có thể mất dữ liệu output</li>
+</ul>
+</div>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="red">1.2. TRÀN SỐ (Overflow) — Sai 50-70% test</h2>
+
+<h3>Khi nào PHẢI dùng long long?</h3>
+<table>
+<tr><th>Tình huống</th><th>Ví dụ</th><th>Cách xử lý</th></tr>
+<tr><td>Tổng N số (N ≤ 10⁵, giá trị ≤ 10⁹)</td><td>Tổng max = 10¹⁴</td><td>Dùng <code>long long</code></td></tr>
+<tr><td>Nhân 2 số (a, b ≤ 10⁹)</td><td>a × b có thể = 10¹⁸</td><td>Ép kiểu TRƯỚC khi nhân</td></tr>
+<tr><td>Bình phương (a² với a ≤ 10⁵)</td><td>Kết quả ≤ 10¹⁰</td><td><code>long long</code></td></tr>
+<tr><td>Prefix sum</td><td>Tổng dồn n số lớn</td><td>Mảng prefix dùng <code>long long</code></td></tr>
+<tr><td>Đếm số cách (kết quả rất lớn)</td><td>Tràn cả <code>long long</code></td><td>Modulo <code>1e9+7</code></td></tr>
+</table>
+
+<h3>Cách nhân KHÔNG bị tràn</h3>
+<pre>
+int a = 100000, b = 100000;
+
+// ❌ SAI - tràn vì a*b tính bằng int trước khi gán
+long long sai = a * b;
+
+// ✅ ĐÚNG - 3 cách ép kiểu
+long long dung1 = (long long)a * b;
+long long dung2 = 1LL * a * b;
+long long dung3 = (long long)a * (long long)b;
+</pre>
+
+<h3>So sánh tích lớn (tránh nhân tràn)</h3>
+<pre>
+// Muốn so sánh a*b với c*d (a,b,c,d có thể đến 10⁹)
+// ❌ SAI: (long long)a*b > (long long)c*d  → vẫn tràn nếu > 10¹⁸
+
+// ✅ ĐÚNG: Dùng double so sánh gần đúng
+if ((double)a * b > (double)c * d) { ... }
+</pre>
+
+<h3>Số âm khi trừ mod</h3>
+<pre>
+// Đảm bảo kết quả luôn dương khi trừ mod
+long long ans = ((a - b) % MOD + MOD) % MOD;
+</pre>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="red">1.3. LỖI CHỈ SỐ MẢNG — Đọc sai vùng nhớ</h2>
+<pre>
+// ❌ SAI: Truy cập a[100] khi mảng chỉ có a[0..99]
+int a[100];
+for (int i = 0; i &lt;= 100; i++) { ... }  // i=100 → lỗi!
+
+// ✅ ĐÚNG: Luôn khai báo DƯ 5-10
+int a[100005];  // N ≤ 10⁵ → khai báo 100005
+for (int i = 0; i &lt; n; i++) { ... }
+</pre>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="red">1.4. TRƯỜNG HỢP ĐẶC BIỆT — Quên là mất test biên</h2>
+
+<div class="warn"><strong>LUÔN test các trường hợp sau trước khi nộp:</strong></div>
+
+<table>
+<tr><th>Trường hợp</th><th>Ví dụ</th><th>Cách xử lý</th></tr>
+<tr><td>n = 0</td><td>Mảng rỗng</td><td>Kiểm tra trước khi xử lý</td></tr>
+<tr><td>n = 1</td><td>Chỉ 1 phần tử</td><td>Thường có đáp án đặc biệt</td></tr>
+<tr><td>Tất cả bằng nhau</td><td>a = {5, 5, 5, 5}</td><td>Kiểm tra công thức</td></tr>
+<tr><td>Đã sắp xếp tăng/giảm</td><td>a = {1, 2, 3, 4}</td><td>Kiểm tra</td></tr>
+<tr><td>Không có đáp án</td><td>Không thỏa điều kiện</td><td>In -1 hoặc "NO"</td></tr>
+<tr><td>Số âm trong dãy</td><td>a = {-5, 3, -2}</td><td>Kiểm tra logic với số âm</td></tr>
+<tr><td>Chia cho 0</td><td>b = 0</td><td>Kiểm tra <code>if (b != 0)</code></td></tr>
+</table>
+
+<pre>
+// Mẫu xử lý
+if (n == 0) { out &lt;&lt; 0; return 0; }
+if (n == 1) { out &lt;&lt; a[0]; return 0; }
+if (b == 0) { out &lt;&lt; -1; return 0; }
+</pre>
+
+<!-- ██████████████████████████████████████████████████████ -->
+<!-- TẦNG 2 -->
+<!-- ██████████████████████████████████████████████████████ -->
+<hr class="section">
+<div class="tang tang-2" id="tang2">TẦNG 2: TỐI ƯU TỐC ĐỘ — TRÁNH TLE<small>Chọn đúng thuật theo N + tối ưu code</small></div>
+
+<h2 class="orange">2.1. ĐỘ PHỨC TẠP LÀ GÌ? (Big-O)</h2>
+
+<div class="tip">
+<strong>💡 GIẢI THÍCH ĐƠN GIẢN:</strong> Độ phức tạp cho biết chương trình chạy <strong>bao nhiêu bước</strong> khi dữ liệu có N phần tử.<br>
+Hãy tưởng tượng bạn có N cuốn sách trên kệ:
+<table>
+<tr><th>Ký hiệu</th><th>Nghĩa là</th><th>Ví dụ đời thường</th><th>N = 100.000 → số bước</th></tr>
+<tr><td><strong>O(1)</strong></td><td>Luôn 1 bước duy nhất</td><td>Mở đúng trang đã đánh dấu sẵn</td><td>1</td></tr>
+<tr><td><strong>O(N)</strong></td><td>Duyệt qua N phần tử 1 lần</td><td>Tìm sách bằng cách lướt từng cuốn</td><td>100.000</td></tr>
+<tr><td><strong>O(N log N)</strong></td><td>Sắp xếp rồi duyệt</td><td>Xếp sách theo tên rồi tìm</td><td>~1.700.000</td></tr>
+<tr><td><strong>O(N²)</strong></td><td>2 vòng for lồng nhau</td><td>So sánh mọi cặp sách với nhau</td><td>10.000.000.000 ❌</td></tr>
+<tr><td><strong>O(2ᴺ)</strong></td><td>Thử tất cả tổ hợp</td><td>Thử mọi cách chọn/không chọn mỗi cuốn</td><td>Vô hạn ❌</td></tr>
+</table>
+<strong>Quy tắc:</strong> Nếu số bước > 10⁸ → chương trình chạy quá 1 giây → bị TLE (Time Limit Exceeded = Quá thời gian).
+</div>
+
+<h2 class="orange">2.2. BẢNG CHỌN THUẬT TOÁN THEO N</h2>
+
+<div class="warn">
+<strong>QUY TẮC VÀNG:</strong> Máy tính chạy ~<strong>10⁸ phép tính/giây</strong>. Nhân N × số vòng lặp, nếu > 10⁸ → TLE!
+</div>
+
+<table>
+<tr><th>Đề cho N ≤</th><th>Độ phức tạp</th><th>Được dùng</th><th>Ví dụ</th></tr>
+<tr><td><strong>10</strong></td><td>O(N!)</td><td>Vét cạn, sinh hoán vị</td><td>Tìm thứ tự tối ưu</td></tr>
+<tr><td><strong>20</strong></td><td>O(2ᴺ)</td><td>Duyệt tập con (bitmask)</td><td>Chọn tập con tổng = k</td></tr>
+<tr><td><strong>100</strong></td><td>O(N³)</td><td>3 vòng for, Floyd, DP 3 chiều</td><td>Tìm bộ 3 số tổng = k</td></tr>
+<tr><td><strong>1000–5000</strong></td><td>O(N²)</td><td>2 vòng for, DP 2 chiều</td><td>Duyệt mọi cặp</td></tr>
+<tr><td><strong>10⁵</strong></td><td>O(N log N)</td><td>Sort + Greedy, Binary Search, BIT</td><td>Ghép cặp tối ưu</td></tr>
+<tr><td><strong>10⁶</strong></td><td>O(N)</td><td>Two Pointers, Prefix Sum, Sliding Window</td><td>Tổng đoạn, đoạn con</td></tr>
+<tr><td><strong>10⁷</strong></td><td>O(N)</td><td>Sàng nguyên tố, duyệt đơn</td><td>Đếm SNT đến 10⁷</td></tr>
+</table>
+
+<div class="good">
+<strong>MẸO NHỚ:</strong> N = 10⁵ → sort + 1 vòng for. N = 10⁶ → chỉ 1 vòng for. 2 vòng for lồng với N = 10⁵ → TLE chắc chắn!
+</div>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="orange">2.3. TỐI ƯU I/O (Đọc/Ghi nhanh hơn)</h2>
+
+<h3>Tắt sync — Nhanh gấp 5-10 lần</h3>
+<p><em>💡 Bình thường C++ đọc/ghi dữ liệu "cẩn thận" nên hơi chậm. Dòng lệnh này bảo nó: "Đọc thẳng, không cần kiểm tra" → nhanh hơn 5-10 lần. <strong>Nhưng khi ta đã dùng ifstream in / ofstream out thì KHÔNG CẦN dòng này</strong> (nó chỉ có tác dụng với cin/cout chuẩn).</em></p>
+<pre>
+// Chỉ cần khi dùng cin/cout chuẩn:
+ios_base::sync_with_stdio(false);
+cin.tie(NULL);
+// Khi dùng ifstream in / ofstream out → KHÔNG CẦN, bỏ qua
+</pre>
+
+<h3>Dùng '\n' thay endl</h3>
+<p><em>💡 Hình dung: <code>endl</code> giống như mỗi lần viết xong 1 dòng lại đi photocopy ngay — rất tốn thời gian. Còn <code>'\n'</code> chỉ xuống dòng, viết tiếp, đến cuối mới photocopy 1 lần — nhanh hơn rất nhiều khi in hàng ngàn dòng.</em></p>
+<pre>
+// ❌ CHẬM - endl xả bộ đệm ra file mỗi lần → chậm khi in hàng ngàn dòng
+out &lt;&lt; a[i] &lt;&lt; endl;
+
+// ✅ NHANH - '\n' chỉ xuống dòng, không xả
+out &lt;&lt; a[i] &lt;&lt; '\n';
+</pre>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="orange">2.4. TỐI ƯU CODE</h2>
+
+<p><em>💡 Khi truyền dữ liệu vào hàm, C++ mặc định tạo một BẢN SAO — giống như bạn muốn cho mượn cuốn vở thì lại đi photo nguyên cuốn rồi mới đưa. Thêm dấu <code>&amp;</code> nghĩa là "cho mượn cuốn gốc luôn" → không tốn thời gian photo → nhanh hơn rất nhiều!</em></p>
+<table>
+<tr><th>❌ Chậm</th><th>✅ Nhanh</th><th>Lý do</th></tr>
+<tr><td><code>void f(vector&lt;int&gt; v)</code></td><td><code>void f(vector&lt;int&gt; &amp;v)</code></td><td>Dùng trực tiếp (tham chiếu), không tạo bản sao</td></tr>
+<tr><td><code>map&lt;int,int&gt; dem</code></td><td><code>int dem[1000001]</code></td><td>Mảng đếm nhanh gấp 10 lần</td></tr>
+<tr><td><code>vector&lt;int&gt; a(n)</code></td><td><code>int a[100005]</code></td><td>Mảng cố định nhanh hơn mảng động</td></tr>
+<tr><td><code>s.insert(x); s.erase(x)</code></td><td>Mảng đánh dấu <code>bool used[N]</code></td><td>Nếu chỉ cần đánh dấu</td></tr>
+</table>
+
+<pre>
+// Mảng đếm thay map (khi giá trị ≤ 10⁶)
+int dem[1000001] = {0};
+for (int i = 0; i &lt; n; i++) dem[a[i]]++;
+</pre>
+
+<!-- ██████████████████████████████████████████████████████ -->
+<!-- TẦNG 3 -->
+<!-- ██████████████████████████████████████████████████████ -->
+<hr class="section">
+<div class="tang tang-3" id="tang3">TẦNG 3: CÁC KỸ THUẬT CỐT LÕI<small>Thuật toán + Code mẫu — Chia thành 5 nhóm (A-E)</small></div>
+
+<!-- ════════════════════════════════════ -->
+<!-- NHÓM A: XỬ LÝ MẢNG -->
+<!-- ════════════════════════════════════ -->
+<h2 class="blue"><span class="nhom-label nhom-A">NHÓM A</span> XỬ LÝ MẢNG (Array)</h2>
+
+<!-- A1 -->
+<h3>A1. Prefix Sum — Tổng tiền tố</h3>
+<p><em>💡 Hình dung: Em có 1 cuốn sổ ghi "tổng tiền từ ngày 1 đến hôm nay" mỗi ngày. Khi sếp hỏi "tổng tiền từ ngày 3 đến ngày 7", thay vì cộng lại 5 ngày, em chỉ cần lấy: tổng_đến_ngày_7 − tổng_đến_ngày_2 = ra ngay! Tính trước 1 lần → trả lời bao nhiêu câu hỏi cũng chỉ cần 1 phép trừ.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]", "trung bình đoạn", "đoạn con có tổng = k" → truy vấn nhiều lần</div>
+<pre>
+// ═══ PREFIX SUM 1D ═══
+// Build: O(n) | Query: O(1)
+long long prefix[100005];
+prefix[0] = 0;
+for (int i = 1; i &lt;= n; i++)
+    prefix[i] = prefix[i-1] + a[i];
+
+// Tổng đoạn [l, r]
+long long tong = prefix[r] - prefix[l-1];
+</pre>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong>
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+Mảng:    a[] = { 3,  1,  4,  1,  5 }   (đánh số từ 1)
+              a[1] a[2] a[3] a[4] a[5]
+
+Bước 1 — Tính prefix:
+  prefix[0] = 0
+  prefix[1] = 0 + 3 = 3
+  prefix[2] = 3 + 1 = 4
+  prefix[3] = 4 + 4 = 8
+  prefix[4] = 8 + 1 = 9
+  prefix[5] = 9 + 5 = 14
+
+  prefix[] = { 0, 3, 4, 8, 9, 14 }
+
+Bước 2 — Truy vấn: Tổng đoạn [2, 4] = ?
+  = prefix[4] - prefix[1] = 9 - 3 = <strong>6</strong>
+  Kiểm tra: a[2] + a[3] + a[4] = 1 + 4 + 1 = 6 ✓
+</pre>
+</div>
+<pre>
+// ═══ PREFIX SUM 2D ═══
+// Build: O(m×n) | Query: O(1)
+// sum[i][j] = tổng HCN từ (1,1) đến (i,j)
+for (int i = 1; i &lt;= m; i++)
+    for (int j = 1; j &lt;= n; j++)
+        sum[i][j] = a[i][j] + sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1];
+
+// Tổng HCN từ (r1,c1) đến (r2,c2)
+ll tong = sum[r2][c2] - sum[r1-1][c2] - sum[r2][c1-1] + sum[r1-1][c1-1];
+</pre>
+
+<!-- A2 -->
+<h3>A2. Two Pointers — Hai con trỏ</h3>
+<p><em>💡 Hình dung: Hai bạn L và R đứng trên một hàng ghế. R đi sang phải để mở rộng đoạn, nếu đoạn vi phạm điều kiện thì L đi sang phải để thu hẹp. Cả hai chỉ đi về bên phải, không lùi → thay vì thử tất cả các cặp vị trí (rất lâu), ta chỉ cần mỗi người đi qua hàng ghế 1 lần → nhanh gấp nhiều lần.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con dài nhất có tổng ≤ K", "cặp (i,j) thỏa a[i]+a[j] = k" (mảng đã sort), "đoạn ngắn nhất chứa đủ k giá trị"</div>
+<pre>
+// ═══ Tìm đoạn con dài nhất có tổng ≤ K ═══
+// O(n) — L chỉ tiến, không lùi
+int L = 0, maxLen = 0;
+long long sum = 0;
+
+for (int R = 0; R &lt; n; R++) {
+    sum += a[R];                    // Mở rộng phải
+    while (sum > K &amp;&amp; L &lt;= R) {    // Thu hẹp trái nếu vi phạm
+        sum -= a[L];
+        L++;
+    }
+    maxLen = max(maxLen, R - L + 1);
+}
+</pre>
+<pre>
+// ═══ Đếm cặp tổng = K (mảng đã sort) ═══
+sort(a, a + n);
+int L = 0, R = n - 1, cnt = 0;
+while (L &lt; R) {
+    int s = a[L] + a[R];
+    if (s == K)      { cnt++; L++; R--; }
+    else if (s &lt; K)  L++;
+    else             R--;
+}
+</pre>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Tìm đoạn con dài nhất có tổng ≤ 7
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+a[] = { 2, 3, 1, 2, 4, 3 },  K = 7
+
+Bước  L  R  sum   Giải thích                           maxLen
+  1   0  0   2   Thêm a[0]=2. sum=2 ≤ 7               1
+  2   0  1   5   Thêm a[1]=3. sum=5 ≤ 7               2
+  3   0  2   6   Thêm a[2]=1. sum=6 ≤ 7               3
+  4   0  3   8   Thêm a[3]=2. sum=8 > 7!
+      1  3   6   Bỏ a[0]=2, L=1. sum=6 ≤ 7            3
+  5   1  4  10   Thêm a[4]=4. sum=10 > 7!
+      2  4   7   Bỏ a[1]=3, L=2. sum=7 ≤ 7            3
+  6   2  5  10   Thêm a[5]=3. sum=10 > 7!
+      3  5   9   Bỏ a[2]=1, L=3. sum=9 > 7!
+      4  5   7   Bỏ a[3]=2, L=4. sum=7 ≤ 7            3
+
+→ Đáp án: maxLen = <strong>3</strong> (đoạn [0..2] = {2,3,1} hoặc [2..4] = {1,2,4})
+</pre>
+</div>
+
+<!-- A3 -->
+<h3>A3. Sliding Window — Cửa sổ trượt</h3>
+<p><em>💡 Hình dung: Em nhìn qua một cái cửa sổ chỉ thấy được k ngôi nhà liên tiếp trên phố. Em đi bộ — cửa sổ trượt sang phải: mất 1 nhà bên trái, thêm 1 nhà bên phải. Em muốn biết "nhà cao nhất đang thấy" nhưng không muốn đếm lại k nhà mỗi bước. Mẹo: ghi nhớ thông minh — chỉ giữ lại "ứng viên" có thể là nhà cao nhất, bỏ những nhà chắc chắn thấp hơn.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "max/min trong cửa sổ kích thước k", "đoạn có max - min ≤ K"</div>
+<div class="tip"><strong>Khác Two Pointers:</strong> Sliding Window thường duy trì thêm trạng thái (deque, map, tần suất) bên trong cửa sổ.</div>
+<pre>
+// ═══ Max trong mỗi cửa sổ kích thước k ═══
+// Dùng deque đơn điệu giảm — O(n)
+deque&lt;int&gt; dq;  // Lưu CHỈ SỐ
+
+for (int i = 0; i &lt; n; i++) {
+    while (!dq.empty() &amp;&amp; dq.front() &lt;= i - k)   // Ngoài cửa sổ
+        dq.pop_front();
+    while (!dq.empty() &amp;&amp; a[dq.back()] &lt;= a[i])   // Nhỏ hơn → vô dụng
+        dq.pop_back();
+    dq.push_back(i);
+    if (i >= k - 1)
+        out &lt;&lt; a[dq.front()] &lt;&lt; " ";  // Max cửa sổ hiện tại
+}
+</pre>
+
+<!-- A4 -->
+<h3>A4. Binary Search — Tìm kiếm nhị phân</h3>
+<p><em>💡 Hình dung trò chơi "Đoán số": bạn nghĩ 1 số từ 1 đến 1.000.000, em đoán và được trả lời "lớn hơn" hoặc "nhỏ hơn". Thay vì đoán từ 1, 2, 3... em luôn đoán SỐ GIỮA → mỗi lần loại bỏ NỬA số còn lại. 1 triệu số → chỉ cần ~20 lần đoán! <br>"Chặt nhị phân đáp án" cùng ý tưởng: thử đáp án ở giữa, kiểm tra có được không, rồi thu hẹp phạm vi.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong>
+<ul>
+<li>"tìm x trong dãy đã sort" → <code>lower_bound</code>, <code>upper_bound</code></li>
+<li>"đếm phần tử trong [L, R]" → <code>upper_bound(R) - lower_bound(L)</code></li>
+<li><strong>"tìm giá trị nhỏ nhất/lớn nhất thỏa..."</strong> → Chặt nhị phân đáp án (RẤT PHỔ BIẾN!)</li>
+</ul>
+</div>
+<pre>
+// ═══ Hàm có sẵn (mảng PHẢI sort trước) ═══
+sort(a, a + n);
+
+int pos1 = lower_bound(a, a+n, x) - a;  // Vị trí đầu tiên >= x
+int pos2 = upper_bound(a, a+n, x) - a;  // Vị trí đầu tiên > x
+int cntX = pos2 - pos1;                  // Số phần tử = x
+int cntLR = upper_bound(a,a+n,R) - lower_bound(a,a+n,L);  // Trong [L,R]
+</pre>
+<pre>
+// ═══ CHẶT NHỊ PHÂN ĐÁP ÁN ═══
+// "Tìm giá trị nhỏ nhất sao cho check(mid) = true"
+int lo = MIN_ANS, hi = MAX_ANS, ans = -1;
+while (lo &lt;= hi) {
+    int mid = lo + (hi - lo) / 2;
+    if (check(mid)) {   // Hàm kiểm tra mid có thỏa không
+        ans = mid;
+        hi = mid - 1;   // Tìm nhỏ hơn
+    } else {
+        lo = mid + 1;
+    }
+}
+</pre>
+
+<!-- A5 -->
+<h3>A5. Sorting — Sắp xếp</h3>
+<p><em>💡 Hình dung: Bài tú lơ khơ — khi xòe tay không xếp, tìm 1 lá bài rất lâu. Nhưng nếu xếp theo số  (1, 2, 3...), tìm hay ghép cặp đều nhanh. Trong lập trình, sắp xếp mảng trước thường giúp bài toán dễ giải hơn rất nhiều. C++ có sẵn hàm <code>sort()</code> chạy rất nhanh.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "ghép cặp tối ưu", "|a[i]-a[j]| ≤ k", "sắp xếp theo nhiều tiêu chí"
+<br><strong>MẸO:</strong> Sort trước → nhiều bài giải được bằng Greedy hoặc Two Pointers</div>
+<pre>
+// Sort cơ bản
+sort(a, a + n);                              // Tăng dần
+sort(a, a + n, greater&lt;int&gt;());              // Giảm dần
+
+// Sort struct theo nhiều tiêu chí
+bool cmp(SinhVien a, SinhVien b) {
+    if (a.diem != b.diem) return a.diem > b.diem;  // Điểm giảm
+    return a.ten &lt; b.ten;                           // Tên tăng
+}
+sort(sv, sv + n, cmp);
+
+// Sort pair (tự động theo first, rồi second)
+pair&lt;int, int&gt; a[100005];
+sort(a, a + n);
+
+// Loại bỏ trùng lặp sau sort
+sort(a, a + n);
+int m = unique(a, a + n) - a;  // m = số phần tử distinct
+</pre>
+
+<!-- A6 -->
+<h3>A6. Mảng đếm (Counting)</h3>
+<p><em>💡 Hình dung: Có 1.000.000 cái hộp đánh số từ 0 đến 999.999. Duyệt mảng, gặp giá trị nào thì bỏ 1 viên bi vào hộp đó. Sau 1 lượt, xem hộp nào nhiều bi nhất = giá trị xuất hiện nhiều nhất. Cực nhanh — chỉ cần đi qua mảng 1 lần!</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "phần tử xuất hiện nhiều nhất", "tần suất ký tự", giá trị ≤ 10⁶ → dùng mảng đếm thay map</div>
+<pre>
+int dem[1000001] = {0};
+for (int i = 0; i &lt; n; i++) dem[a[i]]++;
+
+// Tìm mode (phần tử xuất hiện nhiều nhất)
+int maxCnt = 0, mode = 0;
+for (int i = 0; i &lt;= 1000000; i++)
+    if (dem[i] > maxCnt) { maxCnt = dem[i]; mode = i; }
+</pre>
+
+<!-- A7 -->
+<h3>A7. Kadane — Đoạn con tổng lớn nhất</h3>
+<p><em>💡 Hình dung: Em đi dọc dãy số, tay cầm một cái túi. Mỗi lần gặp số mới, em quyết định: "Bỏ vào túi cũ" (cộng thêm) hay "Vứt túi cũ, bắt đầu túi mới từ số này". Nếu túi cũ đang âm (tổng < 0) thì vứt đi cho rồi! Luôn ghi nhớ túi nặng nhất từng có. Chỉ đi 1 lượt là xong.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con liên tiếp có tổng lớn nhất", "max subarray sum"</div>
+<pre>
+long long maxSum = a[0], cur = a[0];
+for (int i = 1; i &lt; n; i++) {
+    cur = max((long long)a[i], cur + a[i]);  // Tiếp tục hoặc bắt đầu mới
+    maxSum = max(maxSum, cur);
+}
+</pre>
+
+<!-- ════════════════════════════════════ -->
+<!-- NHÓM B: TỐI ƯU HÓA -->
+<!-- ════════════════════════════════════ -->
+<h2 class="green"><span class="nhom-label nhom-B">NHÓM B</span> TỐI ƯU HÓA (Optimization)</h2>
+
+<!-- B1 -->
+<h3>B1. Dynamic Programming (DP) — Quy hoạch động</h3>
+<p><em>💡 Hình dung: Bài toán giống xếp gạch lên cầu thang. Muốn lên bậc 10, em cần biết kết quả ở bậc 9 (hoặc bậc 8, 7...). Thay vì tính đi tính lại, em ghi kết quả mỗi bậc vào 1 bảng (mảng dp[]). Giải từ bậc 1, rồi bậc 2, dần lên bậc n. Kết quả cuối cùng nằm ở ô cuối cùng của bảng.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đếm số cách", "tìm max/min", "có bao nhiêu phương án"
+<br>Bài có đặc điểm: kết quả bước lớn dựa vào kết quả các bước nhỏ hơn đã tính</div>
+
+<pre>
+// ═══ DP BALO 0/1 (Knapsack) ═══
+// Mỗi vật chỉ dùng 1 lần → Duyệt NGƯỢC
+long long dp[MAX_W + 1] = {0};
+for (int i = 0; i &lt; n; i++)
+    for (int j = W; j >= w[i]; j--)          // ← NGƯỢC!
+        dp[j] = max(dp[j], dp[j - w[i]] + v[i]);
+// Đáp án: dp[W]
+</pre>
+
+<pre>
+// ═══ ĐỔI TIỀN / ĐẾM SỐ CÁCH (Unbounded) ═══
+// Mỗi loại dùng KHÔNG GIỚI HẠN → Duyệt XUÔI
+long long soCach[MAX_SUM + 1] = {0};
+soCach[0] = 1;
+for (int coin : coins)
+    for (int j = coin; j &lt;= S; j++)          // ← XUÔI!
+        soCach[j] += soCach[j - coin];
+</pre>
+
+<pre>
+// ═══ DP ĐẾM SỐ CÁCH ĐẠT TỔNG ═══
+// Dùng các giá trị 1..k đạt tổng n
+soCach[0] = 1;
+for (int val = 1; val &lt;= k; val++)
+    for (int t = val; t &lt;= n; t++)
+        soCach[t] += soCach[t - val];
+</pre>
+
+<div class="tip">
+<strong>PHÂN BIỆT QUAN TRỌNG:</strong>
+<table>
+<tr><th></th><th>Duyệt NGƯỢC j</th><th>Duyệt XUÔI j</th></tr>
+<tr><td><strong>Ý nghĩa</strong></td><td>Mỗi vật dùng tối đa 1 lần (0/1)</td><td>Mỗi vật dùng không giới hạn</td></tr>
+<tr><td><strong>Ví dụ</strong></td><td>Balo 0/1 (NEWBACK)</td><td>Đổi tiền (CHANGE)</td></tr>
+</table>
+</div>
+
+<h3>B1b. LIS — Dãy con tăng dài nhất</h3>
+<p><em>💡 Hình dung: Có dãy học sinh xếp hàng lộn xộn: 3 1 4 1 5 9. Em muốn chọn ra nhiều bạn nhất sao cho chiều cao TĂNG DẦN (không cần đứng cạnh nhau). Chọn: 1, 4, 5, 9 → được 4 bạn. Đó là dãy con tăng dài nhất.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "dãy con tăng dài nhất", "chọn nhiều nhất sao cho tăng dần"</div>
+<pre>
+// ═══ LIS — O(n log n) dùng Binary Search ═══
+vector&lt;int&gt; dp;  // dp[i] = phần tử nhỏ nhất kết thúc dãy tăng dài i+1
+
+for (int i = 0; i &lt; n; i++) {
+    int pos = lower_bound(dp.begin(), dp.end(), a[i]) - dp.begin();
+    if (pos == dp.size())
+        dp.push_back(a[i]);    // Mở rộng dãy
+    else
+        dp[pos] = a[i];        // Thay thế để giữ dãy "tốt" hơn
+}
+int LIS = dp.size();               // Độ dài LIS
+</pre>
+<pre>
+// ═══ LIS — O(n²) dễ hiểu hơn (dùng khi N ≤ 5000) ═══
+int f[5005];  // f[i] = độ dài LIS kết thúc tại i
+int ans = 1;
+for (int i = 0; i &lt; n; i++) {
+    f[i] = 1;
+    for (int j = 0; j &lt; i; j++)
+        if (a[j] &lt; a[i])
+            f[i] = max(f[i], f[j] + 1);
+    ans = max(ans, f[i]);
+}
+</pre>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY DP Balo 0/1:</strong>
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+3 vật: w[]={2,3,4}, v[]={3,4,5}.  Balo chứa W=5.
+
+dp[] ban đầu = {0, 0, 0, 0, 0, 0}   (chỉ số 0..5)
+
+Vật 1 (w=2, v=3): duyệt j=5 xuống 2
+  dp[5] = max(dp[5], dp[3]+3) = max(0, 3) = 3
+  dp[4] = max(dp[4], dp[2]+3) = max(0, 3) = 3
+  dp[3] = max(dp[3], dp[1]+3) = max(0, 3) = 3
+  dp[2] = max(dp[2], dp[0]+3) = max(0, 3) = 3
+  dp[] = {0, 0, 3, 3, 3, 3}
+
+Vật 2 (w=3, v=4): duyệt j=5 xuống 3
+  dp[5] = max(dp[5], dp[2]+4) = max(3, 7) = <strong>7</strong>
+  dp[4] = max(dp[4], dp[1]+4) = max(3, 4) = 4
+  dp[3] = max(dp[3], dp[0]+4) = max(3, 4) = 4
+  dp[] = {0, 0, 3, 4, 4, <strong>7</strong>}
+
+Vật 3 (w=4, v=5): duyệt j=5 xuống 4
+  dp[5] = max(dp[5], dp[1]+5) = max(7, 5) = 7
+  dp[4] = max(dp[4], dp[0]+5) = max(4, 5) = 5
+  dp[] = {0, 0, 3, 4, 5, <strong>7</strong>}
+
+Đáp án: dp[5] = <strong>7</strong> (chọn vật 1 + vật 2: w=2+3=5, v=3+4=7)
+</pre>
+</div>
+
+<!-- B2 -->
+<h3>B2. Greedy — Tham lam</h3>
+<p><em>💡 Hình dung: Đi buffet, mỗi lần lấy món luôn chọn món "hấp dẫn nhất lúc đó" mà không cần suy nghĩ nhiều. Ví dụ bài toán: có 10 công việc, mỗi việc có giờ bắt đầu và kết thúc. Làm sao để làm được nhiều việc nhất? → Sắp theo giờ kết thúc, luôn chọn việc kết thúc sớm nhất trước.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "chọn ít nhất", "nhiều nhất có thể", "tối ưu từng bước"
+<br><strong>MẸO:</strong> Thường đi kèm Sort → chọn tốt nhất tại mỗi bước</div>
+<pre>
+// Mẫu: Sort + chọn tham lam
+sort(a, a + n);  // hoặc sort theo tiêu chí phù hợp
+int ans = 0;
+for (int i = 0; i &lt; n; i++) {
+    if (/* a[i] thỏa điều kiện */) {
+        ans++;
+        // Cập nhật trạng thái
+    }
+}
+</pre>
+
+<!-- B3 -->
+<h3>B3. Bitmask — Duyệt tập con</h3>
+<p><em>💡 Hình dung: Có 4 món: cơm, phở, bún, mì. Em muốn liệt kê TẤT CẢ các cách chọn (chọn hoặc không chọn mỗi món). Mỗi món gán 1 công tắc: bật = chọn, tắt = không. Ví dụ: cơm-BẬ̀T, phở-TẬ́T, bún-BẬ̀T, mì-TẬ́T = 1010₂ = số 10 → chọn cơm và bún. Duyệt số từ 0 đến 15 (= 2⁴−1) là duyệt hết mọi cách chọn!</em></p>
+
+<div class="tip"><strong>📖 PHÉP TOÁN BIT LÀ GÌ?</strong> (Cần biết trước khi học Bitmask)
+<table>
+<tr><th>Ký hiệu</th><th>Tên</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+<tr><td><code>&lt;&lt;</code></td><td>Dịch trái</td><td>Nhân với 2ⁱ. <code>1 &lt;&lt; 3</code> = 1 nhân 2³ = 8 = <code>1000₂</code></td><td><code>1 &lt;&lt; i</code> tạo số chỉ có bit thứ i bật</td></tr>
+<tr><td><code>&amp;</code></td><td>AND</td><td>Bit kết quả = 1 chỉ khi CẢ HAI bit = 1</td><td><code>5 &amp; 3</code> = <code>101 &amp; 011 = 001</code> = 1</td></tr>
+<tr><td><code>|</code></td><td>OR</td><td>Bit kết quả = 1 khi ÍT NHẤT MỘT bit = 1</td><td><code>5 | 3</code> = <code>101 | 011 = 111</code> = 7</td></tr>
+<tr><td><code>~</code></td><td>NOT</td><td>Lật tất cả bit (0→1, 1→0)</td><td></td></tr>
+</table>
+
+<strong>Ví dụ:</strong> Kiểm tra bit thứ 2 của số 5:<br>
+<code>5 = 101₂</code>. <code>1 &lt;&lt; 2 = 100₂</code>. <code>101 &amp; 100 = 100 ≠ 0</code> → bit 2 đang bật ✓
+</div>
+
+<div class="warn"><strong>DẤU HIỆU:</strong> "tập con có tổng = k", "chọn/không chọn", N ≤ 20 (vì 2²⁰ ≈ 10⁶)</div>
+<pre>
+// Duyệt tất cả 2^n tập con
+for (int mask = 0; mask &lt; (1 &lt;&lt; n); mask++) {
+    long long sum = 0;
+    for (int i = 0; i &lt; n; i++)
+        if (mask &amp; (1 &lt;&lt; i))   // Bit i bật → chọn a[i]
+            sum += a[i];
+    if (sum == K) ans++;
+}
+
+// Các phép toán bit
+int setBit   = mask | (1 &lt;&lt; i);      // Bật bit i
+int clearBit = mask &amp; ~(1 &lt;&lt; i);     // Tắt bit i
+bool isSet   = mask &amp; (1 &lt;&lt; i);      // Kiểm tra bit i
+int cntBit   = __builtin_popcount(mask);  // Đếm bit 1
+</pre>
+
+<!-- B4 -->
+<h3>B4. Sinh hoán vị (Backtracking)</h3>
+<p><em>💡 Hình dung: Có 3 bạn A, B, C và em muốn thử TẤT CẢ thứ tự xếp hàng: ABC, ACB, BAC, BCA, CAB, CBA = 3! = 6 cách. C++ có sẵn lệnh <code>next_permutation</code> tự sinh thứ tự tiếp theo. Chỉ dùng khi số phần tử nhỏ (≤ 10) vì 10 phần tử = 3.628.800 cách — nhiều hơn thì máy tính cũng không kịp.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "liệt kê tất cả thứ tự", N ≤ 10 (vì N! tăng rất nhanh)</div>
+<pre>
+vector&lt;int&gt; a = {1, 2, 3};
+sort(a.begin(), a.end());  // PHẢI sort trước
+do {
+    // Xử lý hoán vị hiện tại
+} while (next_permutation(a.begin(), a.end()));
+</pre>
+
+<!-- ════════════════════════════════════ -->
+<!-- NHÓM C: CẤU TRÚC DỮ LIỆU -->
+<!-- ════════════════════════════════════ -->
+<h2 class="purple"><span class="nhom-label nhom-C">NHÓM C</span> CẤU TRÚC DỮ LIỆU (Data Structure)</h2>
+
+<!-- C1 -->
+<h3>C1. Vector / Set / Multiset / Map — Mảng động, Tập hợp &amp; Ánh xạ</h3>
+
+<div class="tip"><strong>Chọn cái nào?</strong>
+<table>
+<tr><th>CTDL</th><th>Khi nào dùng</th><th>Tốc độ</th></tr>
+<tr><td><code>vector</code></td><td>Mảng động, thêm/xóa cuối, duyệt tuần tự, sort</td><td>O(1) thêm cuối</td></tr>
+<tr><td><code>set</code></td><td>Lưu giá trị KHÔNG trùng, tìm min/max, kiểm tra tồn tại</td><td>O(log n)</td></tr>
+<tr><td><code>multiset</code></td><td>Cho phép trùng, tìm + xóa 1 phần tử gần x nhất</td><td>O(log n)</td></tr>
+<tr><td><code>map</code></td><td>Đếm tần suất khi giá trị > 10⁶ hoặc key là string</td><td>O(log n)</td></tr>
+<tr><td>Mảng đếm</td><td>Giá trị ≤ 10⁶ → <strong>LUÔN ưu tiên dùng thay map</strong></td><td>O(1)</td></tr>
+</table>
+</div>
+
+<pre>
+// ═══ VECTOR ═══
+vector&lt;int&gt; a;                     // Khai báo rỗng
+vector&lt;int&gt; b(n, 0);              // n phần tử, giá trị ban đầu = 0
+vector&lt;vector&lt;int&gt;&gt; c(m, vector&lt;int&gt;(n));  // Ma trận m×n
+
+a.push_back(5);                    // Thêm cuối: {5}
+a.push_back(3);                    // {5, 3}
+a.pop_back();                      // Xóa cuối: {5}
+int sz = a.size();                 // Kích thước
+
+// Duyệt
+for (int i = 0; i &lt; a.size(); i++) { /* a[i] */ }
+for (int x : a) { /* x */ }
+
+// Sort + loại trùng
+sort(a.begin(), a.end());
+a.erase(unique(a.begin(), a.end()), a.end());
+
+// ═══ SET ═══
+set&lt;int&gt; s;
+s.insert(5);  s.insert(3);  s.insert(5);  // {3, 5} — không trùng
+int minVal = *s.begin();     // 3
+int maxVal = *s.rbegin();    // 5
+if (s.count(5)) { ... }     // Kiểm tra tồn tại
+
+// ═══ MULTISET ═══ (QUAN TRỌNG: xóa đúng cách)
+multiset&lt;int&gt; ms;
+ms.insert(5);  ms.insert(3);  ms.insert(5);  // {3, 5, 5}
+ms.erase(ms.find(5));   // ✅ Xóa MỘT phần tử 5 → {3, 5}
+ms.erase(5);             // ❌ Xóa TẤT CẢ phần tử 5!
+
+// Tìm phần tử nhỏ nhất >= x
+auto it = ms.lower_bound(x);
+if (it != ms.end()) { int val = *it; ms.erase(it); }
+
+// ═══ MAP ═══
+map&lt;string, int&gt; diem;
+diem["An"] = 9;
+if (diem.count("An")) out &lt;&lt; diem["An"];
+for (auto &amp;[k, v] : diem) out &lt;&lt; k &lt;&lt; ": " &lt;&lt; v &lt;&lt; '\n';
+</pre>
+
+<!-- C2 -->
+<h3>C2. Priority Queue (Heap) — Hàng đợi ưu tiên</h3>
+<p><em>💡 Hình dung: Giống như một cái thùng bỏ bóng vào, nhưng mỗi lần thò tay vào luôn lấy ra được quả BÓNG TO NHẤT (hoặc nhỏ nhất tuỳ loại). Không cần tìm, cứ lấy ra là được cái tốt nhất. Rất hữu ích khi cần liên tục "lấy cái lớn nhất / nhỏ nhất".</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "lấy max/min liên tục", Dijkstra, trộn k dãy, xử lý theo ưu tiên</div>
+<pre>
+// Max heap (mặc định)
+priority_queue&lt;int&gt; maxPQ;
+
+// Min heap
+priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minPQ;
+
+maxPQ.push(5);  maxPQ.push(3);  maxPQ.push(8);
+out &lt;&lt; maxPQ.top();  // 8
+maxPQ.pop();          // Xóa 8
+</pre>
+
+<!-- C3 -->
+<h3>C3. DSU (Disjoint Set Union) — Gộp nhóm</h3>
+<p><em>💡 Hình dung: Lớp có 40 bạn, ban đầu ai cũng là 1 nhóm riêng (40 nhóm). Khi 2 bạn kết bạn, nhóm của 2 bạn GỘP LẠI thành 1. Sau nhiều lần gộp, muốn hỏi "A và B có cùng nhóm không?" → chỉ cần xem 2 người có chung "Nhóm trưởng" không. Gộp nhóm + hỏi nhóm đều cực nhanh.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "cùng nhóm không?", "bao nhiêu nhóm/thành phần liên thông?", "gộp 2 tập hợp", Kruskal</div>
+<pre>
+// ═══ DSU — Phong cách quen thuộc ═══
+
+const int MAXN = 100005;
+int cha[MAXN];                // cha[i] = cha của đỉnh i
+int hang[MAXN];               // hang[i] = chiều cao cây gốc i
+
+void khoiTao(int n) {
+    for (int i = 1; i &lt;= n; i++) {
+        cha[i] = i;            // Ban đầu mỗi đỉnh là gốc của chính nó
+        hang[i] = 0;
+    }
+}
+
+int tim_goc(int v) {
+    if (v == cha[v]) return v;
+    return cha[v] = tim_goc(cha[v]);  // Nén đường đi — RẤT QUAN TRỌNG!
+}
+
+void hop_nhat(int a, int b) {
+    a = tim_goc(a);
+    b = tim_goc(b);
+    if (a == b) return;               // Đã cùng nhóm rồi
+    // Union by rank: gốc nhỏ treo vào gốc lớn
+    if (hang[a] &lt; hang[b]) swap(a, b);
+    cha[b] = a;
+    if (hang[a] == hang[b]) hang[a]++;
+}
+
+bool cungNhom(int u, int v) {
+    return tim_goc(u) == tim_goc(v);
+}
+</pre>
+<pre>
+// ═══ Ứng dụng: Đếm số nhóm / Tổng diện tích nhóm lớn nhất ═══
+
+// Đếm số nhóm (thành phần liên thông)
+int soNhom = 0;
+for (int i = 1; i &lt;= n; i++)
+    if (cha[i] == i) soNhom++;
+
+// Tổng giá trị nhóm lớn nhất (ví dụ: bài LATGACH)
+long long tongDienTich[MAXN];
+// Khi hop_nhat: tongDienTich[a] += tongDienTich[b];
+long long maxTong = 0;
+for (int i = 1; i &lt;= n; i++)
+    if (cha[i] == i)
+        maxTong = max(maxTong, tongDienTich[i]);
+</pre>
+
+<!-- C4 -->
+<h3>C4. BIT (Fenwick Tree) — Cây chỉ số nhị phân</h3>
+<p><em>💡 Hình dung: Prefix Sum giống bảng tính Excel — tính xong rồi không sửa được. BIT giống một bảng tính thông minh hơn: em vừa hỏi "tổng từ cột 3 đến cột 7", vừa có thể sửa số ở cột 5 và bảng tự cập nhật. Cả hỏi và sửa đều rất nhanh.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]" <strong>+ cập nhật</strong> (Prefix Sum thường không cập nhật được), "đếm nghịch thế"</div>
+<pre>
+long long bit[100005];
+int n;
+
+void capNhat(int i, long long delta) {
+    for (; i &lt;= n; i += i &amp; (-i))
+        bit[i] += delta;
+}
+
+long long tong(int i) {
+    long long s = 0;
+    for (; i > 0; i -= i &amp; (-i))
+        s += bit[i];
+    return s;
+}
+
+long long tongDoan(int l, int r) {
+    return tong(r) - tong(l - 1);
+}
+</pre>
+
+<!-- C5 -->
+<h3>C5. Deque — Hàng đợi hai đầu</h3>
+<p><em>💡 Hình dung: Ống nhựa 2 đầu hở — có thể nhét/rút bóng từ CẢ HAI ĐẦU. Dùng kết hợp với "Cửa sổ trượt" để luôn biết giá trị lớn nhất/nhỏ nhất trong khung nhìn hiện tại mà không cần đếm lại.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "min/max trong cửa sổ trượt", "thêm/xóa ở cả hai đầu"</div>
+<pre>
+deque&lt;int&gt; dq;
+dq.push_back(1);   dq.push_front(2);  dq.push_back(3);  // {2, 1, 3}
+dq.front();   // 2
+dq.back();    // 3
+dq.pop_front();   dq.pop_back();   // Tất cả O(1)
+</pre>
+
+<!-- ════════════════════════════════════ -->
+<!-- NHÓM D: ĐỒ THỊ -->
+<!-- ════════════════════════════════════ -->
+<h2 class="green"><span class="nhom-label nhom-D">NHÓM D</span> ĐỒ THỊ (Graph)</h2>
+
+<!-- D0 -->
+<h3>D0. Biểu diễn đồ thị — Danh sách kề</h3>
+<p><em>💡 Hình dung: Bản đồ thành phố — các giao lộ là "đỉnh", các con đường nối giữa chúng là "cạnh". Để lưu bản đồ, với mỗi giao lộ ta ghi danh sách các giao lộ nối trực tiếp với nó. Ví dụ: giao lộ 1 nối với giao lộ 2 và 3 → ke[1] = {2, 3}.</em></p>
+<div class="tip"><strong>CÁCH LƯU ĐỒ THỊ PHỔ BIẾN NHẤT:</strong> Dùng <code>vector&lt;vector&lt;int&gt;&gt; ke</code></div>
+<pre>
+int n, m;                           // n đỉnh, m cạnh
+vector&lt;vector&lt;int&gt;&gt; ke;             // Danh sách kề
+
+// Đọc đồ thị vô hướng
+ke.assign(n + 1, vector&lt;int&gt;());    // Khởi tạo n+1 vector rỗng
+for (int i = 0; i &lt; m; i++) {
+    int u, v;
+    in >> u >> v;
+    ke[u].push_back(v);
+    ke[v].push_back(u);             // Bỏ dòng này nếu đồ thị CÓ HƯỚNG
+}
+
+// Đồ thị CÓ TRỌNG SỐ → dùng pair
+vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke;  // ke[u] = {{v, w}, ...}
+ke[u].push_back({v, w});
+ke[v].push_back({u, w});
+</pre>
+
+<div class="tip"><strong>CÁCH 2: MA TRẬN KỀ</strong> — Dùng cho Floyd, Bellman-Ford, Prim, Ford-Fulkerson (khi N nhỏ ≤ 500)</div>
+<pre>
+// ═══ Biểu diễn bằng ma trận kề ═══
+vector&lt;vector&lt;int&gt;&gt; a;              // a[u][v] = trọng số cạnh u→v
+
+// Khởi tạo: chưa có cạnh → giá trị lớn (vô cực)
+a.assign(n + 1, vector&lt;int&gt;(n + 1, INT_MAX));
+for (int i = 1; i &lt;= n; i++) a[i][i] = 0;
+
+// Đọc đồ thị vô hướng có trọng số
+for (int i = 0; i &lt; m; i++) {
+    int u, v, w;
+    in >> u >> v >> w;
+    a[u][v] = a[v][u] = w;          // Bỏ a[v][u] nếu có hướng
+}
+
+// Đồ thị KHÔNG trọng số → dùng bool
+vector&lt;vector&lt;bool&gt;&gt; a;
+a.assign(n + 1, vector&lt;bool&gt;(n + 1, false));
+// Đọc cạnh: a[u][v] = a[v][u] = true;
+</pre>
+
+<div class="warn"><strong>KHI NÀO DÙNG CÁI NÀO?</strong>
+<table>
+<tr><th></th><th>Danh sách kề (<code>vector&lt;vector&lt;int&gt;&gt; ke</code>)</th><th>Ma trận kề (<code>vector&lt;vector&lt;int&gt;&gt; a</code>)</th></tr>
+<tr><td><strong>Ưu điểm</strong></td><td>Tiết kiệm bộ nhớ, duyệt cạnh nhanh</td><td>Kiểm tra cạnh (u,v) tồn tại = O(1)</td></tr>
+<tr><td><strong>Dùng cho</strong></td><td>BFS, DFS, Dijkstra (N lớn đến 10⁵)</td><td>Floyd, Bellman-Ford, Prim, Ford-Fulkerson (N ≤ 500)</td></tr>
+<tr><td><strong>Bộ nhớ</strong></td><td>O(N + M) — tốt</td><td>O(N²) — chỉ khi N nhỏ</td></tr>
+</table>
+<strong>MẸO:</strong> Nếu đề cho N ≤ 500 → dùng ma trận kề cho đơn giản. N lớn hơn → bắt buộc dùng danh sách kề.
+</div>
+
+<!-- D1 -->
+<h3>D1. BFS — Duyệt theo chiều rộng</h3>
+<p><em>💡 Hình dung: Ném viên đá xuống hồ. Sóng lan ra vòng 1 (các đỉnh cách 1 bước), rồi vòng 2 (cách 2 bước), vòng 3... Vì sóng lan đều nên đỉnh nào sóng đến trước thì đó là đường ngắn nhất. Dùng "hàng đợi" (xếp hàng ai đến trước xử lý trước) để đảm bảo duyệt đúng thứ tự.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" (đồ thị <strong>không trọng số</strong>), "duyệt theo tầng", "lưới/mê cung", "truy vết đường đi"</div>
+<pre>
+// ═══ BFS tìm đường đi từ S đến F ═══
+// Phong cách: Free (đánh dấu) + Trace (truy vết)
+
+vector&lt;vector&lt;int&gt;&gt; ke;
+vector&lt;bool&gt; Free;
+vector&lt;int&gt; Trace;
+int n;
+
+void BFS(int S) {
+    Free.assign(n + 1, true);
+    Trace.assign(n + 1, -1);
+    
+    queue&lt;int&gt; q;
+    q.push(S);
+    Free[S] = false;
+    Trace[S] = S;
+    
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+        
+        for (int v : ke[u]) {
+            if (Free[v]) {
+                Free[v] = false;
+                Trace[v] = u;
+                q.push(v);
+            }
+        }
+    }
+}
+
+// ═══ Truy vết đường đi từ F về S ═══
+void TruyVet(int S, int F) {
+    if (Trace[F] == -1) {
+        out &lt;&lt; -1;  // Không có đường đi
+        return;
+    }
+    vector&lt;int&gt; duongDi;
+    int cur = F;
+    while (cur != S) {
+        duongDi.push_back(cur);
+        cur = Trace[cur];
+    }
+    duongDi.push_back(S);
+    reverse(duongDi.begin(), duongDi.end());
+    
+    for (int x : duongDi) out &lt;&lt; x &lt;&lt; " ";
+}
+</pre>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY BFS:</strong> Tìm đường đi ngắn nhất từ đỉnh 1 đến đỉnh 5
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+Đồ thị: 1--2, 1--3, 2--4, 3--4, 4--5
+
+    1
+   / \
+  2   3      ke[1]={2,3}  ke[2]={1,4}  ke[3]={1,4}
+   \ /       ke[4]={2,3,5} ke[5]={4}
+    4
+    |
+    5
+
+Bước  Queue          Xử lý    Đánh dấu (Free=false)   Trace
+  0   [1]            -        {1}                     Trace[1]=1
+  1   [2, 3]         lấy 1    {1, 2, 3}               Trace[2]=1, Trace[3]=1
+  2   [3, 4]         lấy 2    {1, 2, 3, 4}            Trace[4]=2
+  3   [4]            lấy 3    (4 đã đánh dấu, bỏ qua)
+  4   [5]            lấy 4    {1, 2, 3, 4, 5}         Trace[5]=4
+  5   []             lấy 5    Xong!
+
+Truy vết: 5 ← Trace[5]=4 ← Trace[4]=2 ← Trace[2]=1
+Đường đi: <strong>1 → 2 → 4 → 5</strong> (3 bước = ngắn nhất)
+</pre>
+</div>
+
+<pre>
+// ═══ BFS đếm thành phần liên thông ═══
+vector&lt;bool&gt; Free(n + 1, true);
+int soTPLT = 0;
+
+for (int i = 1; i &lt;= n; i++) {
+    if (Free[i]) {
+        soTPLT++;
+        queue&lt;int&gt; q;
+        q.push(i);
+        Free[i] = false;
+        while (!q.empty()) {
+            int u = q.front(); q.pop();
+            for (int v : ke[u]) {
+                if (Free[v]) {
+                    Free[v] = false;
+                    q.push(v);
+                }
+            }
+        }
+    }
+}
+</pre>
+
+<!-- D1b -->
+<h3>D1b. BFS trên lưới 2D (Mê cung)</h3>
+<p><em>💡 Hình dung: Bản đồ ô vuông, có tường ('#') và đường đi ('.'). Em đứng ở ô xuất phát, mỗi bước đi sang ô kề bên (lên/xuống/trái/phải). Hỏi: cần ít nhất bao nhiêu bước để đến ô đích? → Dùng BFS, sóng lan từ ô xuất phát ra 4 hướng.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "lưới ô vuông", "mê cung", "số bước ít nhất từ ô (r1,c1) đến (r2,c2)"</div>
+<pre>
+// ═══ BFS trên lưới m×n ═══
+int m, n;                           // số hàng, số cột
+char a[105][105];                   // '.' = đi được, '#' = tường
+int dist[105][105];                 // dist[i][j] = số bước đến ô (i,j)
+
+// 4 hướng: lên, xuống, trái, phải
+int dx[] = {-1, 1, 0, 0};
+int dy[] = {0, 0, -1, 1};
+
+void BFS_Luoi(int sr, int sc) {     // Xuất phát từ ô (sr, sc)
+    memset(dist, -1, sizeof(dist)); // -1 = chưa thăm
+    dist[sr][sc] = 0;
+    queue&lt;pair&lt;int,int&gt;&gt; q;
+    q.push({sr, sc});
+    
+    while (!q.empty()) {
+        auto [x, y] = q.front();
+        q.pop();
+        
+        for (int k = 0; k &lt; 4; k++) {    // Thử 4 hướng
+            int nx = x + dx[k];
+            int ny = y + dy[k];
+            // Kiểm tra: trong lưới + đi được + chưa thăm
+            if (nx >= 0 &amp;&amp; nx &lt; m &amp;&amp; ny >= 0 &amp;&amp; ny &lt; n
+                &amp;&amp; a[nx][ny] != '#' &amp;&amp; dist[nx][ny] == -1) {
+                dist[nx][ny] = dist[x][y] + 1;
+                q.push({nx, ny});
+            }
+        }
+    }
+}
+
+// Kết quả: dist[er][ec] = số bước ngắn nhất đến ô (đích)
+//         dist[er][ec] == -1 → không có đường đi
+</pre>
+
+<!-- D2 -->
+<h3>D2. DFS — Duyệt theo chiều sâu</h3>
+<p><em>💡 Hình dung: Khám phá mê cung bằng cách luôn rẽ vào ngõ đầu tiên gặp được, đi sâu cho đến khi đường cùng thì quay lại, thử ngõ tiếp theo. Ví dụ dùng: đếm xem bản đồ có bao nhiêu "đảo" riêng biệt (nhóm đỉnh nối với nhau). Mỗi lần bắt đầu DFS từ 1 đỉnh chưa thăm = tìm được 1 đảo mới.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "thành phần liên thông", "kiểm tra chu trình", "tô màu đồ thị"</div>
+<div class="tip"><strong>LƯU Ý:</strong> Dùng stack thay đệ quy để tránh tràn bộ nhớ khi N lớn (N > 10⁴)</div>
+<pre>
+// ═══ DFS dùng STACK (an toàn, không tràn) ═══
+
+vector&lt;vector&lt;int&gt;&gt; ke;
+vector&lt;bool&gt; Free;
+vector&lt;int&gt; Trace;
+int n;
+
+void DFS(int S) {
+    Free.assign(n + 1, true);
+    Trace.assign(n + 1, -1);
+    
+    stack&lt;int&gt; stk;
+    stk.push(S);
+    Free[S] = false;
+    
+    while (!stk.empty()) {
+        int u = stk.top();
+        stk.pop();
+        
+        for (int v : ke[u]) {
+            if (Free[v]) {
+                Free[v] = false;
+                Trace[v] = u;
+                stk.push(v);
+            }
+        }
+    }
+}
+</pre>
+<pre>
+// ═══ DFS đệ quy (code ngắn, chỉ dùng khi N nhỏ ≤ 10⁴) ═══
+vector&lt;bool&gt; Free;
+
+void DFS(int u) {
+    Free[u] = false;
+    for (int v : ke[u])
+        if (Free[v])
+            DFS(v);
+}
+
+// Đếm thành phần liên thông
+Free.assign(n + 1, true);
+int soTPLT = 0;
+for (int i = 1; i &lt;= n; i++)
+    if (Free[i]) { DFS(i); soTPLT++; }
+</pre>
+
+<!-- D2b -->
+<h3>D2b. Kiểm tra đồ thị liên thông</h3>
+<p><em>💡 Hình dung: Mạng internet — tất cả các máy tính đều nối được với nhau không? Nếu có nhóm máy bị cô lập → mạng "không liên thông". Cách kiểm tra: chạy BFS/DFS từ đỉnh 1. Nếu thăm được TẤT CẢ đỉnh → liên thông (YES). Còn đỉnh nào chưa thăm → không liên thông (NO).</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "kiểm tra liên thông", "tất cả các điểm có nối được với nhau không"</div>
+<pre>
+// ═══ Kiểm tra liên thông bằng DFS ═══
+
+vector&lt;vector&lt;bool&gt;&gt; a;
+vector&lt;bool&gt; Free;
+int n, m;
+
+void DFS(int start) {
+    stack&lt;int&gt; st;
+    st.push(start);
+    Free[start] = false;
+    while (!st.empty()) {
+        int u = st.top(); st.pop();
+        for (int v = 1; v &lt;= n; v++)
+            if (Free[v] &amp;&amp; a[u][v]) {
+                Free[v] = false;
+                st.push(v);
+            }
+    }
+}
+
+void CheckLT() {
+    DFS(1);   // Duyệt từ đỉnh 1
+    bool lienThong = true;
+    for (int i = 1; i &lt;= n; i++)
+        if (Free[i]) { lienThong = false; break; }
+    out &lt;&lt; (lienThong ? "YES" : "NO");
+}
+
+int main() {
+    in >> n >> m;
+    a.assign(n + 1, vector&lt;bool&gt;(n + 1, false));
+    Free.assign(n + 1, true);
+    while (m--) {
+        int u, v;
+        in >> u >> v;
+        a[u][v] = a[v][u] = true;
+    }
+    CheckLT();
+    return 0;
+}
+</pre>
+
+<!-- D3 -->
+<h3>D3. Dijkstra — Đường đi ngắn nhất (có trọng số)</h3>
+<p><em>💡 Hình dung: Bản đồ thành phố với các con đường dài ngắn khác nhau (có "trọng số" = chiều dài). Từ giao lộ A, muốn tìm đường ngắn nhất đến mọi giao lộ khác. Cách làm: luôn chọn giao lộ GẦN NHẤT chưa thăm → cập nhật khoảng cách các giao lộ liền kề → lặp lại cho đến hết. Dùng "thùng lấy quả nhỏ nhất" (Priority Queue) để chọn nhanh.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" trên đồ thị <strong>có trọng số dương</strong></div>
+<pre>
+// ═══ Dijkstra — O(E log V) ═══
+
+vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke;   // ke[u] = {{v, w}, ...}
+vector&lt;long long&gt; dist;
+vector&lt;int&gt; Trace;
+vector&lt;bool&gt; Free;
+int n;
+
+void Dijkstra(int S) {
+    dist.assign(n + 1, 1e18);
+    Trace.assign(n + 1, -1);
+    Free.assign(n + 1, true);
+    
+    // Min heap: {khoảng cách, đỉnh}
+    priority_queue&lt;pair&lt;long long,int&gt;, 
+                   vector&lt;pair&lt;long long,int&gt;&gt;, 
+                   greater&lt;pair&lt;long long,int&gt;&gt;&gt; pq;
+    
+    dist[S] = 0;
+    Trace[S] = S;
+    pq.push({0, S});
+    
+    while (!pq.empty()) {
+        auto [d, u] = pq.top();
+        pq.pop();
+        
+        if (!Free[u]) continue;   // Đã xét rồi → bỏ qua
+        Free[u] = false;
+        
+        for (auto [v, w] : ke[u]) {
+            if (Free[v] &amp;&amp; dist[u] + w &lt; dist[v]) {
+                dist[v] = dist[u] + w;
+                Trace[v] = u;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+}
+
+// Truy vết đường đi ngắn nhất từ S đến F
+void TruyVet(int S, int F) {
+    if (dist[F] >= 1e18) { out &lt;&lt; -1; return; }
+    vector&lt;int&gt; duongDi;
+    int cur = F;
+    while (cur != S) {
+        duongDi.push_back(cur);
+        cur = Trace[cur];
+    }
+    duongDi.push_back(S);
+    reverse(duongDi.begin(), duongDi.end());
+    
+    out &lt;&lt; "Khoang cach: " &lt;&lt; dist[F] &lt;&lt; '\n';
+    for (int x : duongDi) out &lt;&lt; x &lt;&lt; " ";
+}
+</pre>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY DIJKSTRA:</strong> Tìm đường ngắn nhất từ đỉnh 1 đến đỉnh 5
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+Đồ thị có hướng, 5 đỉnh:
+1→2 (w=2), 1→3 (w=5), 2→3 (w=1), 2→4 (w=7), 3→4 (w=3), 4→5 (w=1)
+
+    1 ─2→ 2 ─7→ 4 ─1→ 5
+    |     |     ↑
+    5     1    3
+    ↓     ↓   /
+    3 ←───┘ /
+     ──3──→4
+
+Khởi tạo: dist = [_, 0, ∞, ∞, ∞, ∞],  Free = [_, T, T, T, T, T]
+
+Bước 1: Lấy đỉnh gần nhất chưa thăm = đỉnh 1 (dist=0)
+  Free[1] = false
+  → Cập nhật: dist[2] = 0+2 = 2, dist[3] = 0+5 = 5
+  dist = [_, 0, <strong>2</strong>, <strong>5</strong>, ∞, ∞]
+
+Bước 2: Lấy đỉnh gần nhất = đỉnh 2 (dist=2)
+  Free[2] = false
+  → Cập nhật: dist[3] = min(5, 2+1) = <strong>3</strong>, dist[4] = min(∞, 2+7) = 9
+  dist = [_, 0, 2, <strong>3</strong>, <strong>9</strong>, ∞]
+
+Bước 3: Lấy đỉnh gần nhất = đỉnh 3 (dist=3)
+  Free[3] = false
+  → Cập nhật: dist[4] = min(9, 3+3) = <strong>6</strong>
+  dist = [_, 0, 2, 3, <strong>6</strong>, ∞]
+
+Bước 4: Lấy đỉnh gần nhất = đỉnh 4 (dist=6)
+  Free[4] = false
+  → Cập nhật: dist[5] = min(∞, 6+1) = <strong>7</strong>
+  dist = [_, 0, 2, 3, 6, <strong>7</strong>]
+
+Kết quả: dist[5] = <strong>7</strong>
+Truy vết: 5←4←3←2←1 → Đường đi: <strong>1 → 2 → 3 → 4 → 5</strong>
+</pre>
+</div>
+
+<!-- D4 -->
+<h3>D4. Floyd-Warshall — Đường đi ngắn nhất giữa MỌI cặp đỉnh</h3>
+<p><em>💡 Hình dung: Dijkstra tìm đường ngắn nhất từ 1 giao lộ. Floyd tìm đường ngắn nhất giữa TẤT CẢ các cặp giao lộ cùng lúc. Code cực ngắn — chỉ 3 vòng for lồng nhau. Nhược điểm: chỉ dùng khi số giao lộ nhỏ (≤ 400) vì chạy chậm hơn Dijkstra nhiều.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất giữa mọi cặp đỉnh", N ≤ 400, "kiểm tra 2 đỉnh có đường đi không"</div>
+<pre>
+// ═══ Floyd-Warshall — O(N³) ═══
+long long d[405][405];   // d[i][j] = khoảng cách ngắn nhất từ i đến j
+int n;
+
+void Floyd() {
+    // Khởi tạo: d[i][j] = trọng số cạnh (i,j)
+    // Nếu không có cạnh: d[i][j] = 1e18
+    // d[i][i] = 0
+    
+    for (int k = 1; k &lt;= n; k++)          // Đỉnh trung gian
+        for (int i = 1; i &lt;= n; i++)      // Đỉnh xuất phát
+            for (int j = 1; j &lt;= n; j++)  // Đỉnh đích
+                if (d[i][k] + d[k][j] &lt; d[i][j])
+                    d[i][j] = d[i][k] + d[k][j];
+}
+
+// Sau Floyd: d[u][v] = khoảng cách ngắn nhất u → v
+// Nếu d[u][v] >= 1e18 → không có đường đi
+</pre>
+
+<!-- D5 -->
+<h3>D5. Bellman-Ford — Đường đi ngắn nhất (có trọng số ÂM)</h3>
+<p><em>💡 Hình dung: Giống Dijkstra — tìm đường ngắn nhất từ 1 điểm đến mọi điểm khác. Nhưng Dijkstra "phá sản" khi gặp đường có chi phí âm (đường giảm giá). Bellman-Ford chậm hơn nhưng xử lý được cả trọng số âm. Cách làm: lặp đi lặp lại (n-1) vòng, mỗi vòng duyệt TẤT CẢ các cạnh và cập nhật khoảng cách nếu tìm được đường ngắn hơn.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" + đồ thị có <strong>trọng số ÂM</strong>, hoặc cần phát hiện <strong>chu trình âm</strong></div>
+<div class="tip"><strong>SO SÁNH:</strong>
+Dijkstra: O(E log V), nhanh, nhưng CHỈ dùng khi trọng số ≥ 0<br>
+Bellman-Ford: O(V × E), chậm hơn, nhưng chấp nhận trọng số âm
+</div>
+<pre>
+// ═══ Bellman-Ford — O(V × E) ═══
+// Biểu diễn bằng MA TRẬN KỀ: a[u][v] = trọng số
+
+vector&lt;vector&lt;int&gt;&gt; a;
+vector&lt;int&gt; d;                       // d[i] = khoảng cách ngắn nhất S → i
+vector&lt;int&gt; Trace;
+int n, m, S, F;
+
+void BellmanFord() {
+    // Lặp n-1 vòng
+    for (int lap = 1; lap &lt;= n - 1; lap++) {
+        bool coCapNhat = false;
+        // Duyệt tất cả các cạnh (u, v)
+        for (int u = 1; u &lt;= n; u++) {
+            for (int v = 1; v &lt;= n; v++) {
+                if (a[u][v] != INT_MAX &amp;&amp; d[u] != INT_MAX) {
+                    if (d[u] + a[u][v] &lt; d[v]) {
+                        d[v] = d[u] + a[u][v];
+                        Trace[v] = u;
+                        coCapNhat = true;
+                    }
+                }
+            }
+        }
+        if (!coCapNhat) break;       // Dừng sớm nếu không cập nhật gì
+    }
+}
+
+void Result() {
+    if (d[F] == INT_MAX) {
+        out &lt;&lt; "Path from " &lt;&lt; S &lt;&lt; " to " &lt;&lt; F &lt;&lt; " not found";
+    } else {
+        out &lt;&lt; "Distance: " &lt;&lt; d[F] &lt;&lt; '\n';
+        // Truy vết đường đi
+        vector&lt;int&gt; duongDi;
+        int cur = F;
+        while (cur != S) {
+            duongDi.push_back(cur);
+            cur = Trace[cur];
+        }
+        duongDi.push_back(S);
+        reverse(duongDi.begin(), duongDi.end());
+        for (int x : duongDi) out &lt;&lt; x &lt;&lt; " ";
+    }
+}
+
+int main() {
+    in >> n >> m >> S >> F;
+    a.assign(n + 1, vector&lt;int&gt;(n + 1, INT_MAX));
+    d.assign(n + 1, INT_MAX);
+    Trace.assign(n + 1, S);
+    for (int i = 1; i &lt;= n; i++) a[i][i] = 0;
+    while (m--) {
+        int u, v, w;
+        in >> u >> v >> w;
+        a[u][v] = w;                 // Đồ thị CÓ HƯỚNG
+    }
+    d[S] = 0;
+    BellmanFord();
+    Result();
+    return 0;
+}
+</pre>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY BELLMAN-FORD:</strong> Tìm đường ngắn nhất từ đỉnh 1 đến đỉnh 4
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+Đồ thị có hướng, 4 đỉnh, 5 cạnh:
+1→2 (w=2), 1→3 (w=4), 2→3 (w=-3), 2→4 (w=3), 3→4 (w=2)
+
+Khởi tạo: d = [_, 0, ∞, ∞, ∞]   (S=1)
+
+Vòng 1: Duyệt tất cả cạnh:
+  Cạnh 1→2: d[2] = min(∞, 0+2) = 2     Trace[2]=1
+  Cạnh 1→3: d[3] = min(∞, 0+4) = 4     Trace[3]=1
+  Cạnh 2→3: d[3] = min(4, 2+(-3)) = -1  Trace[3]=2  ← trọng số ÂM!
+  Cạnh 2→4: d[4] = min(∞, 2+3) = 5     Trace[4]=2
+  Cạnh 3→4: d[4] = min(5, -1+2) = 1    Trace[4]=3
+  → d = [_, 0, 2, -1, 1]
+
+Vòng 2: Không có cập nhật → Dừng sớm!
+
+Kết quả: d[4] = 1
+Truy vết: 4←Trace[4]=3←Trace[3]=2←Trace[2]=1
+Đường đi: <strong>1 → 2 → 3 → 4</strong> (chi phí = 2 + (-3) + 2 = 1)
+</pre>
+</div>
+
+<!-- D6 -->
+<h3>D6. Prim — Cây khung nhỏ nhất (Minimum Spanning Tree)</h3>
+<p><em>💡 Hình dung: Có n ngôi nhà và nhiều con đường nối giữa chúng, mỗi đường có chi phí xây dựng khác nhau. Cần nối TẤT CẢ các nhà lại bằng đường, sao cho tổng chi phí THẤP NHẤT và không có đường thừa (không tạo vòng). Cách làm: bắt đầu từ 1 nhà, mỗi bước chọn con đường RẺ NHẤT nối nhà đã kết nối → nhà chưa kết nối. Lặp lại cho đến khi tất cả nhà đều được nối.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "nối tất cả các điểm với chi phí nhỏ nhất", "cây khung nhỏ nhất", "mạng lưới tối ưu"</div>
+<pre>
+// ═══ Prim — O(V²) với ma trận kề ═══
+
+vector&lt;vector&lt;int&gt;&gt; a;              // Ma trận kề: a[u][v] = trọng số
+vector&lt;bool&gt; Free;
+int n, m, total = 0;
+vector&lt;pair&lt;int,int&gt;&gt; result;        // Lưu các cạnh trong cây khung
+
+void Prim() {
+    Free[1] = false;                 // Bắt đầu từ đỉnh 1
+    int dem = 0;
+    while (dem &lt; n - 1) {
+        int u = -1, v = -1, minC = INT_MAX;
+        // Tìm cạnh nhỏ nhất nối tập đã chọn ↔ tập chưa chọn
+        for (int i = 1; i &lt;= n; i++) {
+            if (!Free[i]) {          // Đỉnh đã thuộc cây khung
+                for (int j = 1; j &lt;= n; j++) {
+                    if (Free[j] &amp;&amp; a[i][j] &lt; minC) {
+                        u = i; v = j;
+                        minC = a[i][j];
+                    }
+                }
+            }
+        }
+        if (u == -1 || v == -1) return;  // Đồ thị không liên thông
+        total += a[u][v];
+        result.push_back({u, v});
+        Free[v] = false;
+        dem++;
+    }
+}
+
+int main() {
+    in >> n >> m;
+    a.assign(n + 1, vector&lt;int&gt;(n + 1, INT_MAX));
+    Free.assign(n + 1, true);
+    while (m--) {
+        int u, v, w;
+        in >> u >> v >> w;
+        a[u][v] = a[v][u] = w;      // Đồ thị VÔ HƯỚNG
+    }
+    Prim();
+    // In kết quả
+    if ((int)result.size() != n - 1) {
+        out &lt;&lt; "Do thi khong lien thong";
+    } else {
+        for (auto [u, v] : result)
+            out &lt;&lt; "(" &lt;&lt; u &lt;&lt; ", " &lt;&lt; v &lt;&lt; ") = " &lt;&lt; a[u][v] &lt;&lt; '\n';
+        out &lt;&lt; "Tong trong so: " &lt;&lt; total;
+    }
+    return 0;
+}
+</pre>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY PRIM:</strong> Tìm cây khung nhỏ nhất
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+Đồ thị vô hướng: 4 đỉnh, 5 cạnh
+1-2 (w=1), 1-3 (w=4), 2-3 (w=2), 2-4 (w=6), 3-4 (w=3)
+
+    1
+   / \
+ 1/   \4
+ /     \
+2---2---3       Bắt đầu từ đỉnh 1, Free = {_, F, T, T, T}
+ \     /
+ 6\   /3
+   \ /
+    4
+
+Bước 1: Cạnh rẻ nhất từ {1} → ngoài: 1-2 (w=1) ✓
+  → Chọn cạnh (1,2), total = 1, Free = {_, F, F, T, T}
+
+Bước 2: Cạnh rẻ nhất từ {1,2} → ngoài: 2-3 (w=2) ✓
+  → Chọn cạnh (2,3), total = 3, Free = {_, F, F, F, T}
+
+Bước 3: Cạnh rẻ nhất từ {1,2,3} → ngoài: 3-4 (w=3) ✓
+  → Chọn cạnh (3,4), total = 6, Free = {_, F, F, F, F}
+
+Kết quả: Cây khung có 3 cạnh: (1,2)=1, (2,3)=2, (3,4)=3
+<strong>Tổng trọng số: 6</strong> (nhỏ nhất có thể)
+</pre>
+</div>
+
+<!-- D7 -->
+<h3>D7. Ford-Fulkerson — Luồng cực đại (Maximum Flow)</h3>
+<p><em>💡 Hình dung: Mạng ống nước — nước chảy từ bể chứa (nguồn S) đến nhà máy (đích F). Mỗi ống có sức chứa tối đa (capacity). Hỏi: tổng lượng nước lớn nhất có thể chảy từ S đến F? Cách làm: liên tục tìm đường còn chỗ trống từ S→F (bằng BFS), rồi đẩy nước qua đường đó. Lặp lại đến khi không còn đường nào nữa.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "luồng cực đại", "lưu lượng tối đa", "cắt nhỏ nhất" (max-flow min-cut)</div>
+<pre>
+// ═══ Ford-Fulkerson (dùng BFS — Edmonds-Karp) — O(V × E²) ═══
+
+vector&lt;vector&lt;int&gt;&gt; Cap, Flow;      // Cap = sức chứa, Flow = luồng hiện tại
+vector&lt;int&gt; Trace;
+int n, m, S, F;
+
+bool BFS_TimDuong() {
+    Trace.assign(n + 1, -1);
+    queue&lt;int&gt; q;
+    q.push(S);
+    Trace[S] = S;
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        for (int v = 1; v &lt;= n; v++) {
+            if (Trace[v] == -1 &amp;&amp; Cap[u][v] > Flow[u][v]) {
+                Trace[v] = u;
+                if (v == F) return true;   // Tìm được đường tăng
+                q.push(v);
+            }
+        }
+    }
+    return false;                          // Không còn đường tăng
+}
+
+void MaxFlow() {
+    while (BFS_TimDuong()) {
+        // Tìm lượng nước nhỏ nhất trên đường tăng
+        int minCap = INT_MAX;
+        for (int v = F; v != S; v = Trace[v]) {
+            int u = Trace[v];
+            minCap = min(minCap, Cap[u][v] - Flow[u][v]);
+        }
+        // Cập nhật luồng dọc đường tăng
+        for (int v = F; v != S; v = Trace[v]) {
+            int u = Trace[v];
+            Flow[u][v] += minCap;
+            Flow[v][u] -= minCap;          // Luồng ngược
+        }
+    }
+}
+
+int main() {
+    in >> n >> m >> S >> F;
+    Cap.assign(n + 1, vector&lt;int&gt;(n + 1, 0));
+    Flow.assign(n + 1, vector&lt;int&gt;(n + 1, 0));
+    while (m--) {
+        int u, v, w;
+        in >> u >> v >> w;
+        Cap[u][v] += w;                    // Hỗ trợ cạnh song song
+    }
+    MaxFlow();
+    // Tính tổng luồng ra từ nguồn S
+    int res = 0;
+    for (int i = 1; i &lt;= n; i++) res += Flow[S][i];
+    out &lt;&lt; "Max flow: " &lt;&lt; res;
+    return 0;
+}
+</pre>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY FORD-FULKERSON:</strong>
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+Mạng: S=1, F=4, 4 đỉnh
+Cap: 1→2 (3), 1→3 (2), 2→4 (2), 3→4 (3), 2→3 (1)
+
+    1 ──3──→ 2
+    |        ↗|
+    2    1/   2
+    |  /      |
+    ↓↗        ↓
+    3 ──3──→ 4
+
+Vòng 1: BFS tìm đường 1→2→4, min capacity = min(3,2) = 2
+  → Đẩy 2 đơn vị: Flow[1][2]=2, Flow[2][4]=2
+
+Vòng 2: BFS tìm đường 1→3→4, min capacity = min(2,3) = 2
+  → Đẩy 2 đơn vị: Flow[1][3]=2, Flow[3][4]=2
+
+Vòng 3: BFS tìm đường 1→2→3→4, min capacity = min(3-2, 1, 3-2) = 1
+  → Đẩy 1 đơn vị: Flow[1][2]=3, Flow[2][3]=1, Flow[3][4]=3
+
+Vòng 4: BFS không tìm được đường → Dừng!
+
+<strong>Luồng cực đại = Flow[1][2] + Flow[1][3] = 3 + 2 = 5</strong>
+</pre>
+</div>
+
+<div class="tip"><strong>📊 BẢNG SO SÁNH THUẬT TOÁN ĐỒ THỊ</strong>
+<table>
+<tr><th>Thuật toán</th><th>Bài toán</th><th>Độ phức tạp</th><th>Khi nào dùng</th></tr>
+<tr><td><strong>BFS</strong></td><td>Đường ngắn nhất</td><td>O(V + E)</td><td>Đồ thị <strong>không trọng số</strong></td></tr>
+<tr><td><strong>DFS</strong></td><td>Duyệt / Liên thông</td><td>O(V + E)</td><td>Đếm TPLT, kiểm tra chu trình, tô màu</td></tr>
+<tr><td><strong>Dijkstra</strong></td><td>Đường ngắn nhất (1 nguồn)</td><td>O(E log V)</td><td>Trọng số <strong>≥ 0</strong>, N lớn</td></tr>
+<tr><td><strong>Bellman-Ford</strong></td><td>Đường ngắn nhất (1 nguồn)</td><td>O(V × E)</td><td>Có trọng số <strong>âm</strong></td></tr>
+<tr><td><strong>Floyd</strong></td><td>Đường ngắn nhất (mọi cặp)</td><td>O(V³)</td><td>N ≤ 400, hỏi nhiều cặp</td></tr>
+<tr><td><strong>Prim / Kruskal</strong></td><td>Cây khung nhỏ nhất</td><td>O(V²) / O(E log E)</td><td>Nối tất cả đỉnh, chi phí min</td></tr>
+<tr><td><strong>Topo Sort</strong></td><td>Sắp xếp topo</td><td>O(V + E)</td><td>Đồ thị có hướng không chu trình (DAG)</td></tr>
+<tr><td><strong>Ford-Fulkerson</strong></td><td>Luồng cực đại</td><td>O(V × E²)</td><td>Lưu lượng tối đa qua mạng</td></tr>
+</table>
+</div>
+
+<!-- D8 -->
+<h3>D8. Kruskal — Cây khung nhỏ nhất (dùng DSU)</h3>
+<p><em>💡 Hình dung: Giống Prim (nối tất cả nhà với chi phí thấp nhất), nhưng cách làm khác: liệt kê TẤT CẢ các con đường, sắp theo chi phí tăng dần, rồi chọn từng con đường rẻ nhất mà không tạo vòng. Dùng DSU để kiểm tra "2 đầu đường đã nối chưa?".</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> Giống Prim. <strong>Khi nào chọn Kruskal?</strong> Khi đồ thị có nhiều cạnh, ít đỉnh hoặc đã có sẵn DSU.</div>
+<pre>
+// ═══ Kruskal — O(E log E) dùng DSU ═══
+
+struct Edge {
+    int u, v, w;
+    bool operator&lt;(const Edge &amp;o) const { return w &lt; o.w; }
+};
+
+int cha[100005], hang[100005];
+
+int tim_goc(int v) {
+    if (v == cha[v]) return v;
+    return cha[v] = tim_goc(cha[v]);
+}
+
+void hop_nhat(int a, int b) {
+    a = tim_goc(a); b = tim_goc(b);
+    if (a == b) return;
+    if (hang[a] &lt; hang[b]) swap(a, b);
+    cha[b] = a;
+    if (hang[a] == hang[b]) hang[a]++;
+}
+
+int main() {
+    ifstream in("TENBAI.INP");
+    ofstream out("TENBAI.OUT");
+    int n, m;
+    in >> n >> m;
+    
+    vector&lt;Edge&gt; edges(m);
+    for (int i = 0; i &lt; m; i++)
+        in >> edges[i].u >> edges[i].v >> edges[i].w;
+    
+    sort(edges.begin(), edges.end());  // Sắp cạnh tăng theo trọng số
+    
+    for (int i = 1; i &lt;= n; i++) { cha[i] = i; hang[i] = 0; }
+    
+    long long total = 0;
+    int dem = 0;
+    for (auto &amp;[u, v, w] : edges) {
+        if (tim_goc(u) != tim_goc(v)) {   // Không cùng nhóm → không tạo vòng
+            hop_nhat(u, v);
+            total += w;
+            dem++;
+            if (dem == n - 1) break;       // Đủ n-1 cạnh = xong
+        }
+    }
+    
+    if (dem == n - 1)
+        out &lt;&lt; "Tong trong so: " &lt;&lt; total;
+    else
+        out &lt;&lt; "Do thi khong lien thong";
+    return 0;
+}
+</pre>
+
+<div class="tip"><strong>SO SÁNH PRIM vs KRUSKAL:</strong>
+<table>
+<tr><th></th><th>Prim</th><th>Kruskal</th></tr>
+<tr><td><strong>Độ phức tạp</strong></td><td>O(V²) hoặc O(E log V)</td><td>O(E log E)</td></tr>
+<tr><td><strong>CTDL</strong></td><td>Ma trận kề hoặc Heap</td><td>DSU</td></tr>
+<tr><td><strong>Tốt khi</strong></td><td>Đồ thị dày (ít đỉnh, nhiều cạnh)</td><td>Đồ thị thưa (nhiều đỉnh, ít cạnh)</td></tr>
+<tr><td><strong>Code</strong></td><td>Dài hơn</td><td>Ngắn gọn hơn (nếu có sẵn DSU)</td></tr>
+</table>
+</div>
+
+<!-- D9 -->
+<h3>D9. Topo Sort — Sắp xếp topo (Thứ tự thực hiện)</h3>
+<p><em>💡 Hình dung: Trong môn học, muốn học "Giải tích 2" thì phải học "Giải tích 1" trước. Muốn học "CTDL" thì phải học "Lập trình cơ bản" trước. Sắp xếp topo = tìm thứ tự học môn sao cho không vi phạm tiên quyết. Dùng BFS với "đếm bậc vào" (Kahn's algorithm).</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "thứ tự thực hiện công việc", "môn tiên quyết", "đồ thị có hướng không chu trình (DAG)"</div>
+<pre>
+// ═══ Topo Sort (Kahn's Algorithm — BFS) — O(V + E) ═══
+
+int n, m;
+vector&lt;vector&lt;int&gt;&gt; ke;        // Danh sách kề (đồ thị CÓ HƯỚNG)
+vector&lt;int&gt; bacVao;            // bacVao[v] = số cạnh đi VÀO v
+
+void TopoSort() {
+    queue&lt;int&gt; q;
+    // Bước 1: Đẩy các đỉnh có bậc vào = 0 vào queue
+    for (int i = 1; i &lt;= n; i++)
+        if (bacVao[i] == 0) q.push(i);
+    
+    vector&lt;int&gt; ketQua;
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        ketQua.push_back(u);
+        
+        // Bước 2: Xóa đỉnh u → giảm bậc vào các đỉnh kề
+        for (int v : ke[u]) {
+            bacVao[v]--;
+            if (bacVao[v] == 0) q.push(v);
+        }
+    }
+    
+    if ((int)ketQua.size() != n) {
+        out &lt;&lt; "Co chu trinh!";       // Không phải DAG
+    } else {
+        for (int x : ketQua) out &lt;&lt; x &lt;&lt; " ";
+    }
+}
+
+int main() {
+    ifstream in("TENBAI.INP");
+    ofstream out("TENBAI.OUT");
+    in >> n >> m;
+    ke.assign(n + 1, vector&lt;int&gt;());
+    bacVao.assign(n + 1, 0);
+    while (m--) {
+        int u, v;
+        in >> u >> v;                  // Cạnh u → v (u phải xong trước v)
+        ke[u].push_back(v);
+        bacVao[v]++;
+    }
+    TopoSort();
+    return 0;
+}
+</pre>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY TOPO SORT:</strong>
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+5 môn học, 6 tiên quyết:
+1→2, 1→3, 2→4, 3→4, 2→5, 4→5
+
+    1 → 2 → 4 → 5
+    ↓   ↓   ↑
+    3───┘   │
+    2──────┘
+
+bacVao = [_, 0, 1, 1, 2, 2]
+
+Bước 1: bacVao[1]=0 → queue=[1]
+  Xử lý 1: bacVao[2]=0, bacVao[3]=0 → queue=[2, 3]
+
+Bước 2: Xử lý 2: bacVao[4]=1, bacVao[5]=1 → queue=[3]
+Bước 3: Xử lý 3: bacVao[4]=0 → queue=[4]
+Bước 4: Xử lý 4: bacVao[5]=0 → queue=[5]
+Bước 5: Xử lý 5: xong!
+
+Kết quả: <strong>1 2 3 4 5</strong> (thứ tự học môn hợp lệ)
+</pre>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- NHÓM E: SỐ HỌC -->
+<!-- ════════════════════════════════════ -->
+<h2 class="red"><span class="nhom-label nhom-E">NHÓM E</span> SỐ HỌC (Math)</h2>
+
+<h3>E1. Kiểm tra số nguyên tố — O(√n)</h3>
+<p><em>💡 Số nguyên tố là số chỉ chia hết cho 1 và chính nó (ví dụ: 2, 3, 5, 7, 11...). Để kiểm tra số n có phải SNT không, không cần thử chia từ 2 đến n. Chỉ cần thử đến √n là đủ — ví dụ: kiểm tra 100 chỉ cần thử đến 10.</em></p>
+<pre>
+bool laSNT(long long n) {
+    if (n &lt; 2) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false;
+    for (long long i = 3; i * i &lt;= n; i += 2)
+        if (n % i == 0) return false;
+    return true;
+}
+</pre>
+
+<h3>E2. Sàng Eratosthenes — Liệt kê SNT đến N</h3>
+<p><em>💡 Hình dung: Viết tất cả số từ 2 đến N lên bảng. Bắt đầu từ 2: giữ số 2, xóa tất cả bội của 2 (4, 6, 8...). Chuyển sang 3: giữ 3, xóa bội của 3 (6, 9, 12...). Tiếp tục với 5, 7... Số còn lại trên bảng chính là số nguyên tố. Làm 1 lần, sau đó tra cứu cực nhanh!</em></p>
+<pre>
+bool snt[10000001];
+void sang(int n) {
+    fill(snt, snt + n + 1, true);
+    snt[0] = snt[1] = false;
+    for (int i = 2; i * i &lt;= n; i++)
+        if (snt[i])
+            for (int j = i * i; j &lt;= n; j += i)
+                snt[j] = false;
+}
+</pre>
+
+<h3>E3. Lũy thừa nhanh — a^n mod m trong O(log n)</h3>
+<p><em>💡 Hình dung: Tính 2¹⁰ bình thường cần nhân 10 lần. Nhưng: 2¹⁰ = (2⁵)², và 2⁵ = 2×(2²)² → chỉ cần vài lần nhân! Với số mũ hàng tỷ, thay vì nhân hàng tỷ lần, ta chỉ cần ~30 lần nhân. Kết hợp lấy phần dư (mod) sau mỗi bước để số không bị quá lớn.</em></p>
+<pre>
+long long power(long long a, long long n, long long mod) {
+    long long res = 1;
+    a %= mod;
+    while (n > 0) {
+        if (n &amp; 1) res = res * a % mod;
+        a = a * a % mod;
+        n >>= 1;
+    }
+    return res;
+}
+</pre>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Tính 3¹³ mod 1000000007
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #17a2b8;">
+a = 3, n = 13 (nhị phân: 1101), mod = 10⁹+7
+res = 1
+
+Vòng 1: n=13 (lẻ) → res = 1 × 3 = 3.  a = 3² = 9.   n = 6
+Vòng 2: n=6  (chẵn)→ res giữ 3.    a = 9² = 81.  n = 3
+Vòng 3: n=3  (lẻ) → res = 3 × 81 = 243. a = 81² = 6561. n = 1
+Vòng 4: n=1  (lẻ) → res = 243 × 6561 = <strong>1594323</strong>. n = 0 → dừng.
+
+Kết quả: 3¹³ = 1594323.  Chỉ cần 4 lần nhân thay vì 13!
+</pre>
+</div>
+
+<h3>E4. GCD / LCM / Phân tích thừa số</h3>
+<p><em>💡 GCD (Ước Chung Lớn Nhất): số lớn nhất chia hết cho cả a và b. Ví dụ: GCD(12, 18) = 6. LCM (Bội Chung Nhỏ Nhất): số nhỏ nhất chia hết cho cả a và b. Ví dụ: LCM(4, 6) = 12. Mẹo: LCM = a ÷ GCD × b. Phân tích thừa số: tách số ra thành tích các số nguyên tố, ví dụ: 60 = 2² × 3 × 5.</em></p>
+<pre>
+// GCD &amp; LCM
+int gcd = __gcd(a, b);
+long long lcm = (long long)a / __gcd(a, b) * b;  // Tránh tràn: chia trước rồi nhân
+
+// Phân tích thừa số nguyên tố — O(√n)
+vector&lt;pair&lt;int,int&gt;&gt; phanTich(int n) {
+    vector&lt;pair&lt;int,int&gt;&gt; res;
+    for (int i = 2; i * i &lt;= n; i++) {
+        if (n % i == 0) {
+            int cnt = 0;
+            while (n % i == 0) { n /= i; cnt++; }
+            res.push_back({i, cnt});
+        }
+    }
+    if (n > 1) res.push_back({n, 1});
+    return res;
+}
+
+// Đếm số ước — O(√n)
+int demUoc(int n) {
+    int cnt = 0;
+    for (int i = 1; i * i &lt;= n; i++) {
+        if (n % i == 0) { cnt++; if (i != n/i) cnt++; }
+    }
+    return cnt;
+}
+
+// Chia làm tròn lên
+int lamTronLen = (a + b - 1) / b;
+</pre>
+
+<!-- ██████████████████████████████████████████████████████ -->
+<!-- TẦNG 4 -->
+<!-- ██████████████████████████████████████████████████████ -->
+<hr class="section">
+<div class="tang tang-4" id="tang4">TẦNG 4: KỸ THUẬT NÂNG CAO<small>Biến đổi bài toán + Nén tọa độ + Tối ưu DP + Mẫu code</small></div>
+
+<h2 class="blue">4.1. BIẾN ĐỔI BÀI TOÁN — Đưa về dạng quen thuộc</h2>
+
+<p><em>💡 Hình dung: Gặp bài lạ, không biết giải → thử "đổi màu" cho đề bài thành bài quen. Ví dụ: "Đoạn có số chữ 0 bằng số chữ 1" → đổi chữ 0 thành số −1, chữ 1 thành số +1 → bài trở thành "tìm đoạn có tổng = 0" — đã biết giải bằng Prefix Sum!</em></p>
+<div class="good"><strong>NGUYÊN TẮC:</strong> Nếu không biết giải trực tiếp → biến đổi về bài toán đã biết.</div>
+
+<table>
+<tr><th>Đề bài hỏi</th><th>Cách biến đổi</th><th>Quy về bài toán</th></tr>
+<tr><td>Đoạn có trung bình = k</td><td>Trừ k cho mỗi phần tử</td><td>Tìm đoạn tổng = 0</td></tr>
+<tr><td>Đếm cặp (i,j) có a[j]-a[i] = k</td><td>Với mỗi a[i], tìm a[i]+k</td><td>Đếm bằng map/mảng</td></tr>
+<tr><td>Đoạn dài nhất có số_0 = số_1</td><td>Đặt 0→-1, 1→+1</td><td>Tìm đoạn tổng = 0</td></tr>
+<tr><td>Max (freq c1 - freq c2) trong đoạn</td><td>c1→+1, c2→-1, còn lại→0</td><td>Kadane: max subarray sum</td></tr>
+</table>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="blue">4.2. NÉN TỌA ĐỘ — Khi giá trị lớn mà chỉ cần thứ tự</h2>
+<pre>
+// Giá trị đến 10⁹ nhưng chỉ có n ≤ 10⁵ giá trị
+vector&lt;int&gt; vals(a, a + n);
+sort(vals.begin(), vals.end());
+vals.erase(unique(vals.begin(), vals.end()), vals.end());
+for (int i = 0; i &lt; n; i++)
+    a[i] = lower_bound(vals.begin(), vals.end(), a[i]) - vals.begin() + 1;
+// Giờ a[i] nằm trong [1, m] với m ≤ n → dùng được mảng đếm, BIT
+</pre>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="blue">4.3. TỐI ƯU QUY HOẠCH ĐỘNG</h2>
+<p><em>💡 Hình dung: Bài Balo dùng bảng dp 2 chiều (vật × trọng lượng), nhưng thực ra mỗi hàng chỉ dựa vào hàng trước. Giống như viết bài chỉ cần 2 dòng giấy: dòng cũ và dòng mới. Ta "cuộn" bảng thành 1 hàng duy nhất → tiết kiệm bộ nhớ. Đó là lý do duyệt j NGƯỢC trong bài Balo.</em></p>
+<table>
+<tr><th>Kỹ thuật</th><th>Khi nào</th><th>Cách làm</th></tr>
+<tr><td><strong>Cuộn mảng</strong> (1D thay 2D)</td><td>dp[i][j] chỉ phụ thuộc dp[i-1][...]</td><td>Duyệt j ngược (0/1) hoặc xuôi (unbounded)</td></tr>
+<tr><td><strong>Precompute</strong></td><td>Cần max/min trong đoạn</td><td>Tính trước 1 lần, dùng nhiều lần</td></tr>
+<tr><td><strong>DP trace</strong></td><td>Cần in nghiệm, không chỉ giá trị</td><td>Lưu <code>trace[i][j]</code> để backtrack</td></tr>
+</table>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="blue">4.4. CÁC MẪU CODE HAY DÙNG</h2>
+
+<pre>
+// ═══ 1. LƯU VỊ TRÍ ĐẦU TIÊN — Tìm đoạn dài nhất có tổng = 0 ═══
+map&lt;long long, int&gt; viTri;
+viTri[0] = 0;
+long long tong = 0;
+int maxLen = 0;
+for (int i = 0; i &lt; n; i++) {
+    tong += a[i];
+    if (viTri.count(tong))
+        maxLen = max(maxLen, i + 1 - viTri[tong]);
+    else
+        viTri[tong] = i + 1;
+}
+</pre>
+
+<pre>
+// ═══ 2. MULTISET TÌM + XÓA NHANH (ghép cặp greedy) ═══
+multiset&lt;int&gt; s(tui.begin(), tui.end());
+for (int i = 0; i &lt; n; i++) {
+    auto it = s.lower_bound(mau[i]);  // Tìm túi nhỏ nhất >= mau[i]
+    if (it != s.end()) {
+        ans++;
+        s.erase(it);
+    }
+}
+</pre>
+
+<pre>
+// ═══ 3. ĐẾM LIÊN TIẾP SAU SORT ═══
+sort(a, a + n);
+int maxCnt = 1, cnt = 1;
+for (int i = 1; i &lt; n; i++) {
+    if (a[i] == a[i-1]) cnt++;
+    else { maxCnt = max(maxCnt, cnt); cnt = 1; }
+}
+maxCnt = max(maxCnt, cnt);
+</pre>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="blue">4.5. TRA CỨU NHANH — CÁC HÀM CÓ SẴN TRONG THƯ VIỆN</h2>
+
+<div class="tip"><strong>📑 MỤC LỤC NHANH:</strong>
+<a href="#ref-str">STRING</a> · <a href="#ref-arr">MẢNG TĨNH</a> · <a href="#ref-vec">VECTOR</a> · <a href="#ref-struct">STRUCT</a> · <a href="#ref-stk">STACK</a> · <a href="#ref-que">QUEUE</a> · <a href="#ref-deq">DEQUE</a> · <a href="#ref-pq">PRIORITY_QUEUE</a> · <a href="#ref-set">SET</a> · <a href="#ref-mset">MULTISET</a> · <a href="#ref-map">MAP</a> · <a href="#ref-pair">PAIR</a> · <a href="#ref-char">KÝ TỰ ↔ SỐ</a> · <a href="#ref-algo">ALGORITHM</a> · <a href="#ref-bit">BITSET</a> · <a href="#ref-umap">UNORDERED</a> · <a href="#ref-ss">STRINGSTREAM</a> · <a href="#ref-util">TIỆN ÍCH</a>
+</div>
+
+<h3 id="ref-str">📌 STRING (Chuỗi)</h3>
+<table>
+<tr><th>Hàm / Phép toán</th><th>Công dụng</th><th>Ví dụ</th></tr>
+<tr><td><code>s.length()</code> hoặc <code>s.size()</code></td><td>Độ dài chuỗi</td><td><code>"hello".length() = 5</code></td></tr>
+<tr><td><code>s[i]</code></td><td>Ký tự tại vị trí i (từ 0)</td><td><code>"abc"[1] = 'b'</code></td></tr>
+<tr><td><code>s.substr(pos, len)</code></td><td>Cắt chuỗi con từ pos, dài len</td><td><code>"hello".substr(1,3) = "ell"</code></td></tr>
+<tr><td><code>s.find("abc")</code></td><td>Tìm vị trí đầu tiên xuất hiện</td><td>Không thấy → <code>string::npos</code></td></tr>
+<tr><td><code>s.find('a', pos)</code></td><td>Tìm từ vị trí pos trở đi</td><td></td></tr>
+<tr><td><code>s + t</code></td><td>Nối 2 chuỗi</td><td><code>"ab" + "cd" = "abcd"</code></td></tr>
+<tr><td><code>s += 'x'</code></td><td>Thêm ký tự vào cuối</td><td></td></tr>
+<tr><td><code>s.push_back('x')</code></td><td>Thêm ký tự vào cuối</td><td></td></tr>
+<tr><td><code>s.pop_back()</code></td><td>Xóa ký tự cuối</td><td></td></tr>
+<tr><td><code>s.insert(pos, "abc")</code></td><td>Chèn chuỗi tại vị trí pos</td><td></td></tr>
+<tr><td><code>s.erase(pos, len)</code></td><td>Xóa len ký tự từ vị trí pos</td><td></td></tr>
+<tr><td><code>s.replace(pos, len, "xyz")</code></td><td>Thay len ký tự tại pos bằng "xyz"</td><td></td></tr>
+<tr><td><code>s.empty()</code></td><td>Kiểm tra rỗng</td><td></td></tr>
+<tr><td><code>s.compare(t)</code></td><td>So sánh: &lt;0, =0, &gt;0</td><td>Hoặc dùng <code>s &lt; t</code>, <code>s == t</code></td></tr>
+<tr><td><code>reverse(s.begin(), s.end())</code></td><td>Đảo ngược chuỗi</td><td><code>"abc" → "cba"</code></td></tr>
+<tr><td><code>sort(s.begin(), s.end())</code></td><td>Sắp xếp các ký tự</td><td><code>"bca" → "abc"</code></td></tr>
+<tr><td><code>to_string(123)</code></td><td>Số → chuỗi</td><td><code>"123"</code></td></tr>
+<tr><td><code>stoi("456")</code></td><td>Chuỗi → int</td><td><code>456</code></td></tr>
+<tr><td><code>stoll("123456789012")</code></td><td>Chuỗi → long long</td><td></td></tr>
+<tr><td><code>getline(in, s)</code></td><td>Đọc cả dòng (có khoảng trắng)</td><td>Nhớ <code>in.ignore()</code> trước nếu đã dùng <code>&gt;&gt;</code></td></tr>
+<tr><td><code>isdigit(c) / isalpha(c)</code></td><td>Là chữ số? / Là chữ cái?</td><td></td></tr>
+<tr><td><code>toupper(c) / tolower(c)</code></td><td>Chuyển hoa / thường</td><td><code>toupper('a') = 'A'</code></td></tr>
+</table>
+
+<h3 id="ref-arr">📌 MẢNG TĨNH (Array)</h3>
+<table>
+<tr><th>Hàm / Phép toán</th><th>Công dụng</th><th>Ví dụ</th></tr>
+<tr><td><code>int a[100005]</code></td><td>Khai báo (nên dư 5)</td><td></td></tr>
+<tr><td><code>memset(a, 0, sizeof(a))</code></td><td>Gán tất cả = 0</td><td>Chỉ dùng cho 0 hoặc -1</td></tr>
+<tr><td><code>fill(a, a+n, x)</code></td><td>Gán tất cả = x</td><td>An toàn hơn memset</td></tr>
+<tr><td><code>sort(a, a+n)</code></td><td>Sắp xếp tăng dần</td><td></td></tr>
+<tr><td><code>sort(a, a+n, greater&lt;int&gt;())</code></td><td>Sắp xếp giảm dần</td><td></td></tr>
+<tr><td><code>reverse(a, a+n)</code></td><td>Đảo ngược</td><td></td></tr>
+<tr><td><code>lower_bound(a, a+n, x) - a</code></td><td>Vị trí đầu tiên ≥ x (mảng đã sort)</td><td></td></tr>
+<tr><td><code>upper_bound(a, a+n, x) - a</code></td><td>Vị trí đầu tiên &gt; x (mảng đã sort)</td><td></td></tr>
+<tr><td><code>*min_element(a, a+n)</code></td><td>Giá trị nhỏ nhất</td><td></td></tr>
+<tr><td><code>*max_element(a, a+n)</code></td><td>Giá trị lớn nhất</td><td></td></tr>
+<tr><td><code>accumulate(a, a+n, 0LL)</code></td><td>Tổng tất cả phần tử</td><td>Dùng <code>0LL</code> tránh tràn</td></tr>
+<tr><td><code>count(a, a+n, x)</code></td><td>Đếm số lần x xuất hiện</td><td></td></tr>
+<tr><td><code>unique(a, a+n) - a</code></td><td>Số phần tử distinct (sau sort)</td><td></td></tr>
+<tr><td><code>next_permutation(a, a+n)</code></td><td>Sinh hoán vị tiếp theo</td><td>Mảng phải sort trước</td></tr>
+</table>
+
+<h3 id="ref-vec">📌 VECTOR (Mảng động)</h3>
+<table>
+<tr><th>Hàm / Phép toán</th><th>Công dụng</th><th>Ví dụ</th></tr>
+<tr><td><code>vector&lt;int&gt; v</code></td><td>Khai báo rỗng</td><td></td></tr>
+<tr><td><code>vector&lt;int&gt; v(n, 0)</code></td><td>n phần tử, giá trị = 0</td><td></td></tr>
+<tr><td><code>vector&lt;vector&lt;int&gt;&gt; v(m, vector&lt;int&gt;(n))</code></td><td>Ma trận m×n</td><td></td></tr>
+<tr><td><code>v.push_back(x)</code></td><td>Thêm x vào cuối — O(1)</td><td></td></tr>
+<tr><td><code>v.pop_back()</code></td><td>Xóa phần tử cuối — O(1)</td><td></td></tr>
+<tr><td><code>v.size()</code></td><td>Số phần tử</td><td></td></tr>
+<tr><td><code>v.empty()</code></td><td>Kiểm tra rỗng</td><td></td></tr>
+<tr><td><code>v.front()</code> / <code>v.back()</code></td><td>Phần tử đầu / cuối</td><td></td></tr>
+<tr><td><code>v[i]</code></td><td>Truy cập phần tử i</td><td></td></tr>
+<tr><td><code>v.assign(n, x)</code></td><td>Gán lại n phần tử = x</td><td></td></tr>
+<tr><td><code>v.resize(n)</code></td><td>Đổi kích thước</td><td></td></tr>
+<tr><td><code>v.clear()</code></td><td>Xóa tất cả</td><td></td></tr>
+<tr><td><code>v.insert(v.begin()+i, x)</code></td><td>Chèn x tại vị trí i — O(n)</td><td></td></tr>
+<tr><td><code>v.erase(v.begin()+i)</code></td><td>Xóa phần tử tại i — O(n)</td><td></td></tr>
+<tr><td><code>sort(v.begin(), v.end())</code></td><td>Sắp xếp</td><td></td></tr>
+<tr><td><code>reverse(v.begin(), v.end())</code></td><td>Đảo ngược</td><td></td></tr>
+<tr><td><code>v.erase(unique(v.begin(), v.end()), v.end())</code></td><td>Loại trùng (sau sort)</td><td></td></tr>
+</table>
+
+<h3 id="ref-struct">📌 STRUCT (Kiểu dữ liệu tự định nghĩa)</h3>
+<p><em>💡 Hình dung: Tạo "hộp" chứa nhiều thông tin gom lại — VD: 1 học sinh có tên, điểm, lớp.</em></p>
+<pre>
+// Khai báo struct
+struct SinhVien {
+    string ten;
+    int diem;
+    int lop;
+};
+
+// Sử dụng
+SinhVien a = {"An", 9, 12};
+a.diem = 10;  // truy cập bằng dấu chấm
+
+// Mảng struct
+SinhVien ds[1005];
+for (int i = 0; i &lt; n; i++)
+    in >> ds[i].ten >> ds[i].diem >> ds[i].lop;
+</pre>
+<table>
+<tr><th>Kỹ thuật</th><th>Cách dùng</th><th>Ví dụ</th></tr>
+<tr><td>Sắp xếp struct</td><td>Viết hàm so sánh rồi truyền vào <code>sort</code></td><td>
+<pre>
+bool cmp(SinhVien a, SinhVien b) {
+    if (a.diem != b.diem) return a.diem > b.diem; // Giảm theo điểm
+    return a.ten &lt; b.ten; // Tăng theo tên
+}
+sort(ds, ds + n, cmp);
+</pre></td></tr>
+<tr><td>Dùng với set / priority_queue</td><td>Nạp chồng toán tử <code>&lt;</code> bên trong struct</td><td>
+<pre>
+struct Node {
+    int id, dist;
+    bool operator&lt;(const Node &amp;o) const {
+        return dist > o.dist; // min heap
+    }
+};
+priority_queue&lt;Node&gt; pq;
+pq.push({1, 0});
+</pre></td></tr>
+<tr><td>Dùng với vector</td><td><code>vector&lt;SinhVien&gt; v;</code></td><td><code>v.push_back({"An", 9, 12});</code></td></tr>
+</table>
+
+<h3 id="ref-stk">📌 STACK (Ngăn xếp — Vào sau, Ra trước)</h3>
+<p><em>💡 Hình dung: Chồng đĩa — đĩa bỏ vào sau cùng sẽ được lấy ra trước.</em></p>
+<table>
+<tr><th>Hàm</th><th>Công dụng</th><th>Độ phức tạp</th></tr>
+<tr><td><code>stack&lt;int&gt; st</code></td><td>Khai báo</td><td></td></tr>
+<tr><td><code>st.push(x)</code></td><td>Đẩy x vào đỉnh</td><td>O(1)</td></tr>
+<tr><td><code>st.pop()</code></td><td>Xóa phần tử đỉnh</td><td>O(1)</td></tr>
+<tr><td><code>st.top()</code></td><td>Xem phần tử đỉnh (không xóa)</td><td>O(1)</td></tr>
+<tr><td><code>st.empty()</code></td><td>Kiểm tra rỗng</td><td>O(1)</td></tr>
+<tr><td><code>st.size()</code></td><td>Số phần tử</td><td>O(1)</td></tr>
+</table>
+<pre>
+// Ví dụ: Kiểm tra dấu ngoặc hợp lệ
+stack&lt;char&gt; st;
+for (char c : s) {
+    if (c == '(' || c == '[' || c == '{') st.push(c);
+    else {
+        if (st.empty()) { out &lt;&lt; "NO"; return 0; }
+        char top = st.top(); st.pop();
+        if ((c==')' &amp;&amp; top!='(') || (c==']' &amp;&amp; top!='[') || (c=='}' &amp;&amp; top!='{'))
+            { out &lt;&lt; "NO"; return 0; }
+    }
+}
+out &lt;&lt; (st.empty() ? "YES" : "NO");
+</pre>
+
+<h3 id="ref-que">📌 QUEUE (Hàng đợi — Vào trước, Ra trước)</h3>
+<p><em>💡 Hình dung: Xếp hàng mua vé — ai đến trước được phục vụ trước.</em></p>
+<table>
+<tr><th>Hàm</th><th>Công dụng</th><th>Độ phức tạp</th></tr>
+<tr><td><code>queue&lt;int&gt; q</code></td><td>Khai báo</td><td></td></tr>
+<tr><td><code>q.push(x)</code></td><td>Thêm x vào cuối hàng</td><td>O(1)</td></tr>
+<tr><td><code>q.pop()</code></td><td>Xóa phần tử đầu hàng</td><td>O(1)</td></tr>
+<tr><td><code>q.front()</code></td><td>Xem phần tử đầu (không xóa)</td><td>O(1)</td></tr>
+<tr><td><code>q.back()</code></td><td>Xem phần tử cuối (không xóa)</td><td>O(1)</td></tr>
+<tr><td><code>q.empty()</code></td><td>Kiểm tra rỗng</td><td>O(1)</td></tr>
+<tr><td><code>q.size()</code></td><td>Số phần tử</td><td>O(1)</td></tr>
+</table>
+
+<h3 id="ref-deq">📌 DEQUE (Hàng đợi hai đầu)</h3>
+<p><em>💡 Hình dung: Ống 2 đầu hở — nhét/rút từ CẢ HAI ĐẦU.</em></p>
+<table>
+<tr><th>Hàm</th><th>Công dụng</th><th>Độ phức tạp</th></tr>
+<tr><td><code>deque&lt;int&gt; dq</code></td><td>Khai báo</td><td></td></tr>
+<tr><td><code>dq.push_back(x)</code></td><td>Thêm vào cuối</td><td>O(1)</td></tr>
+<tr><td><code>dq.push_front(x)</code></td><td>Thêm vào đầu</td><td>O(1)</td></tr>
+<tr><td><code>dq.pop_back()</code></td><td>Xóa cuối</td><td>O(1)</td></tr>
+<tr><td><code>dq.pop_front()</code></td><td>Xóa đầu</td><td>O(1)</td></tr>
+<tr><td><code>dq.front()</code> / <code>dq.back()</code></td><td>Xem đầu / cuối</td><td>O(1)</td></tr>
+<tr><td><code>dq[i]</code></td><td>Truy cập phần tử i</td><td>O(1)</td></tr>
+<tr><td><code>dq.size()</code> / <code>dq.empty()</code></td><td>Kích thước / Rỗng?</td><td>O(1)</td></tr>
+</table>
+
+<h3 id="ref-pq">📌 PRIORITY_QUEUE (Hàng đợi ưu tiên / Heap)</h3>
+<p><em>💡 Hình dung: Thùng bóng — mỗi lần thò tay vào luôn lấy ra quả TO NHẤT (hoặc nhỏ nhất).</em></p>
+<table>
+<tr><th>Hàm</th><th>Công dụng</th><th>Độ phức tạp</th></tr>
+<tr><td><code>priority_queue&lt;int&gt; pq</code></td><td>Max heap (lấy ra lớn nhất)</td><td></td></tr>
+<tr><td><code>priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; pq</code></td><td>Min heap (lấy ra nhỏ nhất)</td><td></td></tr>
+<tr><td><code>pq.push(x)</code></td><td>Thêm phần tử</td><td>O(log n)</td></tr>
+<tr><td><code>pq.pop()</code></td><td>Xóa phần tử lớn/nhỏ nhất</td><td>O(log n)</td></tr>
+<tr><td><code>pq.top()</code></td><td>Xem phần tử lớn/nhỏ nhất</td><td>O(1)</td></tr>
+<tr><td><code>pq.empty()</code> / <code>pq.size()</code></td><td>Rỗng? / Kích thước</td><td>O(1)</td></tr>
+</table>
+
+<h3 id="ref-set">📌 SET (Tập hợp — không trùng, tự sắp xếp)</h3>
+<table>
+<tr><th>Hàm</th><th>Công dụng</th><th>Độ phức tạp</th></tr>
+<tr><td><code>set&lt;int&gt; s</code></td><td>Khai báo (tự sắp tăng dần)</td><td></td></tr>
+<tr><td><code>s.insert(x)</code></td><td>Thêm phần tử (bỏ qua nếu trùng)</td><td>O(log n)</td></tr>
+<tr><td><code>s.erase(x)</code></td><td>Xóa phần tử có giá trị x</td><td>O(log n)</td></tr>
+<tr><td><code>s.erase(it)</code></td><td>Xóa phần tử tại iterator</td><td>O(log n)</td></tr>
+<tr><td><code>s.count(x)</code></td><td>Có x không? (0 hoặc 1)</td><td>O(log n)</td></tr>
+<tr><td><code>s.find(x)</code></td><td>Iterator đến x (hoặc s.end())</td><td>O(log n)</td></tr>
+<tr><td><code>*s.begin()</code></td><td>Phần tử NHỎ NHẤT</td><td>O(1)</td></tr>
+<tr><td><code>*s.rbegin()</code></td><td>Phần tử LỚN NHẤT</td><td>O(1)</td></tr>
+<tr><td><code>s.lower_bound(x)</code></td><td>Iterator đến phần tử ≥ x</td><td>O(log n)</td></tr>
+<tr><td><code>s.upper_bound(x)</code></td><td>Iterator đến phần tử &gt; x</td><td>O(log n)</td></tr>
+<tr><td><code>s.size()</code> / <code>s.empty()</code></td><td>Kích thước / Rỗng?</td><td>O(1)</td></tr>
+</table>
+
+<h3 id="ref-mset">📌 MULTISET (Tập hợp — cho phép trùng)</h3>
+<div class="bad"><strong>⚠ BẪY NGUY HIỂM:</strong> <code>ms.erase(x)</code> xóa TẤT CẢ phần tử = x. Muốn xóa MỘT thì dùng <code>ms.erase(ms.find(x))</code></div>
+<table>
+<tr><th>Hàm</th><th>Công dụng</th><th>Ghi chú</th></tr>
+<tr><td><code>multiset&lt;int&gt; ms</code></td><td>Khai báo</td><td>Giống set nhưng cho trùng</td></tr>
+<tr><td><code>ms.insert(x)</code></td><td>Thêm (cho phép trùng)</td><td></td></tr>
+<tr><td><code>ms.erase(ms.find(x))</code></td><td>Xóa MỘT phần tử = x</td><td>✅ Cách đúng</td></tr>
+<tr><td><code>ms.erase(x)</code></td><td>Xóa TẤT CẢ phần tử = x</td><td>⚠ Cẩn thận!</td></tr>
+<tr><td><code>ms.count(x)</code></td><td>Số lần x xuất hiện</td><td></td></tr>
+<tr><td>Các hàm khác</td><td>Giống set</td><td>begin, rbegin, lower_bound...</td></tr>
+</table>
+
+<h3 id="ref-map">📌 MAP (Ánh xạ key → value)</h3>
+<table>
+<tr><th>Hàm</th><th>Công dụng</th><th>Độ phức tạp</th></tr>
+<tr><td><code>map&lt;string, int&gt; m</code></td><td>Khai báo</td><td></td></tr>
+<tr><td><code>m[key] = value</code></td><td>Gán giá trị</td><td>O(log n)</td></tr>
+<tr><td><code>m[key]</code></td><td>Truy cập (tạo mới nếu chưa có!)</td><td>O(log n)</td></tr>
+<tr><td><code>m.count(key)</code></td><td>Có key không? (0 hoặc 1)</td><td>O(log n)</td></tr>
+<tr><td><code>m.find(key)</code></td><td>Iterator đến key</td><td>O(log n)</td></tr>
+<tr><td><code>m.erase(key)</code></td><td>Xóa theo key</td><td>O(log n)</td></tr>
+<tr><td><code>m.size()</code> / <code>m.empty()</code></td><td>Kích thước / Rỗng?</td><td>O(1)</td></tr>
+<tr><td><code>for(auto &amp;[k,v] : m)</code></td><td>Duyệt theo thứ tự key tăng dần</td><td></td></tr>
+</table>
+
+<h3 id="ref-pair">📌 PAIR (Cặp giá trị)</h3>
+<table>
+<tr><th>Hàm / Phép toán</th><th>Công dụng</th><th>Ví dụ</th></tr>
+<tr><td><code>pair&lt;int,int&gt; p = {3, 5}</code></td><td>Khai báo</td><td></td></tr>
+<tr><td><code>p.first</code> / <code>p.second</code></td><td>Truy cập phần tử 1 / 2</td><td></td></tr>
+<tr><td><code>make_pair(a, b)</code></td><td>Tạo pair</td><td>Hoặc dùng <code>{a, b}</code></td></tr>
+<tr><td>So sánh <code>&lt;</code></td><td>So first trước, rồi second</td><td><code>{1,5} &lt; {2,3} &lt; {2,4}</code></td></tr>
+<tr><td><code>auto [x, y] = p</code></td><td>Structured binding (C++17)</td><td></td></tr>
+</table>
+
+<h3 id="ref-char">📌 CHUYỂN ĐỔI KÝ TỰ ↔ SỐ (Thủ thuật quan trọng)</h3>
+<p><em>💡 Mỗi ký tự có mã ASCII: '0'=48, 'A'=65, 'a'=97. Ta dùng phép trừ để chuyển đổi.</em></p>
+<table>
+<tr><th>Phép toán</th><th>Công dụng</th><th>Ví dụ</th></tr>
+<tr><td><code>c - '0'</code></td><td>Ký tự chữ số → số nguyên</td><td><code>'7' - '0' = 7</code></td></tr>
+<tr><td><code>(char)(d + '0')</code></td><td>Số (0-9) → ký tự</td><td><code>(char)(3 + '0') = '3'</code></td></tr>
+<tr><td><code>c - 'a'</code></td><td>Chữ thường → chỉ số 0-25</td><td><code>'c' - 'a' = 2</code></td></tr>
+<tr><td><code>(char)(i + 'a')</code></td><td>Chỉ số 0-25 → chữ thường</td><td><code>(char)(2 + 'a') = 'c'</code></td></tr>
+<tr><td><code>c - 'A'</code></td><td>Chữ hoa → chỉ số 0-25</td><td><code>'C' - 'A' = 2</code></td></tr>
+<tr><td><code>(char)(i + 'A')</code></td><td>Chỉ số 0-25 → chữ hoa</td><td><code>(char)(2 + 'A') = 'C'</code></td></tr>
+<tr><td><code>c - 'A' + 'a'</code></td><td>Chữ hoa → chữ thường</td><td><code>'B' - 'A' + 'a' = 'b'</code></td></tr>
+<tr><td><code>c - 'a' + 'A'</code></td><td>Chữ thường → chữ hoa</td><td><code>'b' - 'a' + 'A' = 'B'</code></td></tr>
+<tr><td><code>(int)c</code></td><td>Ký tự → mã ASCII</td><td><code>(int)'A' = 65</code></td></tr>
+<tr><td><code>(char)65</code></td><td>Mã ASCII → ký tự</td><td><code>(char)65 = 'A'</code></td></tr>
+</table>
+<pre>
+// Ứng dụng: Đếm tần suất ký tự
+int dem[26] = {};
+for (char c : s) dem[c - 'a']++;
+
+// Ứng dụng: Tách từng chữ số của số
+string num = to_string(12345);
+for (char c : num) {
+    int d = c - '0'; // d lần lượt = 1, 2, 3, 4, 5
+}
+
+// Ứng dụng: Mã hóa Caesar dịch k ký tự
+for (char &amp;c : s)
+    c = (char)((c - 'a' + k) % 26 + 'a');
+</pre>
+
+<h3 id="ref-algo">📌 ALGORITHM — CÁC HÀM CÓ SẴN TRONG THƯ VIỆN (RẤT QUAN TRỌNG!)</h3>
+<p><em>💡 C++ có sẵn rất nhiều hàm mạnh trong <code>&lt;algorithm&gt;</code> và <code>&lt;numeric&gt;</code>. Dùng <code>#include &lt;bits/stdc++.h&gt;</code> là có hết. Biết dùng hàm có sẵn = tiết kiệm thời gian code + ít bug hơn viết tay!</em></p>
+
+<div class="good"><strong>🔍 TÌM KIẾM — Dùng trên mảng ĐÃ SORT</strong></div>
+<table>
+<tr><th>Hàm có sẵn</th><th>Công dụng</th><th>Ví dụ (mảng a = {1, 3, 5, 7, 9})</th></tr>
+<tr><td><code>lower_bound(a, a+n, x)</code></td><td>Con trỏ đến phần tử đầu tiên <strong>≥ x</strong></td><td><code>lower_bound(a,a+5,5) - a = 2</code> (vị trí của 5)</td></tr>
+<tr><td><code>upper_bound(a, a+n, x)</code></td><td>Con trỏ đến phần tử đầu tiên <strong>&gt; x</strong></td><td><code>upper_bound(a,a+5,5) - a = 3</code> (sau 5 là 7)</td></tr>
+<tr><td><code>binary_search(a, a+n, x)</code></td><td>Có x trong mảng không? (true/false)</td><td><code>binary_search(a,a+5,5) = true</code></td></tr>
+<tr><td><code>equal_range(a, a+n, x)</code></td><td>Cặp {lower_bound, upper_bound}</td><td>Tiện đếm số lần x xuất hiện</td></tr>
+</table>
+<pre>
+// Ứng dụng: Đếm phần tử = x
+int cnt = upper_bound(a, a+n, x) - lower_bound(a, a+n, x);
+
+// Ứng dụng: Đếm phần tử trong đoạn [L, R]
+int cnt = upper_bound(a, a+n, R) - lower_bound(a, a+n, L);
+
+// Ứng dụng: Tìm phần tử nhỏ nhất >= x
+int pos = lower_bound(a, a+n, x) - a;
+if (pos &lt; n) out &lt;&lt; a[pos];  // Tìm thấy
+</pre>
+
+<div class="good"><strong>📊 SẮP XẾP + THAO TÁC MẢNG</strong></div>
+<table>
+<tr><th>Hàm có sẵn</th><th>Công dụng</th><th>Ví dụ</th></tr>
+<tr><td><code>sort(a, a+n)</code></td><td>Sắp xếp tăng dần — O(n log n)</td><td></td></tr>
+<tr><td><code>sort(a, a+n, greater&lt;int&gt;())</code></td><td>Sắp xếp giảm dần</td><td></td></tr>
+<tr><td><code>sort(a, a+n, cmp)</code></td><td>Sắp theo hàm so sánh tự viết</td><td>Sort struct, nhiều tiêu chí</td></tr>
+<tr><td><code>stable_sort(a, a+n)</code></td><td>Sort ổn định (giữ thứ tự cũ khi bằng)</td><td></td></tr>
+<tr><td><code>reverse(a, a+n)</code></td><td>Đảo ngược mảng</td><td>{1,2,3} → {3,2,1}</td></tr>
+<tr><td><code>unique(a, a+n)</code></td><td>Loại trùng liên tiếp (sau sort)</td><td>Trả về iterator cuối</td></tr>
+<tr><td><code>next_permutation(a, a+n)</code></td><td>Sinh hoán vị tiếp theo</td><td>Phải sort trước</td></tr>
+<tr><td><code>prev_permutation(a, a+n)</code></td><td>Hoán vị trước đó</td><td></td></tr>
+<tr><td><code>random_shuffle(a, a+n)</code></td><td>Xáo trộn ngẫu nhiên</td><td></td></tr>
+<tr><td><code>nth_element(a, a+k, a+n)</code></td><td>Đưa phần tử nhỏ thứ k vào đúng vị trí — O(n)</td><td>Tìm median nhanh</td></tr>
+<tr><td><code>partial_sort(a, a+k, a+n)</code></td><td>Sort k phần tử đầu tiên</td><td>Lấy top-k nhanh</td></tr>
+</table>
+
+<div class="good"><strong>📊 TÌM GIÁ TRỊ + ĐẾM + TỔNG</strong></div>
+<table>
+<tr><th>Hàm có sẵn</th><th>Công dụng</th><th>Ví dụ</th></tr>
+<tr><td><code>*min_element(a, a+n)</code></td><td>Giá trị nhỏ nhất</td><td></td></tr>
+<tr><td><code>*max_element(a, a+n)</code></td><td>Giá trị lớn nhất</td><td></td></tr>
+<tr><td><code>min_element(a, a+n) - a</code></td><td>Vị trí phần tử nhỏ nhất</td><td></td></tr>
+<tr><td><code>count(a, a+n, x)</code></td><td>Đếm số lần x xuất hiện</td><td></td></tr>
+<tr><td><code>count_if(a, a+n, check)</code></td><td>Đếm số phần tử thỏa check</td><td><code>count_if(a,a+n,[](int x){return x>0;})</code></td></tr>
+<tr><td><code>accumulate(a, a+n, 0LL)</code></td><td>Tổng tất cả phần tử</td><td>Dùng <code>0LL</code> tránh tràn. Cần <code>#include &lt;numeric&gt;</code></td></tr>
+<tr><td><code>fill(a, a+n, x)</code></td><td>Gán tất cả = x</td><td>An toàn hơn memset</td></tr>
+<tr><td><code>iota(a, a+n, 1)</code></td><td>Gán a = {1, 2, 3, ...}</td><td>Cần <code>#include &lt;numeric&gt;</code></td></tr>
+</table>
+
+<div class="good"><strong>🔀 KIỂM TRA + THAO TÁC TẬP HỢP</strong></div>
+<table>
+<tr><th>Hàm có sẵn</th><th>Công dụng</th><th>Ghi chú</th></tr>
+<tr><td><code>all_of(a, a+n, check)</code></td><td>Tất cả thỏa check?</td><td><code>all_of(a,a+n,[](int x){return x>0;})</code></td></tr>
+<tr><td><code>any_of(a, a+n, check)</code></td><td>Có phần tử nào thỏa?</td><td></td></tr>
+<tr><td><code>none_of(a, a+n, check)</code></td><td>Không phần tử nào thỏa?</td><td></td></tr>
+<tr><td><code>find(a, a+n, x)</code></td><td>Con trỏ đến phần tử đầu tiên = x</td><td>Không cần sort</td></tr>
+<tr><td><code>is_sorted(a, a+n)</code></td><td>Mảng đã sort chưa?</td><td></td></tr>
+<tr><td><code>merge(a,a+n, b,b+m, c)</code></td><td>Trộn 2 mảng đã sort vào c</td><td></td></tr>
+<tr><td><code>set_intersection(...)</code></td><td>Giao 2 mảng đã sort</td><td>Cần output iterator</td></tr>
+<tr><td><code>set_union(...)</code></td><td>Hợp 2 mảng đã sort</td><td></td></tr>
+</table>
+
+<h3 id="ref-bit">📌 BITSET (Mảng bit hiệu quả)</h3>
+<p><em>💡 Hình dung: Mảng bool nhưng nén 64 phần tử vào 1 ô nhớ → nhanh gấp 64 lần.</em></p>
+<table>
+<tr><th>Hàm / Phép toán</th><th>Công dụng</th><th>Ví dụ</th></tr>
+<tr><td><code>bitset&lt;1000&gt; bs</code></td><td>Khai báo (kích thước cố định)</td><td>Mặc định tất cả = 0</td></tr>
+<tr><td><code>bs[i] = 1</code></td><td>Bật bit i</td><td></td></tr>
+<tr><td><code>bs.set(i)</code></td><td>Bật bit i</td><td><code>bs.set()</code> = bật tất cả</td></tr>
+<tr><td><code>bs.reset(i)</code></td><td>Tắt bit i</td><td><code>bs.reset()</code> = tắt tất cả</td></tr>
+<tr><td><code>bs.flip(i)</code></td><td>Đảo bit i</td><td><code>bs.flip()</code> = đảo tất cả</td></tr>
+<tr><td><code>bs.test(i)</code></td><td>Bit i có bật không?</td><td>Hoặc dùng <code>bs[i]</code></td></tr>
+<tr><td><code>bs.count()</code></td><td>Đếm số bit 1</td><td></td></tr>
+<tr><td><code>bs.any()</code> / <code>bs.none()</code></td><td>Có bit 1 nào không? / Toàn 0?</td><td></td></tr>
+<tr><td><code>bs &amp; bs2</code></td><td>AND hai bitset</td><td></td></tr>
+<tr><td><code>bs | bs2</code></td><td>OR hai bitset</td><td></td></tr>
+<tr><td><code>bs &lt;&lt; k</code></td><td>Dịch trái k bit</td><td>Ứng dụng: DP knapsack nhanh</td></tr>
+</table>
+<pre>
+// Ứng dụng: DP Knapsack tối ưu bằng bitset
+// Hỏi: Có tạo được tổng S từ n vật không?
+bitset&lt;100001&gt; dp;
+dp[0] = 1;
+for (int i = 0; i &lt; n; i++) {
+    int w; in >> w;
+    dp |= (dp &lt;&lt; w); // Mỗi vật w mở rộng các tổng có thể
+}
+out &lt;&lt; (dp[S] ? "YES" : "NO");
+</pre>
+
+<h3 id="ref-umap">📌 UNORDERED_MAP / UNORDERED_SET (Bảng băm — Trung bình O(1))</h3>
+<p><em>💡 Giống map/set nhưng KHÔNG sắp xếp → nhanh hơn. Dùng khi cần tốc độ, không cần thứ tự.</em></p>
+<table>
+<tr><th>So sánh</th><th>map / set</th><th>unordered_map / unordered_set</th></tr>
+<tr><td>Thao tác</td><td>O(log n)</td><td>Trung bình O(1), xấu nhất O(n)</td></tr>
+<tr><td>Có sắp xếp?</td><td>✅ Có</td><td>❌ Không</td></tr>
+<tr><td>Dùng khi</td><td>Cần duyệt theo thứ tự, lower_bound</td><td>Chỉ cần tra cứu / đếm nhanh</td></tr>
+</table>
+<pre>
+// Cách dùng — giống hệt map/set
+unordered_map&lt;string, int&gt; m;
+m["hello"] = 1;
+if (m.count("hello")) out &lt;&lt; "co";
+
+unordered_set&lt;int&gt; s;
+s.insert(5);
+if (s.count(5)) out &lt;&lt; "co";
+</pre>
+
+<h3 id="ref-ss">📌 STRINGSTREAM (Tách chuỗi theo khoảng trắng)</h3>
+<p><em>💡 Biến string thành "dòng suối" để đọc từng phần bằng &gt;&gt; — rất tiện khi tách input phức tạp.</em></p>
+<pre>
+#include &lt;sstream&gt;  // Cần include thêm (hoặc dùng bits/stdc++.h)
+
+// Tách chuỗi thành từng từ
+string line = "hello world 123";
+stringstream ss(line);
+string word;
+while (ss >> word) {
+    out &lt;&lt; word &lt;&lt; "\n"; // In: hello, world, 123
+}
+
+// Tách chuỗi thành số
+string data = "10 20 30";
+stringstream ss2(data);
+int x;
+while (ss2 >> x) {
+    out &lt;&lt; x &lt;&lt; " "; // In: 10 20 30
+}
+</pre>
+
+<h3 id="ref-util">📌 CÁC HÀM TIỆN ÍCH KHÁC</h3>
+<table>
+<tr><th>Hàm</th><th>Công dụng</th><th>Ví dụ</th></tr>
+<tr><td><code>min(a, b)</code> / <code>max(a, b)</code></td><td>Giá trị nhỏ/lớn hơn</td><td></td></tr>
+<tr><td><code>min({a,b,c,d})</code></td><td>Min nhiều số cùng lúc</td><td><code>min({5,2,8,1}) = 1</code></td></tr>
+<tr><td><code>swap(a, b)</code></td><td>Hoán đổi giá trị</td><td></td></tr>
+<tr><td><code>abs(x)</code></td><td>Giá trị tuyệt đối</td><td><code>abs(-5) = 5</code></td></tr>
+<tr><td><code>__gcd(a, b)</code></td><td>Ước Chung Lớn Nhất</td><td><code>__gcd(12, 18) = 6</code></td></tr>
+<tr><td><code>__builtin_popcount(x)</code></td><td>Đếm bit 1 trong x</td><td><code>popcount(7) = 3</code></td></tr>
+<tr><td><code>ceil(a / b)</code> → <code>(a + b - 1) / b</code></td><td>Chia làm tròn LÊN (số nguyên)</td><td><code>(7+3-1)/3 = 3</code></td></tr>
+<tr><td><code>next_permutation(begin, end)</code></td><td>Sinh hoán vị tiếp theo</td><td>Phải sort trước</td></tr>
+</table>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="blue">4.6. ĐỌC DỮ LIỆU NÂNG CAO</h2>
+<pre>
+// Đọc an toàn (tránh crash nếu file rỗng)
+if (!(in >> n)) return 0;
+
+// Đọc đến hết file
+while (in >> x) { /* xử lý x */ }
+
+// Đọc ma trận ký tự
+char a[105][105];
+for (int i = 0; i &lt; m; i++)
+    for (int j = 0; j &lt; n; j++)
+        in >> a[i][j];
+</pre>
+
+<!-- ██████████████████████████████████████████████████████ -->
+<!-- TẦNG 5 -->
+<!-- ██████████████████████████████████████████████████████ -->
+<hr class="section">
+<div class="tang tang-5" id="tang5">TẦNG 5: CHIẾN THUẬT PHÒNG THI<small>Phân bổ thời gian + Gỡ điểm + Debug + Checklist</small></div>
+
+<h2 class="purple">5.1. PHÂN BỔ THỜI GIAN (Đề HCM — 150 phút, 3 bài)</h2>
+
+<table>
+<tr><th>Giai đoạn</th><th>Thời gian</th><th>Mục tiêu</th></tr>
+<tr><td>Đọc cả 3 đề</td><td>10 phút</td><td>Xác định độ khó, chọn thứ tự làm (dễ → khó)</td></tr>
+<tr><td><strong>Bài 1 (Dễ)</strong></td><td>30-35 phút</td><td><strong>100%</strong> — Không được sai</td></tr>
+<tr><td><strong>Bài 2 (TB)</strong></td><td>45-55 phút</td><td><strong>70-100%</strong> — Cẩn thận overflow</td></tr>
+<tr><td><strong>Bài 3 (Khó)</strong></td><td>40-50 phút</td><td>Ưu tiên subtask nếu không ra thuật tối ưu</td></tr>
+<tr><td>Kiểm tra lại</td><td>15-20 phút</td><td>Test mẫu, edge case, tên file, xóa debug</td></tr>
+</table>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="purple">5.2. KHI BÍ — CHIẾN THUẬT GỠ ĐIỂM TỪNG PHẦN</h2>
+
+<div class="bad"><strong>KHÔNG BAO GIỜ BỎ CUỘC! Luôn lấy điểm subtask.</strong></div>
+
+<table>
+<tr><th>Cách làm</th><th>Khi nào</th><th>Điểm kỳ vọng</th></tr>
+<tr><td>Vét cạn 2 vòng for</td><td>Subtask N ≤ 1000</td><td>40-60%</td></tr>
+<tr><td>Duyệt tập con (bitmask)</td><td>Subtask N ≤ 20</td><td>30-50%</td></tr>
+<tr><td>Tham lam (chưa chứng minh)</td><td>Bài tối ưu, không nghĩ ra DP</td><td>30-50%</td></tr>
+<tr><td>Sinh ngẫu nhiên</td><td>Không có ý tưởng gì</td><td>10-20%</td></tr>
+</table>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="purple">5.3. DEBUG NHANH TRONG PHÒNG THI</h2>
+<pre>
+// Dùng cerr → in ra console, KHÔNG ảnh hưởng file output
+cerr &lt;&lt; "DEBUG: n=" &lt;&lt; n &lt;&lt; " sum=" &lt;&lt; sum &lt;&lt; endl;
+
+// In mảng DP
+for (int i = 0; i &lt;= n; i++) {
+    for (int j = 0; j &lt;= m; j++)
+        cerr &lt;&lt; dp[i][j] &lt;&lt; " ";
+    cerr &lt;&lt; endl;
+}
+
+// ⚠ NHỚ: Xóa hết cerr trước khi nộp (hoặc giữ cũng không sai, nhưng chạy chậm hơn)
+</pre>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="purple">5.4. QUY TRÌNH LÀM BÀI 6 BƯỚC</h2>
+<div class="good">
+<ol>
+<li><strong>Đọc kỹ đề:</strong> Input/output, giới hạn N, loại bài</li>
+<li><strong>Ước lượng:</strong> N ≤ 10⁵ → cần O(n log n). N ≤ 10⁶ → cần O(n)</li>
+<li><strong>Nghĩ thuật:</strong> Dùng bảng nhận dạng (xem bên dưới). Không ra → subtask trước</li>
+<li><strong>Code cẩn thận:</strong> Kiểu dữ liệu, biên mảng, trường hợp đặc biệt</li>
+<li><strong>Test thử:</strong> Input mẫu + edge case (n=0, n=1, all equal, số âm)</li>
+<li><strong>Kiểm tra:</strong> Tên file, format output, xóa debug</li>
+</ol>
+</div>
+
+<!-- ─────────────────────────────────── -->
+<h2 class="purple">5.5. CHECKLIST TRƯỚC KHI NỘP</h2>
+<div class="good">
+<strong>✓ KIỂM TRA LẦN CUỐI:</strong>
+<ol>
+<li>☐ Tên file .INP/.OUT chính xác (HOA/thường)</li>
+<li>☐ <code>long long</code> cho mọi phép tính có thể > 2×10⁹</li>
+<li>☐ Mảng khai báo dư 5 (<code>MAXN = N + 5</code>)</li>
+<li>☐ Test: n=0, n=1, tất cả bằng nhau, số âm, không có đáp án</li>
+<li>☐ Xóa debug <code>cerr</code></li>
+<li>☐ Compile thành công + chạy đúng input mẫu</li>
+<li>☐ Output đúng format (dấu cách, xuống dòng)</li>
+</ol>
+</div>
+
+<!-- ██████████████████████████████████████████████████████ -->
+<!-- SƠ ĐỒ NHẬN DẠNG + BẢNG CÔNG THỨC -->
+<!-- ██████████████████████████████████████████████████████ -->
+<hr class="section">
+<h2 class="dark">PHỤ LỤC A: SƠ ĐỒ NHẬN DẠNG BÀI TOÁN</h2>
+
+<pre style="background: #f8f9fa; color: #000; border-left: 4px solid #333; font-size: 11pt;">
+Đề bài hỏi gì?
+│
+├── "Tổng đoạn [L,R]" (chỉ hỏi) ───────── → <strong>Prefix Sum</strong>
+├── "Tổng đoạn + CẬP NHẬT" ─────────────── → <strong>BIT / Segment Tree</strong>
+├── "Đoạn con dài nhất/ngắn nhất thỏa..." → <strong>Two Pointers / Sliding Window</strong>
+├── "Max/min trong cửa sổ kích thước k" ── → <strong>Deque đơn điệu</strong>
+├── "Đoạn con tổng lớn nhất" ───────────── → <strong>Kadane</strong>
+├── "Dãy con tăng dài nhất" ────────────── → <strong>LIS (DP + Binary Search)</strong>
+├── "Đếm số cách / số phương án" ──────── → <strong>DP</strong>
+├── "Max/min với ràng buộc trọng lượng" ── → <strong>DP Knapsack</strong>
+├── "Chọn ít nhất / nhiều nhất có thể" ── → <strong>Greedy (thường sort trước)</strong>
+├── "Tìm giá trị nhỏ nhất thỏa..." ───── → <strong>Chặt nhị phân đáp án</strong>
+├── "Gộp nhóm / liên thông" ───────────── → <strong>DSU</strong> hoặc <strong>BFS/DFS</strong>
+├── "Kiểm tra đồ thị liên thông không?" ── → <strong>DFS/BFS từ đỉnh 1, xem đã thăm hết?</strong>
+├── "Đường đi ngắn nhất (không trọng số)" → <strong>BFS</strong>
+├── "Lưới/mê cung: đường đi ngắn nhất" ── → <strong>BFS trên lưới 2D</strong>
+├── "Đường đi ngắn nhất (có trọng số)" ── → <strong>Dijkstra</strong> (1 nguồn, trọng số ≥ 0)
+├── "Đường ngắn nhất + trọng số ÂM" ───── → <strong>Bellman-Ford</strong>
+├── "Đường ngắn nhất giữa MỌI cặp đỉnh"  → <strong>Floyd</strong> (N ≤ 400)
+├── "Nối tất cả điểm, chi phí nhỏ nhất"── → <strong>Prim</strong> (Cây khung nhỏ nhất)
+├── "Luồng cực đại / lưu lượng tối đa" ── → <strong>Ford-Fulkerson</strong>
+├── N ≤ 20 ──────────────────────────────── → <strong>Bitmask / Backtracking</strong>
+└── N ≤ 10 ──────────────────────────────── → <strong>Sinh hoán vị</strong>
+</pre>
+
+<h2 class="dark">PHỤ LỤC B: BẢNG CÔNG THỨC NHỚ NHANH</h2>
+<table>
+<tr><th>Công thức</th><th>Ý nghĩa</th></tr>
+<tr><td><code>prefix[R] - prefix[L-1]</code></td><td>Tổng đoạn [L, R]</td></tr>
+<tr><td><code>sum[r2][c2] - sum[r1-1][c2] - sum[r2][c1-1] + sum[r1-1][c1-1]</code></td><td>Tổng HCN 2D</td></tr>
+<tr><td><code>f[j] = max(f[j], f[j-w] + v)</code></td><td>Knapsack 0/1 (duyệt j ngược)</td></tr>
+<tr><td><code>f[j] += f[j - coin]</code></td><td>Đếm cách (duyệt j xuôi)</td></tr>
+<tr><td><code>cha[v] = tim_goc(cha[v])</code></td><td>DSU nén đường đi (đã thăm gốc → nhớ luôn, lần sau không tìm lại)</td></tr>
+<tr><td><code>i += i &amp; (-i)</code></td><td>BIT: cập nhật giá trị lên cây</td></tr>
+<tr><td><code>i -= i &amp; (-i)</code></td><td>BIT: hỏi tổng từ gốc đến i</td></tr>
+<tr><td><code>(long long)a * b</code></td><td>Tránh tràn khi nhân</td></tr>
+<tr><td><code>(a + b - 1) / b</code></td><td>Chia làm tròn lên</td></tr>
+<tr><td><code>((a - b) % MOD + MOD) % MOD</code></td><td>Trừ mod không bị âm</td></tr>
+<tr><td><code>__builtin_popcount(x)</code></td><td>Đếm bit 1 trong x</td></tr>
+<tr><td><code>__gcd(a, b)</code></td><td>ƯCLN</td></tr>
+<tr><td><code>(ll)a / __gcd(a,b) * b</code></td><td>BCNN (tránh tràn)</td></tr>
+<tr><td><code>lower_bound(a,a+n,x) - a</code></td><td>Vị trí đầu tiên ≥ x (mảng đã sort)</td></tr>
+<tr><td><code>upper_bound(a,a+n,x) - lower_bound(a,a+n,x)</code></td><td>Đếm số phần tử = x</td></tr>
+<tr><td><code>*min_element(a,a+n)</code></td><td>Giá trị min (không cần sort)</td></tr>
+<tr><td><code>accumulate(a,a+n,0LL)</code></td><td>Tổng mảng</td></tr>
+<tr><td><code>count(a,a+n,x)</code></td><td>Đếm x trong mảng</td></tr>
+<tr><td><code>a.erase(unique(a.begin(),a.end()),a.end())</code></td><td>Loại trùng (sau sort)</td></tr>
+</table>
+
+<hr>
+<p style="text-align: center; font-style: italic; font-size: 13pt;">
+    <strong>"Code đúng quan trọng hơn code nhanh. Ăn chắc mặc bền!"</strong>
+</p>
+
+</body>
+</html>

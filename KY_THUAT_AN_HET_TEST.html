@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Kỹ Thuật Ăn Hết Test - HSG Tin Học</title>
+    <style>
+        body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.5; max-width: 800px; margin: 0 auto; padding: 15px; }
+        h1 { text-align: center; font-size: 16pt; border-bottom: 2px solid #000; color: #1a5276; }
+        h2 { font-size: 13pt; padding: 5px 10px; margin-top: 20px; border-radius: 4px; }
+        h2.red { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+        h2.blue { background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8; }
+        h2.green { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+        h2.orange { background: #fff3cd; color: #856404; border-left: 4px solid #ffc107; }
+        h2.purple { background: #e2d9f3; color: #4a235a; border-left: 4px solid #8e44ad; }
+        h3 { font-size: 12pt; margin: 10px 0 5px 0; color: #2c3e50; border-left: 3px solid #3498db; padding-left: 8px; }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 12px; font-size: 10pt; margin: 8px 0; border-radius: 5px; overflow-x: auto; border-left: 4px solid #007acc; }
+        code { font-family: Consolas, 'Courier New', monospace; background: #e8e8e8; color: #c7254e; padding: 2px 5px; border-radius: 3px; }
+        .red { color: #c00; font-weight: bold; }
+        .green { color: #060; font-weight: bold; }
+        .warn { background: #fff3cd; padding: 8px; margin: 8px 0; border-left: 3px solid #ffc107; }
+        .good { background: #d4edda; padding: 8px; margin: 8px 0; border-left: 3px solid #28a745; }
+        .bad { background: #f8d7da; padding: 8px; margin: 8px 0; border-left: 3px solid #dc3545; }
+        table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 11pt; }
+        th, td { border: 1px solid #333; padding: 5px 8px; }
+        th { background: #ccc; }
+    </style>
+</head>
+<body>
+
+<h1>KỸ THUẬT ĂN HẾT TEST - HSG TIN HỌC (ĐỀ HCM)</h1>
+
+<!-- ========== PHẦN 1 ========== -->
+<h2 class="red">1. TRÀN SỐ - SAI 50% TEST MÀ KHÔNG BIẾT</h2>
+
+<h3>1.1. Khi nào cần dùng long long?</h3>
+<table>
+<tr><th>Tình huống</th><th>Ví dụ</th><th>Cách xử lý</th></tr>
+<tr><td>Tổng N số (N ≤ 10⁵, giá trị ≤ 10⁹)</td><td>Tổng max = 10¹⁴</td><td>Dùng <code>long long</code></td></tr>
+<tr><td>Nhân 2 số (a, b ≤ 10⁹)</td><td>a × b có thể = 10¹⁸</td><td>Ép kiểu trước khi nhân</td></tr>
+<tr><td>Bình phương số lớn</td><td>a² với a ≤ 10⁵</td><td>Kết quả ≤ 10¹⁰ → long long</td></tr>
+<tr><td>Prefix sum</td><td>Tổng dồn n số lớn</td><td>Mảng prefix dùng long long</td></tr>
+</table>
+
+<h3>1.2. Cách nhân không bị tràn</h3>
+<pre>
+int a = 100000, b = 100000;
+
+// SAI - tràn số vì a*b tính bằng int trước
+long long sai = a * b;              // Kết quả sai!
+
+// ĐÚNG - ép kiểu TRƯỚC khi nhân
+long long dung1 = (long long)a * b;
+long long dung2 = 1LL * a * b;
+long long dung3 = (long long)a * (long long)b;
+</pre>
+
+<h3>1.3. So sánh tích lớn (tránh nhân)</h3>
+<pre>
+// Muốn so sánh a*b với c*d (a,b,c,d có thể đến 10⁹)
+// SAI: (long long)a*b > (long long)c*d  // Vẫn có thể tràn nếu > 10¹⁸
+
+// ĐÚNG: Dùng double để so sánh gần đúng
+if ((double)a * b > (double)c * d) { ... }
+
+// Hoặc chia để so sánh (nếu d != 0)
+if (a > (long long)c * d / b) { ... }  // Cẩn thận chia 0
+</pre>
+
+<!-- ========== PHẦN 2 ========== -->
+<h2 class="red">2. ĐỌC/GHI FILE - SAI LÀ 0 ĐIỂM</h2>
+
+<div class="bad">
+<strong>LỖI HAY GẶP:</strong>
+<ul>
+<li>Sai tên file (HOA/thường): "bai.inp" ≠ "BAI.INP"</li>
+<li>Quên đổi tên file khi copy code từ bài khác</li>
+<li>Ghi nhầm .INP thành .OUT</li>
+</ul>
+</div>
+
+<!-- ========== PHẦN 3 ========== -->
+<h2 class="blue">3. TỐI ƯU TỐC ĐỘ - TRÁNH TLE</h2>
+
+<h3>3.1. N bao nhiêu thì dùng thuật gì?</h3>
+<div class="warn">
+<strong>QUY TẮC:</strong> Máy tính chạy được khoảng <strong>10⁸ phép tính/giây</strong>. Nhân N với số vòng lặp, nếu > 10⁸ thì TLE!
+</div>
+<table>
+<tr><th>Đề cho N ≤</th><th>Bạn được dùng</th><th>Ví dụ bài toán</th></tr>
+<tr><td><strong>10</strong></td><td>Thử tất cả (vét cạn)</td><td>Tìm thứ tự tối ưu → sinh hoán vị</td></tr>
+<tr><td><strong>20</strong></td><td>Duyệt 2^n tập con</td><td>Chọn tập con tổng = k → bitmask</td></tr>
+<tr><td><strong>10² (100)</strong></td><td>3 vòng for lồng nhau</td><td>Tìm bộ 3 số tổng = k → 3 vòng for</td></tr>
+<tr><td><strong>10³ - 5×10³</strong></td><td>2 vòng for lồng nhau</td><td>Duyệt mọi cặp → 2 vòng for</td></tr>
+<tr><td><strong>10⁵</strong></td><td>1 vòng for + sort</td><td>Ghép cặp tối ưu → sort + greedy</td></tr>
+<tr><td><strong>10⁶</strong></td><td>Chỉ 1 vòng for</td><td>Tính tổng đoạn → prefix sum</td></tr>
+</table>
+<div class="good">
+<strong>MẸO NHỚ:</strong> N = 10⁵ (100.000) → cần sort + 1 vòng for. N = 10⁶ → chỉ được 1 vòng for. 2 vòng for lồng với N=10⁵ → TLE chắc chắn!
+</div>
+
+<h3>3.2. Tăng tốc đọc dữ liệu</h3>
+<pre>
+// Thêm dòng này vào đầu main() nếu dùng cin/cout
+ios_base::sync_with_stdio(false);
+cin.tie(NULL);
+
+// QUAN TRỌNG: Sau khi thêm, KHÔNG được dùng xen kẽ cin với scanf, cout với printf
+</pre>
+
+<h3>3.3. Tránh endl, dùng '\n'</h3>
+<pre>
+// CHẬM - endl flush buffer mỗi lần
+for (int i = 0; i < n; i++)
+    cout << a[i] << endl;
+
+// NHANH - '\n' không flush
+for (int i = 0; i < n; i++)
+    cout << a[i] << '\n';
+</pre>
+
+<h3>3.4. Truyền tham chiếu cho vector/string</h3>
+<pre>
+// CHẬM - copy toàn bộ vector mỗi lần gọi
+void xu_ly(vector&lt;int&gt; v) { ... }
+
+// NHANH - truyền tham chiếu, không copy
+void xu_ly(vector&lt;int&gt; &v) { ... }
+
+// Nếu không muốn thay đổi, dùng const
+void xu_ly(const vector&lt;int&gt; &v) { ... }
+</pre>
+
+<h3>3.5. Tránh dùng map/set khi có thể</h3>
+<pre>
+// CHẬM - map mỗi thao tác chậm hơn mảng
+map&lt;int, int&gt; dem;
+for (int x : a) dem[x]++;
+
+// NHANH GẤP 10 LẦN - mảng đếm tức thì (nếu giá trị nhỏ)
+int dem[1000001] = {0};  // Giá trị từ 0 đến 10⁶
+for (int x : a) dem[x]++;
+</pre>
+
+<h3>3.6. Dùng mảng thay vector khi có thể</h3>
+<pre>
+// Vector có overhead, mảng nhanh hơn một chút
+int a[100005];      // Nhanh hơn
+vector&lt;int&gt; a(n);   // Linh hoạt hơn nhưng chậm hơn
+</pre>
+
+<!-- ========== PHẦN 4 ========== -->
+<h2 class="green">4. CÁC KỸ THUẬT THƯỜNG DÙNG</h2>
+
+<h3>4.1. Tổng tiền tố (Prefix Sum)</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "tổng các phần tử từ vị trí L đến R" (nhiều lần)</li>
+<li>Đề hỏi: "tìm đoạn con có tổng = k"</li>
+<li>Đề hỏi: "đoạn con dài nhất/ngắn nhất có tổng = k"</li>
+</ul>
+</div>
+<pre>
+// Xây dựng: 1 vòng for
+long long prefix[100005];
+prefix[0] = 0;
+for (int i = 1; i <= n; i++)
+    prefix[i] = prefix[i-1] + a[i];
+
+// Tổng đoạn [l, r] tức thì (không cần duyệt lại)
+long long tong = prefix[r] - prefix[l-1];
+</pre>
+
+<h3>4.2. Two Pointers</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "đoạn con dài nhất có tổng ≤ K"</li>
+<li>Đề hỏi: "số cặp (i, j) thỏa a[i] + a[j] = k" (mảng đã sort)</li>
+<li>Đề hỏi: "đoạn ngắn nhất chứa đủ k ký tự khác nhau"</li>
+<li>Khi có 2 đầu mút (L, R) di chuyển được</li>
+</ul>
+</div>
+<pre>
+// Tìm đoạn con dài nhất có tổng ≤ K
+int L = 0, maxLen = 0;
+long long sum = 0;
+
+for (int R = 0; R < n; R++) {
+    sum += a[R];
+    while (sum > K && L <= R) {
+        sum -= a[L];
+        L++;
+    }
+    maxLen = max(maxLen, R - L + 1);
+}
+</pre>
+
+<h3>4.3. Binary Search</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "tìm x trong dãy đã sắp xếp"</li>
+<li>Đề hỏi: "đếm số phần tử trong đoạn [L, R]"</li>
+<li>Đề hỏi: "tìm giá trị nhỏ nhất/lớn nhất thỏa điều kiện X"</li>
+<li>Khi mảng đã sort hoặc có tính chất đơn điệu</li>
+</ul>
+</div>
+<pre>
+// Mảng PHẢI được sắp xếp trước
+sort(a, a + n);
+
+// Tìm vị trí đầu tiên >= x
+int pos = lower_bound(a, a + n, x) - a;
+
+// Tìm vị trí đầu tiên > x
+int pos = upper_bound(a, a + n, x) - a;
+
+// Đếm số phần tử = x
+int cnt = upper_bound(a, a+n, x) - lower_bound(a, a+n, x);
+
+// Đếm số phần tử trong đoạn [L, R]
+int cnt = upper_bound(a, a+n, R) - lower_bound(a, a+n, L);
+</pre>
+
+<h3>4.4. Sắp xếp theo tiêu chí</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề yêu cầu: "sắp xếp theo điềm giảm, nếu bằng thì theo tên tăng"</li>
+<li>Đề yêu cầu: "ghép cặp sao cho tối ưu" → thường sort trước rồi tham lam</li>
+<li>Đề có điều kiện |a[i] - a[j]| ≤ k → sort rồi duyệt liên tiếp, break sớm</li>
+</ul>
+</div>
+<pre>
+// Cách 1: Dùng pair (sắp theo first, rồi second)
+pair&lt;int, int&gt; a[100005];
+sort(a, a + n);  // Tự động sắp theo first, rồi second
+
+// Cách 2: Dùng struct + hàm so sánh
+struct SinhVien {
+    string ten;
+    int diem;
+};
+
+bool cmp(SinhVien a, SinhVien b) {
+    if (a.diem != b.diem) return a.diem > b.diem;  // Điểm giảm dần
+    return a.ten < b.ten;  // Tên tăng dần (alphabet)
+}
+
+sort(sv, sv + n, cmp);
+</pre>
+
+<h3>4.5. Mảng đếm</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "phần tử xuất hiện nhiều nhất" (giá trị ≤ 10⁶)</li>
+<li>Đề hỏi: "kiểm tra có 2 phần tử bằng nhau không"</li>
+<li>Đề hỏi: "số lần xuất hiện của từng ký tự"</li>
+<li>Thay thế map khi giá trị nhỏ → nhanh hơn nhiều</li>
+</ul>
+</div>
+<pre>
+// Nếu giá trị nhỏ (≤ 10⁶): dùng mảng
+int dem[1000001] = {0};
+for (int i = 0; i < n; i++)
+    dem[a[i]]++;
+
+// Tìm phần tử xuất hiện nhiều nhất
+int maxCnt = 0, ans = 0;
+for (int i = 0; i <= 1000000; i++)
+    if (dem[i] > maxCnt) {
+        maxCnt = dem[i];
+        ans = i;
+    }
+</pre>
+
+<h3>4.6. Loại bỏ trùng lặp</h3>
+<pre>
+sort(a, a + n);
+int m = unique(a, a + n) - a;  // m = số phần tử distinct
+// a[0..m-1] chứa các phần tử không trùng
+</pre>
+
+<!-- ========== PHẦN 5 ========== -->
+<h2 class="orange">5. XỬ LÝ TRƯỜNG HỢP ĐẶC BIỆT</h2>
+
+<div class="warn">
+<strong>LUÔN TEST CÁC TRƯỜNG HỢP SAU:</strong>
+</div>
+
+<table>
+<tr><th>Trường hợp</th><th>Ví dụ</th><th>Cách xử lý</th></tr>
+<tr><td>n = 0</td><td>Mảng rỗng</td><td>Kiểm tra trước khi xử lý</td></tr>
+<tr><td>n = 1</td><td>Chỉ 1 phần tử</td><td>Thường có đáp án đặc biệt</td></tr>
+<tr><td>Tất cả bằng nhau</td><td>a = {5, 5, 5, 5}</td><td>Kiểm tra công thức</td></tr>
+<tr><td>Đã sắp xếp tăng</td><td>a = {1, 2, 3, 4}</td><td>Kiểm tra công thức</td></tr>
+<tr><td>Đã sắp xếp giảm</td><td>a = {4, 3, 2, 1}</td><td>Kiểm tra công thức</td></tr>
+<tr><td>Không có đáp án</td><td>Không thỏa điều kiện</td><td>In -1 hoặc "NO"</td></tr>
+<tr><td>Số âm</td><td>a = {-5, 3, -2}</td><td>Kiểm tra logic với số âm</td></tr>
+<tr><td>Số 0</td><td>Chia cho 0, nhân với 0</td><td>Kiểm tra trước khi chia</td></tr>
+</table>
+
+<pre>
+// Mẫu xử lý trường hợp đặc biệt
+if (n == 0) {
+    cout << 0;  // hoặc -1, tùy đề
+    return 0;
+}
+
+if (n == 1) {
+    cout << a[0];  // hoặc xử lý riêng
+    return 0;
+}
+
+// Kiểm tra chia cho 0
+if (b == 0) {
+    cout << -1;
+    return 0;
+}
+</pre>
+
+<!-- ========== PHẦN 6 ========== -->
+<h2 class="purple">6. CÁC HÀM HAY DÙNG</h2>
+
+<h3>6.1. Toán học cơ bản</h3>
+<pre>
+// Ước chung lớn nhất
+int gcd = __gcd(a, b);
+
+// Bội chung nhỏ nhất (tránh tràn số)
+long long lcm = (long long)a / __gcd(a, b) * b;
+
+// Giá trị tuyệt đối
+int x = abs(a - b);
+
+// Min, max nhiều số
+int minVal = min({a, b, c, d});
+int maxVal = max({a, b, c, d});
+
+// Hoán đổi
+swap(a, b);
+</pre>
+
+<h3>6.2. Kiểm tra số nguyên tố</h3>
+<pre>
+bool laSNT(long long n) {
+    if (n < 2) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false;
+    for (long long i = 3; i * i <= n; i += 2)
+        if (n % i == 0) return false;
+    return true;
+}
+</pre>
+
+<h3>6.3. Sàng nguyên tố (tìm tất cả SNT đến N)</h3>
+<pre>
+bool snt[10000001];  // snt[i] = true nếu i nguyên tố
+
+void sang(int n) {
+    for (int i = 0; i <= n; i++) snt[i] = true;
+    snt[0] = snt[1] = false;
+    for (int i = 2; i * i <= n; i++)
+        if (snt[i])
+            for (int j = i * i; j <= n; j += i)
+                snt[j] = false;
+}
+</pre>
+
+<h3>6.4. Lũy thừa nhanh (a^n mod m)</h3>
+<pre>
+long long power(long long a, long long n, long long mod) {
+    long long res = 1;
+    a %= mod;
+    while (n > 0) {
+        if (n % 2 == 1)           // n lẻ
+            res = res * a % mod;
+        a = a * a % mod;
+        n /= 2;
+    }
+    return res;
+}
+</pre>
+
+<h3>6.5. Chia làm tròn lên (với số nguyên)</h3>
+<pre>
+// Chia a cho b, làm tròn lên
+int lamTronLen = (a + b - 1) / b;
+
+// Ví dụ: 7/3 = 2, nhưng (7+2)/3 = 3
+</pre>
+
+<h3>6.6. Xử lý String</h3>
+<pre>
+string s = "hello world";
+
+// Độ dài
+int len = s.length();  // hoặc s.size() → 11
+
+// Lấy chuỗi con: s.substr(vị_trí_bắt_đầu, độ_dài)
+string sub = s.substr(0, 5);   // "hello"
+string sub2 = s.substr(6);     // "world" (từ vị trí 6 đến hết)
+
+// Tìm vị trí chuỗi con
+int pos = s.find("world");     // 6 (vị trí đầu tiên tìm thấy)
+if (s.find("abc") == string::npos)  // Không tìm thấy
+    cout << "Khong co";
+
+// Đảo ngược chuỗi
+reverse(s.begin(), s.end());   // "dlrow olleh"
+
+// Chuyển số → chuỗi
+string str = to_string(123);   // "123"
+
+// Chuyển chuỗi → số
+int n = stoi("456");           // 456
+long long m = stoll("123456789012");
+
+// So sánh chuỗi (theo alphabet)
+if (s1 < s2) { }  // s1 đứng trước s2 theo alphabet
+
+// Nối chuỗi
+string s3 = s1 + s2;
+s1 += s2;
+
+// Kiểm tra rỗng
+if (s.empty()) { }
+</pre>
+
+<h3>6.7. Xử lý Vector</h3>
+<pre>
+vector&lt;int&gt; v = {3, 1, 4, 1, 5};
+
+// Kích thước
+int n = v.size();
+
+// Thêm/xóa cuối
+v.push_back(9);     // {3, 1, 4, 1, 5, 9}
+v.pop_back();       // {3, 1, 4, 1, 5}
+
+// Truy cập
+int first = v.front();  // 3
+int last = v.back();    // 5
+int x = v[2];           // 4
+
+// Sắp xếp
+sort(v.begin(), v.end());               // Tăng dần: {1, 1, 3, 4, 5}
+sort(v.begin(), v.end(), greater&lt;int&gt;());  // Giảm dần: {5, 4, 3, 1, 1}
+
+// Đảo ngược
+reverse(v.begin(), v.end());
+
+// Tìm min/max
+int minV = *min_element(v.begin(), v.end());
+int maxV = *max_element(v.begin(), v.end());
+
+// Tính tổng
+long long sum = accumulate(v.begin(), v.end(), 0LL);
+
+// Đếm số lần xuất hiện
+int cnt = count(v.begin(), v.end(), 1);  // Đếm số 1
+
+// Xóa trùng (SAU KHI SORT)
+sort(v.begin(), v.end());
+v.erase(unique(v.begin(), v.end()), v.end());
+
+// Khởi tạo với giá trị
+vector&lt;int&gt; a(n, 0);           // n phần tử, tất cả = 0
+vector&lt;vector&lt;int&gt;&gt; dp(n, vector&lt;int&gt;(m, -1));  // Mảng 2D n×m
+
+// Xóa toàn bộ
+v.clear();
+</pre>
+
+<h3>6.8. Pair</h3>
+<pre>
+pair&lt;int, int&gt; p = {3, 5};
+int x = p.first;   // 3
+int y = p.second;  // 5
+
+// Tạo pair
+pair&lt;int, int&gt; p2 = make_pair(1, 2);
+
+// Mảng pair - TỰ ĐỘNG SẮP XẾP theo first, rồi second
+vector&lt;pair&lt;int, int&gt;&gt; v;
+v.push_back({3, 5});
+v.push_back({1, 2});
+v.push_back({3, 1});
+sort(v.begin(), v.end());  // {1,2}, {3,1}, {3,5}
+
+// Sắp xếp theo second (tùy chỉnh)
+sort(v.begin(), v.end(), [](auto a, auto b) {
+    return a.second < b.second;
+});
+</pre>
+
+<h3>6.9. Đọc dữ liệu nâng cao</h3>
+<pre>
+// Đọc dòng có khoảng trắng
+string line;
+getline(cin, line);  // Đọc cả dòng (kể cả khoảng trắng)
+
+// CHÚ Ý: Sau khi dùng cin >> n, cần bỏ ký tự '\n' trước getline
+cin >> n;
+cin.ignore();        // Bỏ qua '\n' còn sót
+getline(cin, line);
+
+// Đọc đến hết file (không biết số lượng test)
+while (cin >> n) {
+    // Xử lý từng test
+}
+
+// Đọc ma trận ký tự
+char a[105][105];
+for (int i = 0; i < m; i++)
+    for (int j = 0; j < n; j++)
+        cin >> a[i][j];
+
+// Hoặc đọc từng dòng string
+string row[105];
+for (int i = 0; i < m; i++)
+    cin >> row[i];
+// Truy cập: row[i][j]
+</pre>
+
+<h3>6.10. Kadane - Tìm đoạn con tổng lớn nhất</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "đoạn con có tổng lớn nhất" (Max subarray sum)</li>
+<li>Đề hỏi: "tổng max của đoạn liên tiếp"</li>
+<li>Biến thể: max hiệu 2 tổng tiền tố, max tích</li>
+</ul>
+</div>
+<pre>
+// Tìm đoạn con có tổng lớn nhất (có thể âm)
+long long maxSum = a[0], cur = a[0];
+for (int i = 1; i < n; i++) {
+    cur = max((long long)a[i], cur + a[i]);  // Tiếp tục hoặc bắt đầu mới
+    maxSum = max(maxSum, cur);
+}
+cout << maxSum;
+
+// Nếu cần vị trí đoạn
+int L = 0, R = 0, tempL = 0;
+long long maxSum = a[0], cur = a[0];
+for (int i = 1; i < n; i++) {
+    if (cur + a[i] >= a[i]) {
+        cur += a[i];
+    } else {
+        cur = a[i];
+        tempL = i;
+    }
+    if (cur > maxSum) {
+        maxSum = cur;
+        L = tempL;
+        R = i;
+    }
+}
+</pre>
+
+<h3>6.11. Bitmask - Duyệt tập con</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "tập con có tổng = k", "tập con thỏa điều kiện X"</li>
+<li>Đề cho N ≤ 20 (vì 2²⁰ ≈ 10⁶ vẫn chạy được)</li>
+<li>Cần thử tất cả tổ hợp chọn/không chọn</li>
+</ul>
+</div>
+<pre>
+// Duyệt tất cả 2^n tập con
+for (int mask = 0; mask < (1 << n); mask++) {
+    // mask biểu diễn tập con
+    for (int i = 0; i < n; i++) {
+        if (mask & (1 << i)) {  // Bit thứ i bật → a[i] thuộc tập con
+            cout << a[i] << " ";
+        }
+    }
+    cout << "\n";
+}
+
+// Các phép toán bit
+int setBit = mask | (1 << i);     // Bật bit thứ i
+int clearBit = mask & ~(1 << i);  // Tắt bit thứ i
+int toggleBit = mask ^ (1 << i);  // Đảo bit thứ i
+bool isSet = mask & (1 << i);     // Kiểm tra bit thứ i
+int cntBit = __builtin_popcount(mask);  // Đếm số bit 1
+</pre>
+
+<h3>6.12. Sinh hoán vị</h3>
+<pre>
+// Sinh tất cả hoán vị của mảng
+vector&lt;int&gt; a = {1, 2, 3};
+sort(a.begin(), a.end());  // PHẢI sort trước
+
+do {
+    for (int x : a) cout << x << " ";
+    cout << "\n";
+} while (next_permutation(a.begin(), a.end()));
+// In: 1 2 3, 1 3 2, 2 1 3, 2 3 1, 3 1 2, 3 2 1
+</pre>
+
+<h3>6.13. Phân tích thừa số nguyên tố</h3>
+<pre>
+// Phân tích n thành thừa số nguyên tố
+vector&lt;pair&lt;int, int&gt;&gt; phanTich(int n) {
+    vector&lt;pair&lt;int, int&gt;&gt; res;  // {số nguyên tố, số mũ}
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            int cnt = 0;
+            while (n % i == 0) {
+                n /= i;
+                cnt++;
+            }
+            res.push_back({i, cnt});
+        }
+    }
+    if (n > 1) res.push_back({n, 1});
+    return res;
+}
+
+// Đếm số ước của n
+int demUoc(int n) {
+    int cnt = 0;
+    for (int i = 1; i * i <= n; i++) {
+        if (n % i == 0) {
+            cnt++;
+            if (i != n / i) cnt++;
+        }
+    }
+    return cnt;
+}
+</pre>
+
+<!-- ========== PHẦN 7 ========== -->
+<h2 class="blue">7. CÁCH DÙNG CẤU TRÚC DỮ LIỆU</h2>
+
+<h3>7.1. Set</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Cần lưu các giá trị KHÔNG TRÙNG</li>
+<li>Đề hỏi: "có bao nhiêu giá trị khác nhau"</li>
+<li>Đề hỏi: "kiểm tra x có xuất hiện không"</li>
+<li>Cần tìm min/max trong tập hợp động</li>
+</ul>
+</div>
+<pre>
+set&lt;int&gt; s;
+s.insert(5);         // Thêm: {5}
+s.insert(3);         // Thêm: {3, 5}
+s.insert(5);         // Không thêm (đã có): {3, 5}
+s.erase(3);          // Xóa: {5}
+
+if (s.count(5))      // Kiểm tra có 5 không → 1 (có)
+    cout << "Co";
+
+int minVal = *s.begin();   // Phần tử nhỏ nhất
+int maxVal = *s.rbegin();  // Phần tử lớn nhất
+</pre>
+
+<h3>7.2. Map</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đếm tần suất khi giá trị QUÁ LỚN (> 10⁶) hoặc là chuỗi</li>
+<li>Lưu vị trí xuất hiện đầu tiên của mỗi giá trị</li>
+<li>Lưu điểm của học sinh theo tên (key = string)</li>
+<li>ThậT CHẬM hơn mảng đếm! Chỉ dùng khi bắt buộc</li>
+</ul>
+</div>
+<pre>
+map&lt;string, int&gt; diem;
+diem["An"] = 9;
+diem["Binh"] = 8;
+
+if (diem.count("An"))       // Kiểm tra có key "An" không
+    cout << diem["An"];     // In: 9
+
+// Duyệt map
+for (auto &p : diem)
+    cout << p.first << ": " << p.second << "\n";
+</pre>
+
+<h3>7.3. Priority Queue (Heap)</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "lấy phần tử lớn nhất/nhỏ nhất liên tục"</li>
+<li>Thuật toán Dijkstra tìm đường ngắn nhất</li>
+<li>Bài trộn k dãy đã sắp xếp</li>
+<li>Bài xử lý sự kiện theo thứ tự ưu tiên</li>
+</ul>
+</div>
+<pre>
+// Max heap (mặc định) - phần tử lớn nhất ở top
+priority_queue&lt;int&gt; maxPQ;
+maxPQ.push(5);
+maxPQ.push(3);
+maxPQ.push(8);
+cout << maxPQ.top();  // 8
+maxPQ.pop();          // Xóa 8
+
+// Min heap - phần tử nhỏ nhất ở top
+priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minPQ;
+minPQ.push(5);
+minPQ.push(3);
+cout << minPQ.top();  // 3
+</pre>
+
+<h3>7.4. Deque</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "min/max trong cửa sổ kích thước k trượt qua mảng"</li>
+<li>Cần thêm/xóa ở CẢ HAI ĐẦU (không chỉ 1 đầu)</li>
+<li>Mô phỏng hàng đợi 2 đầu</li>
+</ul>
+</div>
+<pre>
+deque&lt;int&gt; dq;
+dq.push_back(1);     // Thêm cuối: {1}
+dq.push_front(2);    // Thêm đầu: {2, 1}
+dq.push_back(3);     // Thêm cuối: {2, 1, 3}
+
+cout << dq.front();  // 2
+cout << dq.back();   // 3
+
+dq.pop_front();      // Xóa đầu: {1, 3}
+dq.pop_back();       // Xóa cuối: {1}
+</pre>
+
+<h3>7.5. Multiset</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề cho phép giá trị TRÙNG (set không được)</li>
+<li>Đề hỏi: "tìm túi nhỏ nhất đủ chứa mẫu kích thước x" (ghép cặp greedy)</li>
+<li>Cần tìm + xóa nhanh (lower_bound + erase)</li>
+<li>Tìm phần tử gần x nhất trong tập hợp</li>
+</ul>
+</div>
+<pre>
+multiset&lt;int&gt; ms;
+ms.insert(5);  ms.insert(3);  ms.insert(5);  // {3, 5, 5}
+
+// Tìm phần tử >= x (rất nhanh)
+auto it = ms.lower_bound(4);  // trỏ đến 5
+if (it != ms.end()) {
+    cout << *it;     // 5
+    ms.erase(it);    // XÓA 1 phần tử (không phải tất cả)
+}
+
+// Ứng dụng: Ghép cặp greedy
+// Tìm túi nhỏ nhất đủ chứa mẫu có kích thước w
+for (int i = 0; i < n; i++) {
+    auto it = ms.lower_bound(mau[i]);
+    if (it != ms.end()) {
+        tong += giaTri[i];
+        ms.erase(it);  // Đánh dấu túi đã dùng
+    }
+}
+</pre>
+
+<h3>7.6. DSU (Disjoint Set Union)</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "2 phần tử có cùng nhóm không"</li>
+<li>Đề hỏi: "có bao nhiêu nhóm/thành phần liên thông"</li>
+<li>Bài ghép các cặp lại với nhau (union)</li>
+<li>Thuật toán Kruskal tìm cây khung nhỏ nhất</li>
+</ul>
+</div>
+<pre>
+int cha[100005], hang[100005];
+
+void khoiTao(int n) {
+    for (int i = 1; i <= n; i++) {
+        cha[i] = i;
+        hang[i] = 0;
+    }
+}
+
+int tim(int u) {
+    if (cha[u] != u) cha[u] = tim(cha[u]);  // Nén đường
+    return cha[u];
+}
+
+void hopNhat(int u, int v) {
+    int pu = tim(u), pv = tim(v);
+    if (pu == pv) return;  // Đã cùng nhóm
+    
+    // Union by rank
+    if (hang[pu] < hang[pv]) swap(pu, pv);
+    cha[pv] = pu;
+    if (hang[pu] == hang[pv]) hang[pu]++;
+}
+
+bool cungNhom(int u, int v) {
+    return tim(u) == tim(v);
+}
+</pre>
+
+<h3>7.7. BIT (Binary Indexed Tree / Fenwick Tree)</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "tổng đoạn [L, R]" + "cập nhật giá trị a[i]" (nhiều lần)</li>
+<li>Đề hỏi: "đếm số nghịch thế trong mảng"</li>
+<li>Prefix Sum nhưng CÓ CẬP NHẬT (Prefix Sum thường không cập nhật được)</li>
+</ul>
+</div>
+<pre>
+long long bit[100005];
+int n;
+
+void capNhat(int i, long long delta) {
+    for (; i <= n; i += i & (-i))
+        bit[i] += delta;
+}
+
+long long tong(int i) {
+    long long s = 0;
+    for (; i > 0; i -= i & (-i))
+        s += bit[i];
+    return s;
+}
+
+// Tổng đoạn [l, r]
+long long tongDoan(int l, int r) {
+    return tong(r) - tong(l - 1);
+}
+
+// Khởi tạo từ mảng a[]
+void xayDung(int mang[], int n) {
+    for (int i = 1; i <= n; i++)
+        capNhat(i, mang[i]);
+}
+</pre>
+
+<h3>7.8. Sliding Window với Deque</h3>
+<div class="warn"><strong>KHI NÀO DÙNG:</strong>
+<ul>
+<li>Đề hỏi: "max/min trong mỗi cửa sổ kích thước k"</li>
+<li>Đề hỏi: "với mỗi vị trí, tìm max trong k phần tử gần nhất"</li>
+<li>Bài cần duyệt qua mảng, mỗi bước cần max/min của đoạn</li>
+</ul>
+</div>
+<pre>
+// Tìm MAX trong mỗi cửa sổ kích thước k
+deque&lt;int&gt; dq;  // Lưu CHỈ SỐ, không phải giá trị
+
+for (int i = 0; i < n; i++) {
+    // Xóa các phần tử ngoài cửa sổ
+    while (!dq.empty() && dq.front() <= i - k)
+        dq.pop_front();
+    
+    // Xóa các phần tử nhỏ hơn a[i] (không bao giờ là max)
+    while (!dq.empty() && a[dq.back()] <= a[i])
+        dq.pop_back();
+    
+    dq.push_back(i);
+    
+    // Từ i = k-1 trở đi, in max của cửa sổ
+    if (i >= k - 1)
+        cout << a[dq.front()] << " ";  // Max của cửa sổ
+}
+</pre>
+
+<!-- ========== PHẦN 8 ========== -->
+<h2 class="green">8. CHECKLIST TRƯỚC KHI NỘP</h2>
+
+<div class="good">
+<strong>KIỂM TRA:</strong>
+<ol>
+<li>☐ Tên file .INP/.OUT chính xác</li>
+<li>☐ Dùng <code>long long</code> cho số lớn</li>
+<li>☐ Mảng đủ kích thước</li>
+<li>☐ Test n=0, n=1</li>
+<li>☐ Test tất cả phần tử bằng nhau</li>
+<li>☐ Test có số âm (nếu đề cho phép)</li>
+<li>☐ Test không có đáp án</li>
+<li>☐ Compile không lỗi, warning</li>
+<li>☐ Chạy đúng input mẫu</li>
+<li>☐ Output đúng format</li>
+</ol>
+</div>
+
+<!-- ========== PHẦN 9 ========== -->
+<h2 class="orange">9. CHIẾN THUẬT LÀM BÀI (ĐỀ HCM - 3 BÀI)</h2>
+
+<h3>9.1. Phân bổ thời gian (150 phút)</h3>
+<table>
+<tr><th>Giai đoạn</th><th>Thời gian</th><th>Mục tiêu</th></tr>
+<tr><td>Đọc cả 3 đề</td><td>10 phút</td><td>Xác định độ khó, chọn thứ tự làm</td></tr>
+<tr><td><strong>Bài 1</strong></td><td>30-35 phút</td><td><span class="green">100%</span> - Không được sai</td></tr>
+<tr><td><strong>Bài 2</strong></td><td>45-55 phút</td><td><span class="green">70-100%</span> - Cẩn thận overflow</td></tr>
+<tr><td><strong>Bài 3</strong></td><td>40-50 phút</td><td>Ưu tiên subtask, 2 vòng for nếu không ra thuật nhanh</td></tr>
+<tr><td>Kiểm tra lại</td><td>15-20 phút</td><td>Test mẫu, edge case, tên file</td></tr>
+</table>
+
+<h3>9.2. Chiến thuật từng bài</h3>
+<div class="good">
+<strong>BÀI 1 - PHẢI ĂN TRỌN:</strong> Đề dễ, time limit rộng → ưu tiên đúng trước nhanh sau
+</div>
+<div class="warn">
+<strong>BÀI 2 - CẨN THẬN:</strong> N lên đến 10⁵ → cần thuật nhanh (sort + 1 vòng), chú ý long long
+</div>
+<div class="bad">
+<strong>BÀI 3 - LẤY ĐIỂM TỮNG PHẦN:</strong> Không ra thuật tối ưu → làm subtask N nhỏ (2 vòng for, duyệt tập con)
+</div>
+
+<h3>9.3. Khi bí không ra thuật tối ưu</h3>
+<div class="bad">
+<strong>KHÔNG BỎ CUỘC!</strong> Làm subtask để lấy điểm từng phần:
+</div>
+<table>
+<tr><th>Cách làm</th><th>Khi nào dùng</th><th>Điểm kỳ vọng</th></tr>
+<tr><td>Vét cạn 2 vòng for</td><td>Đề có subtask N ≤ 1000 hoặc N ≤ 5000</td><td>40-60%</td></tr>
+<tr><td>Vét cạn duyệt tập con</td><td>Đề có subtask N ≤ 15 hoặc N ≤ 20</td><td>30-50%</td></tr>
+<tr><td>Tham lam (chưa chứng minh)</td><td>Bài tối ưu mà không nghĩ ra DP</td><td>30-50%</td></tr>
+<tr><td>Sinh ngẫu nhiên</td><td>Không có ý tưởng gì cả</td><td>10-20%</td></tr>
+</table>
+
+<h3>9.4. Debug nhanh</h3>
+<pre>
+// In ra console (không ảnh hưởng file output)
+cerr << "n=" << n << " sum=" << sum << endl;
+for (int i = 0; i < n; i++) cerr << a[i] << " ";
+</pre>
+
+<!-- ========== PHẦN 10 - NGUYÊN TẮC CHUNG ========== -->
+<h2 class="purple">10. NGUYÊN TẮC CHUNG ĐỂ ĂN HẾT TEST</h2>
+
+<h3>10.1. XỬ LÝ SỐ LỚN</h3>
+<table>
+<tr><th>Vấn đề</th><th>Giải pháp</th></tr>
+<tr><td>Tổng n số lớn</td><td>Dùng <code>long long</code> cho biến tổng</td></tr>
+<tr><td>Nhân 2 số</td><td>Ép kiểu trước: <code>(long long)a * b</code></td></tr>
+<tr><td>So sánh tích lớn a×b với c×d</td><td>Dùng <code>(double)a*b > (double)c*d</code></td></tr>
+<tr><td>Modulo kết quả</td><td>Mod SAU MỖI phép cộng/nhân, tránh tràn giữa chừng</td></tr>
+<tr><td>Số âm khi trừ mod</td><td><code>((a - b) % MOD + MOD) % MOD</code></td></tr>
+</table>
+
+<h3>10.2. CHẠY NHANH - GIẢM ĐỘ PHỨC TẠP</h3>
+<table>
+<tr><th>Kỹ thuật</th><th>Khi nào dùng</th><th>Hiệu quả</th></tr>
+<tr><td>Sort + break sớm</td><td>Đề có điều kiện |a[i]-a[j]| ≤ k → sort rồi duyệt liên tiếp</td><td>2 vòng for → nhanh hơn</td></tr>
+<tr><td>Two Pointers</td><td>Đề hỏi "đoạn dài nhất tổng ≤ K", "đếm cặp tổng = K"</td><td>2 vòng for → 1 vòng for</td></tr>
+<tr><td>Prefix Sum</td><td>Đề hỏi tổng đoạn [L,R] nhiều lần hoặc "tìm đoạn tổng = k"</td><td>Tính lại mỗi lần → tính sẵn</td></tr>
+<tr><td>Binary Search</td><td>Đề cho mảng sort sẵn hoặc "tìm giá trị nhỏ nhất thỏa X"</td><td>Duyệt hết → chia đôi</td></tr>
+<tr><td>Mảng đếm thay map</td><td>Đề cho giá trị nhỏ (≤ 10⁶) và cần đếm tần suất</td><td>Chậm → tức thì</td></tr>
+<tr><td>Multiset thay duyệt</td><td>Đề cần tìm phần tử gần x nhất + xóa (ghép cặp greedy)</td><td>Duyệt hết → rất nhanh</td></tr>
+<tr><td>BIT/Segment Tree</td><td>Đề có cập nhật + truy vấn tổng đoạn (cả 2 thao tác)</td><td>Duyệt hết → rất nhanh</td></tr>
+</table>
+
+<h3>10.3. TỐI ƯU BỘ NHỚ</h3>
+<table>
+<tr><th>Vấn đề</th><th>Giải pháp</th></tr>
+<tr><td>Mảng 2D quá lớn</td><td>DP cuộn: chỉ lưu 2 hàng thay vì toàn bảng</td></tr>
+<tr><td>Giá trị lớn (10⁹) nhưng ít giá trị</td><td>Nén tọa độ về [1, n]</td></tr>
+<tr><td>Chỉ cần xử lý ký tự xuất hiện</td><td>Lọc trước, không duyệt 26 ký tự</td></tr>
+<tr><td>Đệ quy sâu (n > 10⁴)</td><td>Chuyển sang stack để tránh tràn</td></tr>
+</table>
+
+<h3>10.4. BIẾN ĐỔI BÀI TOÁN</h3>
+<div class="good">
+<strong>NGUYÊN TẮC:</strong> Nếu không biết giải trực tiếp → biến đổi về bài toán quen thuộc.
+</div>
+<table>
+<tr><th>Đề bài hỏi</th><th>Cách biến đổi</th><th>Bài toán quen thuộc</th></tr>
+<tr><td>Đoạn có trung bình = k</td><td>Trừ k cho mỗi phần tử</td><td>Tìm đoạn tổng = 0</td></tr>
+<tr><td>Đếm cặp (i,j) có a[j] - a[i] = k</td><td>Với mỗi a[i], tìm xem có a[i]+k không</td><td>Đếm bằng map/mảng</td></tr>
+<tr><td>Đoạn dài nhất có số 0 = số 1</td><td>Đặt 0 → -1, 1 → +1</td><td>Tìm đoạn tổng = 0</td></tr>
+<tr><td>Max (số lần xuất hiện c1 - c2) trong đoạn</td><td>Đặt c1 → +1, c2 → -1, còn lại → 0</td><td>Kadane: max subarray sum</td></tr>
+</table>
+
+<h3>10.5. CÁC MẪU CODE HAY DÙNG</h3>
+
+<pre>
+// 1. LƯU VỊ TRÍ ĐẦU TIÊN (tìm đoạn dài nhất)
+map&lt;long long, int&gt; viTri;
+viTri[0] = 0;  // Khởi tạo cho đoạn từ đầu
+for (int i = 0; i < n; i++) {
+    tong += a[i];
+    if (viTri.count(tong)) {
+        maxLen = max(maxLen, i + 1 - viTri[tong]);
+    } else {
+        viTri[tong] = i + 1;  // Chỉ lưu lần đầu
+    }
+}
+
+// 2. TỔNG CỘNG DỒN (cập nhật hàng loạt)
+long long tongDaCong = 0;
+for (int i = 0; i < n; i++) {
+    long long giaTriThuc = a[i] + tongDaCong;
+    // Xử lý...
+    tongDaCong += delta;  // Delta ảnh hưởng tất cả phần tử sau
+}
+
+// 3. NÉN TỌA ĐỘ
+vector&lt;int&gt; vals = a;
+sort(vals.begin(), vals.end());
+vals.erase(unique(vals.begin(), vals.end()), vals.end());
+for (int &x : a)
+    x = lower_bound(vals.begin(), vals.end(), x) - vals.begin() + 1;
+
+// 4. MULTISET TÌM + XÓA NHANH
+multiset&lt;int&gt; s;
+auto it = s.lower_bound(x);  // Tìm >= x
+if (it != s.end()) {
+    // Dùng *it
+    s.erase(it);  // Xóa 1 phần tử
+}
+
+// 5. ĐẾM LIÊN TIẾP SAU KHI SORT
+sort(a, a + n);
+int maxCnt = 1, cnt = 1;
+for (int i = 1; i < n; i++) {
+    if (a[i] == a[i-1]) cnt++;
+    else { maxCnt = max(maxCnt, cnt); cnt = 1; }
+}
+maxCnt = max(maxCnt, cnt);
+
+// 6. PREFIX SUM 2D (đếm trong hình chữ nhật)
+// Xây: sum[i][j] = a[i][j] + sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1]
+// Hỏi: sum[r2][c2] - sum[r1-1][c2] - sum[r2][c1-1] + sum[r1-1][c1-1]
+</pre>
+
+<h3>10.6. TRÁNH SAI SÓT</h3>
+<div class="bad">
+<strong>LỖI THƯỜNG GẶP:</strong>
+</div>
+<table>
+<tr><th>Lỗi</th><th>Cách tránh</th></tr>
+<tr><td>Tràn số khi nhân</td><td>Ép kiểu <code>(long long)</code> TRƯỚC khi nhân</td></tr>
+<tr><td>Truy cập ngoài mảng</td><td>Khai báo mảng dư 5-10 phần tử</td></tr>
+<tr><td>Chia cho 0</td><td>Kiểm tra <code>if (b != 0)</code> trước khi chia</td></tr>
+<tr><td>Quên khởi tạo mảng</td><td>Dùng <code>memset</code> hoặc <code>fill</code></td></tr>
+<tr><td>n = 0 hoặc n = 1</td><td>Xử lý riêng ở đầu hàm</td></tr>
+<tr><td>Không có đáp án</td><td>Kiểm tra và in -1 hoặc "NO"</td></tr>
+<tr><td>File input rỗng</td><td><code>if (!(cin >> n)) return 0;</code></td></tr>
+<tr><td>Sai tên file</td><td>Kiểm tra kỹ HOA/thường</td></tr>
+</table>
+
+<h3>10.7. CHIẾN THUẬT LÀM BÀI</h3>
+<ol>
+<li><strong>Đọc kỹ đề:</strong> Xác định input/output, giới hạn N, loại bài</li>
+<li><strong>Ước lượng số bước chạy:</strong> N ≤ 10⁵ → cần thuật nhanh (sort + 1 vòng), N ≤ 10⁶ → chỉ được 1 vòng for</li>
+<li><strong>Nghĩ thuật toán:</strong> Nếu không ra ngay → làm subtask N nhỏ trước</li>
+<li><strong>Code cẩn thận:</strong> Kiểu dữ liệu, biên mảng, trường hợp đặc biệt</li>
+<li><strong>Test thử:</strong> Input mẫu + các edge case (n=0, n=1, tất cả bằng nhau)</li>
+<li><strong>Kiểm tra lại:</strong> Tên file, format output, xóa code debug</li>
+</ol>
+
+<h3>10.8. TỐI ƯU QUY HOẠCH ĐỘNG (DP)</h3>
+<table>
+<tr><th>Kỹ thuật</th><th>Khi nào dùng</th><th>Cách làm</th></tr>
+<tr><td>DP 1D thay 2D</td><td>dp[i][j] chỉ phụ thuộc dp[i-1][...]</td><td>Duyệt j ngược: <code>for (j = W; j >= w[i]; j--)</code></td></tr>
+<tr><td>Unbounded Knapsack</td><td>Mỗi vật dùng nhiều lần</td><td>Duyệt j xuôi: <code>for (j = w; j <= W; j++)</code></td></tr>
+<tr><td>Precompute max/min</td><td>Cần max/min trong đoạn khi DP</td><td>Tính trước <code>maxVal[i][j]</code> một lần</td></tr>
+<tr><td>DP trace</td><td>Cần in nghiệm, không chỉ giá trị</td><td>Lưu <code>trace[i][j]</code> để backtrack</td></tr>
+</table>
+<pre>
+// DP BALO 0/1 - Tối ưu bộ nhớ chỉ dùng 1 mảng
+// QUAN TRỌNG: Duyệt NGƯỢC để không dùng lại vật
+for (int i = 0; i < n; i++) {
+    for (int j = W; j >= w[i]; j--) {  // Duyệt NGƯỢC
+        dp[j] = max(dp[j], dp[j - w[i]] + v[i]);
+    }
+}
+
+// ĐỔI TIỀN (Unbounded) - Duyệt XUÔI
+// Mỗi loại tiền dùng không giới hạn
+for (int coin : coins) {
+    for (int j = coin; j <= n; j++) {  // Duyệt XUÔI
+        dp[j] = min(dp[j], dp[j - coin] + 1);
+    }
+}
+</pre>
+</body>
+</html>
