@@ -80,7 +80,7 @@
 </h1>
 
 <p style="text-align: center; margin: -10px 0 15px 0; font-size: 12pt;">
-    <span style="background: #8e44ad; color: #fff; padding: 5px 16px; border-radius: 15px; font-weight: bold;">Trưởng môn nhân: <span style="color: #f1c40f;">Hungnq77</span> — Môn phái <span style="color: #f1c40f;">Code Lụi</span></span>
+    <span style="background: #8e44ad; color: #fff; padding: 5px 16px; border-radius: 15px; font-weight: bold; white-space: nowrap;">Trưởng môn nhân: <span style="color: #f1c40f;">Hungnq77</span> — Môn phái <span style="color: #f1c40f;">Code Lụi</span></span>
 </p>
 
 <!-- ===================== MỤC LỤC ===================== -->
@@ -100,25 +100,20 @@
 <!-- ██████████████████████████████████████████████████████ -->
 <div class="tang tang-1" id="tang1">TẦNG 1: KHÔNG MẤT ĐIỂM OAN<small>Sai ở đây = mất 50-100% điểm mà không biết tại sao</small></div>
 
-<h2 class="red">1.1. ĐỌC/GHI FILE — Sai = 0 điểm toàn bài</h2>
-
-<div class="bad">
-<strong>⚠ 99% đề thi HSG yêu cầu đọc/ghi file. Sai tên file = 0 điểm!</strong>
-</div>
+<h2 class="red">1.1. MẪU CODE BẮT ĐẦU — Copy vào rồi code tiếp</h2>
 
 <pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 typedef long long ll;
-
 int main() {
-    ifstream in("TENBAI.INP");   // ← PHẢI đúng chính xác tên, HOA/thường
-    ofstream out("TENBAI.OUT");  // ← Kiểm tra kỹ .INP vs .OUT
+    ifstream in("TENBAI.INP");   // ← Đổi TENBAI thành tên bài, đúng HOA/thường
+    ofstream out("TENBAI.OUT");
 
-    // CODE Ở ĐÂY
+    // CODE GIẢI BÀI Ở ĐÂY...
 
-    in.close();                  // ← Đóng file input
-    out.close();                 // ← Đóng file output
+    in.close();
+    out.close();
     return 0;
 }
 </pre>
@@ -136,6 +131,23 @@ int main() {
 <!-- ─────────────────────────────────── -->
 <h2 class="red">1.2. TRÀN SỐ (Overflow) — Sai 50-70% test</h2>
 
+<h3>Giới hạn kiểu số nguyên</h3>
+<table>
+<tr><th>Kiểu</th><th>Số byte</th><th>Phạm vi</th><th>Giá trị max gần đúng</th></tr>
+<tr><td><code>int</code></td><td>4</td><td>−2,147,483,648 → 2,147,483,647</td><td>≈ <strong>2 × 10⁹</strong></td></tr>
+<tr><td><code>long long</code></td><td>8</td><td>−9,223,372,036,854,775,808 → 9,223,372,036,854,775,807</td><td>≈ <strong>9.2 × 10¹⁸</strong></td></tr>
+</table>
+<p><strong>Mẹo nhớ:</strong> <code>int</code> chứa được ~<strong>2 tỷ</strong>. Nếu kết quả có thể vượt 2 tỷ → dùng <code>long long</code>.</p>
+<p><strong>Hằng số có sẵn</strong> (trong <code>&lt;climits&gt;</code>, đã có khi dùng <code>bits/stdc++.h</code>):</p>
+<table>
+<tr><th>Hằng số</th><th>Giá trị</th><th>Hay dùng khi</th></tr>
+<tr><td><code>INT_MAX</code></td><td>2,147,483,647 ≈ 2×10⁹</td><td>Khởi tạo min: <code>int mn = INT_MAX;</code></td></tr>
+<tr><td><code>INT_MIN</code></td><td>−2,147,483,648</td><td>Khởi tạo max: <code>int mx = INT_MIN;</code></td></tr>
+<tr><td><code>LLONG_MAX</code></td><td>≈ 9.2×10¹⁸</td><td><code>long long mn = LLONG_MAX;</code></td></tr>
+<tr><td><code>LLONG_MIN</code></td><td>≈ −9.2×10¹⁸</td><td><code>long long mx = LLONG_MIN;</code></td></tr>
+</table>
+<p>⚠️ Tên đúng là <code>LLONG_MAX</code> (hai chữ L), không phải <code>LONG_MAX</code>.</p>
+
 <h3>Khi nào PHẢI dùng long long?</h3>
 <table>
 <tr><th>Tình huống</th><th>Ví dụ</th><th>Cách xử lý</th></tr>
@@ -143,7 +155,7 @@ int main() {
 <tr><td>Nhân 2 số (a, b ≤ 10⁹)</td><td>a × b có thể = 10¹⁸</td><td>Ép kiểu TRƯỚC khi nhân</td></tr>
 <tr><td>Bình phương (a² với a ≤ 10⁵)</td><td>Kết quả ≤ 10¹⁰</td><td><code>long long</code></td></tr>
 <tr><td>Prefix sum</td><td>Tổng dồn n số lớn</td><td>Mảng prefix dùng <code>long long</code></td></tr>
-<tr><td>Đếm số cách (kết quả rất lớn)</td><td>Tràn cả <code>long long</code></td><td>Modulo <code>1e9+7</code></td></tr>
+<tr><td>Đếm số cách (kết quả rất lớn)</td><td>Tràn cả <code>long long</code></td><td>Chia dư cho <code>10⁹+7</code> (xem bên dưới)</td></tr>
 </table>
 
 <h3>Cách nhân KHÔNG bị tràn</h3>
@@ -168,10 +180,21 @@ long long dung3 = (long long)a * (long long)b;
 if ((double)a * b > (double)c * d) { ... }
 </pre>
 
-<h3>Số âm khi trừ mod</h3>
+<h3>Modulo 10⁹+7 là gì?</h3>
+<p>Khi đề bài hỏi <em>"có bao nhiêu cách?"</em>, kết quả có thể cực lớn (hàng trăm chữ số), vượt cả <code>long long</code>. Lúc đó đề sẽ yêu cầu: <em>"In ra kết quả mod 10⁹+7"</em>.</p>
+<p><code>10⁹+7 = 1,000,000,007</code> — là một <strong>số nguyên tố</strong> rất lớn, được chọn vì: hai số mod này nhân nhau vẫn nằm gọn trong <code>long long</code>.</p>
 <pre>
-// Đảm bảo kết quả luôn dương khi trừ mod
-long long ans = ((a - b) % MOD + MOD) % MOD;
+const int MOD = 1e9 + 7;   // = 1000000007
+
+// Cộng mod
+ans = (a + b) % MOD;
+
+// Nhân mod (ép long long trước khi nhân!)
+ans = (1LL * a * b) % MOD;
+
+// Trừ mod — phải cộng MOD tránh bị âm
+// Vì (a - b) có thể ra số âm → % MOD vẫn âm → cộng MOD cho dương → % MOD lần nữa
+ans = ((a - b) % MOD + MOD) % MOD;
 </pre>
 
 <!-- ─────────────────────────────────── -->
@@ -404,22 +427,52 @@ Bước  L  R  sum   Giải thích                           maxLen
 
 <!-- A3 -->
 <h3>A3. Sliding Window — Cửa sổ trượt</h3>
-<p><em>💡 Hình dung: Bạn nhìn qua một cái cửa sổ chỉ thấy được k ngôi nhà liên tiếp trên phố. Bạn đi bộ — cửa sổ trượt sang phải: mất 1 nhà bên trái, thêm 1 nhà bên phải. Bạn muốn biết "nhà cao nhất đang thấy" nhưng không muốn đếm lại k nhà mỗi bước. Mẹo: ghi nhớ thông minh — chỉ giữ lại "ứng viên" có thể là nhà cao nhất, bỏ những nhà chắc chắn thấp hơn.</em></p>
+<p><em>💡 Hình dung: Bạn nhìn qua cửa sổ xe buýt, chỉ thấy đúng 3 ngôi nhà. Xe chạy tới — mất 1 nhà bên trái, thêm 1 bên phải. Muốn biết "nhà cao nhất đang thấy" mà không so lại cả 3 nhà mỗi lần → dùng deque giữ sẵn "ứng viên cao nhất".</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "max/min trong cửa sổ kích thước k", "đoạn có max - min ≤ K"</div>
 <div class="tip"><strong>Khác Two Pointers:</strong> Sliding Window thường duy trì thêm trạng thái (deque, map, tần suất) bên trong cửa sổ.</div>
+
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Max trong mỗi cửa sổ k=3, mảng [1, 3, 2, 5, 4]
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
+               Cửa sổ                Deque (ứng viên max)     Max
+
+Bước 1:   [1   3   2]  5   4        [3, 2]                   → <strong>3</strong>
+
+Bước 2:    1  [3   2   5]  4        [5]                      → <strong>5</strong>
+
+Bước 3:    1   3  [2   5   4]       [5, 4]                   → <strong>5</strong>
+
+Kết quả: 3  5  5
+
+Deque là gì? Là danh sách "ứng viên" đang đứng trong cửa sổ,
+xếp từ lớn → nhỏ. Đầu danh sách luôn là MAX hiện tại.
+
+Mỗi lần cửa sổ trượt sang phải 1 ô:
+  1. Phần tử mới bước VÀO cửa sổ:
+     → Nó lớn hơn ai trong deque → loại hết (thua chắc, không cần giữ)
+     → Rồi nó vào cuối deque
+  2. Phần tử cũ bước RA khỏi cửa sổ:
+     → Nếu nó đang đứng đầu deque → loại (hết hạn)
+  3. Đầu deque = MAX → in ra
+</pre>
+</div>
+
 <pre>
 // ═══ Max trong mỗi cửa sổ kích thước k ═══
-// Dùng deque đơn điệu giảm — O(n)
-deque&lt;int&gt; dq;  // Lưu CHỈ SỐ
-
+// Dùng deque giảm dần — O(n)
+deque&lt;int&gt; dq;  // Lưu chỉ số (vị trí), KHÔNG lưu giá trị
 for (int i = 0; i &lt; n; i++) {
-    while (!dq.empty() &amp;&amp; dq.front() &lt;= i - k)   // Ngoài cửa sổ
+    //1. Đầu deque ra khỏi cửa sổ rồi → bỏ
+    // Cửa sổ kết thúc ở i, bắt đầu ở i-k+1
+    // Nên vị trí ≤ i-k là ngoài cửa sổ
+    while (!dq.empty() &amp;&amp; dq.front() &lt;= i - k)
         dq.pop_front();
-    while (!dq.empty() &amp;&amp; a[dq.back()] &lt;= a[i])   // Nhỏ hơn → vô dụng
+    //2. Phần tử mới vào: đá hết ai nhỏ hơn nó
+    while (!dq.empty() &amp;&amp; a[dq.back()] &lt;= a[i])
         dq.pop_back();
-    dq.push_back(i);
+    dq.push_back(i);  // Cho phần tử mới vào cuối deque
+    //3. Đầu deque = max cửa sổ hiện tại
     if (i >= k - 1)
-        out &lt;&lt; a[dq.front()] &lt;&lt; " ";  // Max cửa sổ hiện tại
+        out &lt;&lt; a[dq.front()] &lt;&lt; " ";
 }
 </pre>
 
@@ -1964,6 +2017,35 @@ maxCnt = max(maxCnt, cnt);
 <tr><td><code>reverse(v.begin(), v.end())</code></td><td>Đảo ngược</td><td></td></tr>
 <tr><td><code>v.erase(unique(v.begin(), v.end()), v.end())</code></td><td>Loại trùng (sau sort)</td><td></td></tr>
 </table>
+
+<div class="tip"><strong>🔄MẢNG TĨNH vs VECTOR</strong>
+<table>
+<tr><th>Công việc</th><th>Mảng tĩnh <code>int a[N]</code></th><th>Vector <code>vector&lt;int&gt; v</code></th></tr>
+<tr><td>Sắp xếp tăng</td><td><code>sort(a, a+n)</code></td><td><code>sort(v.begin(), v.end())</code></td></tr>
+<tr><td>Sắp xếp giảm</td><td><code>sort(a, a+n, greater&lt;int&gt;())</code></td><td><code>sort(v.begin(), v.end(), greater&lt;int&gt;())</code></td></tr>
+<tr><td>Đảo ngược</td><td><code>reverse(a, a+n)</code></td><td><code>reverse(v.begin(), v.end())</code></td></tr>
+<tr><td>Tìm min</td><td><code>*min_element(a, a+n)</code></td><td><code>*min_element(v.begin(), v.end())</code></td></tr>
+<tr><td>Tìm max</td><td><code>*max_element(a, a+n)</code></td><td><code>*max_element(v.begin(), v.end())</code></td></tr>
+<tr><td>Tổng</td><td><code>accumulate(a, a+n, 0LL)</code></td><td><code>accumulate(v.begin(), v.end(), 0LL)</code></td></tr>
+<tr><td>Đếm x</td><td><code>count(a, a+n, x)</code></td><td><code>count(v.begin(), v.end(), x)</code></td></tr>
+<tr><td>Tìm vị trí ≥ x</td><td><code>lower_bound(a, a+n, x) <strong>- a</strong></code></td><td><code>lower_bound(v.begin(), v.end(), x) <strong>- v.begin()</strong></code></td></tr>
+<tr><td>Hoán vị tiếp</td><td><code>next_permutation(a, a+n)</code></td><td><code>next_permutation(v.begin(), v.end())</code></td></tr>
+<tr><td>Loại trùng (sau sort)</td><td><code>m = unique(a, a+n) - a</code></td><td><code>v.erase(unique(v.begin(), v.end()), v.end())</code></td></tr>
+<tr><td>Gán tất cả = x</td><td><code>fill(a, a+n, x)</code></td><td><code>fill(v.begin(), v.end(), x)</code> hoặc <code>v.assign(n, x)</code></td></tr>
+<tr><td>Số phần tử</td><td><code>n</code> (tự quản lý)</td><td><code>v.size()</code></td></tr>
+<tr><td>Kiểm tra rỗng</td><td><code>n == 0</code></td><td><code>v.empty()</code></td></tr>
+<tr><td>Thêm cuối</td><td><code>a[n] = x; n++;</code></td><td><code>v.push_back(x)</code></td></tr>
+<tr><td>Xóa cuối</td><td><code>n--;</code></td><td><code>v.pop_back()</code></td></tr>
+<tr><td>Phần tử đầu</td><td><code>a[0]</code></td><td><code>v.front()</code> hoặc <code>v[0]</code></td></tr>
+<tr><td>Phần tử cuối</td><td><code>a[n-1]</code></td><td><code>v.back()</code> hoặc <code>v[n-1]</code></td></tr>
+<tr><td>Truy cập vị trí i</td><td><code>a[i]</code></td><td><code>v[i]</code></td></tr>
+<tr><td>Xóa tất cả</td><td><code>n = 0;</code></td><td><code>v.clear()</code></td></tr>
+<tr><td>Gán 0 toàn bộ</td><td><code>memset(a, 0, sizeof(a))</code></td><td><code>v.assign(n, 0)</code></td></tr>
+<tr><td>Khai báo</td><td><code>int a[100005];</code> (ngoài main)</td><td><code>vector&lt;int&gt; v;</code> hoặc <code>vector&lt;int&gt; v(n);</code></td></tr>
+<tr><td>Nhập n phần tử</td><td><code>for(int i=0;i&lt;n;i++) fin&gt;&gt;a[i];</code></td><td><code>v.resize(n); for(int i=0;i&lt;n;i++) fin&gt;&gt;v[i];</code></td></tr>
+</table>
+<p><strong>Quy tắc nhớ:</strong> Mảng dùng <code>(a, a+n)</code> — Vector dùng <code>(v.begin(), v.end())</code>. Chỉ khác phần đầu và cuối, phần hàm y hệt nhau! Các thao tác thêm/xóa/size thì vector có hàm riêng, mảng phải tự quản lý biến <code>n</code>.</p>
+</div>
 
 <h3 id="ref-struct">📌 STRUCT (Kiểu dữ liệu tự định nghĩa)</h3>
 <p><em>💡 Hình dung: Tạo "hộp" chứa nhiều thông tin gom lại — VD: 1 học sinh có tên, điểm, lớp.</em></p>
