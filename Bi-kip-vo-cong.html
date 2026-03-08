@@ -792,9 +792,40 @@ for (int i = 0; i &lt; n; i++) {
 }
 </pre>
 
-<!-- B3 -->
-<h3>B3. Bitmask — Duyệt tập con</h3>
-<p><em>💡 Hình dung: Có 4 món: cơm, phở, bún, mì. Bạn muốn liệt kê TẤT CẢ các cách chọn (chọn hoặc không chọn mỗi món). Mỗi món gán 1 công tắc: bật = chọn, tắt = không. Ví dụ: cơm-BẬ̀T, phở-TẬ́T, bún-BẬ̀T, mì-TẬ́T = 1010₂ = số 10 → chọn cơm và bún. Duyệt số từ 0 đến 15 (= 2⁴−1) là duyệt hết mọi cách chọn!</em></p>
+<!-- B3: VÉT CẠN -->
+<h3>B3. Vét cạn (Brute Force) — Thử tất cả rồi chọn tốt nhất</h3>
+<p><em>💡 Hình dung: Quên chìa khóa ở phòng nào? Mở thử TẤT CẢ các phòng! Đó là vét cạn — đơn giản nhưng hiệu quả khi số lượng đủ nhỏ. <br>Trong thi HSG, vét cạn giúp lấy 30-50% điểm khi chưa nghĩ ra thuật toán tối ưu. Có 4 dạng chính:</em></p>
+
+<div class="tip"><strong>📊 CHỌN DẠNG VÉT CẠN NÀO?</strong>
+<table>
+<tr><th>Dạng</th><th>Ý tưởng</th><th>Giới hạn N</th><th>Số trường hợp</th></tr>
+<tr><td><strong>Duyệt vòng for</strong></td><td>2-3 vòng lồng nhau</td><td>N ≤ 5000</td><td>N², N³</td></tr>
+<tr><td><strong>Bitmask</strong></td><td>Chọn/không chọn mỗi phần tử</td><td>N ≤ 20</td><td>2ᴺ ≈ 10⁶</td></tr>
+<tr><td><strong>Sinh hoán vị</strong></td><td>Thử mọi thứ tự</td><td>N ≤ 10</td><td>N! ≈ 3.6×10⁶</td></tr>
+<tr><td><strong>Quay lui (Backtracking)</strong></td><td>Đệ quy + cắt nhánh</td><td>Tùy bài</td><td>Nhỏ hơn brute nhờ cắt</td></tr>
+</table>
+</div>
+
+<h4>Dạng 1: Duyệt vòng for — Đơn giản nhất</h4>
+<p><em>Dùng khi N nhỏ (≤ 5000) và cần thử mọi cặp/bộ ba.</em></p>
+<pre>
+// Thử tất cả cặp (i, j) — O(N²)
+for (int i = 0; i &lt; n; i++)
+    for (int j = i + 1; j &lt; n; j++)
+        if (a[i] + a[j] == k) ans++;
+
+// Thử tất cả đoạn con [i..j] — O(N²)
+for (int i = 0; i &lt; n; i++) {
+    int sum = 0;
+    for (int j = i; j &lt; n; j++) {
+        sum += a[j];
+        ans = max(ans, sum);
+    }
+}
+</pre>
+
+<h4>Dạng 2: Bitmask — Duyệt tập con</h4>
+<p><em>💡 Hình dung: Có 4 món: cơm, phở, bún, mì. Mỗi món gán 1 công tắc: bật = chọn, tắt = không. <code>1010₂</code> = chọn cơm và bún. Duyệt 0 đến 2⁴−1 = duyệt hết mọi cách chọn!</em></p>
 
 <div class="tip"><strong>📖 PHÉP TOÁN BIT LÀ GÌ?</strong> (Cần biết trước khi học Bitmask)
 <table>
@@ -827,10 +858,9 @@ bool isSet   = mask &amp; (1 &lt;&lt; i);      // Kiểm tra bit i
 int cntBit   = __builtin_popcount(mask);  // Đếm bit 1
 </pre>
 
-<!-- B4 -->
-<h3>B4. Sinh hoán vị (Backtracking)</h3>
-<p><em>💡 Hình dung: Có 3 bạn A, B, C và bạn muốn thử TẤT CẢ thứ tự xếp hàng: ABC, ACB, BAC, BCA, CAB, CBA = 3! = 6 cách. C++ có sẵn lệnh <code>next_permutation</code> tự sinh thứ tự tiếp theo. Chỉ dùng khi số phần tử nhỏ (≤ 10) vì 10 phần tử = 3.628.800 cách — nhiều hơn thì máy tính cũng không kịp.</em></p>
-<div class="warn"><strong>DẤU HIỆU:</strong> "liệt kê tất cả thứ tự", N ≤ 10 (vì N! tăng rất nhanh)</div>
+<h4>Dạng 3: Sinh hoán vị</h4>
+<p><em>💡 Hình dung: Có 3 bạn A, B, C → thử TẤT CẢ thứ tự: ABC, ACB, BAC, BCA, CAB, CBA = 3! = 6 cách. C++ có sẵn <code>next_permutation</code>. Chỉ dùng khi N ≤ 10.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "liệt kê tất cả thứ tự", "tìm cách sắp tối ưu", N ≤ 10</div>
 <pre>
 vector&lt;int&gt; a = {1, 2, 3};
 sort(a.begin(), a.end());  // PHẢI sort trước
@@ -839,8 +869,64 @@ do {
 } while (next_permutation(a.begin(), a.end()));
 </pre>
 
-<!-- B5: Chia để trị -->
-<h3>B5. Divide and Conquer — Chia để trị</h3>
+<h4>Dạng 4: Quay lui (Backtracking) — Đệ quy + cắt nhánh</h4>
+<p><em>💡 Hình dung: Đi trong mê cung — mỗi ngã rẽ bạn chọn 1 hướng. Nếu đi vào ngõ cụt → quay lui, thử hướng khác. Nếu phát hiện sớm "đi tiếp cũng không được" → cắt luôn, không cần thử (= cắt nhánh).</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "liệt kê tất cả cách chọn k phần tử từ n" (tổ hợp), "tìm đường đi", "đặt N quân hậu". Mạnh hơn brute force nhờ <strong>cắt nhánh sớm</strong>.</div>
+<pre>
+// Mẫu quay lui tổng quát
+int chon[25];       // Lưu các phần tử đã chọn
+bool used[25];      // Đánh dấu đã dùng chưa
+
+void Try(int k) {   // Đang chọn vị trí thứ k
+    if (k > m) {     // Đã chọn đủ m phần tử → xử lý
+        xuLy();
+        return;
+    }
+    for (int i = 1; i &lt;= n; i++) {
+        if (!used[i]) {
+            // CẮT NHÁNH: bỏ qua nếu biết chắc không tối ưu
+            if (khongTheToiUu()) continue;
+
+            chon[k] = i;
+            used[i] = true;
+            Try(k + 1);        // Đệ quy tiếp
+            used[i] = false;   // QUAY LUI — hoàn tác để thử cách khác
+        }
+    }
+}
+</pre>
+
+<p><strong>Ví dụ: Liệt kê tổ hợp chập k của n</strong> (chọn k từ n phần tử, không quan tâm thứ tự):</p>
+<pre>
+int chon[25];
+
+void Try(int pos, int start) {  // pos: vị trí đang chọn, start: bắt đầu từ đâu
+    if (pos > k) {
+        for (int i = 1; i &lt;= k; i++) fout &lt;&lt; chon[i] &lt;&lt; " ";
+        fout &lt;&lt; "\n";
+        return;
+    }
+    // CẮT NHÁNH: còn lại không đủ phần tử để chọn
+    if (n - start + 1 &lt; k - pos + 1) return;
+
+    for (int i = start; i &lt;= n; i++) {
+        chon[pos] = i;
+        Try(pos + 1, i + 1);   // i+1 vì tổ hợp, không lấy lại
+    }
+}
+// Gọi: Try(1, 1);
+</pre>
+
+<div class="tip"><strong>Mẹo cắt nhánh thường gặp:</strong>
+<ul>
+<li>Tổng hiện tại đã vượt K → không cần thử thêm</li>
+<li>Số phần tử còn lại không đủ để hoàn thành → bỏ</li>
+<li>Kết quả hiện tại đã tệ hơn đáp án tốt nhất → bỏ</li>
+</ul>
+</div>
+
+<!-- B4: Chia để trị -->
+<h3>B4. Divide and Conquer — Chia để trị</h3>
 <p><em>💡 Hình dung: Bạn có chồng 1000 bài thi cần xếp theo điểm. Chia đôi thành 2 chồng 500, mỗi chồng chia đôi tiếp... đến khi 1 tờ thì đã "có thứ tự". Rồi gộp 2 chồng đã sắp thành 1 chồng sắp → nhanh hơn xếp cả 1000 tờ cùng lúc.</em></p>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
@@ -895,8 +981,8 @@ void solve(int a[], int l, int r) {
 
 <div class="tip"><strong>Độ phức tạp:</strong> O(N log N) — vì mỗi tầng chia đôi xử lý O(N), có log N tầng.</div>
 
-<!-- B6: Kỹ thuật đóng góp -->
-<h3>B6. Contribution Technique — Kỹ thuật đóng góp</h3>
+<!-- B5: Kỹ thuật đóng góp -->
+<h3>B5. Contribution Technique — Kỹ thuật đóng góp</h3>
 <p><em>💡 Hình dung: Thầy giáo hỏi "tổng điểm của TẤT CẢ các nhóm có thể chọn từ lớp". Thay vì liệt kê mọi nhóm (cực nhiều) → hỏi TỪNG học sinh: "bạn xuất hiện trong bao nhiêu nhóm?" rồi nhân điểm × số nhóm. <br>Đảo góc nhìn: không duyệt đoạn → duyệt phần tử, tính mỗi phần tử đóng góp vào bao nhiêu đoạn.</em></p>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
@@ -946,6 +1032,60 @@ for (int i = 1; i &lt;= n; i++) {
 </pre>
 
 <div class="tip"><strong>Công thức nhớ:</strong> Phần tử ở vị trí i (1-indexed) nằm trong <code>i × (n − i + 1)</code> đoạn con liên tiếp.</div>
+
+<!-- B6: Meet in the Middle -->
+<h3>B6. Meet in the Middle — Gặp nhau ở giữa</h3>
+<p><em>💡 Hình dung: Bạn có 36 món đồ, cần tìm cách chọn sao cho tổng = K. Brute force 2³⁶ ≈ 7×10¹⁰ → quá lâu. Nhưng chia đôi thành 2 nửa 18 món → mỗi nửa chỉ 2¹⁸ ≈ 260.000 → duyệt được! Rồi ghép: tìm trong nửa B tổng = K − (tổng nửa A) bằng binary search.</em></p>
+
+<div class="warn"><strong>DẤU HIỆU:</strong>
+<ul>
+<li>"Tập con có tổng = K" với N ≈ 30-40 (quá lớn cho bitmask 2ᴺ, nhưng 2^(N/2) được)</li>
+<li>"Đếm cặp tập con thỏa điều kiện"</li>
+</ul>
+</div>
+
+<p><strong>3 bước:</strong></p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Bước 1: Chia mảng thành 2 nửa — A[0..n/2-1] và B[n/2..n-1]
+Bước 2: Duyệt tất cả tập con mỗi nửa → lưu tổng vào 2 danh sách
+Bước 3: Sort 1 danh sách, dùng binary search ghép kết quả
+</pre>
+
+<p><strong>Ví dụ: Đếm số tập con có tổng = K</strong></p>
+<pre>
+// N ≤ 40 → chia đôi, mỗi nửa ≤ 20
+int half = n / 2;
+vector&lt;long long&gt; sumA, sumB;
+
+// Bước 1-2: Sinh tổng tất cả tập con nửa trái
+for (int mask = 0; mask &lt; (1 &lt;&lt; half); mask++) {
+    long long s = 0;
+    for (int i = 0; i &lt; half; i++)
+        if (mask &amp; (1 &lt;&lt; i)) s += a[i];
+    sumA.push_back(s);
+}
+
+// Sinh tổng tất cả tập con nửa phải
+int half2 = n - half;
+for (int mask = 0; mask &lt; (1 &lt;&lt; half2); mask++) {
+    long long s = 0;
+    for (int i = 0; i &lt; half2; i++)
+        if (mask &amp; (1 &lt;&lt; i)) s += a[half + i];
+    sumB.push_back(s);
+}
+
+// Bước 3: Sort nửa B, duyệt nửa A + binary search
+sort(sumB.begin(), sumB.end());
+long long ans = 0;
+for (long long sa : sumA) {
+    long long need = K - sa;
+    // Đếm số phần tử trong sumB = need
+    ans += upper_bound(sumB.begin(), sumB.end(), need)
+         - lower_bound(sumB.begin(), sumB.end(), need);
+}
+</pre>
+
+<div class="tip"><strong>Độ phức tạp:</strong> O(2^(N/2) × log) — với N=40 thì ≈ 2²⁰ × 20 ≈ 20 triệu phép tính → chạy tốt.</div>
 
 <!-- ════════════════════════════════════ -->
 <!-- NHÓM C: CẤU TRÚC DỮ LIỆU -->
