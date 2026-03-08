@@ -60,10 +60,12 @@
             h2 { font-size: 12pt; padding: 5px 8px; }
             h3 { font-size: 11pt; }
             pre { font-size: 8pt; padding: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: pre; word-wrap: normal; }
-            code { font-size: 8.5pt; padding: 1px 3px; word-break: break-all; }
-            table { font-size: 8.5pt; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            th, td { padding: 3px 5px; white-space: normal; }
-            td code { white-space: nowrap; font-size: 8pt; }
+            code { font-size: 8.5pt; padding: 1px 3px; }
+            .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 8px 0; }
+            table { font-size: 8.5pt; white-space: nowrap; width: max-content; min-width: 100%; }
+            th, td { padding: 3px 5px; white-space: nowrap; }
+            td:nth-child(2) { white-space: normal; min-width: 80px; }
+            td code { font-size: 8pt; }
             .toc-box { padding: 10px 12px; }
             .toc-box ol { padding-left: 16px; }
             .toc-box li { font-size: 10pt; }
@@ -2540,6 +2542,16 @@ for (int i = 0; i &lt;= n; i++) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
 <script>
+// Wrap tables in scrollable div for mobile
+document.querySelectorAll('table').forEach(function(tbl) {
+    if (!tbl.parentElement.classList.contains('table-wrap')) {
+        var wrap = document.createElement('div');
+        wrap.className = 'table-wrap';
+        tbl.parentNode.insertBefore(wrap, tbl);
+        wrap.appendChild(tbl);
+    }
+});
+// Highlight.js auto-wrap
 document.querySelectorAll('pre').forEach(function(pre) {
     if (!pre.querySelector('code')) {
         var code = document.createElement('code');
