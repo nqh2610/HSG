@@ -337,17 +337,28 @@ if (b == 0) { out &lt;&lt; -1; return 0; }
 <h2 class="orange" id="s21">2.1. ĐỘ PHỨC TẠP LÀ GÌ? (Big-O)</h2>
 
 <div class="tip">
-<strong>💡 Độ phức tạp:</strong>  cho biết chương trình chạy <strong>bao nhiêu bước</strong> khi dữ liệu có N phần tử.<br>
-Hãy tưởng tượng bạn có N cuốn sách trên kệ:
+<strong>💡 Một câu:</strong> Độ phức tạp = <strong>"khi N tăng gấp đôi, chương trình chạy chậm đi bao nhiêu lần?"</strong><br>
+Máy tính chạy ~<strong>10⁸ bước/giây</strong>. Bài thi cho 1–2 giây → code của bạn tối đa khoảng <strong>10⁸ bước</strong>. Vượt quá → TLE!
+</div>
+
+<p>Tưởng tượng bạn là giáo viên, lớp có <strong>N học sinh</strong> xếp hàng:</p>
+
 <table>
-<tr><th>Ký hiệu</th><th>Nghĩa là</th><th>Ví dụ đời thường</th><th>N = 100.000 → số bước</th></tr>
-<tr><td><strong>O(1)</strong></td><td>Luôn 1 bước duy nhất</td><td>Mở đúng trang đã đánh dấu sẵn</td><td>1</td></tr>
-<tr><td><strong>O(N)</strong></td><td>Duyệt qua N phần tử 1 lần</td><td>Tìm sách bằng cách lướt từng cuốn</td><td>100.000</td></tr>
-<tr><td><strong>O(N log N)</strong></td><td>Sắp xếp rồi duyệt</td><td>Xếp sách theo tên rồi tìm</td><td>~1.700.000</td></tr>
-<tr><td><strong>O(N²)</strong></td><td>2 vòng for lồng nhau</td><td>So sánh mọi cặp sách với nhau</td><td>10.000.000.000 ❌</td></tr>
-<tr><td><strong>O(2ᴺ)</strong></td><td>Thử tất cả tổ hợp</td><td>Thử mọi cách chọn/không chọn mỗi cuốn</td><td>Vô hạn ❌</td></tr>
+<tr><th></th><th>Code trông như thế nào?</th><th>N = 10</th><th>N = 10⁵</th></tr>
+<tr><td><strong>O(1)</strong></td><td>Không có vòng lặp. Truy cập thẳng: <code>a[i]</code>, <code>prefix[r] - prefix[l-1]</code></td><td>1</td><td><strong>1 ✅</strong></td></tr>
+<tr><td><strong>O(log N)</strong></td><td><code>while (lo &lt; hi) { mid = (lo+hi)/2; ... }</code> — mỗi bước loại <strong>nửa</strong></td><td>3</td><td><strong>17 ✅</strong></td></tr>
+<tr><td><strong>O(N)</strong></td><td><strong>1 vòng for</strong>: <code>for (i = 0; i &lt; n; i++)</code></td><td>10</td><td><strong>10⁵ ✅</strong></td></tr>
+<tr><td><strong>O(N log N)</strong></td><td><code>sort()</code>, hoặc <strong>1 vòng for + Binary Search</strong> bên trong</td><td>33</td><td><strong>1,7×10⁶ ✅</strong></td></tr>
+<tr><td><strong>O(N²)</strong></td><td><strong>2 vòng for lồng</strong>: <code>for i { for j { ... } }</code></td><td>100</td><td><strong>10¹⁰ ❌ TLE</strong></td></tr>
+<tr><td><strong>O(N³)</strong></td><td><strong>3 vòng for lồng</strong>: <code>for i { for j { for k { ... } } }</code></td><td>1.000</td><td><strong>10¹⁵ ❌❌</strong></td></tr>
+<tr><td><strong>O(2ᴺ)</strong></td><td>Đệ quy <strong>2 nhánh</strong>: <code>f(n) = f(n-1) tổ hợp f(n-2)</code>, hoặc duyệt bitmask</td><td>1.024</td><td><strong>💀 vô hạn</strong></td></tr>
+<tr><td><strong>O(N!)</strong></td><td>Sinh <strong>mọi hoán vị</strong>: <code>next_permutation</code> hoặc quay lui thử mọi thứ tự</td><td>3.628.800</td><td><strong>💀 vô hạn</strong></td></tr>
 </table>
-<strong>Quy tắc:</strong> Nếu số bước > 10⁸ → chương trình chạy quá 1 giây → bị TLE (Time Limit Exceeded = Quá thời gian).
+
+<div class="good">
+<strong>THỨ TỰ TỪ NHANH → CHẬM:</strong><br>
+O(1) → O(log N) → O(N) → O(N log N) → O(N²) → O(N³) → O(2ᴺ) → O(N!)<br>
+<em>Quy tắc vàng: N ≤ 10⁵ mà code có 2 vòng for lồng → <strong>chắc chắn TLE</strong>, phải nghĩ cách khác!</em>
 </div>
 
 <h2 class="orange" id="s22">2.2. BẢNG CHỌN THUẬT TOÁN THEO N</h2>
@@ -357,7 +368,7 @@ Hãy tưởng tượng bạn có N cuốn sách trên kệ:
 </div>
 
 <table>
-<tr><th>Đề cho N ≤</th><th>Độ phức tạp</th><th>Được dùng</th><th>Ví dụ</th></tr>
+<tr><th>Đề cho N ≤</th><th>Độ phức tạp tối đa</th><th>Được dùng</th><th>Ví dụ</th></tr>
 <tr><td><strong>10</strong></td><td>O(N!)</td><td>Vét cạn, sinh hoán vị</td><td>Tìm thứ tự tối ưu</td></tr>
 <tr><td><strong>20</strong></td><td>O(2ᴺ)</td><td>Duyệt tập con (bitmask)</td><td>Chọn tập con tổng = k</td></tr>
 <tr><td><strong>100</strong></td><td>O(N³)</td><td>3 vòng for, Floyd, DP 3 chiều</td><td>Tìm bộ 3 số tổng = k</td></tr>
