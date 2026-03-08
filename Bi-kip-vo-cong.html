@@ -144,12 +144,14 @@
   <span class="toc-links">
     <a href="#B1">B1. Vét cạn</a>
     <span class="toc-sub">(<a href="#B1d1">For</a> · <a href="#B1d2">Bitmask</a> · <a href="#B1d3">Hoán vị</a> · <a href="#B1d4">Quay lui</a> · <a href="#B1d5">MitM</a>)</span><br>
-    <a href="#B2">B2. Greedy</a> · <a href="#B3">B3. DP</a> · <a href="#B4">B4. Chia để trị</a> · <a href="#B5">B5. Contribution</a>
+    <a href="#B2">B2. Greedy</a> · <a href="#B3">B3. DP</a> · <a href="#B4">B4. Chia để trị</a> · <a href="#B5">B5. Contribution</a><br>
+    <a href="#B6">B6. Digit DP</a> · <a href="#B7">B7. Mo's Algorithm</a> · <a href="#B8">B8. Nhân ma trận</a>
   </span>
 </div>
 <div class="toc-section sec-C">
   <span class="toc-title">🟣 <a href="#nhomC">NHÓM C — Cấu trúc dữ liệu</a></span>
-  <span class="toc-links"><a href="#C1">C1. Vector/Set/Map</a> · <a href="#C2">C2. Priority Queue</a> · <a href="#C3">C3. DSU</a> · <a href="#C4">C4. BIT</a> · <a href="#C5">C5. Deque</a></span>
+  <span class="toc-links"><a href="#C1">C1. Vector/Set/Map</a> · <a href="#C2">C2. Priority Queue</a> · <a href="#C3">C3. DSU</a> · <a href="#C4">C4. BIT</a> · <a href="#C5">C5. Deque</a><br>
+    <a href="#C6">C6. Segment Tree</a> · <a href="#C7">C7. Sparse Table</a></span>
 </div>
 <div class="toc-section sec-D">
   <span class="toc-title">🟢 <a href="#nhomD">NHÓM D — Đồ thị</a></span>
@@ -1360,6 +1362,199 @@ for (int i = 1; i &lt;= n; i++) {
 
 <div class="tip"><strong>Công thức nhớ:</strong> Phần tử ở vị trí i (1-indexed) nằm trong <code>i × (n − i + 1)</code> đoạn con liên tiếp.</div>
 
+<!-- B6: Digit DP -->
+<h3 id="B6">B6. Digit DP — Đếm số trong đoạn [L, R]</h3>
+<p><em>💡 Hình dung: Bạn đang đặt mật khẩu gồm 9 chữ số, mỗi ô chọn 0–9. Đề bài hỏi "có bao nhiêu mật khẩu từ 000000001 đến 999999999 mà tổng các chữ số chia hết cho 3?". Duyệt cả tỷ mật khẩu thì chết — nhưng bạn nhận ra: khi điền từng ô <strong>từ trái qua phải</strong>, mỗi lần chọn chữ số, bạn chỉ cần nhớ "tổng hiện tại mod 3 đang là bao nhiêu" — không cần nhớ toàn bộ mật khẩu. Đó chính là Digit DP: <strong>xây số từng chữ số</strong>, mỗi bước chỉ lưu trạng thái cần thiết.</em></p>
+
+<div class="warn"><strong>DẤU HIỆU:</strong>
+<ul>
+<li>"Đếm số trong [L, R] thỏa điều kiện ..."</li>
+<li>"Có bao nhiêu số không quá N mà ..."</li>
+<li>Điều kiện liên quan đến <strong>các chữ số</strong>: tổng chữ số, chữ số lặp, chữ số tăng/giảm...</li>
+</ul>
+</div>
+
+<div class="tip"><strong>NGUYÊN TẮC CHÍNH:</strong>
+<ul>
+<li><strong>Tách:</strong> count(L, R) = count(R) − count(L − 1)</li>
+<li><strong>Xây từng chữ số:</strong> Đệ quy từ chữ số đầu tiên → chữ số cuối</li>
+<li><strong>Biến tight:</strong> Nếu các chữ số trước = chữ số tương ứng của N → chữ số hiện tại ≤ chữ số tương ứng. Nếu đã nhỏ hơn → tự do chọn 0–9</li>
+<li><strong>Memo:</strong> Lưu <code>dp[pos][state][tight]</code></li>
+</ul>
+</div>
+
+<p><strong>Khuôn mẫu: Đếm số từ 1..N có tổng chữ số = S</strong></p>
+<pre>
+string num;           // N dạng chuỗi
+int memo[20][200][2]; // [vị trí][tổng hiện tại][tight]
+
+// pos: chữ số đang xét, sum: tổng chữ số đã chọn
+// tight: có bị giới hạn bởi N không
+int solve(int pos, int sum, bool tight) {
+    if (pos == (int)num.size())
+        return (sum == S) ? 1 : 0;          // Đã xây xong
+    if (memo[pos][sum][tight] != -1)
+        return memo[pos][sum][tight];
+
+    int lim = tight ? (num[pos] - '0') : 9; // Giới hạn chữ số
+    int res = 0;
+    for (int d = 0; d &lt;= lim; d++)
+        res += solve(pos + 1, sum + d, tight &amp;&amp; (d == lim));
+
+    return memo[pos][sum][tight] = res;
+}
+
+// Đếm số trong [1, N] có tổng chữ số = S
+int countUpTo(long long N) {
+    num = to_string(N);
+    memset(memo, -1, sizeof(memo));
+    return solve(0, 0, true);
+}
+
+// Đếm trong [L, R]: countUpTo(R) - countUpTo(L - 1)
+</pre>
+
+<div class="tip"><strong>Các biến thể phổ biến:</strong>
+<table>
+<tr><th>Điều kiện</th><th>State cần lưu</th></tr>
+<tr><td>Tổng chữ số = S</td><td>sum</td></tr>
+<tr><td>Không có 2 chữ số giống liền nhau</td><td>last_digit</td></tr>
+<tr><td>Chữ số tăng dần</td><td>last_digit</td></tr>
+<tr><td>Chia hết cho K</td><td>remainder (% K)</td></tr>
+<tr><td>Có chứa chữ số d</td><td>has_d (bool)</td></tr>
+</table>
+</div>
+
+<!-- B7: Mo's Algorithm -->
+<h3 id="B7">B7. Mo's Algorithm — Truy vấn offline trên đoạn</h3>
+<p><em>💡 Hình dung: Giáo viên cho 100 câu hỏi: "Từ bạn thứ L đến bạn thứ R trong lớp, có bao nhiêu họ khác nhau?". Nếu trả lời lung tung (hỏi đoạn [3,50] rồi nhảy sang [80,90] rồi quay lại [5,45]) thì mỗi lần phải đếm lại từ đầu. Nhưng nếu bạn <strong>sắp xếp</strong> lại thứ tự câu hỏi cho gần nhau ([3,50] → [5,45] → [3,48]...) thì mỗi lần chỉ cần thêm/bớt 1–2 bạn ở rìa là xong — không đếm lại! Mo's Algorithm chính là cách <strong>sắp xếp câu hỏi thông minh</strong> để "trượt" đoạn [L,R] ít nhất có thể.</em></p>
+
+<div class="warn"><strong>DẤU HIỆU:</strong>
+<ul>
+<li>Nhiều truy vấn dạng [L, R] — <strong>offline</strong> (có thể trả lời không theo thứ tự)</li>
+<li>Có thể thêm/bớt 1 phần tử vào kết quả nhanh (O(1) hoặc O(log))</li>
+<li>N, Q ≤ 10⁵ và không có cập nhật</li>
+</ul>
+</div>
+
+<div class="tip"><strong>Ý TƯỞNG:</strong>
+<ol>
+<li>Chia mảng thành √N <strong>khối</strong> (block)</li>
+<li>Sắp câu hỏi: cùng khối L → tăng theo R</li>
+<li>Duy trì kết quả đoạn hiện tại, mỗi bước thêm/xóa 1 phần tử</li>
+</ol>
+<strong>Độ phức tạp:</strong> O((N + Q) × √N)
+</div>
+
+<pre>
+// ═══ Mo's Algorithm — Đếm số phần tử khác nhau trong đoạn [L,R] ═══
+int BLOCK;
+struct Query {
+    int l, r, idx;
+};
+
+int cnt[1000005];   // cnt[v] = số lần v xuất hiện trong đoạn hiện tại
+int curAns = 0;     // Số phần tử khác nhau hiện tại
+
+void add(int val) {
+    if (cnt[val] == 0) curAns++;
+    cnt[val]++;
+}
+
+void remove(int val) {
+    cnt[val]--;
+    if (cnt[val] == 0) curAns--;
+}
+
+// Trong main:
+BLOCK = max(1, (int)sqrt(n));
+sort(queries, queries + q, [](const Query &amp;a, const Query &amp;b) {
+    if (a.l / BLOCK != b.l / BLOCK) return a.l / BLOCK &lt; b.l / BLOCK;
+    return (a.l / BLOCK &amp; 1) ? a.r &gt; b.r : a.r &lt; b.r; // Tối ưu zigzag
+});
+
+int curL = 0, curR = -1;
+for (int i = 0; i &lt; q; i++) {
+    while (curR &lt; queries[i].r) add(a[++curR]);
+    while (curL &gt; queries[i].l) add(a[--curL]);
+    while (curR &gt; queries[i].r) remove(a[curR--]);
+    while (curL &lt; queries[i].l) remove(a[curL++]);
+    ans[queries[i].idx] = curAns;
+}
+</pre>
+
+<!-- B8: Matrix Exponentiation -->
+<h3 id="B8">B8. Matrix Exponentiation — Nhân ma trận nhanh</h3>
+<p><em>💡 Hình dung: Bạn cần tính Fibonacci thứ 10¹⁸. Tính từng bước dp[1], dp[2], ..., dp[10¹⁸] thì đợi cả trăm năm không xong. Nhưng nếu bạn viết phép tính "bước tiếp theo" thành <strong>1 phép nhân ma trận</strong>: nhân ma trận A một lần = tiến 1 bước, nhân A hai lần = tiến 2 bước. Vậy nhân A mười lần = tiến 10 bước. Và nhờ <strong>lũy thừa nhanh</strong> (giống tính 2¹⁰⁰⁰ bằng cách bình phương liên tục), bạn tính A^(10¹⁸) chỉ trong khoảng 60 phép nhân ma trận!</em></p>
+
+<div class="warn"><strong>DẤU HIỆU:</strong>
+<ul>
+<li>Bài có <strong>hệ truy hồi tuyến tính</strong> và <strong>n rất lớn</strong> (10⁹, 10¹⁸)</li>
+<li>"Tìm f(n) mod M" với f là Fibonacci, dãy truy hồi bậc k</li>
+<li>"Đếm số đường đi độ dài n" trong đồ thị nhỏ</li>
+</ul>
+</div>
+
+<p><strong>Bước 1: Viết hệ truy hồi thành dạng ma trận</strong></p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Ví dụ Fibonacci: f(n) = f(n-1) + f(n-2)
+
+Viết dạng vector trạng thái:
+┌ f(n)   ┐   ┌ 1  1 ┐   ┌ f(n-1) ┐
+│         │ = │       │ × │         │
+└ f(n-1) ┘   └ 1  0 ┘   └ f(n-2) ┘
+
+Suy ra:
+┌ f(n)   ┐   ┌ 1  1 ┐ⁿ⁻¹  ┌ f(1) ┐
+│         │ = │       │     × │       │
+└ f(n-1) ┘   └ 1  0 ┘      └ f(0) ┘
+</pre>
+
+<p><strong>Bước 2: Code nhân ma trận + lũy thừa nhanh</strong></p>
+<pre>
+typedef vector&lt;vector&lt;long long&gt;&gt; Matrix;
+const long long MOD = 1e9 + 7;
+
+Matrix multiply(const Matrix &amp;A, const Matrix &amp;B) {
+    int n = A.size();
+    Matrix C(n, vector&lt;long long&gt;(n, 0));
+    for (int i = 0; i &lt; n; i++)
+        for (int k = 0; k &lt; n; k++) if (A[i][k])
+            for (int j = 0; j &lt; n; j++)
+                C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % MOD;
+    return C;
+}
+
+Matrix matpow(Matrix A, long long p) {
+    int n = A.size();
+    Matrix res(n, vector&lt;long long&gt;(n, 0));
+    for (int i = 0; i &lt; n; i++) res[i][i] = 1;  // Ma trận đơn vị
+    while (p &gt; 0) {
+        if (p &amp; 1) res = multiply(res, A);
+        A = multiply(A, A);
+        p &gt;&gt;= 1;
+    }
+    return res;
+}
+
+// Fibonacci thứ n (n ≤ 10¹⁸):
+long long fib(long long n) {
+    if (n &lt;= 1) return n;
+    Matrix A = {{1, 1}, {1, 0}};
+    Matrix R = matpow(A, n - 1);
+    return R[0][0];                   // f(n) = R[0][0]*f(1) + R[0][1]*f(0)
+}
+</pre>
+
+<div class="tip"><strong>Các hệ truy hồi thường gặp:</strong>
+<table>
+<tr><th>Hệ truy hồi</th><th>Ma trận</th><th>Kích thước</th></tr>
+<tr><td>f(n) = f(n-1) + f(n-2)</td><td>[[1,1],[1,0]]</td><td>2×2</td></tr>
+<tr><td>f(n) = a·f(n-1) + b·f(n-2) + c</td><td>[[a,b,c],[1,0,0],[0,0,1]]</td><td>3×3</td></tr>
+<tr><td>Đếm đường đi dài n trong đồ thị K đỉnh</td><td>Ma trận kề KxK</td><td>K×K</td></tr>
+</table>
+</div>
+
 <!-- ════════════════════════════════════ -->
 <!-- NHÓM C: CẤU TRÚC DỮ LIỆU -->
 <!-- ════════════════════════════════════ -->
@@ -1528,6 +1723,137 @@ dq.front();   // 2
 dq.back();    // 3
 dq.pop_front();   dq.pop_back();   // Tất cả O(1)
 </pre>
+
+<!-- C6 -->
+<h3 id="C6">C6. Segment Tree — Cây phân đoạn</h3>
+<p><em>💡 Hình dung: Lớp có 100 học sinh xếp hàng. Thầy hay hỏi "điểm cao nhất từ bạn 20 đến bạn 50?". Nếu duyệt từ 20→50 mỗi lần thì chậm. Segment Tree giống việc <strong>chia lớp thành các nhóm nhỏ</strong>: nhóm 1–50, nhóm 1–25, nhóm 26–50, nhóm 1–12... Mỗi nhóm <strong>nhớ sẵn</strong> điểm cao nhất. Cần hỏi đoạn [20,50]? Chỉ cần ghép 3–4 nhóm nhỏ có sẵn → trả lời ngay! Thầy sửa điểm 1 bạn? Chỉ cập nhật vài nhóm chứa bạn đó. Cập nhật cả nhóm 10–40 cùng lúc? Dùng "Lazy" — ghi nhớ "nhóm này cần +5 điểm" rồi để dành, chỉ cập nhật thật khi ai hỏi.</em></p>
+
+<div class="warn"><strong>DẤU HIỆU:</strong>
+<ul>
+<li>"Truy vấn min/max/tổng/GCD trên đoạn [L, R]" + <strong>cập nhật</strong></li>
+<li>"Cập nhật cả đoạn [L, R]" (gán, cộng thêm) → cần Lazy</li>
+<li>BIT không đủ (cần min/max, hoặc cập nhật đoạn)</li>
+</ul>
+</div>
+
+<div class="tip"><strong>KHI NÀO DÙNG GÌ?</strong>
+<table>
+<tr><th>Yêu cầu</th><th>Chọn</th></tr>
+<tr><td>Tổng đoạn + cập nhật 1 phần tử</td><td><strong>BIT</strong> (đơn giản hơn)</td></tr>
+<tr><td>Min/Max đoạn + cập nhật 1 phần tử</td><td><strong>Segment Tree</strong></td></tr>
+<tr><td>Bất kỳ truy vấn + cập nhật cả đoạn</td><td><strong>Segment Tree + Lazy</strong></td></tr>
+<tr><td>Min/Max đoạn, <strong>KHÔNG</strong> cập nhật</td><td><strong>Sparse Table</strong> (O(1) truy vấn)</td></tr>
+</table>
+</div>
+
+<p><strong>Segment Tree cơ bản — Truy vấn tổng + Cập nhật điểm:</strong></p>
+<pre>
+int st[400005]; // Kích thước 4 × n
+int a[100005], n;
+
+void build(int id, int l, int r) {
+    if (l == r) { st[id] = a[l]; return; }
+    int mid = (l + r) / 2;
+    build(2*id, l, mid);
+    build(2*id+1, mid+1, r);
+    st[id] = st[2*id] + st[2*id+1];         // Đổi thành min/max/GCD tùy bài
+}
+
+void update(int id, int l, int r, int pos, int val) {
+    if (l == r) { st[id] = val; return; }
+    int mid = (l + r) / 2;
+    if (pos &lt;= mid) update(2*id, l, mid, pos, val);
+    else update(2*id+1, mid+1, r, pos, val);
+    st[id] = st[2*id] + st[2*id+1];
+}
+
+int query(int id, int l, int r, int ql, int qr) {
+    if (ql &gt; r || qr &lt; l) return 0;         // Ngoài đoạn → giá trị trung tính
+    if (ql &lt;= l &amp;&amp; r &lt;= qr) return st[id]; // Nằm trọn trong
+    int mid = (l + r) / 2;
+    return query(2*id, l, mid, ql, qr)
+         + query(2*id+1, mid+1, r, ql, qr);
+}
+
+// Gọi: build(1, 1, n);  update(1, 1, n, pos, val);  query(1, 1, n, L, R);
+</pre>
+
+<p><strong>Segment Tree + Lazy Propagation — Cập nhật cả đoạn:</strong></p>
+<pre>
+long long st[400005], lazy[400005];
+
+void push_down(int id, int l, int r) {
+    if (lazy[id]) {
+        int mid = (l + r) / 2;
+        st[2*id] += lazy[id] * (mid - l + 1);
+        st[2*id+1] += lazy[id] * (r - mid);
+        lazy[2*id] += lazy[id];
+        lazy[2*id+1] += lazy[id];
+        lazy[id] = 0;
+    }
+}
+
+void updateRange(int id, int l, int r, int ql, int qr, long long val) {
+    if (ql &gt; r || qr &lt; l) return;
+    if (ql &lt;= l &amp;&amp; r &lt;= qr) {
+        st[id] += val * (r - l + 1);
+        lazy[id] += val;
+        return;
+    }
+    push_down(id, l, r);
+    int mid = (l + r) / 2;
+    updateRange(2*id, l, mid, ql, qr, val);
+    updateRange(2*id+1, mid+1, r, ql, qr, val);
+    st[id] = st[2*id] + st[2*id+1];
+}
+
+long long queryRange(int id, int l, int r, int ql, int qr) {
+    if (ql &gt; r || qr &lt; l) return 0;
+    if (ql &lt;= l &amp;&amp; r &lt;= qr) return st[id];
+    push_down(id, l, r);
+    int mid = (l + r) / 2;
+    return queryRange(2*id, l, mid, ql, qr)
+         + queryRange(2*id+1, mid+1, r, ql, qr);
+}
+</pre>
+
+<!-- C7 -->
+<h3 id="C7">C7. Sparse Table — Truy vấn tĩnh O(1)</h3>
+<p><em>💡 Hình dung: Bạn có bảng điểm <strong>cố định</strong> (không ai sửa), nhưng thầy hỏi rất nhiều lần "ai điểm thấp nhất từ bạn L đến bạn R?". Sparse Table giống việc <strong>lập bảng tra sẵn</strong>: ghi lại "min trong 1 bạn", "min trong 2 bạn liên tiếp", "min trong 4 bạn"... Khi thầy hỏi đoạn [3, 10], bạn tra 2 ô đã tính sẵn (đoạn [3,6] và [7,10]) rồi lấy min → trả lời O(1). Đánh đổi: nếu sửa điểm thì phải <strong>tính lại bảng</strong> → chỉ dùng khi dữ liệu không thay đổi.</em></p>
+
+<div class="warn"><strong>DẤU HIỆU:</strong>
+<ul>
+<li>"Truy vấn min/max/GCD trên đoạn [L, R]" + <strong>KHÔNG cập nhật</strong></li>
+<li>"Range Minimum/Maximum Query" (RMQ)</li>
+<li>Cần O(1) mỗi truy vấn (nhiều truy vấn, Q lớn)</li>
+</ul>
+</div>
+
+<pre>
+// ═══ Sparse Table — RMQ (Range Minimum Query) O(1) ═══
+int sp[100005][17]; // sp[i][j] = min đoạn dài 2^j bắt đầu từ i
+int LOG[100005];
+
+void build(int n) {
+    LOG[1] = 0;
+    for (int i = 2; i &lt;= n; i++)
+        LOG[i] = LOG[i/2] + 1;
+
+    for (int i = 1; i &lt;= n; i++)
+        sp[i][0] = a[i];                    // Đoạn dài 1
+
+    for (int j = 1; (1 &lt;&lt; j) &lt;= n; j++)
+        for (int i = 1; i + (1 &lt;&lt; j) - 1 &lt;= n; i++)
+            sp[i][j] = min(sp[i][j-1], sp[i + (1 &lt;&lt; (j-1))][j-1]);
+}
+
+int query(int l, int r) {
+    int k = LOG[r - l + 1];
+    return min(sp[l][k], sp[r - (1 &lt;&lt; k) + 1][k]);  // O(1)!
+}
+</pre>
+
+<div class="tip"><strong>Lưu ý:</strong> Sparse Table chỉ hoạt động đúng với các phép toán <strong>overlap-friendly</strong> (min, max, GCD, OR, AND). Với phép <strong>tổng</strong> thì phải dùng BIT/Segment Tree vì 2 đoạn chồng nhau sẽ đếm lặp.</div>
 
 <!-- ════════════════════════════════════ -->
 <!-- NHÓM D: ĐỒ THỊ -->
