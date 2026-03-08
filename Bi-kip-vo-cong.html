@@ -425,6 +425,7 @@ for (int i = 0; i &lt; n; i++) dem[a[i]]++;
 <!-- A1 -->
 <h3 id="A1">A1. Prefix Sum — Tổng tiền tố</h3>
 <p><em>💡 Hình dung: Bạn có 1 cuốn sổ ghi "tổng tiền từ ngày 1 đến hôm nay" mỗi ngày. Khi sếp hỏi "tổng tiền từ ngày 3 đến ngày 7", thay vì cộng lại 5 ngày, bạn chỉ cần lấy: tổng_đến_ngày_7 − tổng_đến_ngày_2 = ra ngay! Tính trước 1 lần → trả lời bao nhiêu câu hỏi cũng chỉ cần 1 phép trừ.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi câu hỏi "tổng từ L đến R" phải cộng từng phần tử → O(n). Có Q câu hỏi → O(n×Q). Với n = Q = 10⁵ → <strong>10¹⁰ phép tính → chắc chắn TLE</strong>. Dùng Prefix Sum → mỗi câu O(1), tổng O(n + Q).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]", "trung bình đoạn", "đoạn con có tổng = k" → truy vấn nhiều lần</div>
 <pre>
 // ═══ PREFIX SUM 1D ═══
@@ -473,6 +474,7 @@ ll tong = sum[r2][c2] - sum[r1-1][c2] - sum[r2][c1-1] + sum[r1-1][c1-1];
 <!-- A2 -->
 <h3 id="A2">A2. Difference Array — Mảng hiệu (Cộng cả đoạn trong O(1))</h3>
 <p><em>💡 Hình dung: Bạn có 100 học sinh xếp hàng. Thầy giáo ra 10.000 lệnh kiểu "từ bạn thứ 3 đến bạn thứ 7, mỗi người thêm 5 điểm". Nếu cộng từng bạn một → quá lâu. <br>Mảng hiệu = "ghi chú thông minh": chỉ ghi "+5 ở vị trí 3" và "−5 ở vị trí 8" (sau đoạn). Cuối cùng Prefix Sum lại 1 lần → ra kết quả tất cả mọi người.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi lệnh "cộng từ vị trí L đến R" phải duyệt từng ô → O(n). Có Q lệnh → O(n×Q). Với n = Q = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Mảng hiệu → mỗi lệnh O(1), cuối cùng prefix sum 1 lần.</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong> "Cập nhật cả đoạn [l, r] nhiều lần" rồi "hỏi giá trị cuối cùng". Là phép ngược của Prefix Sum.</div>
 
@@ -518,6 +520,7 @@ for (int i = 1; i &lt;= n; i++)
 <!-- A3 -->
 <h3 id="A3">A3. Two Pointers — Hai con trỏ</h3>
 <p><em>💡 Hình dung: Hai bạn L và R đứng trên một hàng ghế. R đi sang phải để mở rộng đoạn, nếu đoạn vi phạm điều kiện thì L đi sang phải để thu hẹp. Cả hai chỉ đi về bên phải, không lùi → thay vì thử tất cả các cặp vị trí (rất lâu), ta chỉ cần mỗi người đi qua hàng ghế 1 lần → nhanh gấp nhiều lần.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi cặp (L, R) → O(n²). Với n = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Two Pointers → mỗi con trỏ chỉ tiến, tổng O(n).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con dài nhất có tổng ≤ K", "cặp (i,j) thỏa a[i]+a[j] = k" (mảng đã sort), "đoạn ngắn nhất chứa đủ k giá trị"</div>
 <pre>
 // ═══ Tìm đoạn con dài nhất có tổng ≤ K ═══
@@ -569,6 +572,7 @@ Bước  L  R  sum   Giải thích                           maxLen
 <!-- A3 -->
 <h3 id="A4">A4. Sliding Window — Cửa sổ trượt</h3>
 <p><em>💡 Hình dung: Bạn nhìn qua cửa sổ xe buýt, chỉ thấy đúng 3 ngôi nhà. Xe chạy tới — mất 1 nhà bên trái, thêm 1 bên phải. Muốn biết "nhà cao nhất đang thấy" mà không so lại cả 3 nhà mỗi lần → dùng deque giữ sẵn "ứng viên cao nhất".</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi cửa sổ duyệt k phần tử tìm max → O(n×k). Với n = 10⁵, k = 10⁴ → <strong>10⁹ → TLE</strong>. Dùng Sliding Window + Deque → O(n).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "max/min trong cửa sổ kích thước k", "đoạn có max - min ≤ K"</div>
 <div class="tip"><strong>Khác Two Pointers:</strong> Sliding Window thường duy trì thêm trạng thái (deque, map, tần suất) bên trong cửa sổ.</div>
 
@@ -620,6 +624,7 @@ for (int i = 0; i &lt; n; i++) {
 <!-- A5 -->
 <h3 id="A5">A5. Monotonic Stack — Ngăn xếp đơn điệu</h3>
 <p><em>💡 Hình dung: Bạn đứng trong hàng người xếp hàng, nhìn về bên phải. Bạn chỉ thấy người đầu tiên CAO HƠN bạn — những người thấp hơn bị "che" mất. Mono Stack giúp tìm "người cao hơn gần nhất" cho mọi người trong hàng, chỉ với O(n).</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Với mỗi phần tử, duyệt sang phải tìm phần tử lớn hơn → O(n²). Với n = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Mono Stack → mỗi phần tử vào/ra stack đúng 1 lần → O(n).</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -677,6 +682,7 @@ for (int i = n - 1; i >= 0; i--) {
 <!-- A6 -->
 <h3 id="A6">A6. Binary Search — Tìm kiếm nhị phân</h3>
 <p><em>💡 Hình dung trò chơi "Đoán số": bạn nghĩ 1 số từ 1 đến 1.000.000, bạn đoán và được trả lời "lớn hơn" hoặc "nhỏ hơn". Thay vì đoán từ 1, 2, 3... bạn luôn đoán SỐ GIỮA → mỗi lần loại bỏ NỬA số còn lại. 1 triệu số → chỉ cần ~20 lần đoán! <br>"Chặt nhị phân đáp án" cùng ý tưởng: thử đáp án ở giữa, kiểm tra có được không, rồi thu hẹp phạm vi.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Tìm trong mảng 10⁶ phần tử bằng duyệt → 10⁶ bước. Dùng BS → chỉ ~20 bước. Chặt nhị phân đáp án: thử từng giá trị từ 1→10⁹ → TLE. Dùng BS → <strong>chỉ ~30 lần thử</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
 <li>"tìm x trong dãy đã sort" → <code>lower_bound</code>, <code>upper_bound</code></li>
@@ -711,6 +717,7 @@ while (lo &lt;= hi) {
 <!-- A5 -->
 <h3 id="A7">A7. Sorting — Sắp xếp</h3>
 <p><em>💡 Hình dung: Khi đánh bài tiến lên xoè bài nhưng không xếp, tìm 1 lá bài rất lâu. Nhưng nếu xếp theo số  (1, 2, 3...), tìm hay ghép cặp đều nhanh. Trong lập trình, sắp xếp mảng trước thường giúp bài toán dễ giải hơn rất nhiều. C++ có sẵn hàm <code>sort()</code> chạy rất nhanh.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Không sort → nhiều bài buộc phải so sánh mọi cặp O(n²), hoặc không dùng được Two Pointers / Binary Search. Sort trước O(n log n) → mở ra hàng loạt kỹ thuật nhanh phía sau.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "ghép cặp tối ưu", "|a[i]-a[j]| ≤ k", "sắp xếp theo nhiều tiêu chí"
 <br><strong>MẸO:</strong> Sort trước → nhiều bài giải được bằng Greedy hoặc Two Pointers</div>
 <pre>
@@ -737,6 +744,7 @@ int m = unique(a, a + n) - a;  // m = số phần tử distinct
 <!-- A6 -->
 <h3 id="A8">A8. Mảng đếm (Counting)</h3>
 <p><em>💡 Hình dung: Có 1.000.000 cái hộp đánh số từ 0 đến 999.999. Duyệt mảng, gặp giá trị nào thì bỏ 1 viên bi vào hộp đó. Sau 1 lượt, xem hộp nào nhiều bi nhất = giá trị xuất hiện nhiều nhất. Cực nhanh — chỉ cần đi qua mảng 1 lần!</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng map → mỗi lần truy cập O(log n). Dùng mảng đếm → O(1). Khi giá trị ≤ 10⁶ và cần truy cập hàng triệu lần, mảng đếm <strong>nhanh gấp 10-20 lần</strong> so với map.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "phần tử xuất hiện nhiều nhất", "tần suất ký tự", giá trị ≤ 10⁶ → dùng mảng đếm thay map</div>
 <pre>
 int dem[1000001] = {0};
@@ -751,6 +759,7 @@ for (int i = 0; i &lt;= 1000000; i++)
 <!-- A7 -->
 <h3 id="A9">A9. Kadane — Đoạn con tổng lớn nhất</h3>
 <p><em>💡 Hình dung: Bạn đi dọc dãy số, tay cầm một cái túi. Mỗi lần gặp số mới, bạn quyết định: "Bỏ vào túi cũ" (cộng thêm) hay "Vứt túi cũ, bắt đầu túi mới từ số này". Nếu túi cũ đang âm (tổng < 0) thì vứt đi cho rồi! Luôn ghi nhớ túi nặng nhất từng có. Chỉ đi 1 lượt là xong.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi đoạn con [i,j] rồi cộng → O(n³), hoặc dùng Prefix Sum → O(n²). Với n = 10⁵ → <strong>TLE</strong>. Dùng Kadane → <strong>O(n)</strong>, chỉ đi qua 1 lượt.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con liên tiếp có tổng lớn nhất", "max subarray sum"</div>
 <pre>
 long long maxSum = a[0], cur = a[0];
@@ -954,6 +963,7 @@ for (long long sa : sumA) {
 <!-- B2 -->
 <h3 id="B2">B2. Greedy — Tham lam</h3>
 <p><em>💡 Hình dung: Đi buffet, mỗi lần lấy món luôn chọn món "hấp dẫn nhất lúc đó" mà không cần suy nghĩ nhiều. Ví dụ bài toán: có 10 công việc, mỗi việc có giờ bắt đầu và kết thúc. Làm sao để làm được nhiều việc nhất? → Sắp theo giờ kết thúc, luôn chọn việc kết thúc sớm nhất trước.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi cách chọn (vét cạn) → O(2ⁿ). Với n = 30 → <strong>10⁹ → TLE</strong>. Greedy chọn tối ưu tại mỗi bước → thường chỉ O(n log n) sau sort.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "chọn ít nhất", "nhiều nhất có thể", "tối ưu từng bước"
 <br><strong>MẸO:</strong> Thường đi kèm Sort → chọn tốt nhất tại mỗi bước</div>
 <pre>
@@ -972,6 +982,7 @@ for (int i = 0; i &lt; n; i++) {
 <!-- B3 -->
 <h3 id="B3">B3. Dynamic Programming (DP) — Quy hoạch động</h3>
 <p><em>💡 Hình dung: Bài toán giống xếp gạch lên cầu thang. Muốn lên bậc 10, bạn cần biết kết quả ở bậc 9 (hoặc bậc 8, 7...). Thay vì tính đi tính lại, bạn ghi kết quả mỗi bậc vào 1 bảng (mảng <code>dp[]</code>). Giải từ bậc 1, rồi bậc 2, dần lên bậc n. Kết quả cuối cùng nằm ở ô cuối bảng.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Đệ quy thường tính lại cùng bài toán con hàng triệu lần. VD Fibonacci bằng đệ quy: f(50) gọi đến <strong>2⁵⁰ ≈ 10¹⁵ lần</strong> → không bao giờ chạy xong. Dùng DP (ghi bảng) → mỗi bài toán con tính đúng 1 lần → O(n).</div>
 
 <div class="warn"><strong>DẤU HIỆU NHẬN BIẾT BÀI DP:</strong>
 <ul>
@@ -1257,6 +1268,7 @@ Vật 3 (w=4, v=5): duyệt j=5 xuống 4
 <!-- B2 -->
 <h3 id="B4">B4. Divide and Conquer (Chia để trị)</h3>
 <p><em>💡 Hình dung: Bạn có chồng 1000 bài thi cần xếp theo điểm. Chia đôi thành 2 chồng 500, mỗi chồng chia đôi tiếp... đến khi 1 tờ thì đã "có thứ tự". Rồi gộp 2 chồng đã sắp thành 1 chồng sắp → nhanh hơn xếp cả 1000 tờ cùng lúc.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Đếm nghịch thế bằng 2 vòng for → O(n²). Với n = 10⁵ → <strong>10¹⁰ → TLE</strong>. D&C (merge sort biến đổi) → O(n log n) ≈ 1,7 triệu phép tính.</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -1313,6 +1325,7 @@ void solve(int a[], int l, int r) {
 <!-- B5: Kỹ thuật đóng góp -->
 <h3 id="B5">B5. Contribution Technique (Kỹ thuật đóng góp)</h3>
 <p><em>💡 Hình dung: Thầy giáo hỏi "tổng điểm của TẤT CẢ các nhóm có thể chọn từ lớp". Thay vì liệt kê mọi nhóm (cực nhiều) → hỏi TỪNG học sinh: "bạn xuất hiện trong bao nhiêu nhóm?" rồi nhân điểm × số nhóm. <br>Đảo góc nhìn: không duyệt đoạn → duyệt phần tử, tính mỗi phần tử đóng góp vào bao nhiêu đoạn.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Liệt kê mọi đoạn con [i,j] rồi tính min/max/tổng → O(n²) hoặc O(n³). Với n = 10⁵ → <strong>TLE</strong>. Dùng Contribution → hỏi "mỗi phần tử xuất hiện trong bao nhiêu đoạn?" → O(n).</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -1365,6 +1378,7 @@ for (int i = 1; i &lt;= n; i++) {
 <!-- B6: Digit DP -->
 <h3 id="B6">B6. Digit DP (QHĐ theo chữ số) — Đếm số trong đoạn [L, R]</h3>
 <p><em>💡 Hình dung: Bạn đang đặt mật khẩu gồm 9 chữ số, mỗi ô chọn 0–9. Đề bài hỏi "có bao nhiêu mật khẩu từ 000000001 đến 999999999 mà tổng các chữ số chia hết cho 3?". Duyệt cả tỷ mật khẩu thì chết — nhưng bạn nhận ra: khi điền từng ô <strong>từ trái qua phải</strong>, mỗi lần chọn chữ số, bạn chỉ cần nhớ "tổng hiện tại mod 3 đang là bao nhiêu" — không cần nhớ toàn bộ mật khẩu. Đó chính là Digit DP: <strong>xây số từng chữ số</strong>, mỗi bước chỉ lưu trạng thái cần thiết.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Duyệt từng số từ L đến R rồi kiểm tra → O(R − L). Với R = 10¹⁸ → <strong>không bao giờ chạy xong</strong>. Digit DP chỉ duyệt theo số chữ số (18 chữ số × vài trạng thái) → cực nhanh.</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -1428,6 +1442,7 @@ int countUpTo(long long N) {
 <!-- B7: Mo's Algorithm -->
 <h3 id="B7">B7. Mo's Algorithm (Thuật toán Mo) — Trả lời hàng loạt câu hỏi trên đoạn</h3>
 <p><em>💡 Hình dung: Giáo viên cho 100 câu hỏi: "Từ bạn thứ L đến bạn thứ R trong lớp, có bao nhiêu họ khác nhau?". Nếu trả lời lung tung (hỏi đoạn [3,50] rồi nhảy sang [80,90] rồi quay lại [5,45]) thì mỗi lần phải đếm lại từ đầu. Nhưng nếu bạn <strong>sắp xếp</strong> lại thứ tự câu hỏi cho gần nhau ([3,50] → [5,45] → [3,48]...) thì mỗi lần chỉ cần thêm/bớt 1–2 bạn ở rìa là xong — không đếm lại! Mo's Algorithm chính là cách <strong>sắp xếp câu hỏi thông minh</strong> để "trượt" đoạn [L,R] ít nhất có thể.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi câu hỏi duyệt đoạn [L,R] từ đầu → O(n×Q). Với n = Q = 10⁵ → <strong>10¹⁰ → TLE</strong>. Mo sắp xếp câu hỏi → O((N+Q)√N) ≈ 3×10⁷ → OK.</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -1486,6 +1501,7 @@ for (int i = 0; i &lt; q; i++) {
 <!-- B8: Matrix Exponentiation -->
 <h3 id="B8">B8. Matrix Exponentiation (Lũy thừa ma trận) — Tính nhanh công thức truy hồi</h3>
 <p><em>💡 Hình dung: Bạn cần tính Fibonacci thứ 10¹⁸. Tính từng bước dp[1], dp[2], ..., dp[10¹⁸] thì đợi cả trăm năm không xong. Nhưng nếu bạn viết phép tính "bước tiếp theo" thành <strong>1 phép nhân ma trận</strong>: nhân ma trận A một lần = tiến 1 bước, nhân A hai lần = tiến 2 bước. Vậy nhân A mười lần = tiến 10 bước. Và nhờ <strong>lũy thừa nhanh</strong> (giống tính 2¹⁰⁰⁰ bằng cách bình phương liên tục), bạn tính A^(10¹⁸) chỉ trong khoảng 60 phép nhân ma trận!</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Tính dp[1] → dp[2] → ... → dp[n] tuần tự → O(n). Với n = 10¹⁸ → <strong>không bao giờ chạy xong</strong>. Lũy thừa ma trận → O(k³ × log n) với k nhỏ (2–4) → chỉ vài trăm phép tính.</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -1620,6 +1636,7 @@ for (auto &amp;[k, v] : diem) out &lt;&lt; k &lt;&lt; ": " &lt;&lt; v &lt;&lt; '
 <!-- C2 -->
 <h3 id="C2">C2. Priority Queue (Hàng đợi ưu tiên)</h3>
 <p><em>💡 Hình dung: Giống như một cái thùng bỏ bóng vào, nhưng mỗi lần thò tay vào luôn lấy ra được quả BÓNG TO NHẤT (hoặc nhỏ nhất tuỳ loại). Không cần tìm, cứ lấy ra là được cái tốt nhất. Rất hữu ích khi cần liên tục "lấy cái lớn nhất / nhỏ nhất".</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi lần cần lấy max/min phải duyệt cả mảng → O(n). Lấy n lần → O(n²). Dùng Priority Queue → mỗi lần lấy/thêm chỉ O(log n).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "lấy max/min liên tục", Dijkstra, trộn k dãy, xử lý theo ưu tiên</div>
 <pre>
 // Max heap (mặc định)
@@ -1636,6 +1653,7 @@ maxPQ.pop();          // Xóa 8
 <!-- C3 -->
 <h3 id="C3">C3. DSU (Disjoint Set Union — Cấu trúc gộp nhóm)</h3>
 <p><em>💡 Hình dung: Lớp có 40 bạn, ban đầu ai cũng là 1 nhóm riêng (40 nhóm). Khi 2 bạn kết bạn, nhóm của 2 bạn GỘP LẠI thành 1. Sau nhiều lần gộp, muốn hỏi "A và B có cùng nhóm không?" → chỉ cần xem 2 người có chung "Nhóm trưởng" không. Gộp nhóm + hỏi nhóm đều cực nhanh.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Kiểm tra "A và B cùng nhóm?" bằng BFS/DFS mỗi lần → O(n). Với Q câu hỏi → O(n×Q). Dùng DSU → mỗi thao tác gần như <strong>O(1)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "cùng nhóm không?", "bao nhiêu nhóm riêng biệt (thành phần liên thông)?", "gộp 2 tập hợp", Kruskal</div>
 <pre>
 // ═══ DSU — Phong cách quen thuộc ═══
@@ -1690,6 +1708,7 @@ for (int i = 1; i &lt;= n; i++)
 <!-- C4 -->
 <h3 id="C4">C4. BIT (Fenwick Tree — Cây chỉ số nhị phân)</h3>
 <p><em>💡 Hình dung: Bạn có bảng điểm cả lớp và ghi sẵn "tổng từ đầu đến bạn thứ i" (tổng tiền tố). Muốn hỏi "tổng từ bạn 3 đến bạn 7" thì lấy tổng[7] − tổng[2] là xong. Nhưng nếu thầy sửa điểm ai đó, bạn phải tính lại toàn bộ tổng — rất chậm! BIT giống bảng tính thông minh: vừa hỏi "tổng bạn 3 đến 7", vừa sửa điểm bạn 5 mà bảng tự cập nhật. Cả hỏi và sửa đều rất nhanh.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng tổng tiền tố: hỏi nhanh O(1) nhưng sửa 1 phần tử phải tính lại bảng → O(n). Với Q câu hỏi + sửa → O(n×Q). Dùng BIT → cả hỏi và sửa đều <strong>O(log n)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]" <strong>+ sửa giá trị</strong> (tổng tiền tố thường không sửa được), "đếm nghịch thế đảo"</div>
 <pre>
 long long bit[100005];
@@ -1715,6 +1734,7 @@ long long tongDoan(int l, int r) {
 <!-- C5 -->
 <h3 id="C5">C5. Deque — Hàng đợi hai đầu</h3>
 <p><em>💡 Hình dung: Ống nhựa 2 đầu hở — có thể nhét/rút bóng từ CẢ HAI ĐẦU. Dùng kết hợp với "Cửa sổ trượt" để luôn biết giá trị lớn nhất/nhỏ nhất trong khung nhìn hiện tại mà không cần đếm lại.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng queue thường → không xóa được đầu bên kia. Dùng vector → xóa phần tử đầu O(n). Deque cho phép thêm/xóa cả 2 đầu trong <strong>O(1)</strong> — cần thiết cho Sliding Window.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "min/max trong cửa sổ trượt", "thêm/xóa ở cả hai đầu"</div>
 <pre>
 deque&lt;int&gt; dq;
@@ -1727,6 +1747,7 @@ dq.pop_front();   dq.pop_back();   // Tất cả O(1)
 <!-- C6 -->
 <h3 id="C6">C6. Segment Tree (Cây phân đoạn)</h3>
 <p><em>💡 Hình dung: Lớp có 100 học sinh xếp hàng. Thầy hay hỏi "điểm cao nhất từ bạn 20 đến bạn 50?". Nếu duyệt từ 20→50 mỗi lần thì chậm. Segment Tree giống việc <strong>chia lớp thành các nhóm nhỏ</strong>: nhóm 1–50, nhóm 1–25, nhóm 26–50, nhóm 1–12... Mỗi nhóm <strong>nhớ sẵn</strong> điểm cao nhất. Cần hỏi đoạn [20,50]? Chỉ cần ghép 3–4 nhóm nhỏ có sẵn → trả lời ngay! Thầy sửa điểm 1 bạn? Chỉ cập nhật vài nhóm chứa bạn đó. Cập nhật cả nhóm 10–40 cùng lúc? Dùng "Lazy" — ghi nhớ "nhóm này cần +5 điểm" rồi để dành, chỉ cập nhật thật khi ai hỏi.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi truy vấn min/max/tổng duyệt đoạn [L,R] → O(n). Cập nhật đoạn cũng O(n). Với Q thao tác → O(n×Q). Dùng Segment Tree → mọi thao tác <strong>O(log n)</strong>.</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -1820,6 +1841,7 @@ long long queryRange(int id, int l, int r, int ql, int qr) {
 <!-- C7 -->
 <h3 id="C7">C7. Sparse Table (Bảng thưa) — Hỏi nhanh min/max đoạn không đổi</h3>
 <p><em>💡 Hình dung: Bạn có bảng điểm <strong>cố định</strong> (không ai sửa), nhưng thầy hỏi rất nhiều lần "ai điểm thấp nhất từ bạn L đến bạn R?". Sparse Table giống việc <strong>lập bảng tra sẵn</strong>: ghi lại "min trong 1 bạn", "min trong 2 bạn liên tiếp", "min trong 4 bạn"... Khi thầy hỏi đoạn [3, 10], bạn tra 2 ô đã tính sẵn (đoạn [3,6] và [7,10]) rồi lấy min → trả lời O(1). Đánh đổi: nếu sửa điểm thì phải <strong>tính lại bảng</strong> → chỉ dùng khi dữ liệu không thay đổi.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi câu hỏi min/max duyệt đoạn [L,R] → O(n). Với Q câu hỏi → O(n×Q). Dùng Sparse Table → dựng bảng O(n log n), mỗi câu hỏi <strong>O(1)</strong>. Đơn giản hơn Segment Tree khi không cần cập nhật.</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -1918,6 +1940,7 @@ a.assign(n + 1, vector&lt;bool&gt;(n + 1, false));
 <!-- D1 -->
 <h3 id="D1">D1. BFS — Duyệt theo chiều rộng</h3>
 <p><em>💡 Hình dung: Ném viên đá xuống hồ. Sóng lan ra vòng 1 (các đỉnh cách 1 bước), rồi vòng 2 (cách 2 bước), vòng 3... Vì sóng lan đều nên đỉnh nào sóng đến trước thì đó là đường ngắn nhất. Dùng "hàng đợi" (xếp hàng ai đến trước xử lý trước) để đảm bảo duyệt đúng thứ tự.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng DFS tìm đường ngắn nhất → không đảm bảo đúng (đường tìm được có thể dài hơn). Vét cạn mọi đường → O(n!). BFS đảm bảo <strong>đúng + nhanh O(V+E)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" (đồ thị <strong>không trọng số</strong>), "duyệt theo tầng", "lưới/mê cung", "truy vết đường đi"</div>
 <pre>
 // ═══ BFS tìm đường đi từ S đến F ═══
@@ -2063,6 +2086,7 @@ void BFS_Luoi(int sr, int sc) {     // Xuất phát từ ô (sr, sc)
 <!-- D2 -->
 <h3 id="D2">D2. DFS — Duyệt theo chiều sâu</h3>
 <p><em>💡 Hình dung: Khám phá mê cung bằng cách luôn rẽ vào ngõ đầu tiên gặp được, đi sâu cho đến khi đường cùng thì quay lại, thử ngõ tiếp theo. Ví dụ dùng: đếm xem bản đồ có bao nhiêu "đảo" riêng biệt (nhóm đỉnh nối với nhau). Mỗi lần bắt đầu DFS từ 1 đỉnh chưa thăm = tìm được 1 đảo mới.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Đếm nhóm liên thông bằng cách thử mọi cặp đỉnh → O(V²). Hoặc kiểm tra chu trình bằng tay → cực khó. DFS làm tất cả trong <strong>O(V+E)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đếm nhóm riêng biệt (thành phần liên thông)", "kiểm tra chu trình", "tô màu đồ thị"</div>
 <div class="tip"><strong>LƯU Ý:</strong> Dùng stack thay đệ quy để tránh tràn bộ nhớ khi N lớn (N > 10⁴)</div>
 <pre>
@@ -2163,6 +2187,7 @@ int main() {
 <!-- D3 -->
 <h3 id="D3">D3. Dijkstra — Đường đi ngắn nhất (có trọng số)</h3>
 <p><em>💡 Hình dung: Bản đồ thành phố với các con đường dài ngắn khác nhau (có "trọng số" = chiều dài). Từ giao lộ A, muốn tìm đường ngắn nhất đến mọi giao lộ khác. Cách làm: luôn chọn giao lộ GẦN NHẤT chưa thăm → cập nhật khoảng cách các giao lộ liền kề → lặp lại cho đến hết. Dùng "thùng lấy quả nhỏ nhất" (Priority Queue) để chọn nhanh.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> BFS chỉ đúng khi tất cả cạnh có trọng số = 1. Với cạnh trọng số khác nhau, BFS cho kết quả <strong>sai</strong>. Dijkstra luôn tìm đường ngắn nhất đúng với O(E log V).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" trên đồ thị <strong>có trọng số dương</strong></div>
 <pre>
 // ═══ Dijkstra — O(E log V) ═══
@@ -2384,6 +2409,7 @@ Truy vết: 4←Trace[4]=3←Trace[3]=2←Trace[2]=1
 <!-- D6 -->
 <h3 id="D6">D6. Prim — Cây khung nhỏ nhất (Minimum Spanning Tree)</h3>
 <p><em>💡 Hình dung: Có n ngôi nhà và nhiều con đường nối giữa chúng, mỗi đường có chi phí xây dựng khác nhau. Cần nối TẤT CẢ các nhà lại bằng đường, sao cho tổng chi phí THẤP NHẤT và không có đường thừa (không tạo vòng). Cách làm: bắt đầu từ 1 nhà, mỗi bước chọn con đường RẺ NHẤT nối nhà đã kết nối → nhà chưa kết nối. Lặp lại cho đến khi tất cả nhà đều được nối.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi cách nối → số cây khung là n^(n-2) (công thức Cayley). Với n = 20 → 20¹⁸ → không khả thi. Prim/Kruskal tìm cây khung nhỏ nhất trong <strong>O(E log V)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "nối tất cả các điểm với chi phí nhỏ nhất", "cây khung nhỏ nhất", "mạng lưới tối ưu"</div>
 <pre>
 // ═══ Prim — O(V²) với ma trận kề ═══
@@ -2471,6 +2497,7 @@ Kết quả: Cây khung có 3 cạnh: (1,2)=1, (2,3)=2, (3,4)=3
 <!-- D7 -->
 <h3 id="D7">D7. Ford-Fulkerson — Luồng cực đại (Maximum Flow)</h3>
 <p><em>💡 Hình dung: Mạng ống nước — nước chảy từ bể chứa (nguồn S) đến nhà máy (đích F). Mỗi ống có sức chứa tối đa (capacity). Hỏi: tổng lượng nước lớn nhất có thể chảy từ S đến F? Cách làm: liên tục tìm đường còn chỗ trống từ S→F (bằng BFS), rồi đẩy nước qua đường đó. Lặp lại đến khi không còn đường nào nữa.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Không có thuật toán luồng → phải thử mọi cách phân bổ → số lượng khổng lồ. Ford-Fulkerson (BFS) tìm luồng cực đại trong <strong>O(V × E²)</strong> và còn cho biết "cắt nhỏ nhất" miễn phí.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "luồng cực đại", "lưu lượng tối đa", "cắt nhỏ nhất" (max-flow min-cut)</div>
 <pre>
 // ═══ Ford-Fulkerson (dùng BFS — Edmonds-Karp) — O(V × E²) ═══
@@ -2646,6 +2673,7 @@ int main() {
 <!-- D9 -->
 <h3 id="D9">D9. Topo Sort — Sắp xếp topo (Thứ tự thực hiện)</h3>
 <p><em>💡 Hình dung: Trong môn học, muốn học "Giải tích 2" thì phải học "Giải tích 1" trước. Muốn học "CTDL" thì phải học "Lập trình cơ bản" trước. Sắp xếp topo = tìm thứ tự học môn sao cho không vi phạm tiên quyết. Dùng BFS với "đếm bậc vào" (Kahn's algorithm).</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Xếp thứ tự bằng tay với nhiều điều kiện tiên quyết → rất dễ sai và chậm. Topo Sort O(V+E) làm tự động + phát hiện luôn nếu <strong>có chu trình</strong> (không thể xếp thứ tự).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "thứ tự thực hiện công việc", "môn tiên quyết", "đồ thị có hướng không chu trình (DAG)"</div>
 <pre>
 // ═══ Topo Sort (Kahn's Algorithm — BFS) — O(V + E) ═══
@@ -2727,6 +2755,7 @@ Kết quả: <strong>1 2 3 4 5</strong> (thứ tự học môn hợp lệ)
 
 <h3 id="E1">E1. Kiểm tra số nguyên tố — O(√n)</h3>
 <p><em>💡 Số nguyên tố là số chỉ chia hết cho 1 và chính nó (ví dụ: 2, 3, 5, 7, 11...). Để kiểm tra số n có phải SNT không, không cần thử chia từ 2 đến n. Chỉ cần thử đến √n là đủ — ví dụ: kiểm tra 100 chỉ cần thử đến 10.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử chia từ 2 đến n → O(n). Với n = 10¹⁸ → không khả thi. Dùng O(√n) → chỉ cần thử đến <strong>10⁹ ≈ 1 tỷ lần</strong> — chấp nhận được.</div>
 <pre>
 bool laSNT(long long n) {
     if (n &lt; 2) return false;
@@ -2740,6 +2769,7 @@ bool laSNT(long long n) {
 
 <h3 id="E2">E2. Sàng Eratosthenes — Liệt kê SNT đến N</h3>
 <p><em>💡 Hình dung: Viết tất cả số từ 2 đến N lên bảng. Bắt đầu từ 2: giữ số 2, xóa tất cả bội của 2 (4, 6, 8...). Chuyển sang 3: giữ 3, xóa bội của 3 (6, 9, 12...). Tiếp tục với 5, 7... Số còn lại trên bảng chính là số nguyên tố. Làm 1 lần, sau đó tra cứu cực nhanh!</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Kiểm tra từng số bằng O(√n) → tổng O(n√n). Với n = 10⁷ → ~3×10¹⁰ → chậm. Sàng 1 lần O(n log log n) → sau đó tra "có phải SNT không?" trong <strong>O(1)</strong>.</div>
 <pre>
 bool snt[10000001];
 void sang(int n) {
@@ -2754,6 +2784,7 @@ void sang(int n) {
 
 <h3 id="E3">E3. Lũy thừa nhanh — a^n mod m trong O(log n)</h3>
 <p><em>💡 Hình dung: Tính 2¹⁰ bình thường cần nhân 10 lần. Nhưng: 2¹⁰ = (2⁵)², và 2⁵ = 2×(2²)² → chỉ cần vài lần nhân! Với số mũ hàng tỷ, thay vì nhân hàng tỷ lần, ta chỉ cần ~30 lần nhân. Kết hợp lấy phần dư (mod) sau mỗi bước để số không bị quá lớn.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Nhân a với chính nó n lần → O(n). Với n = 10¹⁸ → <strong>không bao giờ chạy xong</strong>. Lũy thừa nhanh → <strong>O(log n) ≈ 60 lần nhân</strong>.</div>
 <pre>
 long long power(long long a, long long n, long long mod) {
     long long res = 1;
