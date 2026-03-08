@@ -877,31 +877,191 @@ for (int i = 0; i &lt; n; i++) {
 }
 </pre>
 
-<!-- B3: VÉT CẠN -->
+<!-- B3: QUY HOẠCH ĐỘNG -->
 <!-- B3 -->
 <h3>B3. Dynamic Programming (DP) — Quy hoạch động</h3>
-<p><em>💡 Hình dung: Bài toán giống xếp gạch lên cầu thang. Muốn lên bậc 10, bạn cần biết kết quả ở bậc 9 (hoặc bậc 8, 7...). Thay vì tính đi tính lại, bạn ghi kết quả mỗi bậc vào 1 bảng (mảng dp[]). Giải từ bậc 1, rồi bậc 2, dần lên bậc n. Kết quả cuối cùng nằm ở ô cuối cùng của bảng.</em></p>
-<div class="warn"><strong>DẤU HIỆU:</strong> "đếm số cách", "tìm max/min", "có bao nhiêu phương án"
-<br>Bài có đặc điểm: kết quả bước lớn dựa vào kết quả các bước nhỏ hơn đã tính</div>
+<p><em>💡 Hình dung: Bài toán giống xếp gạch lên cầu thang. Muốn lên bậc 10, bạn cần biết kết quả ở bậc 9 (hoặc bậc 8, 7...). Thay vì tính đi tính lại, bạn ghi kết quả mỗi bậc vào 1 bảng (mảng <code>dp[]</code>). Giải từ bậc 1, rồi bậc 2, dần lên bậc n. Kết quả cuối cùng nằm ở ô cuối bảng.</em></p>
 
+<div class="warn"><strong>DẤU HIỆU NHẬN BIẾT BÀI DP:</strong>
+<ul>
+<li>"Đếm số cách", "tìm giá trị lớn nhất / nhỏ nhất", "có bao nhiêu phương án"</li>
+<li>Kết quả bước lớn <strong>dựa vào kết quả các bước nhỏ hơn đã tính</strong></li>
+<li>Bài yêu cầu <strong>tối ưu</strong> (max/min) hoặc <strong>đếm</strong> trên một tập có cấu trúc con lặp lại</li>
+</ul>
+</div>
+
+<!-- ── 4 BƯỚC GIẢI BÀI DP ── -->
+<h4>🧩 4 BƯỚC GIẢI MỌI BÀI DP</h4>
+<p>Bất kỳ bài DP nào cũng giải được theo 4 bước sau. Bạn chỉ cần trả lời lần lượt 4 câu hỏi:</p>
+
+<table>
+<tr><th>Bước</th><th>Câu hỏi cần trả lời</th><th>Mẹo</th></tr>
+<tr>
+<td><strong>Bước 1</strong><br>Xác định biến trạng thái</td>
+<td><code>dp[i]</code> (hoặc <code>dp[i][j]</code>) <strong>nghĩa là gì?</strong><br>Nó lưu kết quả gì? Đơn vị gì?</td>
+<td>Viết bằng lời: <em>"dp[i] là ... khi xét đến phần tử thứ i"</em></td>
+</tr>
+<tr>
+<td><strong>Bước 2</strong><br>Xác định điều kiện biên</td>
+<td>Khi bài toán <strong>nhỏ nhất</strong> (n=0, n=1) thì <code>dp</code> bằng bao nhiêu?</td>
+<td>Thử tay: n=0 → dp[0]=?, n=1 → dp[1]=?</td>
+</tr>
+<tr>
+<td><strong>Bước 3</strong><br>Công thức chuyển trạng thái</td>
+<td><code>dp[i]</code> được tính từ <code>dp[?]</code> nào?<br>Công thức truy hồi là gì?</td>
+<td>Hỏi: <em>"Ở bước cuối cùng, ta có mấy lựa chọn?"</em> (xem mẹo bên dưới)</td>
+</tr>
+<tr>
+<td><strong>Bước 4</strong><br>Truy vết tìm nghiệm</td>
+<td>Đáp án nằm ở <code>dp[n]</code> hay <code>max(dp[])</code>?<br>Nếu cần in phương án → truy ngược từ đáp án</td>
+<td>Lưu mảng <code>trace[]</code> song song khi tính dp</td>
+</tr>
+</table>
+
+<!-- ── KINH NGHIỆM TÌM CÔNG THỨC ── -->
+<h4>🔑 KINH NGHIỆM TÌM CÔNG THỨC DP (Bước 3)</h4>
+<p>Bước 3 là bước <strong>khó nhất</strong>. Dưới đây là các mẹo giúp bạn tìm công thức nhanh:</p>
+
+<div class="tip"><strong>Mẹo 1 — "Bước cuối cùng":</strong><br>
+Đứng ở phần tử thứ i, hỏi: <em>"Ở bước cuối, ta có mấy lựa chọn?"</em><br>
+Mỗi lựa chọn sẽ tương ứng với 1 nhánh trong công thức.
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+VD Balo: Với món đồ thứ i, ta có 2 lựa chọn:
+  → Không chọn:  dp[i][w] = dp[i-1][w]
+  → Chọn:        dp[i][w] = dp[i-1][w - weight[i]] + value[i]
+  ⟹ dp[i][w] = max(không chọn, chọn)
+
+VD Leo cầu thang (mỗi bước leo 1 hoặc 2 bậc):
+  → Leo 1 bậc từ bậc i-1:  dp[i-1] cách
+  → Leo 2 bậc từ bậc i-2:  dp[i-2] cách
+  ⟹ dp[i] = dp[i-1] + dp[i-2]
+</pre>
+</div>
+
+<div class="tip"><strong>Mẹo 2 — Thử bằng tay n nhỏ:</strong><br>
+Tính tay n=1, n=2, n=3, n=4. Nhìn vào dãy kết quả → tìm quy luật.
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+VD Lát gạch 2×n: n=1→1, n=2→2, n=3→3, n=4→5
+  Nhận ra: 1, 2, 3, 5... → dp[i] = dp[i-1] + dp[i-2]
+</pre>
+</div>
+
+<div class="tip"><strong>Mẹo 3 — 1D hay 2D?</strong><br>
+<ul>
+<li>Bài chỉ có <strong>1 ràng buộc</strong> (vị trí i) → dp[i] <strong>1 chiều</strong></li>
+<li>Bài có <strong>2 ràng buộc</strong> (vd: vật thứ i + trọng lượng w) → dp[i][w] <strong>2 chiều</strong></li>
+<li>2D có thể <strong>tối ưu thành 1D</strong> bằng cách duyệt ngược (xem balo 0/1 bên dưới)</li>
+</ul>
+</div>
+
+<div class="tip"><strong>Mẹo 4 — Phân biệt "đếm" và "tối ưu":</strong><br>
+<ul>
+<li><strong>"Đếm số cách"</strong> → cộng dồn: <code>dp[i] += dp[j]</code></li>
+<li><strong>"Tìm max/min"</strong> → so sánh: <code>dp[i] = max(dp[i], dp[j] + ...)</code></li>
+</ul>
+</div>
+
+<!-- ── BẢNG DẠNG DP THƯỜNG GẶP ── -->
+<h4>📋 BẢNG DẠNG DP THƯỜNG GẶP</h4>
+<table>
+<tr><th>Dạng bài</th><th>Biến trạng thái</th><th>Công thức (ý tưởng)</th></tr>
+<tr><td>Fibonacci / Leo thang</td><td>dp[i] = kết quả tại bậc i</td><td>dp[i] = dp[i-1] + dp[i-2]</td></tr>
+<tr><td>Balo 0/1</td><td>dp[w] = giá trị max với sức chứa w</td><td>dp[w] = max(dp[w], dp[w-wi] + vi) — duyệt <strong>ngược</strong></td></tr>
+<tr><td>Đổi tiền / Unbounded</td><td>dp[w] = số cách đạt tổng w</td><td>dp[w] += dp[w-coin] — duyệt <strong>xuôi</strong></td></tr>
+<tr><td>LIS (dãy con tăng)</td><td>dp[i] = độ dài LIS kết thúc tại i</td><td>dp[i] = max(dp[j]+1) với j&lt;i, a[j]&lt;a[i]</td></tr>
+<tr><td>Dãy con liên tiếp max</td><td>dp[i] = tổng max kết thúc tại i</td><td>dp[i] = max(a[i], dp[i-1]+a[i]) (Kadane)</td></tr>
+<tr><td>Lát gạch 2×n</td><td>dp[i] = số cách lát cột 1..i</td><td>dp[i] = dp[i-1] + dp[i-2]</td></tr>
+<tr><td>Xâu con chung LCS</td><td>dp[i][j] = LCS của a[1..i], b[1..j]</td><td>a[i]==b[j] ? dp[i-1][j-1]+1 : max(dp[i-1][j], dp[i][j-1])</td></tr>
+</table>
+
+<!-- ── VÍ DỤ 1: FIBONACCI ── -->
+<h4>Ví dụ 1: Fibonacci — Bài DP đầu tiên</h4>
+<p><em>Tìm số Fibonacci thứ n. Dãy: 0, 1, 1, 2, 3, 5, 8, 13, 21...</em></p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Bước 1: dp[i] = số Fibonacci thứ i
+Bước 2: dp[0] = 0, dp[1] = 1
+Bước 3: dp[i] = dp[i-1] + dp[i-2]   ← "bước cuối": cộng 2 số trước
+Bước 4: Đáp án = dp[n]
+</pre>
 <pre>
-// ═══ DP BALO 0/1 (Knapsack) ═══
-// Mỗi vật chỉ dùng 1 lần → Duyệt NGƯỢC
+int fibo(int n) {
+    vector&lt;int&gt; dp(n + 1);
+    dp[0] = 0; dp[1] = 1;                   // Bước 2: Biên
+    for (int i = 2; i &lt;= n; i++)
+        dp[i] = dp[i-1] + dp[i-2];          // Bước 3: Công thức
+    return dp[n];                            // Bước 4: Đáp án
+}
+</pre>
+
+<!-- ── VÍ DỤ 2: BALO 0/1 ── -->
+<h4>Ví dụ 2: Balo 0/1 — Mỗi vật dùng 1 lần</h4>
+<p><em>n món đồ, mỗi món có trọng lượng w[i] và giá trị v[i]. Balo chứa tối đa W. Chọn sao cho tổng giá trị lớn nhất.</em></p>
+
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Bước 1: dp[i][w] = giá trị lớn nhất khi xét i món đầu, balo chứa w
+Bước 2: dp[0][w] = 0  (0 món → giá trị 0)
+Bước 3: "Bước cuối" — món thứ i có 2 lựa chọn:
+  → Không chọn: dp[i][w] = dp[i-1][w]
+  → Chọn (nếu w[i] ≤ w): dp[i][w] = dp[i-1][w-w[i]] + v[i]
+  ⟹ dp[i][w] = max(không chọn, chọn)
+Bước 4: Đáp án = dp[n][W]
+</pre>
+
+<p><strong>Code 2D (dễ hiểu):</strong></p>
+<pre>
+// Bước 1: dp[i][w] = giá trị max xét i món, balo chứa w
+vector&lt;vector&lt;int&gt;&gt; dp(n+1, vector&lt;int&gt;(W+1, 0));
+// Bước 2: dp[0][w] = 0 (đã khởi tạo)
+// Bước 3: Công thức chuyển trạng thái
+for (int i = 1; i &lt;= n; i++)
+    for (int w = 0; w &lt;= W; w++) {
+        dp[i][w] = dp[i-1][w];              // Không chọn món i
+        if (weights[i-1] &lt;= w)
+            dp[i][w] = max(dp[i][w],
+                dp[i-1][w - weights[i-1]] + values[i-1]); // Chọn
+    }
+// Bước 4: Đáp án
+cout &lt;&lt; dp[n][W];
+</pre>
+
+<p><strong>Code 1D tối ưu (duyệt NGƯỢC — mỗi vật chỉ dùng 1 lần):</strong></p>
+<pre>
 long long dp[MAX_W + 1] = {0};
 for (int i = 0; i &lt; n; i++)
-    for (int j = W; j >= w[i]; j--)          // ← NGƯỢC!
+    for (int j = W; j >= w[i]; j--)          // ← NGƯỢC! (vật i chỉ dùng 1 lần)
         dp[j] = max(dp[j], dp[j - w[i]] + v[i]);
 // Đáp án: dp[W]
 </pre>
 
+<p><strong>Truy vết — In ra các món đã chọn (từ bảng 2D):</strong></p>
 <pre>
-// ═══ ĐỔI TIỀN / ĐẾM SỐ CÁCH (Unbounded) ═══
-// Mỗi loại dùng KHÔNG GIỚI HẠN → Duyệt XUÔI
+// Bước 4: Truy ngược từ dp[n][W]
+int i = n, w = W;
+while (i &gt; 0 &amp;&amp; w &gt; 0) {
+    if (dp[i][w] != dp[i-1][w]) {            // Giá trị thay đổi → đã chọn món i
+        cout &lt;&lt; "Chọn món " &lt;&lt; i &lt;&lt; endl;
+        w -= weights[i-1];
+    }
+    i--;
+}
+</pre>
+
+<!-- ── VÍ DỤ 3: ĐỔI TIỀN ── -->
+<h4>Ví dụ 3: Đổi tiền — Mỗi loại dùng không giới hạn</h4>
+<p><em>Có các mệnh giá coins[] = {1, 2, 5}. Đếm số cách đổi amount = 5.</em></p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Bước 1: dp[w] = số cách đổi số tiền w
+Bước 2: dp[0] = 1  (1 cách đổi 0 đồng: không chọn gì)
+Bước 3: dp[w] += dp[w - coin]  ← "nếu dùng đồng coin, còn lại w-coin đã có dp[w-coin] cách"
+Bước 4: Đáp án = dp[amount]
+</pre>
+<pre>
 long long soCach[MAX_SUM + 1] = {0};
-soCach[0] = 1;
-for (int coin : coins)
-    for (int j = coin; j &lt;= S; j++)          // ← XUÔI!
-        soCach[j] += soCach[j - coin];
+soCach[0] = 1;                               // Bước 2: Biên
+for (int coin : coins)                        // Duyệt từng mệnh giá
+    for (int j = coin; j &lt;= S; j++)          // ← XUÔI! (dùng không giới hạn)
+        soCach[j] += soCach[j - coin];        // Bước 3: Cộng dồn số cách
+// Đáp án: soCach[S]
 </pre>
 
 <pre>
@@ -914,43 +1074,67 @@ for (int val = 1; val &lt;= k; val++)
 </pre>
 
 <div class="tip">
-<strong>PHÂN BIỆT QUAN TRỌNG:</strong>
+<strong>PHÂN BIỆT: Duyệt NGƯỢC vs XUÔI</strong>
 <table>
 <tr><th></th><th>Duyệt NGƯỢC j</th><th>Duyệt XUÔI j</th></tr>
-<tr><td><strong>Ý nghĩa</strong></td><td>Mỗi vật dùng tối đa 1 lần (0/1)</td><td>Mỗi vật dùng không giới hạn</td></tr>
+<tr><td><strong>Ý nghĩa</strong></td><td>Mỗi vật dùng <strong>tối đa 1 lần</strong> (0/1)</td><td>Mỗi vật dùng <strong>không giới hạn</strong></td></tr>
+<tr><td><strong>Lý do</strong></td><td>Duyệt ngược → dp[j-w[i]] chưa bị cập nhật ở vòng i hiện tại → vật i không bị dùng lại</td><td>Duyệt xuôi → dp[j-coin] đã cập nhật → cho phép dùng lại coin đó</td></tr>
 <tr><td><strong>Ví dụ</strong></td><td>Balo 0/1 (NEWBACK)</td><td>Đổi tiền (CHANGE)</td></tr>
 </table>
 </div>
 
-<h3>B3b. LIS — Dãy con tăng dài nhất</h3>
-<p><em>💡 Hình dung: Có dãy học sinh xếp hàng lộn xộn: 3 1 4 1 5 9. Bạn muốn chọn ra nhiều bạn nhất sao cho chiều cao TĂNG DẦN (không cần đứng cạnh nhau). Chọn: 1, 4, 5, 9 → được 4 bạn. Đó là dãy con tăng dài nhất.</em></p>
+<!-- ── VÍ DỤ 4: LIS ── -->
+<h4>Ví dụ 4: LIS — Dãy con tăng dài nhất</h4>
+<p><em>💡 Hình dung: Có dãy học sinh xếp hàng lộn xộn: 3 1 4 1 5 9. Bạn muốn chọn ra nhiều bạn nhất sao cho chiều cao TĂNG DẦN (không cần đứng cạnh nhau). Chọn: 1, 4, 5, 9 → được 4 bạn.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "dãy con tăng dài nhất", "chọn nhiều nhất sao cho tăng dần"</div>
-<pre>
-// ═══ LIS — O(n log n) dùng Binary Search ═══
-vector&lt;int&gt; dp;  // dp[i] = phần tử nhỏ nhất kết thúc dãy tăng dài i+1
 
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Bước 1: dp[i] = độ dài dãy con tăng dài nhất KẾT THÚC tại vị trí i
+        trace[i] = vị trí phần tử đứng trước a[i] trong LIS (để truy vết)
+Bước 2: dp[i] = 1 (mỗi phần tử tự nó là dãy dài 1), trace[i] = -1
+Bước 3: "Bước cuối" — phần tử a[i] có thể nối sau a[j] nào?
+  → Duyệt j &lt; i: nếu a[j] &lt; a[i] và dp[j]+1 &gt; dp[i]
+  ⟹ dp[i] = dp[j] + 1, trace[i] = j
+Bước 4: Đáp án = max(dp[0..n-1]). Truy vết theo trace[] từ vị trí đáp án.
+</pre>
+
+<p><strong>LIS — O(n²) dễ hiểu (dùng khi N ≤ 5000):</strong></p>
+<pre>
+// Bước 1: dp[i] = độ dài LIS kết thúc tại i
+int dp[5005], trace[5005];
+int ans = 1, lastIdx = 0;
+for (int i = 0; i &lt; n; i++) {
+    dp[i] = 1; trace[i] = -1;               // Bước 2: Biên
+    for (int j = 0; j &lt; i; j++)
+        if (a[j] &lt; a[i] &amp;&amp; dp[j] + 1 &gt; dp[i]) {
+            dp[i] = dp[j] + 1;              // Bước 3: Công thức
+            trace[i] = j;                   // Lưu vết
+        }
+    if (dp[i] &gt; ans) { ans = dp[i]; lastIdx = i; }
+}
+
+// Bước 4: Truy vết
+vector&lt;int&gt; lis;
+for (int i = lastIdx; i != -1; i = trace[i])
+    lis.push_back(a[i]);
+reverse(lis.begin(), lis.end());
+</pre>
+
+<p><strong>LIS — O(n log n) tối ưu dùng Binary Search:</strong></p>
+<pre>
+// dp[i] = phần tử nhỏ nhất kết thúc dãy tăng dài i+1
+vector&lt;int&gt; dp;
 for (int i = 0; i &lt; n; i++) {
     int pos = lower_bound(dp.begin(), dp.end(), a[i]) - dp.begin();
-    if (pos == dp.size())
-        dp.push_back(a[i]);    // Mở rộng dãy
+    if (pos == (int)dp.size())
+        dp.push_back(a[i]);                  // Mở rộng dãy
     else
-        dp[pos] = a[i];        // Thay thế để giữ dãy "tốt" hơn
+        dp[pos] = a[i];                      // Thay thế để giữ dãy "tốt" hơn
 }
-int LIS = dp.size();               // Độ dài LIS
-</pre>
-<pre>
-// ═══ LIS — O(n²) dễ hiểu hơn (dùng khi N ≤ 5000) ═══
-int f[5005];  // f[i] = độ dài LIS kết thúc tại i
-int ans = 1;
-for (int i = 0; i &lt; n; i++) {
-    f[i] = 1;
-    for (int j = 0; j &lt; i; j++)
-        if (a[j] &lt; a[i])
-            f[i] = max(f[i], f[j] + 1);
-    ans = max(ans, f[i]);
-}
+int LIS = dp.size();
 </pre>
 
+<!-- ── CHẠY TAY ── -->
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY DP Balo 0/1:</strong>
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
 3 vật: w[]={2,3,4}, v[]={3,4,5}.  Balo chứa W=5.
