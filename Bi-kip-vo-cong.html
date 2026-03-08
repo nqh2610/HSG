@@ -42,13 +42,28 @@
         .nhom-C { background: #9b59b6; }
         .nhom-D { background: #1abc9c; }
         .nhom-E { background: #e74c3c; }
-        .toc-box { background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 8px; padding: 15px 20px; margin: 15px 0; }
-        .toc-box h3 { border: none; padding: 0; margin: 0 0 8px 0; font-size: 13pt; }
-        .toc-box p { margin: 6px 0 0 0; }
-        .toc-box ul { margin: 2px 0 6px 18px; }
-        .toc-box li { margin-bottom: 1px; font-size: 11pt; }
+        .toc-box { background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 10px; padding: 18px 20px; margin: 15px 0; }
+        .toc-box h3 { border: none; padding: 0; margin: 0 0 12px 0; font-size: 14pt; text-align: center; }
         .toc-box a { text-decoration: none; color: #2980b9; }
-        .toc-box a:hover { text-decoration: underline; }
+        .toc-box a:hover { text-decoration: underline; color: #1a5276; }
+        .toc-section { margin: 0 0 10px 0; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #ccc; background: #fff; }
+        .toc-section.sec-tang1 { border-left-color: #e74c3c; }
+        .toc-section.sec-tang2 { border-left-color: #e67e22; }
+        .toc-section.sec-A { border-left-color: #3498db; }
+        .toc-section.sec-B { border-left-color: #e67e22; }
+        .toc-section.sec-C { border-left-color: #9b59b6; }
+        .toc-section.sec-D { border-left-color: #1abc9c; }
+        .toc-section.sec-E { border-left-color: #e74c3c; }
+        .toc-section.sec-tang4 { border-left-color: #3498db; }
+        .toc-section.sec-tang5 { border-left-color: #8e44ad; }
+        .toc-section.sec-phuluc { border-left-color: #7f8c8d; }
+        .toc-section .toc-title { font-weight: bold; font-size: 11pt; margin-bottom: 4px; display: block; }
+        .toc-section .toc-links { font-size: 10.5pt; line-height: 1.7; color: #555; }
+        .toc-section .toc-links a { margin-right: 2px; }
+        .toc-section .toc-sub { font-size: 9.5pt; color: #888; margin-left: 6px; }
+        .toc-section .toc-sub a { color: #6c9bc4; font-size: 9.5pt; }
+        .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .toc-grid .toc-section { margin: 0; }
         html { scroll-behavior: smooth; }
         hr.section { border: none; border-top: 2px dashed #ccc; margin: 30px 0; }
 
@@ -68,9 +83,13 @@
             th, td { padding: 3px 5px; white-space: nowrap; }
             td:nth-child(2) { white-space: normal; min-width: 80px; }
             td code { font-size: 8pt; }
-            .toc-box { padding: 10px 12px; }
-            .toc-box ol { padding-left: 16px; }
-            .toc-box li { font-size: 10pt; }
+            .toc-box { padding: 10px 10px; }
+            .toc-grid { grid-template-columns: 1fr; gap: 6px; }
+            .toc-section { padding: 6px 10px; margin-bottom: 6px; }
+            .toc-section .toc-title { font-size: 10pt; }
+            .toc-section .toc-links { font-size: 9.5pt; line-height: 1.6; }
+            .toc-section .toc-sub { font-size: 8.5pt; }
+            .toc-section .toc-sub a { font-size: 8.5pt; }
             .warn, .good, .bad, .tip { padding: 8px; font-size: 10pt; }
             .nhom-label { font-size: 8pt; padding: 2px 5px; }
             p { font-size: 11pt; }
@@ -92,69 +111,81 @@
 
 <!-- ===================== MỤC LỤC ===================== -->
 <div class="toc-box">
-<h3>📑 MỤC LỤC</h3>
+<h3>📑 MỤC LỤC NHANH</h3>
 
-<p><strong><a href="#tang1">🔴 TẦNG 1: KHÔNG MẤT ĐIỂM OAN</a></strong></p>
-<ul style="margin:2px 0 8px 18px; list-style:none; padding:0;">
-<li><a href="#s11">1.1. Mẫu code bắt đầu</a></li>
-<li><a href="#s12">1.2. Tràn số (Overflow)</a></li>
-<li><a href="#s13">1.3. Lỗi chỉ số mảng</a></li>
-<li><a href="#s14">1.4. Trường hợp đặc biệt</a></li>
-</ul>
+<!-- Tầng 1 + 2 -->
+<div class="toc-grid">
+<div class="toc-section sec-tang1">
+  <span class="toc-title">🔴 <a href="#tang1">TẦNG 1: KHÔNG MẤT ĐIỂM OAN</a></span>
+  <span class="toc-links"><a href="#s11">1.1 Mẫu code</a> · <a href="#s12">1.2 Tràn số</a> · <a href="#s13">1.3 Lỗi chỉ số</a> · <a href="#s14">1.4 TH đặc biệt</a></span>
+</div>
+<div class="toc-section sec-tang2">
+  <span class="toc-title">🟠 <a href="#tang2">TẦNG 2: TỐI ƯU TỐC ĐỘ</a></span>
+  <span class="toc-links"><a href="#s21">2.1 Big-O</a> · <a href="#s22">2.2 Bảng chọn thuật</a> · <a href="#s23">2.3 Tối ưu I/O</a> · <a href="#s24">2.4 Tối ưu code</a></span>
+</div>
+</div>
 
-<p><strong><a href="#tang2">🟠 TẦNG 2: TỐI ƯU TỐC ĐỘ</a></strong></p>
-<ul style="margin:2px 0 8px 18px; list-style:none; padding:0;">
-<li><a href="#s21">2.1. Độ phức tạp Big-O</a></li>
-<li><a href="#s22">2.2. Bảng chọn thuật theo N</a></li>
-<li><a href="#s23">2.3. Tối ưu I/O</a></li>
-<li><a href="#s24">2.4. Tối ưu code</a></li>
-</ul>
+<!-- Tầng 3: NHÓM A – E -->
+<div class="toc-section" style="border-left-color: #2c3e50; background: #eef2f5; margin-top: 8px;">
+  <span class="toc-title">🟢 <a href="#tang3">TẦNG 3: KỸ THUẬT CỐT LÕI</a></span>
+</div>
 
-<p><strong><a href="#tang3">🟢 TẦNG 3: KỸ THUẬT CỐT LÕI</a></strong></p>
+<div class="toc-grid">
+<div class="toc-section sec-A">
+  <span class="toc-title">🔵 <a href="#nhomA">NHÓM A — Xử lý mảng</a></span>
+  <span class="toc-links">
+    <a href="#A1">A1. Prefix Sum</a> · <a href="#A2">A2. Difference Array</a> · <a href="#A3">A3. Two Pointers</a><br>
+    <a href="#A4">A4. Sliding Window</a> · <a href="#A5">A5. Mono Stack</a> · <a href="#A6">A6. Binary Search</a><br>
+    <a href="#A7">A7. Sorting</a> · <a href="#A8">A8. Counting</a> · <a href="#A9">A9. Kadane</a>
+  </span>
+</div>
+<div class="toc-section sec-B">
+  <span class="toc-title">🟠 <a href="#nhomB">NHÓM B — Phương pháp giải</a></span>
+  <span class="toc-links">
+    <a href="#B1">B1. Vét cạn</a>
+    <span class="toc-sub">(<a href="#B1d1">For</a> · <a href="#B1d2">Bitmask</a> · <a href="#B1d3">Hoán vị</a> · <a href="#B1d4">Quay lui</a> · <a href="#B1d5">MitM</a>)</span><br>
+    <a href="#B2">B2. Greedy</a> · <a href="#B3">B3. DP</a> · <a href="#B4">B4. Chia để trị</a> · <a href="#B5">B5. Contribution</a>
+  </span>
+</div>
+<div class="toc-section sec-C">
+  <span class="toc-title">🟣 <a href="#nhomC">NHÓM C — Cấu trúc dữ liệu</a></span>
+  <span class="toc-links"><a href="#C1">C1. Vector/Set/Map</a> · <a href="#C2">C2. Priority Queue</a> · <a href="#C3">C3. DSU</a> · <a href="#C4">C4. BIT</a> · <a href="#C5">C5. Deque</a></span>
+</div>
+<div class="toc-section sec-D">
+  <span class="toc-title">🟢 <a href="#nhomD">NHÓM D — Đồ thị</a></span>
+  <span class="toc-links">
+    <a href="#D0">D0. Biểu diễn</a> · <a href="#D1">D1. BFS</a> · <a href="#D1b">D1b. BFS 2D</a> · <a href="#D2">D2. DFS</a> · <a href="#D2b">D2b. Liên thông</a><br>
+    <a href="#D3">D3. Dijkstra</a> · <a href="#D4">D4. Floyd</a> · <a href="#D5">D5. Bellman-Ford</a> · <a href="#D6">D6. Prim</a><br>
+    <a href="#D7">D7. Ford-Fulk.</a> · <a href="#D8">D8. Kruskal</a> · <a href="#D9">D9. Topo Sort</a>
+  </span>
+</div>
+<div class="toc-section sec-E">
+  <span class="toc-title">🔴 <a href="#nhomE">NHÓM E — Số học</a></span>
+  <span class="toc-links"><a href="#E1">E1. Kiểm tra SNT</a> · <a href="#E2">E2. Sàng Eratosthenes</a> · <a href="#E3">E3. Lũy thừa nhanh</a> · <a href="#E4">E4. GCD/LCM</a></span>
+</div>
+</div>
 
-<p style="margin:2px 0 2px 10px;"><strong><a href="#nhomA">NHÓM A — Xử lý mảng</a></strong></p>
-<ul style="margin:2px 0 6px 18px; list-style:none; padding:0;">
-<li><a href="#A1">A1. Prefix Sum</a> · <a href="#A2">A2. Difference Array</a> · <a href="#A3">A3. Two Pointers</a></li>
-<li><a href="#A4">A4. Sliding Window</a> · <a href="#A5">A5. Mono Stack</a> · <a href="#A6">A6. Binary Search</a></li>
-<li><a href="#A7">A7. Sorting</a> · <a href="#A8">A8. Counting</a> · <a href="#A9">A9. Kadane</a></li>
-</ul>
+<!-- Tầng 4 + 5 -->
+<div class="toc-grid" style="margin-top: 8px;">
+<div class="toc-section sec-tang4">
+  <span class="toc-title">🔵 <a href="#tang4">TẦNG 4: KỸ THUẬT NÂNG CAO</a></span>
+  <span class="toc-links">
+    <a href="#s41">4.1 Biến đổi bài toán</a> · <a href="#s42">4.2 Nén tọa độ</a> · <a href="#s43">4.3 Tối ưu DP</a><br>
+    <a href="#s44">4.4 Mẫu code hay</a> · <a href="#s45">4.5 Tra cứu</a> · <a href="#s46">4.6 Đọc dữ liệu</a>
+  </span>
+</div>
+<div class="toc-section sec-tang5">
+  <span class="toc-title">🟣 <a href="#tang5">TẦNG 5: CHIẾN THUẬT PHÒNG THI</a></span>
+  <span class="toc-links">
+    <a href="#s51">5.1 Phân bổ TG</a> · <a href="#s52">5.2 Gỡ điểm</a> · <a href="#s53">5.3 Debug</a><br>
+    <a href="#s54">5.4 Quy trình 6 bước</a> · <a href="#s55">5.5 Checklist nộp</a>
+  </span>
+</div>
+</div>
 
-<p style="margin:2px 0 2px 10px;"><strong><a href="#nhomB">NHÓM B — Phương pháp giải</a></strong></p>
-<ul style="margin:2px 0 6px 18px; list-style:none; padding:0;">
-<li><a href="#B1">B1. Vét cạn</a> — <a href="#B1d1">Vòng for</a> · <a href="#B1d2">Bitmask</a> · <a href="#B1d3">Hoán vị</a> · <a href="#B1d4">Backtracking</a> · <a href="#B1d5">Meet in the Middle</a></li>
-<li><a href="#B2">B2. Greedy</a> · <a href="#B3">B3. Quy hoạch động (DP)</a> · <a href="#B4">B4. Chia để trị</a> · <a href="#B5">B5. Contribution</a></li>
-</ul>
-
-<p style="margin:2px 0 2px 10px;"><strong><a href="#nhomC">NHÓM C — Cấu trúc dữ liệu</a></strong></p>
-<ul style="margin:2px 0 6px 18px; list-style:none; padding:0;">
-<li><a href="#C1">C1. Vector/Set/Map</a> · <a href="#C2">C2. Priority Queue</a> · <a href="#C3">C3. DSU</a> · <a href="#C4">C4. BIT</a> · <a href="#C5">C5. Deque</a></li>
-</ul>
-
-<p style="margin:2px 0 2px 10px;"><strong><a href="#nhomD">NHÓM D — Đồ thị</a></strong></p>
-<ul style="margin:2px 0 6px 18px; list-style:none; padding:0;">
-<li><a href="#D0">D0. Biểu diễn đồ thị</a> · <a href="#D1">D1. BFS</a> · <a href="#D1b">D1b. BFS lưới 2D</a> · <a href="#D2">D2. DFS</a> · <a href="#D2b">D2b. Liên thông</a></li>
-<li><a href="#D3">D3. Dijkstra</a> · <a href="#D4">D4. Floyd</a> · <a href="#D5">D5. Bellman-Ford</a> · <a href="#D6">D6. Prim</a></li>
-<li><a href="#D7">D7. Ford-Fulkerson</a> · <a href="#D8">D8. Kruskal</a> · <a href="#D9">D9. Topo Sort</a></li>
-</ul>
-
-<p style="margin:2px 0 2px 10px;"><strong><a href="#nhomE">NHÓM E — Số học</a></strong></p>
-<ul style="margin:2px 0 6px 18px; list-style:none; padding:0;">
-<li><a href="#E1">E1. Kiểm tra SNT</a> · <a href="#E2">E2. Sàng Eratosthenes</a> · <a href="#E3">E3. Lũy thừa nhanh</a> · <a href="#E4">E4. GCD/LCM</a></li>
-</ul>
-
-<p><strong><a href="#tang4">🔵 TẦNG 4: KỸ THUẬT NÂNG CAO</a></strong></p>
-<ul style="margin:2px 0 8px 18px; list-style:none; padding:0;">
-<li><a href="#s41">4.1. Biến đổi bài toán</a> · <a href="#s42">4.2. Nén tọa độ</a> · <a href="#s43">4.3. Tối ưu DP</a></li>
-<li><a href="#s44">4.4. Mẫu code hay dùng</a> · <a href="#s45">4.5. Tra cứu hàm thư viện</a> · <a href="#s46">4.6. Đọc dữ liệu nâng cao</a></li>
-</ul>
-
-<p><strong><a href="#tang5">🟣 TẦNG 5: CHIẾN THUẬT PHÒNG THI</a></strong></p>
-<ul style="margin:2px 0 8px 18px; list-style:none; padding:0;">
-<li><a href="#s51">5.1. Phân bổ thời gian</a> · <a href="#s52">5.2. Gỡ điểm từng phần</a> · <a href="#s53">5.3. Debug nhanh</a></li>
-<li><a href="#s54">5.4. Quy trình 6 bước</a> · <a href="#s55">5.5. Checklist trước nộp</a></li>
-</ul>
-
-<p><strong>📎 PHỤ LỤC:</strong> <a href="#plA">Sơ đồ nhận dạng bài toán</a> · <a href="#plB">Bảng công thức nhớ nhanh</a></p>
+<div class="toc-section sec-phuluc" style="margin-top: 8px;">
+  <span class="toc-links">📎 <strong>PHỤ LỤC:</strong> <a href="#plA">Sơ đồ nhận dạng bài toán</a> · <a href="#plB">Bảng công thức nhớ nhanh</a></span>
+</div>
 
 </div>
 
@@ -3129,7 +3160,7 @@ for (int i = 0; i &lt;= n; i++) {
 
 <hr>
 <p style="text-align: center; font-style: italic; font-size: 13pt;">
-    <strong>"Thà code lụi còn hơn code bug!"</strong>
+    <strong>"Thà code lụi còn hơn để trống!"</strong>
 </p>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
