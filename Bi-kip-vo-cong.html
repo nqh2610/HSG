@@ -144,8 +144,8 @@
   <span class="toc-links">
     <a href="#B1">B1. Vét cạn</a>
     <span class="toc-sub">(<a href="#B1d1">For</a> · <a href="#B1d2">Bitmask</a> · <a href="#B1d3">Hoán vị</a> · <a href="#B1d4">Quay lui</a> · <a href="#B1d5">MitM</a>)</span><br>
-    <a href="#B2">B2. Greedy</a> · <a href="#B3">B3. DP</a> · <a href="#B4">B4. Chia để trị</a> · <a href="#B5">B5. Contribution</a><br>
-    <a href="#B6">B6. Digit DP</a> · <a href="#B7">B7. Mo's Algorithm</a> · <a href="#B8">B8. Nhân ma trận</a>
+    <a href="#B2">B2. Greedy</a> · <a href="#B3">B3. DP</a> · <a href="#B4">B4. Chia để trị</a> · <a href="#B5">B5. Đóng góp</a><br>
+    <a href="#B6">B6. Digit DP</a> · <a href="#B7">B7. Thuật toán Mo</a> · <a href="#B8">B8. Lũy thừa ma trận</a>
   </span>
 </div>
 <div class="toc-section sec-C">
@@ -1255,7 +1255,7 @@ Vật 3 (w=4, v=5): duyệt j=5 xuống 4
 </div>
 
 <!-- B2 -->
-<h3 id="B4">B4. Divide and Conquer — Chia để trị</h3>
+<h3 id="B4">B4. Divide and Conquer (Chia để trị)</h3>
 <p><em>💡 Hình dung: Bạn có chồng 1000 bài thi cần xếp theo điểm. Chia đôi thành 2 chồng 500, mỗi chồng chia đôi tiếp... đến khi 1 tờ thì đã "có thứ tự". Rồi gộp 2 chồng đã sắp thành 1 chồng sắp → nhanh hơn xếp cả 1000 tờ cùng lúc.</em></p>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
@@ -1311,7 +1311,7 @@ void solve(int a[], int l, int r) {
 <div class="tip"><strong>Độ phức tạp:</strong> O(N log N) — vì mỗi tầng chia đôi xử lý O(N), có log N tầng.</div>
 
 <!-- B5: Kỹ thuật đóng góp -->
-<h3 id="B5">B5. Contribution Technique — Kỹ thuật đóng góp</h3>
+<h3 id="B5">B5. Contribution Technique (Kỹ thuật đóng góp)</h3>
 <p><em>💡 Hình dung: Thầy giáo hỏi "tổng điểm của TẤT CẢ các nhóm có thể chọn từ lớp". Thay vì liệt kê mọi nhóm (cực nhiều) → hỏi TỪNG học sinh: "bạn xuất hiện trong bao nhiêu nhóm?" rồi nhân điểm × số nhóm. <br>Đảo góc nhìn: không duyệt đoạn → duyệt phần tử, tính mỗi phần tử đóng góp vào bao nhiêu đoạn.</em></p>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
@@ -1363,7 +1363,7 @@ for (int i = 1; i &lt;= n; i++) {
 <div class="tip"><strong>Công thức nhớ:</strong> Phần tử ở vị trí i (1-indexed) nằm trong <code>i × (n − i + 1)</code> đoạn con liên tiếp.</div>
 
 <!-- B6: Digit DP -->
-<h3 id="B6">B6. Digit DP — Đếm số trong đoạn [L, R]</h3>
+<h3 id="B6">B6. Digit DP (QHĐ theo chữ số) — Đếm số trong đoạn [L, R]</h3>
 <p><em>💡 Hình dung: Bạn đang đặt mật khẩu gồm 9 chữ số, mỗi ô chọn 0–9. Đề bài hỏi "có bao nhiêu mật khẩu từ 000000001 đến 999999999 mà tổng các chữ số chia hết cho 3?". Duyệt cả tỷ mật khẩu thì chết — nhưng bạn nhận ra: khi điền từng ô <strong>từ trái qua phải</strong>, mỗi lần chọn chữ số, bạn chỉ cần nhớ "tổng hiện tại mod 3 đang là bao nhiêu" — không cần nhớ toàn bộ mật khẩu. Đó chính là Digit DP: <strong>xây số từng chữ số</strong>, mỗi bước chỉ lưu trạng thái cần thiết.</em></p>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
@@ -1426,12 +1426,12 @@ int countUpTo(long long N) {
 </div>
 
 <!-- B7: Mo's Algorithm -->
-<h3 id="B7">B7. Mo's Algorithm — Truy vấn offline trên đoạn</h3>
+<h3 id="B7">B7. Mo's Algorithm (Thuật toán Mo) — Trả lời hàng loạt câu hỏi trên đoạn</h3>
 <p><em>💡 Hình dung: Giáo viên cho 100 câu hỏi: "Từ bạn thứ L đến bạn thứ R trong lớp, có bao nhiêu họ khác nhau?". Nếu trả lời lung tung (hỏi đoạn [3,50] rồi nhảy sang [80,90] rồi quay lại [5,45]) thì mỗi lần phải đếm lại từ đầu. Nhưng nếu bạn <strong>sắp xếp</strong> lại thứ tự câu hỏi cho gần nhau ([3,50] → [5,45] → [3,48]...) thì mỗi lần chỉ cần thêm/bớt 1–2 bạn ở rìa là xong — không đếm lại! Mo's Algorithm chính là cách <strong>sắp xếp câu hỏi thông minh</strong> để "trượt" đoạn [L,R] ít nhất có thể.</em></p>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
-<li>Nhiều truy vấn dạng [L, R] — <strong>offline</strong> (có thể trả lời không theo thứ tự)</li>
+<li>Nhiều câu hỏi dạng [L, R] — biết hết câu hỏi trước khi trả lời (không bắt buộc trả lời theo thứ tự)</li>
 <li>Có thể thêm/bớt 1 phần tử vào kết quả nhanh (O(1) hoặc O(log))</li>
 <li>N, Q ≤ 10⁵ và không có cập nhật</li>
 </ul>
@@ -1484,14 +1484,14 @@ for (int i = 0; i &lt; q; i++) {
 </pre>
 
 <!-- B8: Matrix Exponentiation -->
-<h3 id="B8">B8. Matrix Exponentiation — Nhân ma trận nhanh</h3>
+<h3 id="B8">B8. Matrix Exponentiation (Lũy thừa ma trận) — Tính nhanh công thức truy hồi</h3>
 <p><em>💡 Hình dung: Bạn cần tính Fibonacci thứ 10¹⁸. Tính từng bước dp[1], dp[2], ..., dp[10¹⁸] thì đợi cả trăm năm không xong. Nhưng nếu bạn viết phép tính "bước tiếp theo" thành <strong>1 phép nhân ma trận</strong>: nhân ma trận A một lần = tiến 1 bước, nhân A hai lần = tiến 2 bước. Vậy nhân A mười lần = tiến 10 bước. Và nhờ <strong>lũy thừa nhanh</strong> (giống tính 2¹⁰⁰⁰ bằng cách bình phương liên tục), bạn tính A^(10¹⁸) chỉ trong khoảng 60 phép nhân ma trận!</em></p>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
-<li>Bài có <strong>hệ truy hồi tuyến tính</strong> và <strong>n rất lớn</strong> (10⁹, 10¹⁸)</li>
-<li>"Tìm f(n) mod M" với f là Fibonacci, dãy truy hồi bậc k</li>
-<li>"Đếm số đường đi độ dài n" trong đồ thị nhỏ</li>
+<li>Bài có <strong>công thức "số sau tính từ vài số trước"</strong> (VD: f(n) = f(n-1) + f(n-2)) và <strong>n rất lớn</strong> (10⁹, 10¹⁸)</li>
+<li>"Tìm f(n) mod M" với n cực lớn — VD: Fibonacci thứ 10¹⁸</li>
+<li>"Đếm số đường đi độ dài n" trong đồ thị nhỏ (ít đỉnh)</li>
 </ul>
 </div>
 
@@ -1618,7 +1618,7 @@ for (auto &amp;[k, v] : diem) out &lt;&lt; k &lt;&lt; ": " &lt;&lt; v &lt;&lt; '
 </pre>
 
 <!-- C2 -->
-<h3 id="C2">C2. Priority Queue (Heap) — Hàng đợi ưu tiên</h3>
+<h3 id="C2">C2. Priority Queue (Hàng đợi ưu tiên)</h3>
 <p><em>💡 Hình dung: Giống như một cái thùng bỏ bóng vào, nhưng mỗi lần thò tay vào luôn lấy ra được quả BÓNG TO NHẤT (hoặc nhỏ nhất tuỳ loại). Không cần tìm, cứ lấy ra là được cái tốt nhất. Rất hữu ích khi cần liên tục "lấy cái lớn nhất / nhỏ nhất".</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "lấy max/min liên tục", Dijkstra, trộn k dãy, xử lý theo ưu tiên</div>
 <pre>
@@ -1634,9 +1634,9 @@ maxPQ.pop();          // Xóa 8
 </pre>
 
 <!-- C3 -->
-<h3 id="C3">C3. DSU (Disjoint Set Union) — Gộp nhóm</h3>
+<h3 id="C3">C3. DSU (Disjoint Set Union — Cấu trúc gộp nhóm)</h3>
 <p><em>💡 Hình dung: Lớp có 40 bạn, ban đầu ai cũng là 1 nhóm riêng (40 nhóm). Khi 2 bạn kết bạn, nhóm của 2 bạn GỘP LẠI thành 1. Sau nhiều lần gộp, muốn hỏi "A và B có cùng nhóm không?" → chỉ cần xem 2 người có chung "Nhóm trưởng" không. Gộp nhóm + hỏi nhóm đều cực nhanh.</em></p>
-<div class="warn"><strong>DẤU HIỆU:</strong> "cùng nhóm không?", "bao nhiêu nhóm/thành phần liên thông?", "gộp 2 tập hợp", Kruskal</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "cùng nhóm không?", "bao nhiêu nhóm riêng biệt (thành phần liên thông)?", "gộp 2 tập hợp", Kruskal</div>
 <pre>
 // ═══ DSU — Phong cách quen thuộc ═══
 
@@ -1688,9 +1688,9 @@ for (int i = 1; i &lt;= n; i++)
 </pre>
 
 <!-- C4 -->
-<h3 id="C4">C4. BIT (Fenwick Tree) — Cây chỉ số nhị phân</h3>
-<p><em>💡 Hình dung: Prefix Sum giống bảng tính Excel — tính xong rồi không sửa được. BIT giống một bảng tính thông minh hơn: bạn vừa hỏi "tổng từ cột 3 đến cột 7", vừa có thể sửa số ở cột 5 và bảng tự cập nhật. Cả hỏi và sửa đều rất nhanh.</em></p>
-<div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]" <strong>+ cập nhật</strong> (Prefix Sum thường không cập nhật được), "đếm nghịch thế"</div>
+<h3 id="C4">C4. BIT (Fenwick Tree — Cây chỉ số nhị phân)</h3>
+<p><em>💡 Hình dung: Bạn có bảng điểm cả lớp và ghi sẵn "tổng từ đầu đến bạn thứ i" (tổng tiền tố). Muốn hỏi "tổng từ bạn 3 đến bạn 7" thì lấy tổng[7] − tổng[2] là xong. Nhưng nếu thầy sửa điểm ai đó, bạn phải tính lại toàn bộ tổng — rất chậm! BIT giống bảng tính thông minh: vừa hỏi "tổng bạn 3 đến 7", vừa sửa điểm bạn 5 mà bảng tự cập nhật. Cả hỏi và sửa đều rất nhanh.</em></p>
+<div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]" <strong>+ sửa giá trị</strong> (tổng tiền tố thường không sửa được), "đếm nghịch thế đảo"</div>
 <pre>
 long long bit[100005];
 int n;
@@ -1725,7 +1725,7 @@ dq.pop_front();   dq.pop_back();   // Tất cả O(1)
 </pre>
 
 <!-- C6 -->
-<h3 id="C6">C6. Segment Tree — Cây phân đoạn</h3>
+<h3 id="C6">C6. Segment Tree (Cây phân đoạn)</h3>
 <p><em>💡 Hình dung: Lớp có 100 học sinh xếp hàng. Thầy hay hỏi "điểm cao nhất từ bạn 20 đến bạn 50?". Nếu duyệt từ 20→50 mỗi lần thì chậm. Segment Tree giống việc <strong>chia lớp thành các nhóm nhỏ</strong>: nhóm 1–50, nhóm 1–25, nhóm 26–50, nhóm 1–12... Mỗi nhóm <strong>nhớ sẵn</strong> điểm cao nhất. Cần hỏi đoạn [20,50]? Chỉ cần ghép 3–4 nhóm nhỏ có sẵn → trả lời ngay! Thầy sửa điểm 1 bạn? Chỉ cập nhật vài nhóm chứa bạn đó. Cập nhật cả nhóm 10–40 cùng lúc? Dùng "Lazy" — ghi nhớ "nhóm này cần +5 điểm" rồi để dành, chỉ cập nhật thật khi ai hỏi.</em></p>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
@@ -1818,7 +1818,7 @@ long long queryRange(int id, int l, int r, int ql, int qr) {
 </pre>
 
 <!-- C7 -->
-<h3 id="C7">C7. Sparse Table — Truy vấn tĩnh O(1)</h3>
+<h3 id="C7">C7. Sparse Table (Bảng thưa) — Hỏi nhanh min/max đoạn không đổi</h3>
 <p><em>💡 Hình dung: Bạn có bảng điểm <strong>cố định</strong> (không ai sửa), nhưng thầy hỏi rất nhiều lần "ai điểm thấp nhất từ bạn L đến bạn R?". Sparse Table giống việc <strong>lập bảng tra sẵn</strong>: ghi lại "min trong 1 bạn", "min trong 2 bạn liên tiếp", "min trong 4 bạn"... Khi thầy hỏi đoạn [3, 10], bạn tra 2 ô đã tính sẵn (đoạn [3,6] và [7,10]) rồi lấy min → trả lời O(1). Đánh đổi: nếu sửa điểm thì phải <strong>tính lại bảng</strong> → chỉ dùng khi dữ liệu không thay đổi.</em></p>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
@@ -2063,7 +2063,7 @@ void BFS_Luoi(int sr, int sc) {     // Xuất phát từ ô (sr, sc)
 <!-- D2 -->
 <h3 id="D2">D2. DFS — Duyệt theo chiều sâu</h3>
 <p><em>💡 Hình dung: Khám phá mê cung bằng cách luôn rẽ vào ngõ đầu tiên gặp được, đi sâu cho đến khi đường cùng thì quay lại, thử ngõ tiếp theo. Ví dụ dùng: đếm xem bản đồ có bao nhiêu "đảo" riêng biệt (nhóm đỉnh nối với nhau). Mỗi lần bắt đầu DFS từ 1 đỉnh chưa thăm = tìm được 1 đảo mới.</em></p>
-<div class="warn"><strong>DẤU HIỆU:</strong> "thành phần liên thông", "kiểm tra chu trình", "tô màu đồ thị"</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đếm nhóm riêng biệt (thành phần liên thông)", "kiểm tra chu trình", "tô màu đồ thị"</div>
 <div class="tip"><strong>LƯU Ý:</strong> Dùng stack thay đệ quy để tránh tràn bộ nhớ khi N lớn (N > 10⁴)</div>
 <pre>
 // ═══ DFS dùng STACK (an toàn, không tràn) ═══
