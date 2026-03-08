@@ -379,6 +379,51 @@ for (int i = 1; i &lt;= m; i++)
 ll tong = sum[r2][c2] - sum[r1-1][c2] - sum[r2][c1-1] + sum[r1-1][c1-1];
 </pre>
 
+<!-- A1b: Mảng hiệu -->
+<h3>A1b. Difference Array — Mảng hiệu (Cộng cả đoạn trong O(1))</h3>
+<p><em>💡 Hình dung: Bạn có 100 học sinh xếp hàng. Thầy giáo ra 10.000 lệnh kiểu "từ bạn thứ 3 đến bạn thứ 7, mỗi người thêm 5 điểm". Nếu cộng từng bạn một → quá lâu. <br>Mảng hiệu = "ghi chú thông minh": chỉ ghi "+5 ở vị trí 3" và "−5 ở vị trí 8" (sau đoạn). Cuối cùng Prefix Sum lại 1 lần → ra kết quả tất cả mọi người.</em></p>
+
+<div class="warn"><strong>DẤU HIỆU:</strong> "Cập nhật cả đoạn [l, r] nhiều lần" rồi "hỏi giá trị cuối cùng". Là phép ngược của Prefix Sum.</div>
+
+<div class="tip"><strong>Prefix Sum vs Mảng hiệu — Đi cặp với nhau:</strong>
+<table>
+<tr><th></th><th>Prefix Sum</th><th>Mảng hiệu</th></tr>
+<tr><td><strong>Giỏi ở</strong></td><td>Hỏi tổng đoạn [l,r] nhanh</td><td>Cộng/trừ cả đoạn [l,r] nhanh</td></tr>
+<tr><td><strong>Thao tác</strong></td><td><code>prefix[i] = prefix[i-1] + a[i]</code></td><td><code>d[l] += val; d[r+1] -= val;</code></td></tr>
+<tr><td><strong>Lấy kết quả</strong></td><td><code>prefix[r] - prefix[l-1]</code></td><td>Prefix Sum lại mảng d[]</td></tr>
+</table>
+</div>
+
+<p><strong>Ví dụ chạy tay:</strong> Mảng 5 phần tử, ban đầu = [0, 0, 0, 0, 0]</p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Lệnh 1: Cộng 3 vào đoạn [2, 4]   →  d[2] += 3, d[5] -= 3
+Lệnh 2: Cộng 2 vào đoạn [1, 3]   →  d[1] += 2, d[4] -= 2
+
+Mảng d[]:   [0, 2, 3, 0, -2, -3]
+              ↓ Prefix Sum ↓
+Kết quả:    [0, 2, 5, 5,  3,  0]
+                   ↑     ↑
+            Đoạn [2,4] được +3, đoạn [1,3] được +2 → vị trí 2,3 được +5
+</pre>
+
+<p><strong>Code mẫu — Cộng đoạn nhiều lần, hỏi kết quả cuối:</strong></p>
+<pre>
+int d[100005] = {};  // mảng hiệu, khởi tạo = 0
+
+// Mỗi truy vấn: cộng val vào đoạn [l, r]
+while (q--) {
+    int l, r, val;
+    fin >> l >> r >> val;
+    d[l] += val;
+    d[r + 1] -= val;   // r+1 để "huỷ" hiệu ứng sau đoạn
+}
+
+// Prefix Sum lại → ra giá trị thực của từng vị trí
+for (int i = 1; i &lt;= n; i++)
+    d[i] += d[i - 1];
+// Giờ d[i] = giá trị thực tại vị trí i
+</pre>
+
 <!-- A2 -->
 <h3>A2. Two Pointers — Hai con trỏ</h3>
 <p><em>💡 Hình dung: Hai bạn L và R đứng trên một hàng ghế. R đi sang phải để mở rộng đoạn, nếu đoạn vi phạm điều kiện thì L đi sang phải để thu hẹp. Cả hai chỉ đi về bên phải, không lùi → thay vì thử tất cả các cặp vị trí (rất lâu), ta chỉ cần mỗi người đi qua hàng ghế 1 lần → nhanh gấp nhiều lần.</em></p>
@@ -480,6 +525,63 @@ for (int i = 0; i &lt; n; i++) {
         out &lt;&lt; a[dq.front()] &lt;&lt; " ";
 }
 </pre>
+
+<!-- A3b: Mono Stack -->
+<h3>A3b. Monotonic Stack — Ngăn xếp đơn điệu</h3>
+<p><em>💡 Hình dung: Bạn đứng trong hàng người xếp hàng, nhìn về bên phải. Bạn chỉ thấy người đầu tiên CAO HƠN bạn — những người thấp hơn bị "che" mất. Mono Stack giúp tìm "người cao hơn gần nhất" cho mọi người trong hàng, chỉ với O(n).</em></p>
+
+<div class="warn"><strong>DẤU HIỆU:</strong>
+<ul>
+<li>"Phần tử lớn hơn / nhỏ hơn <strong>gần nhất</strong> bên phải (hoặc trái)"</li>
+<li>"Diện tích hình chữ nhật lớn nhất trong histogram"</li>
+<li>"Khoảng cách đến ngày nóng hơn gần nhất"</li>
+</ul>
+</div>
+
+<p><strong>Ví dụ:</strong> Cho mảng <code>a = [2, 1, 5, 6, 2, 3]</code>. Tìm phần tử lớn hơn gần nhất bên phải của mỗi phần tử.</p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Duyệt từ phải sang trái, giữ stack tăng dần (đáy → đỉnh):
+
+  i=5: a[5]=3  stack=[]       → không có → ans=-1, push 3     stack=[3]
+  i=4: a[4]=2  stack=[3]      → 3>2      → ans=3,  push 2     stack=[3,2]
+  i=3: a[3]=6  pop 2, pop 3   → hết      → ans=-1, push 6     stack=[6]
+  i=2: a[2]=5  stack=[6]      → 6>5      → ans=6,  push 5     stack=[6,5]
+  i=1: a[1]=1  stack=[6,5]    → 5>1      → ans=5,  push 1     stack=[6,5,1]
+  i=0: a[0]=2  pop 1          → 5>2      → ans=5,  push 2     stack=[6,5,2]
+
+Kết quả: [5, 5, 6, -1, 3, -1]
+</pre>
+
+<p><strong>Code mẫu — Phần tử lớn hơn gần nhất bên phải:</strong></p>
+<pre>
+// Mono Stack — O(n)
+// Mỗi phần tử chỉ vào/ra stack đúng 1 lần → tổng O(n)
+stack&lt;int&gt; st;          // Lưu giá trị (hoặc chỉ số tuỳ bài)
+int ans[100005];
+
+for (int i = n - 1; i >= 0; i--) {
+    // Loại phần tử nhỏ hơn hoặc bằng — chúng bị "che" bởi a[i]
+    while (!st.empty() &amp;&amp; st.top() &lt;= a[i])
+        st.pop();
+
+    // Đỉnh stack = phần tử lớn hơn gần nhất bên phải
+    ans[i] = st.empty() ? -1 : st.top();
+
+    st.push(a[i]);
+}
+</pre>
+
+<div class="tip"><strong>Khác Sliding Window:</strong> Sliding Window dùng deque để duy trì min/max trong <em>cửa sổ cố định</em>. Mono Stack tìm phần tử lớn/nhỏ hơn gần nhất — <em>không có cửa sổ</em>, duyệt cả mảng.</div>
+
+<div class="tip"><strong>4 biến thể:</strong>
+<table>
+<tr><th>Tìm gì?</th><th>Duyệt</th><th>Stack giữ</th><th>Điều kiện pop</th></tr>
+<tr><td>Lớn hơn gần nhất bên <strong>phải</strong></td><td>Phải → trái</td><td>Tăng dần</td><td><code>st.top() &lt;= a[i]</code></td></tr>
+<tr><td>Lớn hơn gần nhất bên <strong>trái</strong></td><td>Trái → phải</td><td>Tăng dần</td><td><code>st.top() &lt;= a[i]</code></td></tr>
+<tr><td>Nhỏ hơn gần nhất bên <strong>phải</strong></td><td>Phải → trái</td><td>Giảm dần</td><td><code>st.top() >= a[i]</code></td></tr>
+<tr><td>Nhỏ hơn gần nhất bên <strong>trái</strong></td><td>Trái → phải</td><td>Giảm dần</td><td><code>st.top() >= a[i]</code></td></tr>
+</table>
+</div>
 
 <!-- A4 -->
 <h3>A4. Binary Search — Tìm kiếm nhị phân</h3>
@@ -736,6 +838,114 @@ do {
     // Xử lý hoán vị hiện tại
 } while (next_permutation(a.begin(), a.end()));
 </pre>
+
+<!-- B5: Chia để trị -->
+<h3>B5. Divide and Conquer — Chia để trị</h3>
+<p><em>💡 Hình dung: Bạn có chồng 1000 bài thi cần xếp theo điểm. Chia đôi thành 2 chồng 500, mỗi chồng chia đôi tiếp... đến khi 1 tờ thì đã "có thứ tự". Rồi gộp 2 chồng đã sắp thành 1 chồng sắp → nhanh hơn xếp cả 1000 tờ cùng lúc.</em></p>
+
+<div class="warn"><strong>DẤU HIỆU:</strong>
+<ul>
+<li>Bài toán có thể <strong>chia thành 2 nửa giống nhau</strong>, giải riêng, rồi <strong>gộp kết quả</strong></li>
+<li>"Đếm nghịch thế", "đếm cặp (i,j) thỏa điều kiện" (dùng merge sort biến đổi)</li>
+<li>"Tìm cặp điểm gần nhất" (closest pair)</li>
+</ul>
+</div>
+
+<p><strong>Mẫu chung 3 bước:</strong></p>
+<pre>
+void solve(int l, int r) {
+    if (l >= r) return;          // Bước 1: Cơ sở — 1 phần tử đã "xong"
+
+    int mid = (l + r) / 2;
+    solve(l, mid);               // Bước 2: Giải nửa trái
+    solve(mid + 1, r);           //         Giải nửa phải
+
+    merge(l, mid, r);            // Bước 3: GỘP kết quả 2 nửa
+}
+</pre>
+
+<p><strong>Ví dụ: Đếm nghịch thế</strong> (số cặp i &lt; j mà a[i] > a[j]) — dùng Merge Sort biến đổi:</p>
+<pre>
+long long cnt = 0;
+int temp[100005];
+
+void mergeCount(int a[], int l, int mid, int r) {
+    int i = l, j = mid + 1, k = l;
+    while (i &lt;= mid &amp;&amp; j &lt;= r) {
+        if (a[i] &lt;= a[j])
+            temp[k++] = a[i++];
+        else {
+            temp[k++] = a[j++];
+            cnt += mid - i + 1;  // Tất cả a[i..mid] > a[j] → đều là nghịch thế
+        }
+    }
+    while (i &lt;= mid) temp[k++] = a[i++];
+    while (j &lt;= r)   temp[k++] = a[j++];
+    for (int t = l; t &lt;= r; t++) a[t] = temp[t];
+}
+
+void solve(int a[], int l, int r) {
+    if (l >= r) return;
+    int mid = (l + r) / 2;
+    solve(a, l, mid);
+    solve(a, mid + 1, r);
+    mergeCount(a, l, mid, r);
+}
+</pre>
+
+<div class="tip"><strong>Độ phức tạp:</strong> O(N log N) — vì mỗi tầng chia đôi xử lý O(N), có log N tầng.</div>
+
+<!-- B6: Kỹ thuật đóng góp -->
+<h3>B6. Contribution Technique — Kỹ thuật đóng góp</h3>
+<p><em>💡 Hình dung: Thầy giáo hỏi "tổng điểm của TẤT CẢ các nhóm có thể chọn từ lớp". Thay vì liệt kê mọi nhóm (cực nhiều) → hỏi TỪNG học sinh: "bạn xuất hiện trong bao nhiêu nhóm?" rồi nhân điểm × số nhóm. <br>Đảo góc nhìn: không duyệt đoạn → duyệt phần tử, tính mỗi phần tử đóng góp vào bao nhiêu đoạn.</em></p>
+
+<div class="warn"><strong>DẤU HIỆU:</strong>
+<ul>
+<li>"Tổng ... của tất cả đoạn con" (tổng min, tổng max, tổng XOR...)</li>
+<li>"Tổng |a[i] - a[j]| với mọi cặp (i,j)"</li>
+<li>Duyệt mọi tập con quá lâu → tính đóng góp từng phần tử</li>
+</ul>
+</div>
+
+<p><strong>Ví dụ 1:</strong> Tổng các phần tử của tất cả đoạn con liên tiếp.</p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Mảng: [2, 5, 3]    (chỉ số 1..3)
+
+Liệt kê mọi đoạn con:
+  [2] [5] [3] [2,5] [5,3] [2,5,3]
+Tổng = 2 + 5 + 3 + 7 + 8 + 10 = 35
+
+Cách đóng góp — a[i] nằm trong bao nhiêu đoạn con?
+  Đoạn chứa vị trí i: chọn trái từ 1..i, phải từ i..n
+  → Số đoạn chứa i = i × (n - i + 1)
+
+  a[1]=2: 1 × 3 = 3 đoạn → đóng góp 2 × 3 = 6
+  a[2]=5: 2 × 2 = 4 đoạn → đóng góp 5 × 4 = 20
+  a[3]=3: 3 × 1 = 3 đoạn → đóng góp 3 × 3 = 9
+  Tổng = 6 + 20 + 9 = 35 ✓
+</pre>
+
+<p><strong>Code mẫu — Tổng mọi đoạn con:</strong></p>
+<pre>
+long long ans = 0;
+for (int i = 1; i &lt;= n; i++) {
+    long long soDoạn = (long long)i * (n - i + 1);
+    ans += a[i] * soDoạn;
+}
+</pre>
+
+<p><strong>Ví dụ 2:</strong> Tổng |a[i] - a[j]| với mọi cặp i &lt; j → sort trước, rồi mỗi a[i] đóng góp:</p>
+<pre>
+sort(a + 1, a + n + 1);
+long long ans = 0;
+for (int i = 1; i &lt;= n; i++) {
+    // a[i] lớn hơn (i-1) phần tử trước nó
+    // → đóng góp +a[i] × (i-1) lần, -a[i] × (n-i) lần
+    ans += (long long)a[i] * (2 * i - n - 1);
+}
+</pre>
+
+<div class="tip"><strong>Công thức nhớ:</strong> Phần tử ở vị trí i (1-indexed) nằm trong <code>i × (n − i + 1)</code> đoạn con liên tiếp.</div>
 
 <!-- ════════════════════════════════════ -->
 <!-- NHÓM C: CẤU TRÚC DỮ LIỆU -->
