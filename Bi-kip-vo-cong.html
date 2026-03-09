@@ -436,6 +436,7 @@ for (int i = 0; i &lt; n; i++) dem[a[i]]++;
 <p><em>💡 Hình dung: Bạn có 1 cuốn sổ ghi "tổng tiền từ ngày 1 đến hôm nay" mỗi ngày. Khi sếp hỏi "tổng tiền từ ngày 3 đến ngày 7", thay vì cộng lại 5 ngày, bạn chỉ cần lấy: tổng_đến_ngày_7 − tổng_đến_ngày_2 = ra ngay! Tính trước 1 lần → trả lời bao nhiêu câu hỏi cũng chỉ cần 1 phép trừ.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi câu hỏi "tổng từ L đến R" phải cộng từng phần tử → O(n). Có Q câu hỏi → O(n×Q). Với n = Q = 10⁵ → <strong>10¹⁰ phép tính → chắc chắn TLE</strong>. Dùng Prefix Sum → mỗi câu O(1), tổng O(n + Q).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]", "trung bình đoạn", "đoạn con có tổng = k" → truy vấn nhiều lần</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Prefix Sum giống <b>bảng cộng dồn điểm</b>: tính sẵn 1 lần, sau đó hỏi "tổng từ bạn 3→7" chỉ cần 1 phép trừ. Ngược lại, <a href="#A2">Mảng hiệu</a> giống <b>ghi lệnh "cộng điểm"</b>: ghi nhanh rồi cuối cùng cộng dồn lại — hai kỹ thuật này luôn đi cặp.<br>• Nếu bài vừa hỏi tổng vừa hay thay đổi điểm → bảng cộng dồn bị lỗi thời, phải dùng <a href="#C4">BIT</a> hoặc <a href="#C6">Segment Tree</a> (bảng tự cập nhật).<br>• Bài "đoạn con tổng lớn nhất" → dùng <a href="#A9">Kadane</a> đi 1 lượt là xong, không cần Prefix Sum.</div>
 <pre>
 // ═══ PREFIX SUM 1D ═══
 // Build: O(n) | Query: O(1)
@@ -531,6 +532,7 @@ for (int i = 1; i &lt;= n; i++)
 <p><em>💡 Hình dung: Hai bạn L và R đứng trên một hàng ghế. R đi sang phải để mở rộng đoạn, nếu đoạn vi phạm điều kiện thì L đi sang phải để thu hẹp. Cả hai chỉ đi về bên phải, không lùi → thay vì thử tất cả các cặp vị trí (rất lâu), ta chỉ cần mỗi người đi qua hàng ghế 1 lần → nhanh gấp nhiều lần.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi cặp (L, R) → O(n²). Với n = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Two Pointers → mỗi con trỏ chỉ tiến, tổng O(n).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con dài nhất có tổng ≤ K", "cặp (i,j) thỏa a[i]+a[j] = k" (mảng đã sort), "đoạn ngắn nhất chứa đủ k giá trị"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Muốn dùng Two Pointers tìm cặp → thường phải <a href="#A7">Sort</a> trước (giống xếp học sinh theo chiều cao rồi mới ghép cặp).<br>• Nếu trong đoạn cần biết thêm ai cao nhất/thấp nhất → gắn thêm <a href="#C5">Deque</a> thành <a href="#A4">Sliding Window</a>.</div>
 <pre>
 // ═══ Tìm đoạn con dài nhất có tổng ≤ K ═══
 // O(n) — L chỉ tiến, không lùi
@@ -584,6 +586,7 @@ Bước  L  R  sum   Giải thích                           maxLen
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi cửa sổ duyệt k phần tử tìm max → O(n×k). Với n = 10⁵, k = 10⁴ → <strong>10⁹ → TLE</strong>. Dùng Sliding Window + Deque → O(n).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "max/min trong cửa sổ kích thước k", "đoạn có max - min ≤ K"</div>
 <div class="tip"><strong>Khác Two Pointers:</strong> Sliding Window thường duy trì thêm trạng thái (deque, map, tần suất) bên trong cửa sổ.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống <a href="#A3">Two Pointers</a> nhưng "cửa sổ" còn nhớ thêm thông tin bên trong (ai cao nhất? xuất hiện mấy lần?).<br>• Muốn biết max/min trong cửa sổ → dùng <a href="#C5">Deque</a> (ống 2 đầu) để luôn giữ sẵn đáp án.</div>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Max trong mỗi cửa sổ k=3, mảng [1, 3, 2, 5, 4]
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
@@ -699,6 +702,7 @@ for (int i = n - 1; i >= 0; i--) {
 <li><strong>"tìm giá trị nhỏ nhất/lớn nhất thỏa..."</strong> → Chặt nhị phân đáp án (RẤT PHỔ BIẾN!)</li>
 </ul>
 </div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống tìm từ trong từ điển — từ điển phải <b>xếp theo ABC</b> trước mới lật giữa được → mảng phải <a href="#A7">Sort</a> trước!<br>• Combo thi HSG rất hay gặp: đề hỏi "giá trị lớn nhất/nhỏ nhất thỏa..." → <b>chặt đáp án</b> kết hợp hàm check dùng <a href="#B2">Greedy</a>.</div>
 <pre>
 // ═══ Hàm có sẵn (mảng PHẢI sort trước) ═══
 sort(a, a + n);
@@ -770,6 +774,7 @@ for (int i = 0; i &lt;= 1000000; i++)
 <p><em>💡 Hình dung: Bạn đi dọc dãy số, tay cầm một cái túi. Mỗi lần gặp số mới, bạn quyết định: "Bỏ vào túi cũ" (cộng thêm) hay "Vứt túi cũ, bắt đầu túi mới từ số này". Nếu túi cũ đang âm (tổng < 0) thì vứt đi cho rồi! Luôn ghi nhớ túi nặng nhất từng có. Chỉ đi 1 lượt là xong.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi đoạn con [i,j] rồi cộng → O(n³), hoặc dùng Prefix Sum → O(n²). Với n = 10⁵ → <strong>TLE</strong>. Dùng Kadane → <strong>O(n)</strong>, chỉ đi qua 1 lượt.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con liên tiếp có tổng lớn nhất", "max subarray sum"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#A1">Prefix Sum</a> phải thử mọi cặp đầu-cuối → chậm. Kadane chỉ đi 1 lượt: "túi đang lỗ thì vứt, bắt túi mới" — cùng bài nhưng nhanh hơn nhiều.</div>
 <pre>
 long long maxSum = a[0], cur = a[0];
 for (int i = 1; i &lt; n; i++) {
@@ -975,6 +980,7 @@ for (long long sa : sumA) {
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi cách chọn (vét cạn) → O(2ⁿ). Với n = 30 → <strong>10⁹ → TLE</strong>. Greedy chọn tối ưu tại mỗi bước → thường chỉ O(n log n) sau sort.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "chọn ít nhất", "nhiều nhất có thể", "tối ưu từng bước"
 <br><strong>MẸO:</strong> Thường đi kèm Sort → chọn tốt nhất tại mỗi bước</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống đi buffet: phải <a href="#A7">xếp món theo độ ngon</a> rồi mới lấy từ ngon nhất → Sort trước, chọn Greedy sau.<br>• Combo hay gặp: <a href="#A6">chặt đáp án</a> + check bằng Greedy.<br>• Greedy đôi khi "tham lầm" (chọn sai) → phải dùng <a href="#B3">DP</a> xét kỹ hơn.</div>
 <pre>
 // Mẫu: Sort + chọn tham lam
 sort(a, a + n);  // hoặc sort theo tiêu chí phù hợp
@@ -1000,6 +1006,7 @@ for (int i = 0; i &lt; n; i++) {
 <li>Bài yêu cầu <strong>tối ưu</strong> (max/min) hoặc <strong>đếm</strong> trên một tập có cấu trúc con lặp lại</li>
 </ul>
 </div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• DP = <a href="#B1d4">Quay lui</a> nhưng có <b>"sổ ghi chép"</b>: bài con nào đã giải rồi thì ghi đáp án vào sổ, lần sau khỏi giải lại.<br>• Bên trong công thức DP cần tính tổng nhanh → ghép <a href="#A1">Prefix Sum</a>. Cần tìm min/max nhanh → ghép <a href="#C4">BIT</a>/<a href="#C6">Segment Tree</a>.<br>• <a href="#B2">Greedy</a> chọn tối ưu "ngay lúc đó" → đôi khi sai. DP xét <b>mọi nhánh</b> nên luôn đúng.</div>
 
 <!-- ── 4 BƯỚC GIẢI BÀI DP ── -->
 <h4>🧩 4 BƯỚC GIẢI MỌI BÀI DP</h4>
@@ -1647,6 +1654,7 @@ for (auto &amp;[k, v] : diem) out &lt;&lt; k &lt;&lt; ": " &lt;&lt; v &lt;&lt; '
 <p><em>💡 Hình dung: Giống như một cái thùng bỏ bóng vào, nhưng mỗi lần thò tay vào luôn lấy ra được quả BÓNG TO NHẤT (hoặc nhỏ nhất tuỳ loại). Không cần tìm, cứ lấy ra là được cái tốt nhất. Rất hữu ích khi cần liên tục "lấy cái lớn nhất / nhỏ nhất".</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi lần cần lấy max/min phải duyệt cả mảng → O(n). Lấy n lần → O(n²). Dùng Priority Queue → mỗi lần lấy/thêm chỉ O(log n).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "lấy max/min liên tục", Dijkstra, trộn k dãy, xử lý theo ưu tiên</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống hộp bóng: bỏ bóng vào bất kỳ lúc nào, thò tay vào luôn lấy ra quả <b>nhỏ nhất</b>. <a href="#D3">Dijkstra</a> và <a href="#D6">Prim</a> đều cần liên tục "lấy cái nhỏ nhất" → dùng hộp này.</div>
 <pre>
 // Max heap (mặc định)
 priority_queue&lt;int&gt; maxPQ;
@@ -1664,6 +1672,7 @@ maxPQ.pop();          // Xóa 8
 <p><em>💡 Hình dung: Lớp có 40 bạn, ban đầu ai cũng là 1 nhóm riêng (40 nhóm). Khi 2 bạn kết bạn, nhóm của 2 bạn GỘP LẠI thành 1. Sau nhiều lần gộp, muốn hỏi "A và B có cùng nhóm không?" → chỉ cần xem 2 người có chung "Nhóm trưởng" không. Gộp nhóm + hỏi nhóm đều cực nhanh.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Kiểm tra "A và B cùng nhóm?" bằng BFS/DFS mỗi lần → O(n). Với Q câu hỏi → O(n×Q). Dùng DSU → mỗi thao tác gần như <strong>O(1)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "cùng nhóm không?", "bao nhiêu nhóm riêng biệt (thành phần liên thông)?", "gộp 2 tập hợp", Kruskal</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống lớp học chia nhóm: bạn A kết bạn B → gộp nhóm. Hỏi "A và C cùng nhóm chưa?" → hỏi nhóm trưởng là biết ngay. <a href="#D8">Kruskal</a> dùng DSU để kiểm tra "nối thêm đường này có tạo vòng không?".<br>• <a href="#D1">BFS</a>/<a href="#D2">DFS</a> hỏi liên thông 1 lần thì được, nhưng hỏi nhiều lần → DSU nhanh hơn rất nhiều.</div>
 <pre>
 // ═══ DSU — Phong cách quen thuộc ═══
 
@@ -1719,6 +1728,7 @@ for (int i = 1; i &lt;= n; i++)
 <p><em>💡 Hình dung: Bạn có bảng điểm cả lớp và ghi sẵn "tổng từ đầu đến bạn thứ i" (tổng tiền tố). Muốn hỏi "tổng từ bạn 3 đến bạn 7" thì lấy tổng[7] − tổng[2] là xong. Nhưng nếu thầy sửa điểm ai đó, bạn phải tính lại toàn bộ tổng — rất chậm! BIT giống bảng tính thông minh: vừa hỏi "tổng bạn 3 đến 7", vừa sửa điểm bạn 5 mà bảng tự cập nhật. Cả hỏi và sửa đều rất nhanh.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng tổng tiền tố: hỏi nhanh O(1) nhưng sửa 1 phần tử phải tính lại bảng → O(n). Với Q câu hỏi + sửa → O(n×Q). Dùng BIT → cả hỏi và sửa đều <strong>O(log n)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]" <strong>+ sửa giá trị</strong> (tổng tiền tố thường không sửa được), "đếm nghịch thế đảo"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#A1">Prefix Sum</a> giống bảng tính Excel bị "đóng băng": hỏi nhanh nhưng sửa 1 ô thì cả cột phải tính lại. BIT = Excel "tự cập nhật": sửa xong vẫn hỏi nhanh.<br>• BIT chỉ giỏi cộng. Cần tìm min/max hoặc sửa cả đoạn → phải lên <a href="#C6">Segment Tree</a> (mạnh hơn).</div>
 <pre>
 long long bit[100005];
 int n;
@@ -1745,6 +1755,7 @@ long long tongDoan(int l, int r) {
 <p><em>💡 Hình dung: Ống nhựa 2 đầu hở — có thể nhét/rút bóng từ CẢ HAI ĐẦU. Dùng kết hợp với "Cửa sổ trượt" để luôn biết giá trị lớn nhất/nhỏ nhất trong khung nhìn hiện tại mà không cần đếm lại.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng queue thường → không xóa được đầu bên kia. Dùng vector → xóa phần tử đầu O(n). Deque cho phép thêm/xóa cả 2 đầu trong <strong>O(1)</strong> — cần thiết cho Sliding Window.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "min/max trong cửa sổ trượt", "thêm/xóa ở cả hai đầu"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống ống nhựa 2 đầu hở: nhét vào đầu nào, rút ra đầu nào đều được. <a href="#A4">Sliding Window</a> cần rút đầu trái (hết hạn) và nhét đầu phải (mới vào) → Deque làm cả hai.</div>
 <pre>
 deque&lt;int&gt; dq;
 dq.push_back(1);   dq.push_front(2);  dq.push_back(3);  // {2, 1, 3}
@@ -1951,6 +1962,7 @@ a.assign(n + 1, vector&lt;bool&gt;(n + 1, false));
 <p><em>💡 Hình dung: Ném viên đá xuống hồ. Sóng lan ra vòng 1 (các đỉnh cách 1 bước), rồi vòng 2 (cách 2 bước), vòng 3... Vì sóng lan đều nên đỉnh nào sóng đến trước thì đó là đường ngắn nhất. Dùng "hàng đợi" (xếp hàng ai đến trước xử lý trước) để đảm bảo duyệt đúng thứ tự.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng DFS tìm đường ngắn nhất → không đảm bảo đúng (đường tìm được có thể dài hơn). Vét cạn mọi đường → O(n!). BFS đảm bảo <strong>đúng + nhanh O(V+E)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" (đồ thị <strong>không trọng số</strong>), "duyệt theo tầng", "lưới/mê cung", "truy vết đường đi"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• BFS giống sóng lan đều → chỉ đúng khi mọi đường dài bằng nhau. Đường dài ngắn khác nhau → phải dùng <a href="#D3">Dijkstra</a> (ưu tiên đường ngắn trước, dùng <a href="#C2">Priority Queue</a>).<br>• Chỉ cần đếm "mấy nhóm riêng biệt?" → <a href="#D2b">D2b</a> hoặc <a href="#C3">DSU</a>.</div>
 <pre>
 // ═══ BFS tìm đường đi từ S đến F ═══
 // Phong cách: Free (đánh dấu) + Trace (truy vết)
@@ -2198,6 +2210,7 @@ int main() {
 <p><em>💡 Hình dung: Bản đồ thành phố với các con đường dài ngắn khác nhau (có "trọng số" = chiều dài). Từ giao lộ A, muốn tìm đường ngắn nhất đến mọi giao lộ khác. Cách làm: luôn chọn giao lộ GẦN NHẤT chưa thăm → cập nhật khoảng cách các giao lộ liền kề → lặp lại cho đến hết. Dùng "thùng lấy quả nhỏ nhất" (Priority Queue) để chọn nhanh.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> BFS chỉ đúng khi tất cả cạnh có trọng số = 1. Với cạnh trọng số khác nhau, BFS cho kết quả <strong>sai</strong>. Dijkstra luôn tìm đường ngắn nhất đúng với O(E log V).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" trên đồ thị <strong>có trọng số dương</strong></div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#D1">BFS</a> xếp hàng ai đến trước làm trước. Dijkstra xếp hàng theo <b>khoảng cách</b>: ai gần nhất làm trước → dùng <a href="#C2">Priority Queue</a> thay queue thường.<br>• Nếu có đường "phí âm" (đi qua được thưởng) → Dijkstra tính sai, phải dùng <a href="#D5">Bellman-Ford</a>.</div>
 <pre>
 // ═══ Dijkstra — O(E log V) ═══
 
@@ -2420,6 +2433,7 @@ Truy vết: 4←Trace[4]=3←Trace[3]=2←Trace[2]=1
 <p><em>💡 Hình dung: Có n ngôi nhà và nhiều con đường nối giữa chúng, mỗi đường có chi phí xây dựng khác nhau. Cần nối TẤT CẢ các nhà lại bằng đường, sao cho tổng chi phí THẤP NHẤT và không có đường thừa (không tạo vòng). Cách làm: bắt đầu từ 1 nhà, mỗi bước chọn con đường RẺ NHẤT nối nhà đã kết nối → nhà chưa kết nối. Lặp lại cho đến khi tất cả nhà đều được nối.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi cách nối → số cây khung là n^(n-2) (công thức Cayley). Với n = 20 → 20¹⁸ → không khả thi. Prim/Kruskal tìm cây khung nhỏ nhất trong <strong>O(E log V)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "nối tất cả các điểm với chi phí nhỏ nhất", "cây khung nhỏ nhất", "mạng lưới tối ưu"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Cùng bài "nối tất cả nhà với chi phí rẻ nhất" nhưng 2 cách làm khác nhau:<br>  — <b>Prim</b>: đứng ở 1 nhà, cứ nối sang nhà gần nhất chưa nối (dùng <a href="#C2">Priority Queue</a>).<br>  — <b><a href="#D8">Kruskal</a></b>: liệt kê tất cả đường, <a href="#A7">xếp từ rẻ→đắt</a>, chọn lần lượt đường rẻ nhất mà không tạo vòng (dùng <a href="#C3">DSU</a> kiểm tra).</div>
 <pre>
 // ═══ Prim — O(V²) với ma trận kề ═══
 
@@ -2613,6 +2627,7 @@ Vòng 4: BFS không tìm được đường → Dừng!
 <h3 id="D8">D8. Kruskal — Cây khung nhỏ nhất (dùng DSU)</h3>
 <p><em>💡 Hình dung: Giống Prim (nối tất cả nhà với chi phí thấp nhất), nhưng cách làm khác: liệt kê TẤT CẢ các con đường, sắp theo chi phí tăng dần, rồi chọn từng con đường rẻ nhất mà không tạo vòng. Dùng DSU để kiểm tra "2 đầu đường đã nối chưa?".</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> Giống Prim. <strong>Khi nào chọn Kruskal?</strong> Khi đồ thị có nhiều cạnh, ít đỉnh hoặc đã có sẵn DSU.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Kruskal cần 2 "đồ nghề": <a href="#A7">Sort</a> (xếp đường từ rẻ→đắt) + <a href="#C3">DSU</a> (hỏi nhanh "2 nhà đã nối chưa?").<br>• So với <a href="#D6">Prim</a>: cùng kết quả, nhưng Kruskal dễ code hơn nếu đã biết DSU.</div>
 <pre>
 // ═══ Kruskal — O(E log E) dùng DSU ═══
 
