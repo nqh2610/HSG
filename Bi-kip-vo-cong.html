@@ -402,16 +402,18 @@ O(1) → O(log N) → O(N) → O(N log N) → O(N²) → O(N³) → O(2ᴺ) → 
 <table>
 <tr><th>Đề cho N ≤</th><th>Độ phức tạp tối đa</th><th>Được dùng</th><th>Ví dụ</th></tr>
 <tr><td><strong>10</strong></td><td>O(N!)</td><td>Vét cạn, sinh hoán vị</td><td>Tìm thứ tự tối ưu</td></tr>
-<tr><td><strong>20</strong></td><td>O(2ᴺ)</td><td>Duyệt tập con (bitmask)</td><td>Chọn tập con tổng = k</td></tr>
-<tr><td><strong>100</strong></td><td>O(N³)</td><td>3 vòng for, Floyd, DP 3 chiều</td><td>Tìm bộ 3 số tổng = k</td></tr>
-<tr><td><strong>1000–5000</strong></td><td>O(N²)</td><td>2 vòng for, DP 2 chiều</td><td>Duyệt mọi cặp</td></tr>
-<tr><td><strong>10⁵</strong></td><td>O(N log N)</td><td>Sort + Greedy, Binary Search, BIT</td><td>Ghép cặp tối ưu</td></tr>
-<tr><td><strong>10⁶</strong></td><td>O(N)</td><td>Two Pointers, Prefix Sum, Sliding Window</td><td>Tổng đoạn, đoạn con</td></tr>
-<tr><td><strong>10⁷</strong></td><td>O(N)</td><td>Sàng nguyên tố, duyệt đơn</td><td>Đếm SNT đến 10⁷</td></tr>
+<tr><td><strong>20</strong></td><td>O(2ᴺ)</td><td>Duyệt tập con (bitmask), Backtracking</td><td>Chọn tập con tổng = k</td></tr>
+<tr><td><strong>40</strong></td><td>O(2^(N/2))</td><td>Meet in the Middle</td><td>Chia đôi rồi ghép kết quả</td></tr>
+<tr><td><strong>100–500</strong></td><td>O(N³)</td><td>3 vòng for, Floyd, DP 3 chiều, Ma trận kề</td><td>Đường ngắn nhất mọi cặp, Prim</td></tr>
+<tr><td><strong>1000–5000</strong></td><td>O(N²)</td><td>2 vòng for, DP 2 chiều</td><td>Duyệt mọi cặp, Bellman-Ford</td></tr>
+<tr><td><strong>10⁵</strong></td><td>O(N√N)</td><td>Mo's Algorithm, Sqrt Decomposition</td><td>Hỏi offline nhiều đoạn [L,R]</td></tr>
+<tr><td><strong>10⁵–10⁶</strong></td><td>O(N log N)</td><td>Sort, Binary Search, BIT, SegTree, Dijkstra</td><td>Ghép cặp, tổng đoạn + cập nhật</td></tr>
+<tr><td><strong>10⁶–10⁷</strong></td><td>O(N)</td><td>Prefix Sum, Two Pointers, Kadane, Sàng</td><td>Tổng đoạn, đoạn con, đếm SNT</td></tr>
+<tr><td><strong>10¹⁸</strong></td><td>O(log N)</td><td>Lũy thừa nhanh, Chặt nhị phân, Matrix Expo.</td><td>a^n mod m, Fibonacci thứ 10¹⁸</td></tr>
 </table>
 
 <div class="good">
-<strong>MẸO NHỚ:</strong> N = 10⁵ → sort + 1 vòng for. N = 10⁶ → chỉ 1 vòng for. 2 vòng for lồng với N = 10⁵ → TLE chắc chắn!
+<strong>MẸO NHỚ:</strong> N = 10⁵ → sort + 1 vòng for. N = 10⁶ → chỉ 1 vòng for. 2 vòng for lồng với N = 10⁵ → TLE chắc chắn! N ≤ 500 → thoải mái dùng ma trận kề + Floyd.
 </div>
 
 <!-- ─────────────────────────────────── -->
@@ -4764,31 +4766,149 @@ for (int i = 0; i &lt;= n; i++) {
 <hr class="section">
 <h2 class="dark" id="plA">PHỤ LỤC A: SƠ ĐỒ NHẬN DẠNG BÀI TOÁN</h2>
 
-<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #333; font-size: 11pt;">
-Đề bài hỏi gì?
+<div class="tip"><strong>CÁCH DÙNG:</strong> Đọc đề → xác định đề hỏi gì → tra sơ đồ → tìm thuật toán phù hợp. Mỗi nhánh đều ghi link đến bài học tương ứng.</div>
+
+<div class="good"><strong>🔵 NHÓM 1: BÀI TOÁN TRÊN MẢNG / DÃY SỐ</strong></div>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #3498db; font-size: 11pt;">
+Đề cho mảng a[1..n], hỏi gì?
 │
-├── "Tổng đoạn [L,R]" (chỉ hỏi) ───────── → <strong>Prefix Sum</strong>
-├── "Tổng đoạn + CẬP NHẬT" ─────────────── → <strong>BIT / Segment Tree</strong>
-├── "Đoạn con dài nhất/ngắn nhất thỏa..." → <strong>Two Pointers / Sliding Window</strong>
-├── "Max/min trong cửa sổ kích thước k" ── → <strong>Deque đơn điệu</strong>
-├── "Đoạn con tổng lớn nhất" ───────────── → <strong>Kadane</strong>
-├── "Dãy con tăng dài nhất" ────────────── → <strong>LIS (DP + Binary Search)</strong>
-├── "Đếm số cách / số phương án" ──────── → <strong>DP</strong>
-├── "Max/min với ràng buộc trọng lượng" ── → <strong>DP Knapsack</strong>
-├── "Chọn ít nhất / nhiều nhất có thể" ── → <strong>Greedy (thường sort trước)</strong>
-├── "Tìm giá trị nhỏ nhất thỏa..." ───── → <strong>Chặt nhị phân đáp án</strong>
-├── "Gộp nhóm / liên thông" ───────────── → <strong>DSU</strong> hoặc <strong>BFS/DFS</strong>
-├── "Kiểm tra đồ thị liên thông không?" ── → <strong>DFS/BFS từ đỉnh 1, xem đã thăm hết?</strong>
-├── "Đường đi ngắn nhất (không trọng số)" → <strong>BFS</strong>
-├── "Lưới/mê cung: đường đi ngắn nhất" ── → <strong>BFS trên lưới 2D</strong>
-├── "Đường đi ngắn nhất (có trọng số)" ── → <strong>Dijkstra</strong> (1 nguồn, trọng số ≥ 0)
-├── "Đường ngắn nhất + trọng số ÂM" ───── → <strong>Bellman-Ford</strong>
-├── "Đường ngắn nhất giữa MỌI cặp đỉnh"  → <strong>Floyd</strong> (N ≤ 400)
-├── "Nối tất cả điểm, chi phí nhỏ nhất"── → <strong>Prim</strong> (Cây khung nhỏ nhất)
-├── "Luồng cực đại / lưu lượng tối đa" ── → <strong>Ford-Fulkerson</strong>
-├── N ≤ 20 ──────────────────────────────── → <strong>Bitmask / Backtracking</strong>
-└── N ≤ 10 ──────────────────────────────── → <strong>Sinh hoán vị</strong>
+├── <strong>"Tổng/XOR đoạn [L,R]?"</strong>
+│   ├── Chỉ HỎI, không sửa ─────────── → <a href="#A1" style="color:#5dade2;">Prefix Sum</a> / <a href="#A2" style="color:#5dade2;">Prefix XOR</a>
+│   ├── Hỏi + CẬP NHẬT 1 phần tử ──── → <a href="#C5" style="color:#5dade2;">BIT (Fenwick)</a>
+│   ├── Hỏi + CẬP NHẬT cả đoạn ─────── → <a href="#C8" style="color:#5dade2;">Lazy Segment Tree</a>
+│   └── Hỏi min/max đoạn (không sửa) ─ → <a href="#C10" style="color:#5dade2;">Sparse Table</a>
+│
+├── <strong>"Đoạn con liên tiếp dài nhất/ngắn nhất thỏa điều kiện?"</strong>
+│   ├── Điều kiện tổng ≤ K, ≥ K ─────── → <a href="#A5" style="color:#5dade2;">Two Pointers</a>
+│   ├── Đếm phần tử distinct trong [L,R] → <a href="#A6" style="color:#5dade2;">Sliding Window</a> + Map
+│   └── Max/min trong cửa sổ kích thước k → <a href="#C2" style="color:#5dade2;">Deque đơn điệu</a>
+│
+├── <strong>"Đoạn con tổng lớn nhất?"</strong> ──────── → <a href="#A11" style="color:#5dade2;">Kadane</a>
+│
+├── <strong>"Phần tử gần nhất lớn/nhỏ hơn?"</strong> ─ → <a href="#A7" style="color:#5dade2;">Monotonic Stack</a>
+│
+├── <strong>"Tìm vị trí phần tử / giá trị nhỏ nhất thỏa?"</strong>
+│   ├── Mảng đã sort ────────────────── → <a href="#A8" style="color:#5dade2;">Binary Search</a>
+│   └── Chặt nhị phân đáp án ────────── → <a href="#A8" style="color:#5dade2;">BS trên đáp án</a> (check hàm kiểm tra)
+│
+├── <strong>"Cộng thêm val vào cả đoạn [L,R]?"</strong>
+│   ├── Cộng xong rồi hỏi 1 lần ─────── → <a href="#A3" style="color:#5dade2;">Difference Array</a>
+│   ├── Cộng xong hỏi nhiều lần ─────── → <a href="#C8" style="color:#5dade2;">Lazy Segment Tree</a>
+│   └── Bảng 2D: cộng HCN ──────────── → <a href="#A4" style="color:#5dade2;">Difference 2D</a>
+│
+├── <strong>"Đếm tần suất / phần tử nào xuất hiện nhiều nhất?"</strong>
+│   └── Giá trị nhỏ (≤ 10⁶) ─────────── → <a href="#A10" style="color:#5dade2;">Mảng đếm</a>
+│       Giá trị lớn ──────────────────── → Map hoặc <a href="#A12" style="color:#5dade2;">Nén tọa độ</a> + Mảng đếm
+│
+├── <strong>"Hỏi offline nhiều đoạn [L,R], đếm distinct/tần suất?"</strong>
+│   └── ─────────────────────────────── → <a href="#B7" style="color:#5dade2;">Mo's Algorithm</a>
+│
+└── <strong>"k-th nhỏ nhất trong đoạn [L,R]?"</strong>
+    └── ─────────────────────────────── → <a href="#C9" style="color:#5dade2;">Merge Sort Tree</a>
 </pre>
+
+<div class="good"><strong>🟠 NHÓM 2: BÀI TOÁN TỐI ƯU / ĐẾM SỐ CÁCH</strong></div>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #e67e22; font-size: 11pt;">
+Đề hỏi "bao nhiêu cách?" hoặc "lớn nhất / nhỏ nhất"?
+│
+├── <strong>"Đếm số cách / số phương án"</strong>
+│   ├── Chọn/không chọn, có ràng buộc ── → <a href="#B3" style="color:#f5b041;">DP</a>
+│   ├── Đếm số trong đoạn [L,R] thỏa ── → <a href="#B6" style="color:#f5b041;">Digit DP</a>
+│   └── Số phương án MOD 10⁹+7 ────────── → <a href="#B3" style="color:#f5b041;">DP</a> + mod
+│
+├── <strong>"Max/min giá trị với ràng buộc trọng lượng/thể tích?"</strong>
+│   └── ──────────────────────────────── → <a href="#B3" style="color:#f5b041;">DP Knapsack</a> (ba lô)
+│       ├── Mỗi vật chọn 1 lần ──── Knapsack 0/1 (duyệt j ngược)
+│       └── Mỗi vật chọn ∞ lần ──── Unbounded (duyệt j xuôi)
+│
+├── <strong>"Dãy con tăng/giảm dài nhất?"</strong>
+│   └── ──────────────────────────────── → <a href="#B3" style="color:#f5b041;">LIS</a> (DP + <a href="#A8" style="color:#f5b041;">Binary Search</a>)
+│
+├── <strong>"Xếp thứ tự / lịch trình tối ưu?"</strong>
+│   └── ──────────────────────────────── → <a href="#B2" style="color:#f5b041;">Greedy</a> (sort trước, chọn tham lam)
+│
+├── <strong>"Tính f(n) theo công thức truy hồi, n rất lớn (10¹⁸)?"</strong>
+│   └── ──────────────────────────────── → <a href="#B8" style="color:#f5b041;">Matrix Exponentiation</a>
+│
+├── <strong>"Chia mảng thành 2 nửa, kết hợp?"</strong>
+│   └── ──────────────────────────────── → <a href="#B4" style="color:#f5b041;">Divide and Conquer</a>
+│
+├── <strong>"Tổng đóng góp từng phần tử vào kết quả?"</strong>
+│   └── ──────────────────────────────── → <a href="#B5" style="color:#f5b041;">Contribution Technique</a>
+│
+└── <strong>KHÔNG NGHĨ RA THUẬT? → XEM GIỚI HẠN N</strong>
+    ├── N ≤ 10 ────────────────────────── → <a href="#B1d3" style="color:#f5b041;">Sinh hoán vị</a>
+    ├── N ≤ 20 ────────────────────────── → <a href="#B1d2" style="color:#f5b041;">Bitmask</a> / <a href="#B1d4" style="color:#f5b041;">Quay lui</a>
+    ├── N ≤ 40 ────────────────────────── → <a href="#B1d5" style="color:#f5b041;">Meet in the Middle</a>
+    └── N ≤ 1000 ──────────────────────── → <a href="#B1d1" style="color:#f5b041;">Vét cạn 2 vòng for</a> O(n²)
+</pre>
+
+<div class="good"><strong>🟢 NHÓM 3: BÀI TOÁN ĐỒ THỊ</strong></div>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #2ecc71; font-size: 11pt;">
+Đề cho đồ thị / lưới / mối quan hệ nối nhau?
+│
+├── <strong>"Đường đi ngắn nhất?"</strong>
+│   ├── Không trọng số ──────────────── → <a href="#D1" style="color:#58d68d;">BFS</a>
+│   ├── Lưới 2D / mê cung ──────────── → <a href="#D1b" style="color:#58d68d;">BFS 2D</a>
+│   ├── Có trọng số ≥ 0 (1 nguồn) ──── → <a href="#D3" style="color:#58d68d;">Dijkstra</a>
+│   ├── Có trọng số ÂM (1 nguồn) ───── → <a href="#D5" style="color:#58d68d;">Bellman-Ford</a>
+│   └── MỌI cặp đỉnh (N ≤ 400) ─────── → <a href="#D4" style="color:#58d68d;">Floyd</a>
+│
+├── <strong>"Liên thông / đếm nhóm / gộp nhóm?"</strong>
+│   ├── Hỏi 1 lần "mấy nhóm?" ──────── → <a href="#D2" style="color:#58d68d;">DFS</a> / <a href="#D1" style="color:#58d68d;">BFS</a>
+│   ├── Hỏi nhiều lần + nối thêm cạnh ─ → <a href="#C4" style="color:#58d68d;">DSU</a>
+│   └── "Đồ thị có liên thông không?" ── → <a href="#D2b" style="color:#58d68d;">DFS/BFS từ đỉnh 1</a>
+│
+├── <strong>"Nối tất cả điểm với chi phí nhỏ nhất?"</strong> (Cây khung nhỏ nhất)
+│   ├── N nhỏ, dùng ma trận kề ──────── → <a href="#D6" style="color:#58d68d;">Prim</a>
+│   └── Danh sách cạnh, có sẵn DSU ──── → <a href="#D8" style="color:#58d68d;">Kruskal</a>
+│
+├── <strong>"Thứ tự thực hiện công việc / môn tiên quyết?"</strong>
+│   └── ──────────────────────────────── → <a href="#D9" style="color:#58d68d;">Topo Sort</a>
+│
+├── <strong>"Luồng cực đại / cắt nhỏ nhất?"</strong>
+│   └── ──────────────────────────────── → <a href="#D7" style="color:#58d68d;">Ford-Fulkerson</a>
+│
+├── <strong>"Tổ tiên chung gần nhất (LCA) trên cây?"</strong>
+│   └── ──────────────────────────────── → <a href="#C12" style="color:#58d68d;">Binary Lifting</a>
+│
+└── <strong>"Kiểm tra chu trình?"</strong>
+    └── ──────────────────────────────── → <a href="#D2" style="color:#58d68d;">DFS</a> (tô màu / stack)
+</pre>
+
+<div class="good"><strong>🔴 NHÓM 4: BÀI TOÁN SỐ HỌC</strong></div>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #e74c3c; font-size: 11pt;">
+Đề liên quan đến số nguyên tố, ước, bội, mod?
+│
+├── <strong>"n có phải số nguyên tố?"</strong> ──────── → <a href="#E1" style="color:#ec7063;">Kiểm tra O(√n)</a>
+├── <strong>"Liệt kê tất cả SNT ≤ N?"</strong> ───────  → <a href="#E2" style="color:#ec7063;">Sàng Eratosthenes</a>
+├── <strong>"Tính a^n mod m (n rất lớn)?"</strong> ────  → <a href="#E3" style="color:#ec7063;">Lũy thừa nhanh</a>
+├── <strong>"ƯCLN / BCNN?"</strong> ──────────────────── → <a href="#E4" style="color:#ec7063;">GCD / LCM</a>
+└── <strong>"Phân tích n thành tích thừa số?"</strong>── → <a href="#E4" style="color:#ec7063;">Phân tích thừa số O(√n)</a>
+</pre>
+
+<div class="good"><strong>🟣 NHÓM 5: BÀI TOÁN XÂU (STRING)</strong></div>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #9b59b6; font-size: 11pt;">
+Đề cho xâu ký tự, hỏi gì?
+│
+├── <strong>"Tìm pattern P xuất hiện ở đâu trong text T?"</strong>
+│   ├── Cần tất cả vị trí xuất hiện ──── → <a href="#F2" style="color:#bb8fce;">KMP</a> / <a href="#F3" style="color:#bb8fce;">Z-function</a>
+│   └── So sánh xâu con nhanh ────────── → <a href="#F1" style="color:#bb8fce;">String Hashing</a>
+│
+├── <strong>"Đếm xâu con distinct / sắp xếp tất cả hậu tố?"</strong>
+│   └── ──────────────────────────────── → <a href="#F6" style="color:#bb8fce;">Suffix Array</a>
+│
+├── <strong>"Xâu đối xứng dài nhất / đếm palindrome?"</strong>
+│   └── ──────────────────────────────── → <a href="#F5" style="color:#bb8fce;">Manacher / Expand</a>
+│
+├── <strong>"Kiểm tra tiền tố / tìm từ trong từ điển?"</strong>
+│   └── ──────────────────────────────── → <a href="#F4" style="color:#bb8fce;">Trie</a>
+│
+└── <strong>"Tìm 2 số XOR lớn nhất?"</strong>
+    └── ──────────────────────────────── → <a href="#F4" style="color:#bb8fce;">Binary Trie</a>
+</pre>
+
+<div class="tip"><strong>💡 Bảng chọn thuật theo giới hạn N → xem chi tiết ở <a href="#s22">mục 2.2</a></strong></div>
 
 <h2 class="dark" id="plB">PHỤ LỤC B: BẢNG CÔNG THỨC NHỚ NHANH</h2>
 <table>
