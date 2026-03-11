@@ -4514,7 +4514,7 @@ for (int i = 0; i &lt; m; i++)
 <tr><td>Vét cạn 2 vòng for</td><td>Subtask N ≤ 1000</td><td>40-60%</td></tr>
 <tr><td>Duyệt tập con (bitmask)</td><td>Subtask N ≤ 20</td><td>30-50%</td></tr>
 <tr><td>Tham lam (chưa chứng minh)</td><td>Bài tối ưu, không nghĩ ra DP</td><td>30-50%</td></tr>
-<tr><td>Sinh ngẫu nhiên</td><td>Không có ý tưởng gì</td><td>10-20%</td></tr>
+<tr><td>Xử lý trường hợp đặc biệt</td><td>Subtask riêng (a[i]=1, mảng đã sắp...)</td><td>10-30%</td></tr>
 </table>
 
 <div class="tip"><strong>💡 Ý TƯỞNG CHÍNH:</strong> Đề bài có nhiều subtask với giới hạn khác nhau. Subtask nhỏ (N ≤ 20, N ≤ 1000) dùng thuật chậm vẫn được. <strong>Làm subtask dễ trước → lấy 30-60% → rồi mới nghĩ thuật tối ưu.</strong></div>
@@ -4604,37 +4604,50 @@ out &lt;&lt; best;
 </div>
 
 <div class="good"><strong>③ THAM LAM (GREEDY) — Khi không nghĩ ra DP (30-50%)</strong>
-<p>Bài tối ưu mà không biết thuật chính xác? → Thử chiến lược "tham lam" — chọn cái tốt nhất ở mỗi bước:</p>
+<p>Bài tối ưu mà không biết thuật chính xác? → Thử chiến lược "tham lam" — chọn cái tốt nhất ở mỗi bước. <strong>Greedy không phải lúc nào cũng đúng</strong>, nhưng thường trúng nhiều test:</p>
 <pre>
-// ═══ Bài: N công việc, mỗi công việc có deadline d[i] và điểm p[i].      ═══
-// ═══ Mỗi thời điểm chỉ làm 1 việc. Chọn để tổng điểm lớn nhất.         ═══
-// Thuật tối ưu: DP hoặc Greedy phức tạp. BÍ → tham lam sort theo điểm:
+// ═══ VD1: Bài đổi tiền — dùng ít tờ nhất để trả đúng S đồng ═══
+// Mệnh giá: coins[] = {1, 5, 8}.  Cần trả S = 10.
+// Thuật tối ưu: DP → f[j] = min f[j-coin] + 1 → đáp án f[10] = 2 (5+5)
+// BÍ → Tham lam: luôn chọn tờ LỚN NHẤT trước
 
-struct Job { int deadline, point; };
-vector&lt;Job&gt; jobs(n);
-// ... đọc vào ...
-
-// Chiến lược: ưu tiên việc điểm CAO trước
-sort(jobs.begin(), jobs.end(), [](const Job &amp;a, const Job &amp;b) {
-    return a.point > b.point;
-});
-
-vector&lt;bool&gt; used(n + 2, false);   // used[t] = thời điểm t đã dùng chưa
-long long total = 0;
-for (auto &amp;j : jobs) {
-    // Tìm thời điểm trống gần deadline nhất
-    for (int t = j.deadline; t >= 1; t--) {
-        if (!used[t]) {
-            used[t] = true;
-            total += j.point;
-            break;
-        }
+sort(coins.begin(), coins.end(), greater&lt;int&gt;());  // Sắp giảm dần
+int total = 0, soTo = 0;
+for (int c : coins) {
+    while (total + c &lt;= S) {
+        total += c;
+        soTo++;
     }
 }
-out &lt;&lt; total;
+out &lt;&lt; soTo;
 
-// Có thể KHÔNG tối ưu → nhưng thường ăn 30-50% test!
+// Greedy chọn: 8 + 1 + 1 = 10 → 3 tờ  ← SAI (tối ưu là 5+5 = 2 tờ)
+// Nhưng với nhiều bộ test khác, greedy vẫn đúng → ăn 30-50% điểm!
 </pre>
+<pre>
+// ═══ VD2: Bài chọn hoạt động — chọn nhiều nhất không trùng giờ ═══
+// N hoạt động, mỗi cái có [bắt đầu, kết thúc]. Chọn nhiều nhất.
+// Greedy: sort theo thời gian KẾT THÚC, chọn cái kết thúc sớm nhất
+// → Greedy này LUÔN ĐÚNG (đã chứng minh được)!
+
+struct Act { int start, end; };
+vector&lt;Act&gt; a(n);
+// ... đọc vào ...
+
+sort(a.begin(), a.end(), [](const Act &amp;x, const Act &amp;y) {
+    return x.end &lt; y.end;             // Sort theo thời gian kết thúc
+});
+
+int count = 0, lastEnd = 0;
+for (auto &amp;act : a) {
+    if (act.start >= lastEnd) {        // Không trùng → chọn
+        count++;
+        lastEnd = act.end;
+    }
+}
+out &lt;&lt; count;
+</pre>
+<div class="warn"><strong>MẸO GREEDY KHI BÍ:</strong> Thử sort theo tiêu chí nào đó (giá trị lớn→nhỏ, deadline sớm→muộn, tỉ lệ value/weight...) rồi chọn tham lam. Không chắc đúng 100% nhưng thường ăn 30-50% test.</div>
 </div>
 
 <div class="good"><strong>④ XỬ LÝ TRƯỜNG HỢP ĐẶC BIỆT — Subtask riêng (10-30%)</strong>
