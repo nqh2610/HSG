@@ -2364,6 +2364,206 @@ a.assign(n + 1, vector&lt;bool&gt;(n + 1, false));
 <strong>MẸO:</strong> Nếu đề cho N ≤ 500 → dùng ma trận kề cho đơn giản. N lớn hơn → bắt buộc dùng danh sách kề.
 </div>
 
+<div class="good"><strong>🔍 HÌNH DUNG: CÙNG 1 ĐỒ THỊ — 2 CÁCH LƯU</strong>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #28a745;">
+Đồ thị vô hướng 5 đỉnh, 4 cạnh:           1──2
+1-2, 1-3, 2-4, 3-5                         |
+                                            3──5
+                                            .
+                                            2──4
+
+═══ CÁCH 1: DANH SÁCH KỀ (ke) ═══         ═══ CÁCH 2: MA TRẬN KỀ (a) ═══
+
+ke[1] = {2, 3}   ← 1 nối với 2, 3            1  2  3  4  5
+ke[2] = {1, 4}   ← 2 nối với 1, 4         1 [0, 1, 1, 0, 0]
+ke[3] = {1, 5}   ← 3 nối với 1, 5         2 [1, 0, 0, 1, 0]
+ke[4] = {2}      ← 4 nối với 2            3 [1, 0, 0, 0, 1]
+ke[5] = {3}      ← 5 nối với 3            4 [0, 1, 0, 0, 0]
+                                           5 [0, 0, 1, 0, 0]
+Chỉ lưu những ai NỐI thật.               Bảng N×N: ô [u][v]=1 nếu nối.
+→ Bộ nhớ nhỏ, duyệt nhanh                → Bộ nhớ lớn, nhưng hỏi nhanh
+</pre>
+</div>
+
+<div class="tip"><strong>⭐ DÒNG "THẦN KỲ" — CHỖ DUY NHẤT THAY ĐỔI KHI ĐỔI CÁCH LƯU</strong><br>
+Thực ra, trong mọi thuật toán đồ thị, chỗ khác nhau chỉ là <strong>vòng for duyệt đỉnh kề của u</strong>:
+<pre>
+// ═══ DANH SÁCH KỀ ═══                  ║  // ═══ MA TRẬN KỀ ═══
+for (int v : ke[u]) {                     ║  for (int v = 1; v &lt;= n; v++) {
+    // xử lý v                            ║      if (a[u][v]) {    // có cạnh u→v
+}                                          ║          // xử lý v
+                                           ║      }
+                                           ║  }
+</pre>
+<p style="margin: 8px 0 0 0;">
+<strong>Danh sách kề:</strong> <code>for (int v : ke[u])</code> — chỉ duyệt những đỉnh NỐI THẬT với u → nhanh O(số cạnh của u)<br>
+<strong>Ma trận kề:</strong> <code>for (int v = 1; v &lt;= n; v++) if (a[u][v])</code> — phải thử TẤT CẢ n đỉnh, hỏi "có nối không?" → chậm O(n), nhưng code đơn giản
+</p>
+</div>
+
+<div class="warn"><strong>📋 BẢNG ĐỐI CHIẾU: Code thay đổi thế nào khi đổi cách lưu?</strong>
+<table>
+<tr><th>Thuật toán</th><th>Dùng <code>ke</code> (danh sách kề)</th><th>Dùng <code>a</code> (ma trận kề)</th></tr>
+<tr><td><strong>BFS</strong></td><td><code>for (int v : ke[u])</code></td><td><code>for (int v = 1; v &lt;= n; v++) if (a[u][v])</code></td></tr>
+<tr><td><strong>DFS</strong></td><td><code>for (int v : ke[u])</code></td><td><code>for (int v = 1; v &lt;= n; v++) if (a[u][v])</code></td></tr>
+<tr><td><strong>Dijkstra</strong></td><td><code>for (auto [v,w] : ke[u])</code></td><td><code>for (int v = 1; v &lt;= n; v++) if (a[u][v] != INF)</code></td></tr>
+<tr><td><strong>Prim</strong></td><td><code>for (auto [v,w] : ke[u])</code></td><td><code>for (int j = 1; j &lt;= n; j++) if (a[i][j] &lt; minC)</code></td></tr>
+<tr><td><strong>Floyd</strong></td><td>❌ Không dùng danh sách kề</td><td>✅ Luôn dùng <code>d[i][j]</code></td></tr>
+<tr><td><strong>Bellman-Ford</strong></td><td>Duyệt danh sách cạnh</td><td><code>for u, for v: if (a[u][v] != INF)</code></td></tr>
+<tr><td><strong>Ford-Fulk.</strong></td><td>❌ Cần ma trận Cap/Flow</td><td>✅ Luôn dùng <code>Cap[u][v]</code></td></tr>
+<tr><td><strong>Kruskal</strong></td><td colspan="2">Dùng <strong>danh sách cạnh</strong> (Edge list) — không cần ke lẫn a</td></tr>
+<tr><td><strong>Topo Sort</strong></td><td><code>for (int v : ke[u])</code></td><td><code>for (int v = 1; v &lt;= n; v++) if (a[u][v])</code></td></tr>
+</table>
+</div>
+
+<div class="good"><strong>✅ VÍ DỤ CỤ THỂ: BFS viết bằng 2 cách</strong></div>
+<pre>
+// ═══════════════════════════════════════════════
+// BFS — DANH SÁCH KỀ (dùng khi N lớn ≤ 10⁵)
+// ═══════════════════════════════════════════════
+vector&lt;vector&lt;int&gt;&gt; ke(n + 1);
+// Đọc: ke[u].push_back(v); ke[v].push_back(u);
+
+void BFS(int S) {
+    vector&lt;bool&gt; Free(n + 1, true);
+    queue&lt;int&gt; q;
+    q.push(S); Free[S] = false;
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        for (int v : ke[u]) {            // ← CHỈ DUYỆT ĐỈNH KỀ THẬT
+            if (Free[v]) {
+                Free[v] = false;
+                q.push(v);
+            }
+        }
+    }
+}
+</pre>
+<pre>
+// ═══════════════════════════════════════════════
+// BFS — MA TRẬN KỀ (dùng khi N nhỏ ≤ 500)
+// ═══════════════════════════════════════════════
+vector&lt;vector&lt;bool&gt;&gt; a(n + 1, vector&lt;bool&gt;(n + 1, false));
+// Đọc: a[u][v] = a[v][u] = true;
+
+void BFS(int S) {
+    vector&lt;bool&gt; Free(n + 1, true);
+    queue&lt;int&gt; q;
+    q.push(S); Free[S] = false;
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        for (int v = 1; v &lt;= n; v++) {   // ← THỬ TẤT CẢ n đỉnh
+            if (a[u][v] &amp;&amp; Free[v]) {     // ← kiểm tra có cạnh không
+                Free[v] = false;
+                q.push(v);
+            }
+        }
+    }
+}
+</pre>
+
+<div class="good"><strong>✅ VÍ DỤ CỤ THỂ: DFS viết bằng 2 cách</strong></div>
+<pre>
+// ═══════════════════════════════════════════════
+// DFS STACK — DANH SÁCH KỀ
+// ═══════════════════════════════════════════════
+void DFS(int S) {
+    vector&lt;bool&gt; Free(n + 1, true);
+    stack&lt;int&gt; stk;
+    stk.push(S); Free[S] = false;
+    while (!stk.empty()) {
+        int u = stk.top(); stk.pop();
+        for (int v : ke[u]) {            // ← danh sách kề
+            if (Free[v]) {
+                Free[v] = false;
+                stk.push(v);
+            }
+        }
+    }
+}
+</pre>
+<pre>
+// ═══════════════════════════════════════════════
+// DFS STACK — MA TRẬN KỀ
+// ═══════════════════════════════════════════════
+void DFS(int S) {
+    vector&lt;bool&gt; Free(n + 1, true);
+    stack&lt;int&gt; stk;
+    stk.push(S); Free[S] = false;
+    while (!stk.empty()) {
+        int u = stk.top(); stk.pop();
+        for (int v = 1; v &lt;= n; v++) {   // ← ma trận kề
+            if (a[u][v] &amp;&amp; Free[v]) {
+                Free[v] = false;
+                stk.push(v);
+            }
+        }
+    }
+}
+</pre>
+
+<div class="good"><strong>✅ VÍ DỤ CỤ THỂ: Dijkstra viết bằng 2 cách</strong></div>
+<pre>
+// ═══════════════════════════════════════════════
+// DIJKSTRA — DANH SÁCH KỀ + Priority Queue — O(E log V)
+// ═══════════════════════════════════════════════
+vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke(n + 1);  // ke[u] = {{v, w}, ...}
+// Đọc: ke[u].push_back({v, w}); ke[v].push_back({u, w});
+
+void Dijkstra(int S) {
+    vector&lt;long long&gt; dist(n + 1, 1e18);
+    vector&lt;bool&gt; Free(n + 1, true);
+    priority_queue&lt;pair&lt;long long,int&gt;, vector&lt;pair&lt;long long,int&gt;&gt;, greater&lt;&gt;&gt; pq;
+    dist[S] = 0; pq.push({0, S});
+    while (!pq.empty()) {
+        auto [d, u] = pq.top(); pq.pop();
+        if (!Free[u]) continue;
+        Free[u] = false;
+        for (auto [v, w] : ke[u]) {      // ← chỉ duyệt hàng xóm thật
+            if (Free[v] &amp;&amp; dist[u] + w &lt; dist[v]) {
+                dist[v] = dist[u] + w;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+}
+</pre>
+<pre>
+// ═══════════════════════════════════════════════
+// DIJKSTRA — MA TRẬN KỀ (không cần PQ) — O(V²)
+// Dùng khi N ≤ 500, code đơn giản hơn
+// ═══════════════════════════════════════════════
+vector&lt;vector&lt;int&gt;&gt; a(n + 1, vector&lt;int&gt;(n + 1, INT_MAX));
+// Đọc: a[u][v] = a[v][u] = w;
+
+void Dijkstra(int S) {
+    vector&lt;long long&gt; dist(n + 1, 1e18);
+    vector&lt;bool&gt; Free(n + 1, true);
+    dist[S] = 0;
+    for (int lap = 0; lap &lt; n; lap++) {
+        // Tìm đỉnh chưa thăm có dist nhỏ nhất (thay cho PQ)
+        int u = -1;
+        for (int v = 1; v &lt;= n; v++)
+            if (Free[v] &amp;&amp; (u == -1 || dist[v] &lt; dist[u]))
+                u = v;
+        if (u == -1 || dist[u] >= 1e18) break;
+        Free[u] = false;
+        for (int v = 1; v &lt;= n; v++) {   // ← thử tất cả n đỉnh
+            if (a[u][v] != INT_MAX &amp;&amp; Free[v]) {
+                if (dist[u] + a[u][v] &lt; dist[v])
+                    dist[v] = dist[u] + a[u][v];
+            }
+        }
+    }
+}
+</pre>
+
+<div class="tip"><strong>💡 TÓM TẮT NHANH:</strong><br>
+• <strong>Danh sách kề</strong> = "sổ liên lạc" — mỗi người chỉ ghi SỐ ĐIỆN THOẠI những ai mình quen. Nhanh, tiết kiệm.<br>
+• <strong>Ma trận kề</strong> = "bảng kẻ ô" N×N — ô (i,j) đánh dấu "i quen j hay không?". Tốn bộ nhớ nhưng tra cứu 1 cặp = O(1).<br>
+• Khi chuyển code: chỉ cần đổi <strong>vòng for duyệt đỉnh kề</strong> — phần còn lại (queue, stack, dist, Free, Trace...) NGUYÊN XI không đổi!
+</div>
+
 <!-- D1 -->
 <h3 id="D1">D1. BFS — Duyệt theo chiều rộng</h3>
 <p><em>💡 Hình dung: Đồ thị đã biết lưu thế nào (D0). Giờ muốn tìm đường ngắn nhất? Ném viên đá xuống hồ — sóng lan ra vòng 1 (các đỉnh cách 1 bước), rồi vòng 2, vòng 3... Vì sóng lan đều nên đỉnh nào sóng đến trước = đường ngắn nhất. Dùng <strong>queue</strong> (hàng đợi) để xử lý ai đến trước làm trước. Chỉ đúng khi mọi cạnh dài bằng nhau — nếu cạnh dài khác nhau thì phải dùng <strong>Dijkstra</strong>.</em></p>
