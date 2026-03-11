@@ -4517,6 +4517,174 @@ for (int i = 0; i &lt; m; i++)
 <tr><td>Sinh ngẫu nhiên</td><td>Không có ý tưởng gì</td><td>10-20%</td></tr>
 </table>
 
+<div class="tip"><strong>💡 Ý TƯỞNG CHÍNH:</strong> Đề bài có nhiều subtask với giới hạn khác nhau. Subtask nhỏ (N ≤ 20, N ≤ 1000) dùng thuật chậm vẫn được. <strong>Làm subtask dễ trước → lấy 30-60% → rồi mới nghĩ thuật tối ưu.</strong></div>
+
+<div class="good"><strong>① VÉT CẠN 2 VÒNG FOR — Subtask N ≤ 1000 (40-60%)</strong>
+<p>Bài hỏi "đoạn con tổng lớn nhất"? Không nhớ Kadane? → Duyệt tất cả đoạn [i, j]:</p>
+<pre>
+// ═══ Bài: Tìm đoạn con [i..j] có tổng lớn nhất ═══
+// Thuật tối ưu: Kadane O(n). Nhưng BÍ → duyệt hết O(n²) cũng được 40-60%!
+
+long long best = -1e18;
+for (int i = 1; i &lt;= n; i++) {
+    long long sum = 0;
+    for (int j = i; j &lt;= n; j++) {
+        sum += a[j];                     // Tổng đoạn [i..j]
+        best = max(best, sum);
+    }
+}
+out &lt;&lt; best;
+
+// O(n²) → N ≤ 1000: 10⁶ phép tính → chạy tốt ✓
+//          N = 10⁵: 10¹⁰ phép tính → quá chậm ✗ (nhưng vẫn ăn subtask nhỏ!)
+</pre>
+
+<p>Bài hỏi "hai phần tử có tổng = K"? Không nhớ Two Pointers? → Thử tất cả cặp:</p>
+<pre>
+// ═══ Bài: Tìm 2 phần tử a[i] + a[j] = K ═══
+// Thuật tối ưu: Sort + Two Pointers O(n log n). BÍ → duyệt O(n²):
+
+for (int i = 1; i &lt;= n; i++)
+    for (int j = i + 1; j &lt;= n; j++)
+        if (a[i] + a[j] == K) {
+            out &lt;&lt; i &lt;&lt; " " &lt;&lt; j;
+            return 0;
+        }
+out &lt;&lt; -1;
+</pre>
+</div>
+
+<div class="good"><strong>② DUYỆT TẬP CON (BITMASK) — Subtask N ≤ 20 (30-50%)</strong>
+<p>Bài hỏi "chọn một số phần tử sao cho tổng = S"? Không nhớ DP Knapsack? → Thử TẤT CẢ tập con:</p>
+<pre>
+// ═══ Bài: Chọn các phần tử từ mảng a[] sao cho tổng đúng = S ═══
+// Thuật tối ưu: DP Knapsack O(n×S). BÍ → bitmask duyệt hết 2^n tập con:
+
+int n; long long S;
+in >> n >> S;
+vector&lt;long long&gt; a(n);
+for (int i = 0; i &lt; n; i++) in >> a[i];
+
+for (int mask = 0; mask &lt; (1 &lt;&lt; n); mask++) {
+    long long sum = 0;
+    for (int i = 0; i &lt; n; i++)
+        if (mask &amp; (1 &lt;&lt; i))              // bit thứ i = 1 → chọn a[i]
+            sum += a[i];
+    if (sum == S) {
+        out &lt;&lt; "YES" &lt;&lt; '\n';
+        for (int i = 0; i &lt; n; i++)
+            if (mask &amp; (1 &lt;&lt; i))
+                out &lt;&lt; a[i] &lt;&lt; " ";
+        return 0;
+    }
+}
+out &lt;&lt; "NO";
+
+// 2^20 = 1.048.576 → chạy tốt khi N ≤ 20 ✓
+// 2^30 = 10⁹ → quá chậm ✗
+</pre>
+
+<p>Bài hỏi "chia đội sao cho chênh lệch nhỏ nhất"?</p>
+<pre>
+// ═══ Bài: Chia n người (N ≤ 20) thành 2 đội, chênh lệch tổng nhỏ nhất ═══
+
+long long tong = 0;
+for (int i = 0; i &lt; n; i++) tong += a[i];
+long long best = tong;  // trường hợp xấu nhất
+
+for (int mask = 0; mask &lt; (1 &lt;&lt; n); mask++) {
+    long long sum1 = 0;
+    for (int i = 0; i &lt; n; i++)
+        if (mask &amp; (1 &lt;&lt; i)) sum1 += a[i];
+    long long sum2 = tong - sum1;
+    best = min(best, abs(sum1 - sum2));
+}
+out &lt;&lt; best;
+</pre>
+</div>
+
+<div class="good"><strong>③ THAM LAM (GREEDY) — Khi không nghĩ ra DP (30-50%)</strong>
+<p>Bài tối ưu mà không biết thuật chính xác? → Thử chiến lược "tham lam" — chọn cái tốt nhất ở mỗi bước:</p>
+<pre>
+// ═══ Bài: N công việc, mỗi công việc có deadline d[i] và điểm p[i].      ═══
+// ═══ Mỗi thời điểm chỉ làm 1 việc. Chọn để tổng điểm lớn nhất.         ═══
+// Thuật tối ưu: DP hoặc Greedy phức tạp. BÍ → tham lam sort theo điểm:
+
+struct Job { int deadline, point; };
+vector&lt;Job&gt; jobs(n);
+// ... đọc vào ...
+
+// Chiến lược: ưu tiên việc điểm CAO trước
+sort(jobs.begin(), jobs.end(), [](const Job &amp;a, const Job &amp;b) {
+    return a.point > b.point;
+});
+
+vector&lt;bool&gt; used(n + 2, false);   // used[t] = thời điểm t đã dùng chưa
+long long total = 0;
+for (auto &amp;j : jobs) {
+    // Tìm thời điểm trống gần deadline nhất
+    for (int t = j.deadline; t >= 1; t--) {
+        if (!used[t]) {
+            used[t] = true;
+            total += j.point;
+            break;
+        }
+    }
+}
+out &lt;&lt; total;
+
+// Có thể KHÔNG tối ưu → nhưng thường ăn 30-50% test!
+</pre>
+</div>
+
+<div class="good"><strong>④ XỬ LÝ TRƯỜNG HỢP ĐẶC BIỆT — Subtask riêng (10-30%)</strong>
+<p>Nhiều bài có subtask "tất cả giá trị = 1" hoặc "mảng đã sắp" → code riêng cho trường hợp đặc biệt:</p>
+<pre>
+// ═══ Bài phức tạp nhưng có subtask dễ ═══
+// Subtask 1: N ≤ 10 → sinh hoán vị / vét cạn
+// Subtask 2: Tất cả a[i] = 1 → công thức đơn giản
+// Subtask 3: Mảng đã sắp tăng → xử lý riêng
+// Subtask 4: N ≤ 10⁵ → thuật tối ưu (chưa nghĩ ra)
+
+// → LÀM subtask 1, 2, 3 trước!
+
+bool tatCaBang1 = true;
+for (int i = 1; i &lt;= n; i++)
+    if (a[i] != 1) { tatCaBang1 = false; break; }
+
+bool daSapTang = true;
+for (int i = 2; i &lt;= n; i++)
+    if (a[i] &lt; a[i-1]) { daSapTang = false; break; }
+
+if (n &lt;= 10) {
+    // Subtask 1: vét cạn / sinh hoán vị
+    // ...
+} else if (tatCaBang1) {
+    // Subtask 2: tất cả = 1 → công thức đơn giản
+    out &lt;&lt; n;  // (ví dụ)
+} else if (daSapTang) {
+    // Subtask 3: mảng đã sắp → xử lý riêng
+    // ...
+} else {
+    // Subtask 4: thuật tối ưu → NẾU CHƯA NGHĨ RA thì dùng O(n²) ăn 1 phần
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = i; j &lt;= n; j++) {
+            // ... vét cạn ...
+        }
+}
+</pre>
+</div>
+
+<div class="warn"><strong>⚡ CHIẾN THUẬT PHÒNG THI:</strong>
+<ol>
+<li><strong>Đọc TẤT CẢ subtask</strong> trước khi code. Subtask nhỏ nhất cho điểm DỄ nhất.</li>
+<li><strong>Code subtask dễ trước</strong> (N ≤ 20 bitmask, N ≤ 1000 vét cạn) → nộp lấy điểm.</li>
+<li><strong>Sau đó</strong> mới nghĩ thuật tối ưu cho subtask lớn.</li>
+<li><strong>Nếu hết giờ</strong> mà chưa nghĩ ra thuật tối ưu → vẫn có 30-60% điểm!</li>
+<li><strong>Xử lý trường hợp đặc biệt:</strong> <code>if (n &lt;= 10)</code>, <code>if (all == 1)</code>, <code>if (sorted)</code> → mỗi cái +10-20% điểm.</li>
+</ol>
+</div>
+
 <!-- ─────────────────────────────────── -->
 <h2 class="purple" id="s53">5.3. DEBUG NHANH TRONG PHÒNG THI</h2>
 <pre>
