@@ -42,6 +42,7 @@
         .nhom-C { background: #9b59b6; }
         .nhom-D { background: #1abc9c; }
         .nhom-E { background: #e74c3c; }
+        .nhom-F { background: #2ecc71; }
         .toc-box { background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 10px; padding: 18px 20px; margin: 15px 0; }
         .toc-box h3 { border: none; padding: 0; margin: 0 0 12px 0; font-size: 14pt; text-align: center; }
         .toc-box a { text-decoration: none; color: #2980b9; }
@@ -54,6 +55,7 @@
         .toc-section.sec-C { border-left-color: #9b59b6; }
         .toc-section.sec-D { border-left-color: #1abc9c; }
         .toc-section.sec-E { border-left-color: #e74c3c; }
+        .toc-section.sec-F { border-left-color: #2ecc71; }
         .toc-section.sec-tang4 { border-left-color: #3498db; }
         .toc-section.sec-tang5 { border-left-color: #8e44ad; }
         .toc-section.sec-phuluc { border-left-color: #7f8c8d; }
@@ -134,9 +136,9 @@
 <div class="toc-section sec-A">
   <span class="toc-title">🔵 <a href="#nhomA">NHÓM A — Xử lý mảng</a></span>
   <span class="toc-links">
-    <a href="#A1">A1. Prefix Sum</a> · <a href="#A2">A2. Difference Array</a> · <a href="#A3">A3. Two Pointers</a><br>
-    <a href="#A4">A4. Sliding Window</a> · <a href="#A5">A5. Mono Stack</a> · <a href="#A6">A6. Binary Search</a><br>
-    <a href="#A7">A7. Sorting</a> · <a href="#A8">A8. Counting</a> · <a href="#A9">A9. Kadane</a>
+    <a href="#A1">A1. Prefix Sum</a> · <a href="#A2">A2. Prefix XOR</a> · <a href="#A3">A3. Difference Array</a> · <a href="#A4">A4. Difference 2D</a><br>
+    <a href="#A5">A5. Two Pointers</a> · <a href="#A6">A6. Sliding Window</a> · <a href="#A7">A7. Mono Stack</a> · <a href="#A8">A8. Binary Search</a><br>
+    <a href="#A9">A9. Sorting</a> · <a href="#A10">A10. Counting</a> · <a href="#A11">A11. Kadane</a> · <a href="#A12">A12. Nén tọa độ</a>
   </span>
 </div>
 <div class="toc-section sec-B">
@@ -150,8 +152,11 @@
 </div>
 <div class="toc-section sec-C">
   <span class="toc-title">🟣 <a href="#nhomC">NHÓM C — Cấu trúc dữ liệu</a></span>
-  <span class="toc-links"><a href="#C1">C1. Vector/Set/Map</a> · <a href="#C2">C2. Priority Queue</a> · <a href="#C3">C3. DSU</a> · <a href="#C4">C4. BIT</a> · <a href="#C5">C5. Deque</a><br>
-    <a href="#C6">C6. Segment Tree</a> · <a href="#C7">C7. Sparse Table</a></span>
+  <span class="toc-links">
+    <a href="#C1">C1. Vector/Set/Map</a> · <a href="#C2">C2. Deque</a> · <a href="#C3">C3. Priority Queue</a> · <a href="#C4">C4. DSU</a><br>
+    <a href="#C5">C5. BIT</a> · <a href="#C6">C6. BIT 2D</a> · <a href="#C7">C7. Segment Tree</a> · <a href="#C8">C8. Lazy Seg Tree</a><br>
+    <a href="#C9">C9. Merge Sort Tree</a> · <a href="#C10">C10. Sparse Table</a> · <a href="#C11">C11. Trie</a> · <a href="#C12">C12. Binary Lifting</a>
+  </span>
 </div>
 <div class="toc-section sec-D">
   <span class="toc-title">🟢 <a href="#nhomD">NHÓM D — Đồ thị</a></span>
@@ -165,6 +170,13 @@
   <span class="toc-title">🔴 <a href="#nhomE">NHÓM E — Số học</a></span>
   <span class="toc-links"><a href="#E1">E1. Kiểm tra SNT</a> · <a href="#E2">E2. Sàng Eratosthenes</a> · <a href="#E3">E3. Lũy thừa nhanh</a> · <a href="#E4">E4. GCD/LCM</a></span>
 </div>
+<div class="toc-section sec-F">
+  <span class="toc-title">🟢 <a href="#nhomF">NHÓM F — Xử lý xâu</a></span>
+  <span class="toc-links">
+    <a href="#F1">F1. String Hash</a> · <a href="#F2">F2. KMP</a> · <a href="#F3">F3. Z-function</a><br>
+    <a href="#F4">F4. Trie</a> · <a href="#F5">F5. Palindrome</a> · <a href="#F6">F6. Suffix Array</a>
+  </span>
+</div>
 </div>
 
 <!-- Tầng 4 + 5 -->
@@ -172,7 +184,7 @@
 <div class="toc-section sec-tang4">
   <span class="toc-title">🔵 <a href="#tang4">TẦNG 4: KỸ THUẬT NÂNG CAO</a></span>
   <span class="toc-links">
-    <a href="#s41">4.1 Biến đổi bài toán</a> · <a href="#s42">4.2 Nén tọa độ</a> · <a href="#s43">4.3 Tối ưu DP</a><br>
+    <a href="#s41">4.1 Biến đổi bài toán</a> · <a href="#s43">4.3 Tối ưu DP</a><br>
     <a href="#s44">4.4 Mẫu code hay</a> · <a href="#s45">4.5 Tra cứu</a> · <a href="#s46">4.6 Đọc dữ liệu</a>
   </span>
 </div>
@@ -409,22 +421,77 @@ out &lt;&lt; a[i] &lt;&lt; '\n';
 </pre>
 
 <!-- ─────────────────────────────────── -->
-<h2 class="orange" id="s24">2.4. TỐI ƯU CODE</h2>
+<h2 class="orange" id="s24">2.4. TỐI ƯU CODE (loop, cache, tránh cấp phát)</h2>
 
-<p><em>💡 Khi truyền dữ liệu vào hàm, C++ mặc định tạo một BẢN SAO — giống như bạn muốn cho mượn cuốn vở thì lại đi photo nguyên cuốn rồi mới đưa. Thêm dấu <code>&amp;</code> nghĩa là "cho mượn cuốn gốc luôn" → không tốn thời gian photo → nhanh hơn rất nhiều!</em></p>
+<p><em>💡 Thuật toán đúng rồi nhưng vẫn TLE? Nhiều lúc chỉ cần tối ưu code là qua. Dưới đây là các mẹo thường giúp nhanh hơn 2–5 lần mà không đổi thuật toán.</em></p>
+
+<h4>① Tham chiếu — Không photo bản sao</h4>
+<p>Khi truyền dữ liệu vào hàm, C++ mặc định tạo BẢN SAO — giống photo nguyên cuốn vở rồi mới đưa. Thêm <code>&amp;</code> = "cho mượn cuốn gốc luôn" → không tốn thời gian photo.</p>
 <table>
-<tr><th>❌ Chậm</th><th>✅ Nhanh</th><th>Lý do</th></tr>
-<tr><td><code>void f(vector&lt;int&gt; v)</code></td><td><code>void f(vector&lt;int&gt; &amp;v)</code></td><td>Dùng trực tiếp (tham chiếu), không tạo bản sao</td></tr>
-<tr><td><code>map&lt;int,int&gt; dem</code></td><td><code>int dem[1000001]</code></td><td>Mảng đếm nhanh gấp 10 lần</td></tr>
-<tr><td><code>vector&lt;int&gt; a(n)</code></td><td><code>int a[100005]</code></td><td>Mảng cố định nhanh hơn mảng động</td></tr>
-<tr><td><code>s.insert(x); s.erase(x)</code></td><td>Mảng đánh dấu <code>bool used[N]</code></td><td>Nếu chỉ cần đánh dấu</td></tr>
+<tr><th>❌ Chậm (copy)</th><th>✅ Nhanh (tham chiếu)</th></tr>
+<tr><td><code>void f(vector&lt;int&gt; v)</code></td><td><code>void f(vector&lt;int&gt; &amp;v)</code></td></tr>
+<tr><td><code>void f(string s)</code></td><td><code>void f(string &amp;s)</code></td></tr>
+<tr><td><code>for (auto p : myMap)</code></td><td><code>for (auto &amp;p : myMap)</code></td></tr>
 </table>
 
+<h4>② Mảng tĩnh thay container — Tránh cấp phát bộ nhớ</h4>
+<p>Mỗi lần <code>vector</code> mở rộng = xin hệ điều hành cấp RAM mới, copy dữ liệu cũ sang → chậm. Mảng tĩnh cấp sẵn 1 lần, truy cập nhanh hơn.</p>
+<table>
+<tr><th>❌ Chậm (cấp phát động)</th><th>✅ Nhanh (cấp sẵn)</th><th>Nhanh hơn</th></tr>
+<tr><td><code>vector&lt;int&gt; a(n)</code></td><td><code>int a[100005]</code></td><td>~2x</td></tr>
+<tr><td><code>map&lt;int,int&gt; dem</code></td><td><code>int dem[1000001]</code></td><td>~10–20x</td></tr>
+<tr><td><code>set&lt;int&gt; visited</code></td><td><code>bool visited[100005]</code></td><td>~5–10x</td></tr>
+<tr><td><code>s.insert(x); s.erase(x)</code></td><td><code>bool used[N]</code></td><td>~5x</td></tr>
+</table>
 <pre>
 // Mảng đếm thay map (khi giá trị ≤ 10⁶)
 int dem[1000001] = {0};
 for (int i = 0; i &lt; n; i++) dem[a[i]]++;
 </pre>
+
+<h4>③ Cache-friendly — Duyệt đúng chiều bộ nhớ</h4>
+<p>CPU đọc RAM theo "hàng" (cache line). Duyệt mảng 2D theo hàng (a[i][j]: i ngoài, j trong) = đọc liên tiếp → nhanh. Duyệt theo cột (j ngoài, i trong) = nhảy lung tung → cache miss → chậm gấp 5–10 lần!</p>
+<pre>
+// ❌ CHẬM — duyệt theo cột (nhảy lung tung trong bộ nhớ)
+for (int j = 0; j &lt; m; j++)
+    for (int i = 0; i &lt; n; i++)
+        a[i][j] += 1;
+
+// ✅ NHANH — duyệt theo hàng (đọc liên tiếp, cache-friendly)
+for (int i = 0; i &lt; n; i++)
+    for (int j = 0; j &lt; m; j++)
+        a[i][j] += 1;
+</pre>
+
+<h4>④ Giảm thao tác trong vòng lặp</h4>
+<p>Phép tính lặp lại mỗi vòng mà kết quả không đổi → tính trước bên ngoài.</p>
+<pre>
+// ❌ CHẬM — tính size() mỗi vòng lặp (O(1) nhưng gọi hàm mỗi lần)
+for (int i = 0; i &lt; v.size(); i++) ...
+
+// ✅ NHANH — tính trước
+int sz = v.size();
+for (int i = 0; i &lt; sz; i++) ...
+
+// ❌ CHẬM — chia (/) và lấy dư (%) rất chậm, tránh trong vòng lặp nặng
+x = a[i] / 2;     // ❌
+x = a[i] >> 1;    // ✅ nhanh hơn (dùng bit shift khi chia/nhân 2)
+
+// ✅ MẸO: memset nhanh hơn for khi reset mảng lớn
+memset(dem, 0, sizeof(dem));   // Nhanh hơn for (int i...) dem[i]=0
+</pre>
+
+<h4>⑤ Tổng hợp — Checklist tối ưu khi bị TLE</h4>
+<div class="tip"><strong>Bị TLE? Kiểm tra theo thứ tự:</strong>
+<ol>
+<li><strong>Thuật toán</strong> — Đúng O() chưa? (xem bảng 2.2)</li>
+<li><strong>I/O</strong> — Đã tắt sync + dùng <code>'\n'</code>?</li>
+<li><strong>Tham chiếu</strong> — Hàm có copy vector/string không?</li>
+<li><strong>Container</strong> — map/set thay được bằng mảng không?</li>
+<li><strong>Cache</strong> — Mảng 2D duyệt đúng chiều chưa?</li>
+<li><strong>Vòng lặp</strong> — Có phép tính thừa bên trong không?</li>
+</ol>
+</div>
 
 <!-- ██████████████████████████████████████████████████████ -->
 <!-- TẦNG 3 -->
@@ -442,7 +509,7 @@ for (int i = 0; i &lt; n; i++) dem[a[i]]++;
 <p><em>💡 Hình dung: Bạn có 1 cuốn sổ ghi "tổng tiền từ ngày 1 đến hôm nay" mỗi ngày. Khi sếp hỏi "tổng tiền từ ngày 3 đến ngày 7", thay vì cộng lại 5 ngày, bạn chỉ cần lấy: tổng_đến_ngày_7 − tổng_đến_ngày_2 = ra ngay! Tính trước 1 lần → trả lời bao nhiêu câu hỏi cũng chỉ cần 1 phép trừ. Đây là kỹ thuật nền tảng — nhiều kỹ thuật phía sau như <strong>Mảng hiệu, BIT, Segment Tree</strong> đều xuất phát từ ý tưởng này.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi câu hỏi "tổng từ L đến R" phải cộng từng phần tử → O(n). Có Q câu hỏi → O(n×Q). Với n = Q = 10⁵ → <strong>10¹⁰ phép tính → chắc chắn TLE</strong>. Dùng Prefix Sum → mỗi câu O(1), tổng O(n + Q).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]", "trung bình đoạn", "đoạn con có tổng = k" → truy vấn nhiều lần</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Prefix Sum giống <b>bảng cộng dồn điểm</b>: tính sẵn 1 lần, sau đó hỏi "tổng từ bạn 3→7" chỉ cần 1 phép trừ. Ngược lại, <a href="#A2">Mảng hiệu</a> giống <b>ghi lệnh "cộng điểm"</b>: ghi nhanh rồi cuối cùng cộng dồn lại — hai kỹ thuật này luôn đi cặp.<br>• Nếu bài vừa hỏi tổng vừa hay thay đổi điểm → bảng cộng dồn bị lỗi thời, phải dùng <a href="#C4">BIT</a> hoặc <a href="#C6">Segment Tree</a> (bảng tự cập nhật).<br>• Bài "đoạn con tổng lớn nhất" → dùng <a href="#A9">Kadane</a> đi 1 lượt là xong, không cần Prefix Sum.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Prefix Sum giống <b>bảng cộng dồn điểm</b>: tính sẵn 1 lần, sau đó hỏi "tổng từ bạn 3→7" chỉ cần 1 phép trừ. Ngược lại, <a href="#A3">Mảng hiệu</a> giống <b>ghi lệnh "cộng điểm"</b>: ghi nhanh rồi cuối cùng cộng dồn lại — hai kỹ thuật này luôn đi cặp.<br>• Thay phép cộng bằng XOR → <a href="#A2">Prefix XOR</a> (cùng ý tưởng, khác phép toán).<br>• Nếu bài vừa hỏi tổng vừa hay thay đổi điểm → bảng cộng dồn bị lỗi thời, phải dùng <a href="#C5">BIT</a> hoặc <a href="#C7">Segment Tree</a> (bảng tự cập nhật).<br>• Bài "đoạn con tổng lớn nhất" → dùng <a href="#A11">Kadane</a> đi 1 lượt là xong, không cần Prefix Sum.</div>
 <pre>
 // ═══ PREFIX SUM 1D ═══
 // Bài toán: Cho mảng n phần tử. Trả lời Q câu hỏi "tổng từ vị trí L đến R?"
@@ -490,7 +557,51 @@ ll tong = sum[r2][c2] - sum[r1-1][c2] - sum[r2][c1-1] + sum[r1-1][c1-1];
 </pre>
 
 <!-- A2 -->
-<h3 id="A2">A2. Difference Array — Mảng hiệu (Cộng cả đoạn trong O(1))</h3>
+
+<!-- A2 -->
+<h3 id="A2">A2. Prefix XOR — Tổng XOR tiền tố</h3>
+<p><em>💡 Hình dung: Prefix Sum cộng dồn để hỏi tổng nhanh. Prefix XOR cũng "dồn" nhưng dùng phép XOR thay vì cộng. Tính sẵn prefix_xor[i] = a[1] ⊕ a[2] ⊕ … ⊕ a[i]. Khi cần XOR đoạn [l, r]: chỉ cần prefix_xor[r] ⊕ prefix_xor[l−1] — giống hệt công thức Prefix Sum nhưng đổi dấu trừ thành XOR. Vì sao được? Vì a ⊕ a = 0 (XOR chính mình = triệt tiêu).</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi lần hỏi "XOR đoạn [l, r]" phải duyệt từ l đến r → O(n). Có Q truy vấn → O(n×Q). Với n = Q = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Prefix XOR → mỗi truy vấn O(1).</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "XOR đoạn [l, r]", "tìm phần tử xuất hiện lẻ lần" (XOR = phép triệt tiêu: số nào xuất hiện chẵn lần thì biến mất), "đếm đoạn con có XOR = k"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Cùng ý tưởng <a href="#A1">Prefix Sum</a> nhưng thay phép cộng bằng XOR.<br>• Bài "đếm đoạn con XOR = k": prefix_xor[r] ⊕ prefix_xor[l−1] = k ⟺ prefix_xor[l−1] = prefix_xor[r] ⊕ k → dùng map đếm tần suất (giống trick đếm đoạn tổng = k bên Prefix Sum).</div>
+
+<p><strong>Tính chất XOR cần nhớ:</strong></p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+a ⊕ a = 0          (tự triệt tiêu)
+a ⊕ 0 = a          (phần tử trung lập)
+a ⊕ b = b ⊕ a      (giao hoán)
+(a ⊕ b) ⊕ c = a ⊕ (b ⊕ c)  (kết hợp)
+</pre>
+
+<p><strong>Code mẫu — XOR đoạn [l, r] trong O(1):</strong></p>
+<pre>
+// Bài toán: Cho mảng n phần tử. Trả lời Q truy vấn "XOR các phần tử từ l đến r".
+// Input: n, a[1..n], Q truy vấn (l, r) | Output: XOR(a[l], a[l+1], ..., a[r])
+int px[100005] = {};  // prefix XOR, px[0] = 0
+for (int i = 1; i &lt;= n; i++)
+    px[i] = px[i - 1] ^ a[i];
+
+// Truy vấn XOR đoạn [l, r]:
+int ans = px[r] ^ px[l - 1];
+</pre>
+
+<p><strong>Ứng dụng: Đếm đoạn con có XOR = k</strong></p>
+<pre>
+// Bài toán: Đếm số đoạn con [l, r] có XOR = k
+// Input: n, a[1..n], k | Output: số đoạn con thỏa
+// Nhận xét: px[r] ^ px[l-1] = k  ⟺  px[l-1] = px[r] ^ k
+map&lt;int,int&gt; cnt;
+cnt[0] = 1;  // px[0] = 0
+long long ans = 0;
+int cur = 0;
+for (int i = 1; i &lt;= n; i++) {
+    cur ^= a[i];
+    ans += cnt[cur ^ k];
+    cnt[cur]++;
+}
+</pre>
+
+<h3 id="A3">A3. Difference Array — Mảng hiệu (Cộng cả đoạn trong O(1))</h3>
 <p><em>💡 Hình dung: Prefix Sum giỏi <b>hỏi</b> tổng đoạn nhanh. Nhưng nếu bài ngược lại — <b>cộng điểm cả đoạn</b> nhiều lần rồi mới hỏi kết quả? Ví dụ: thầy ra 10.000 lệnh "từ bạn 3 đến bạn 7, mỗi người thêm 5 điểm". Nếu cộng từng bạn một → quá lâu. <br>Mảng hiệu = "ghi chú thông minh": chỉ ghi "+5 ở vị trí 3" và "−5 ở vị trí 8" (sau đoạn). Cuối cùng Prefix Sum lại 1 lần → ra kết quả tất cả. Nói cách khác: <b>Prefix Sum hỏi nhanh, Mảng hiệu cập nhật nhanh</b> — hai "anh em" luôn đi cặp.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi lệnh "cộng từ vị trí L đến R" phải duyệt từng ô → O(n). Có Q lệnh → O(n×Q). Với n = Q = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Mảng hiệu → mỗi lệnh O(1), cuối cùng prefix sum 1 lần.</div>
 
@@ -538,11 +649,53 @@ for (int i = 1; i &lt;= n; i++)
 </pre>
 
 <!-- A3 -->
-<h3 id="A3">A3. Two Pointers — Hai con trỏ</h3>
+
+<!-- A4 -->
+<h3 id="A4">A4. Difference 2D — Mảng hiệu 2 chiều</h3>
+<p><em>💡 Hình dung: Mảng hiệu 1D (A3) giỏi "cộng cả đoạn [l, r]" trên 1 hàng. Bây giờ bài cho bảng 2 chiều và lệnh "cộng val vào mọi ô trong hình chữ nhật (r1,c1)→(r2,c2)" → ta mở rộng lên 2D. Thay vì ghi 2 điểm (đầu đoạn và sau đoạn), ta ghi 4 góc của HCN: +val ở góc trái-trên, −val ở 2 góc kề, +val ở góc phải-dưới (bù lại). Cuối cùng prefix sum 2D lại → ra kết quả. Nói cách khác: <b>Mảng hiệu 1D ghi 2 điểm, Mảng hiệu 2D ghi 4 góc.</b></em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi lệnh cộng HCN (r1,c1)→(r2,c2) phải duyệt 2 vòng for → O(m×n). Có Q lệnh → O(m×n×Q). Với m = n = 1000, Q = 10⁵ → <strong>10¹¹ → TLE</strong>. Dùng Mảng hiệu 2D → mỗi lệnh O(1), cuối cùng prefix sum 2D 1 lần.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "Cộng/trừ giá trị vào hình chữ nhật con nhiều lần" rồi "hỏi giá trị cuối cùng mỗi ô". Là mở rộng 2D của Mảng hiệu.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Mảng hiệu 1D (<a href="#A3">A3</a>) ghi 2 điểm → mở rộng lên 2D ghi 4 góc.<br>• Bước cuối (prefix sum 2D) dùng đúng công thức <a href="#A1">Prefix Sum 2D</a> đã học.</div>
+
+<p><strong>Ví dụ chạy tay:</strong> Bảng 4×4, lệnh "cộng 3 vào HCN (2,1)→(3,3)"</p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Ghi 4 góc vào mảng d[][]:
+  d[2][1] += 3       (góc trái-trên)
+  d[2][3+1] -= 3     (phải-trên + 1 cột)
+  d[3+1][1] -= 3     (trái-dưới + 1 hàng)
+  d[3+1][3+1] += 3   (phải-dưới + 1 hàng + 1 cột)
+
+Sau prefix sum 2D → mỗi ô trong HCN (2,1)→(3,3) đều được +3
+</pre>
+
+<p><strong>Code mẫu — Cộng HCN nhiều lần, hỏi kết quả cuối:</strong></p>
+<pre>
+// Bài toán: Cho bảng m×n. Thực hiện Q lệnh "cộng val vào mọi ô trong HCN (r1,c1)→(r2,c2)".
+// Input: m, n, Q lệnh (r1, c1, r2, c2, val) | Output: bảng sau khi thực hiện hết lệnh
+int d[1005][1005] = {};  // mảng hiệu 2D
+
+// Mỗi truy vấn: cộng val vào HCN (r1,c1) → (r2,c2)
+while (q--) {
+    int r1, c1, r2, c2, val;
+    fin >> r1 >> c1 >> r2 >> c2 >> val;
+    d[r1][c1]     += val;
+    d[r1][c2 + 1] -= val;
+    d[r2 + 1][c1] -= val;
+    d[r2 + 1][c2 + 1] += val;
+}
+
+// Prefix Sum 2D lại → ra giá trị thực
+for (int i = 1; i &lt;= m; i++)
+    for (int j = 1; j &lt;= n; j++)
+        d[i][j] += d[i-1][j] + d[i][j-1] - d[i-1][j-1];
+// Giờ d[i][j] = giá trị thực tại ô (i, j)
+</pre>
+
+<h3 id="A5">A5. Two Pointers — Hai con trỏ</h3>
 <p><em>💡 Hình dung: Prefix Sum tính sẵn bảng rồi hỏi. Nhưng nếu không cần tính sẵn mà chỉ cần <b>quét qua mảng 1 lượt</b>? Hai bạn L và R đứng trên một hàng ghế. R đi sang phải để mở rộng đoạn, nếu đoạn vi phạm điều kiện thì L đi sang phải để thu hẹp. Cả hai chỉ đi về bên phải, không lùi → thay vì thử tất cả các cặp vị trí (rất lâu), ta chỉ cần mỗi người đi qua hàng ghế 1 lần.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi cặp (L, R) → O(n²). Với n = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Two Pointers → mỗi con trỏ chỉ tiến, tổng O(n).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con dài nhất có tổng ≤ K", "cặp (i,j) thỏa a[i]+a[j] = k" (mảng đã sort), "đoạn ngắn nhất chứa đủ k giá trị"</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Muốn dùng Two Pointers tìm cặp → thường phải <a href="#A7">Sort</a> trước (giống xếp học sinh theo chiều cao rồi mới ghép cặp).<br>• Nếu trong đoạn cần biết thêm ai cao nhất/thấp nhất → gắn thêm <a href="#C5">Deque</a> thành <a href="#A4">Sliding Window</a>.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Muốn dùng Two Pointers tìm cặp → thường phải <a href="#A9">Sort</a> trước (giống xếp học sinh theo chiều cao rồi mới ghép cặp).<br>• Nếu trong đoạn cần biết thêm ai cao nhất/thấp nhất → gắn thêm <a href="#C2">Deque</a> thành <a href="#A6">Sliding Window</a>.</div>
 <pre>
 // ═══ Tìm đoạn con dài nhất có tổng ≤ K ═══
 // Bài toán: Cho mảng n phần tử không âm và số K. Tìm đoạn con liên tiếp dài nhất có tổng ≤ K.
@@ -610,12 +763,12 @@ Bước  L  R  sum   Giải thích                           maxLen
 </div>
 
 <!-- A3 -->
-<h3 id="A4">A4. Sliding Window — Cửa sổ trượt</h3>
+<h3 id="A6">A6. Sliding Window — Cửa sổ trượt</h3>
 <p><em>💡 Hình dung: Two Pointers chỉ nhớ tổng đoạn. Nhưng nếu trong đoạn cần biết thêm "ai cao nhất"? Đó là Sliding Window — như bạn nhìn qua cửa sổ xe buýt, chỉ thấy đúng 3 ngôi nhà. Xe chạy tới — mất 1 nhà bên trái, thêm 1 bên phải. Muốn biết "nhà cao nhất đang thấy" mà không so lại cả 3 nhà mỗi lần → dùng <strong>Deque</strong> giữ sẵn "ứng viên cao nhất".</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi cửa sổ duyệt k phần tử tìm max → O(n×k). Với n = 10⁵, k = 10⁴ → <strong>10⁹ → TLE</strong>. Dùng Sliding Window + Deque → O(n).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "max/min trong cửa sổ kích thước k", "đoạn có max - min ≤ K"</div>
 <div class="tip"><strong>Khác Two Pointers:</strong> Sliding Window thường duy trì thêm trạng thái (deque, map, tần suất) bên trong cửa sổ.</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống <a href="#A3">Two Pointers</a> nhưng "cửa sổ" còn nhớ thêm thông tin bên trong (ai cao nhất? xuất hiện mấy lần?).<br>• Muốn biết max/min trong cửa sổ → dùng <a href="#C5">Deque</a> (ống 2 đầu) để luôn giữ sẵn đáp án.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống <a href="#A5">Two Pointers</a> nhưng "cửa sổ" còn nhớ thêm thông tin bên trong (ai cao nhất? xuất hiện mấy lần?).<br>• Muốn biết max/min trong cửa sổ → dùng <a href="#C2">Deque</a> (ống 2 đầu) để luôn giữ sẵn đáp án.</div>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Max trong mỗi cửa sổ k=3, mảng [1, 3, 2, 5, 4]
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
@@ -662,8 +815,8 @@ for (int i = 0; i &lt; n; i++) {
 }
 </pre>
 
-<!-- A5 -->
-<h3 id="A5">A5. Monotonic Stack — Ngăn xếp đơn điệu</h3>
+<!-- A7 -->
+<h3 id="A7">A7. Monotonic Stack — Ngăn xếp đơn điệu</h3>
 <p><em>💡 Hình dung: Sliding Window duy trì 1 cửa sổ tối ưu khi trượt qua mảng. Mono Stack cũng quét 1 lượt O(n) — nhưng thay vì duy trì cửa sổ, nó duy trì 1 <strong>stack luôn giữ thứ tự tăng/giảm</strong>. Hình ảnh: bạn đứng xếp hàng nhìn sang phải — chỉ thấy người đầu tiên CAO HƠN mình (người thấp bị "che"). Stack giúp tìm "ai cao hơn gần nhất bên phải" cho tất cả mọi người chỉ trong 1 lượt quét.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Với mỗi phần tử, duyệt sang phải tìm phần tử lớn hơn → O(n²). Với n = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Mono Stack → mỗi phần tử vào/ra stack đúng 1 lần → O(n).</div>
 
@@ -723,7 +876,7 @@ for (int i = n - 1; i >= 0; i--) {
 </div>
 
 <!-- A6 -->
-<h3 id="A6">A6. Binary Search — Tìm kiếm nhị phân</h3>
+<h3 id="A8">A8. Binary Search — Tìm kiếm nhị phân</h3>
 <p><em>💡 Hình dung: Two Pointers quét từ 2 đầu mảng đã sắp → tìm cặp. Nhưng nếu không cần cặp mà chỉ cần tìm 1 phần tử? Binary Search = trò chơi "Đoán số": luôn đoán SỐ GIỮA → mỗi lần loại bỏ NỬA → 1 triệu số chỉ cần ~20 lần đoán! <br>"Chặt nhị phân đáp án" cùng ý tưởng: thử đáp án ở giữa, kiểm tra có được không, rồi thu hẹp phạm vi. Điều kiện: mảng phải được sắp (Sort) trước.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Tìm trong mảng 10⁶ phần tử bằng duyệt → 10⁶ bước. Dùng BS → chỉ ~20 bước. Chặt nhị phân đáp án: thử từng giá trị từ 1→10⁹ → TLE. Dùng BS → <strong>chỉ ~30 lần thử</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong>
@@ -733,7 +886,7 @@ for (int i = n - 1; i >= 0; i--) {
 <li><strong>"tìm giá trị nhỏ nhất/lớn nhất thỏa..."</strong> → Chặt nhị phân đáp án (RẤT PHỔ BIẾN!)</li>
 </ul>
 </div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống tìm từ trong từ điển — từ điển phải <b>xếp theo ABC</b> trước mới lật giữa được → mảng phải <a href="#A7">Sort</a> trước!<br>• Combo thi HSG rất hay gặp: đề hỏi "giá trị lớn nhất/nhỏ nhất thỏa..." → <b>chặt đáp án</b> kết hợp hàm check dùng <a href="#B2">Greedy</a>.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống tìm từ trong từ điển — từ điển phải <b>xếp theo ABC</b> trước mới lật giữa được → mảng phải <a href="#A9">Sort</a> trước!<br>• Combo thi HSG rất hay gặp: đề hỏi "giá trị lớn nhất/nhỏ nhất thỏa..." → <b>chặt đáp án</b> kết hợp hàm check dùng <a href="#B2">Greedy</a>.</div>
 <pre>
 // ═══ Hàm có sẵn (mảng PHẢI sort trước) ═══
 sort(a, a + n);
@@ -758,8 +911,8 @@ while (lo &lt;= hi) {
 }
 </pre>
 
-<!-- A5 -->
-<h3 id="A7">A7. Sorting — Sắp xếp</h3>
+<!-- A9 -->
+<h3 id="A9">A9. Sorting — Sắp xếp</h3>
 <p><em>💡 Hình dung: Two Pointers dùng 2 con trỏ trên mảng đã sắp, Binary Search tìm nhanh trên mảng đã sắp — cả 2 đều CẦN mảng được sắp trước. Sort là bước chuẩn bị: giống xếp bài trên tay theo số — tìm hay ghép cặp đều nhanh. Sort là <b>"chìa khóa vạn năng"</b> mở ra hàng loạt kỹ thuật: <strong>Binary Search, Two Pointers, Greedy</strong>. C++ có sẵn <code>sort()</code> chạy rất nhanh.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Không sort → nhiều bài buộc phải so sánh mọi cặp O(n²), hoặc không dùng được Two Pointers / Binary Search. Sort trước O(n log n) → mở ra hàng loạt kỹ thuật nhanh phía sau.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "ghép cặp tối ưu", "|a[i]-a[j]| ≤ k", "sắp xếp theo nhiều tiêu chí"
@@ -785,8 +938,8 @@ sort(a, a + n);
 int m = unique(a, a + n) - a;  // m = số phần tử distinct
 </pre>
 
-<!-- A6 -->
-<h3 id="A8">A8. Mảng đếm (Counting)</h3>
+<!-- A10 -->
+<h3 id="A10">A10. Mảng đếm (Counting)</h3>
 <p><em>💡 Hình dung: Prefix Sum tính sẵn tổng để hỏi nhanh. Mảng đếm cũng "tính sẵn 1 lần, tra nhanh" nhưng dùng để đếm tần suất: có 1.000.000 hộp đánh số 0→999.999. Duyệt mảng, gặp giá trị nào thì bỏ 1 viên bi vào hộp đó. Sau 1 lượt, xem hộp nào nhiều bi nhất. Chỉ dùng khi giá trị nhỏ (≤ 10⁶) — nếu lớn hơn thì dùng map (sẽ học ở Nhóm C).</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng map → mỗi lần truy cập O(log n). Dùng mảng đếm → O(1). Khi giá trị ≤ 10⁶ và cần truy cập hàng triệu lần, mảng đếm <strong>nhanh gấp 10-20 lần</strong> so với map.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "phần tử xuất hiện nhiều nhất", "tần suất ký tự", giá trị ≤ 10⁶ → dùng mảng đếm thay map</div>
@@ -802,8 +955,8 @@ for (int i = 0; i &lt;= 1000000; i++)
     if (dem[i] > maxCnt) { maxCnt = dem[i]; mode = i; }
 </pre>
 
-<!-- A7 -->
-<h3 id="A9">A9. Kadane — Đoạn con tổng lớn nhất</h3>
+<!-- A11 -->
+<h3 id="A11">A11. Kadane — Đoạn con tổng lớn nhất</h3>
 <p><em>💡 Hình dung: Prefix Sum tính tổng đoạn bất kỳ. Nhưng nếu chỉ cần "đoạn con tổng lớn nhất"? Khỏi cần thử mọi cặp! Bạn đi dọc dãy số, tay cầm một cái túi. Mỗi lần gặp số mới: "bỏ vào túi cũ" (cộng thêm) hay "vứt túi cũ, bắt túi mới"? Nếu túi cũ đang âm thì vứt đi cho rồi! Luôn ghi nhớ túi nặng nhất từng có. Chỉ đi 1 lượt là xong.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi đoạn con [i,j] rồi cộng → O(n³), hoặc dùng Prefix Sum → O(n²). Với n = 10⁵ → <strong>TLE</strong>. Dùng Kadane → <strong>O(n)</strong>, chỉ đi qua 1 lượt.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con liên tiếp có tổng lớn nhất", "max subarray sum"</div>
@@ -817,6 +970,38 @@ for (int i = 1; i &lt; n; i++) {
     maxSum = max(maxSum, cur);
 }
 </pre>
+
+
+<!-- A12 -->
+<h3 id="A12">A12. Nén tọa độ (Coordinate Compression) — Thu nhỏ giá trị, giữ nguyên thứ tự</h3>
+<p><em>💡 Hình dung: Mảng đếm (A10) cần giá trị ≤ 10⁶ mới mở được mảng. Nhưng bài cho giá trị đến 10⁹ thì sao? Quan sát: ta chỉ quan tâm <b>thứ tự</b> chứ không cần giá trị thật. Ví dụ điểm thi: 750, 920, 850 → xếp hạng thì chỉ cần biết ai đứng 1, 2, 3. Ta "nén" các giá trị khổng lồ thành 1, 2, 3, …, m (m ≤ n) → giờ dùng được mảng đếm, BIT, Segment Tree bình thường.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Giá trị đến 10⁹ → không thể mở mảng đếm <code>int dem[1000000001]</code> (tràn bộ nhớ). Dùng map thì chậm O(log n) mỗi truy cập. Nén tọa độ → giá trị nằm trong [1, m] với m ≤ n → <strong>mở mảng dễ dàng</strong>.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "giá trị ≤ 10⁹ nhưng n ≤ 10⁵" → giá trị lớn mà số lượng ít. Hoặc khi cần dùng BIT/Segment Tree mà tọa độ không nằm trong phạm vi mảng.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Nén xong → dùng <a href="#A10">Mảng đếm</a> hoặc <a href="#C5">BIT</a>/<a href="#C7">Segment Tree</a> trên giá trị đã nén.<br>• Thường kết hợp với <a href="#A9">Sorting</a> (vì nén = sort + loại trùng + đánh số lại).</div>
+
+<p><strong>Code mẫu — Nén tọa độ:</strong></p>
+<pre>
+// Bài toán: Cho mảng n phần tử (giá trị đến 10⁹). Nén về [1, m] giữ nguyên thứ tự.
+// Input: n, a[0..n-1] | Output: mảng a[] đã nén
+vector&lt;int&gt; vals(a, a + n);
+sort(vals.begin(), vals.end());
+vals.erase(unique(vals.begin(), vals.end()), vals.end());
+for (int i = 0; i &lt; n; i++)
+    a[i] = lower_bound(vals.begin(), vals.end(), a[i]) - vals.begin() + 1;
+// Giờ a[i] nằm trong [1, m] với m ≤ n → dùng được mảng đếm, BIT
+</pre>
+
+<p><strong>Ví dụ chạy tay:</strong></p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+a[] = {100, 999999, 50, 100, 7777}
+
+Bước 1: vals = {50, 100, 7777, 999999}   (sort + loại trùng)
+Bước 2: Đánh số:  50 → 1,  100 → 2,  7777 → 3,  999999 → 4
+Bước 3: a[] = {2, 4, 1, 2, 3}
+
+→ Giá trị nằm trong [1, 4], giữ nguyên thứ tự tương đối
+</pre>
+
 
 <!-- ════════════════════════════════════ -->
 <!-- NHÓM B: PHƯƠNG PHÁP GIẢI -->
@@ -1015,7 +1200,7 @@ for (long long sa : sumA) {
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi cách chọn (vét cạn) → O(2ⁿ). Với n = 30 → <strong>10⁹ → TLE</strong>. Greedy chọn tối ưu tại mỗi bước → thường chỉ O(n log n) sau sort.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "chọn ít nhất", "nhiều nhất có thể", "tối ưu từng bước"
 <br><strong>MẸO:</strong> Thường đi kèm Sort → chọn tốt nhất tại mỗi bước</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống đi buffet: phải <a href="#A7">xếp món theo độ ngon</a> rồi mới lấy từ ngon nhất → Sort trước, chọn Greedy sau.<br>• Combo hay gặp: <a href="#A6">chặt đáp án</a> + check bằng Greedy.<br>• Greedy đôi khi "tham lầm" (chọn sai) → phải dùng <a href="#B3">DP</a> xét kỹ hơn.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống đi buffet: phải <a href="#A9">xếp món theo độ ngon</a> rồi mới lấy từ ngon nhất → Sort trước, chọn Greedy sau.<br>• Combo hay gặp: <a href="#A8">chặt đáp án</a> + check bằng Greedy.<br>• Greedy đôi khi "tham lầm" (chọn sai) → phải dùng <a href="#B3">DP</a> xét kỹ hơn.</div>
 <pre>
 // Mẫu: Sort + chọn tham lam
 sort(a, a + n);  // hoặc sort theo tiêu chí phù hợp
@@ -1041,7 +1226,7 @@ for (int i = 0; i &lt; n; i++) {
 <li>Bài yêu cầu <strong>tối ưu</strong> (max/min) hoặc <strong>đếm</strong> trên một tập có cấu trúc con lặp lại</li>
 </ul>
 </div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• DP = <a href="#B1d4">Quay lui</a> nhưng có <b>"sổ ghi chép"</b>: bài con nào đã giải rồi thì ghi đáp án vào sổ, lần sau khỏi giải lại.<br>• Bên trong công thức DP cần tính tổng nhanh → ghép <a href="#A1">Prefix Sum</a>. Cần tìm min/max nhanh → ghép <a href="#C4">BIT</a>/<a href="#C6">Segment Tree</a>.<br>• <a href="#B2">Greedy</a> chọn tối ưu "ngay lúc đó" → đôi khi sai. DP xét <b>mọi nhánh</b> nên luôn đúng.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• DP = <a href="#B1d4">Quay lui</a> nhưng có <b>"sổ ghi chép"</b>: bài con nào đã giải rồi thì ghi đáp án vào sổ, lần sau khỏi giải lại.<br>• Bên trong công thức DP cần tính tổng nhanh → ghép <a href="#A1">Prefix Sum</a>. Cần tìm min/max nhanh → ghép <a href="#C5">BIT</a>/<a href="#C7">Segment Tree</a>.<br>• <a href="#B2">Greedy</a> chọn tối ưu "ngay lúc đó" → đôi khi sai. DP xét <b>mọi nhánh</b> nên luôn đúng.</div>
 
 <!-- ── 4 BƯỚC GIẢI BÀI DP ── -->
 <h4>🧩 4 BƯỚC GIẢI MỌI BÀI DP</h4>
@@ -1687,7 +1872,21 @@ for (auto &amp;[k, v] : diem) out &lt;&lt; k &lt;&lt; ": " &lt;&lt; v &lt;&lt; '
 </pre>
 
 <!-- C2 -->
-<h3 id="C2">C2. Priority Queue (Hàng đợi ưu tiên)</h3>
+<h3 id="C2">C2. Deque — Hàng đợi hai đầu</h3>
+<p><em>💡 Hình dung: Sliding Window trượt cửa sổ tính tổng nhanh. Nhưng trong cửa sổ, ai LỚN NHẤT? Duyệt cả cửa sổ thì chậm. Deque = ống 2 đầu hở — giữ danh sách ứng cử viên: phần tử mới vào thì loại bỏ những ứng viên yếu hơn (nhét/rút cả 2 đầu). Luôn biết min/max cửa sổ trong O(1).</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng queue thường → không xóa được đầu bên kia. Dùng vector → xóa phần tử đầu O(n). Deque cho phép thêm/xóa cả 2 đầu trong <strong>O(1)</strong> — cần thiết cho Sliding Window.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "min/max trong cửa sổ trượt", "thêm/xóa ở cả hai đầu"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống ống nhựa 2 đầu hở: nhét vào đầu nào, rút ra đầu nào đều được. <a href="#A6">Sliding Window</a> cần rút đầu trái (hết hạn) và nhét đầu phải (mới vào) → Deque làm cả hai.</div>
+<pre>
+deque&lt;int&gt; dq;
+dq.push_back(1);   dq.push_front(2);  dq.push_back(3);  // {2, 1, 3}
+dq.front();   // 2
+dq.back();    // 3
+dq.pop_front();   dq.pop_back();   // Tất cả O(1)
+</pre>
+
+<!-- C3 -->
+<h3 id="C3">C3. Priority Queue (Hàng đợi ưu tiên)</h3>
 <p><em>💡 Hình dung: Sort sắp mảng 1 lần xong tra được. Nhưng nếu dữ liệu thêm/bớt liên tục mà luôn cần biết ai lớn nhất? Sort lại mỗi lần thì chậm chết. Priority Queue = hộp bỏ bóng vào, mỗi lần thò tay lấy ra luôn được quả TO NHẤT (hoặc nhỏ nhất). Thêm/lấy đều O(log n). Sẽ gặp lại ở Dijkstra và Prim.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi lần cần lấy max/min phải duyệt cả mảng → O(n). Lấy n lần → O(n²). Dùng Priority Queue → mỗi lần lấy/thêm chỉ O(log n).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "lấy max/min liên tục", Dijkstra, trộn k dãy, xử lý theo ưu tiên</div>
@@ -1704,8 +1903,8 @@ out &lt;&lt; maxPQ.top();  // 8
 maxPQ.pop();          // Xóa 8
 </pre>
 
-<!-- C3 -->
-<h3 id="C3">C3. DSU (Disjoint Set Union — Cấu trúc gộp nhóm)</h3>
+<!-- C4 -->
+<h3 id="C4">C4. DSU (Disjoint Set Union — Cấu trúc gộp nhóm)</h3>
 <p><em>💡 Hình dung: BFS/DFS trả lời "A nối với B không?" bằng cách loang — mỗi lần hỏi là chạy lại. Nhưng nếu hỏi 100.000 lần giữa lúc liên tục nối thêm cạnh? DSU trả lời gần như O(1)! 40 bạn, ban đầu mỗi bạn 1 nhóm riêng. 2 bạn kết bạn → GỘP 2 nhóm. Hỏi "A và B cùng nhóm không?" → xem có chung Nhóm trưởng không. Gộp + hỏi đều siêu nhanh. Sẽ gặp lại ở Kruskal (D8).</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Kiểm tra "A và B cùng nhóm?" bằng BFS/DFS mỗi lần → O(n). Với Q câu hỏi → O(n×Q). Dùng DSU → mỗi thao tác gần như <strong>O(1)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "cùng nhóm không?", "bao nhiêu nhóm riêng biệt (thành phần liên thông)?", "gộp 2 tập hợp", Kruskal</div>
@@ -1762,12 +1961,12 @@ for (int i = 1; i &lt;= n; i++)
         maxTong = max(maxTong, tongDienTich[i]);
 </pre>
 
-<!-- C4 -->
-<h3 id="C4">C4. BIT (Fenwick Tree — Cây chỉ số nhị phân)</h3>
+<!-- C5 -->
+<h3 id="C5">C5. BIT (Fenwick Tree — Cây chỉ số nhị phân)</h3>
 <p><em>💡 Hình dung: Prefix Sum hỏi nhanh nhưng không sửa được. Bài vừa hỏi vừa sửa thì sao? BIT là "Prefix Sum nâng cấp": giống bảng điểm lớp — hỏi "tổng từ bạn 3 đến bạn 7" thì lấy tổng[7] − tổng[2] là xong. Thầy sửa điểm bạn 5? Bảng <b>tự cập nhật</b> — không cần tính lại từ đầu. Cả hỏi và sửa đều nhanh.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng tổng tiền tố: hỏi nhanh O(1) nhưng sửa 1 phần tử phải tính lại bảng → O(n). Với Q câu hỏi + sửa → O(n×Q). Dùng BIT → cả hỏi và sửa đều <strong>O(log n)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]" <strong>+ sửa giá trị</strong> (tổng tiền tố thường không sửa được), "đếm nghịch thế đảo"</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#A1">Prefix Sum</a> giống bảng tính Excel bị "đóng băng": hỏi nhanh nhưng sửa 1 ô thì cả cột phải tính lại. BIT = Excel "tự cập nhật": sửa xong vẫn hỏi nhanh.<br>• BIT chỉ giỏi cộng. Cần tìm min/max hoặc sửa cả đoạn → phải lên <a href="#C6">Segment Tree</a> (mạnh hơn).</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#A1">Prefix Sum</a> giống bảng tính Excel bị "đóng băng": hỏi nhanh nhưng sửa 1 ô thì cả cột phải tính lại. BIT = Excel "tự cập nhật": sửa xong vẫn hỏi nhanh.<br>• BIT chỉ giỏi cộng. Cần tìm min/max hoặc sửa cả đoạn → phải lên <a href="#C7">Segment Tree</a> (mạnh hơn).</div>
 <pre>
 // Bài toán: n phần tử, Q thao tác: cập nhật a[i] += delta hoặc hỏi tổng a[l..r]
 // Input: n, Q thao tác | Output: tổng đoạn mỗi lần hỏi
@@ -1791,29 +1990,48 @@ long long tongDoan(int l, int r) {
 }
 </pre>
 
-<!-- C5 -->
-<h3 id="C5">C5. Deque — Hàng đợi hai đầu</h3>
-<p><em>💡 Hình dung: Sliding Window trượt cửa sổ tính tổng nhanh. Nhưng trong cửa sổ, ai LỚN NHẤT? Duyệt cả cửa sổ thì chậm. Deque = ống 2 đầu hở — giữ danh sách ứng cử viên: phần tử mới vào thì loại bỏ những ứng viên yếu hơn (nhét/rút cả 2 đầu). Luôn biết min/max cửa sổ trong O(1).</em></p>
-<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng queue thường → không xóa được đầu bên kia. Dùng vector → xóa phần tử đầu O(n). Deque cho phép thêm/xóa cả 2 đầu trong <strong>O(1)</strong> — cần thiết cho Sliding Window.</div>
-<div class="warn"><strong>DẤU HIỆU:</strong> "min/max trong cửa sổ trượt", "thêm/xóa ở cả hai đầu"</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống ống nhựa 2 đầu hở: nhét vào đầu nào, rút ra đầu nào đều được. <a href="#A4">Sliding Window</a> cần rút đầu trái (hết hạn) và nhét đầu phải (mới vào) → Deque làm cả hai.</div>
+<!-- C6 -->
+<h3 id="C6">C6. Fenwick Tree 2D (BIT 2 chiều)</h3>
+<p><em>💡 Hình dung: BIT 1D (C5) giỏi cập nhật 1 điểm và hỏi tổng đoạn [l, r] trên 1 hàng. Nhưng bài cho bảng 2D: cập nhật ô (x, y) rồi hỏi tổng hình chữ nhật (1,1)→(r,c)? Mở rộng BIT lên 2 chiều: gọi update 2 vòng for lồng nhau (mỗi vòng nhảy theo bit thấp nhất). Giống bảng tính Excel 2D tự cập nhật.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng Prefix Sum 2D: hỏi nhanh O(1) nhưng sửa 1 ô → phải tính lại bảng O(m×n). BIT 2D → cập nhật O(log m × log n), truy vấn O(log m × log n).</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "tổng hình chữ nhật con" + "cập nhật điểm" trên bảng 2D, "đếm điểm trong HCN"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Là mở rộng 2D của <a href="#C5">BIT 1D</a>. Nếu chỉ hỏi mà không sửa → dùng <a href="#A1">Prefix Sum 2D</a> (đơn giản hơn).<br>• Nếu cần cập nhật cả HCN (không chỉ 1 ô) → dùng <a href="#A4">Mảng hiệu 2D</a> hoặc Segment Tree 2D.</div>
+
 <pre>
-deque&lt;int&gt; dq;
-dq.push_back(1);   dq.push_front(2);  dq.push_back(3);  // {2, 1, 3}
-dq.front();   // 2
-dq.back();    // 3
-dq.pop_front();   dq.pop_back();   // Tất cả O(1)
+// Bài toán: Bảng m×n. Cập nhật a[x][y] += delta. Hỏi tổng HCN (1,1)→(r,c).
+// Input: m, n, Q thao tác | Output: tổng HCN mỗi lần hỏi
+long long bit2d[1005][1005];
+int M, N;
+
+void update2D(int x, int y, long long delta) {
+    for (int i = x; i &lt;= M; i += i &amp; (-i))
+        for (int j = y; j &lt;= N; j += j &amp; (-j))
+            bit2d[i][j] += delta;
+}
+
+long long query2D(int x, int y) {
+    long long s = 0;
+    for (int i = x; i > 0; i -= i &amp; (-i))
+        for (int j = y; j > 0; j -= j &amp; (-j))
+            s += bit2d[i][j];
+    return s;
+}
+
+// Tổng HCN (r1,c1)→(r2,c2):
+long long tongHCN(int r1, int c1, int r2, int c2) {
+    return query2D(r2, c2) - query2D(r1-1, c2) - query2D(r2, c1-1) + query2D(r1-1, c1-1);
+}
 </pre>
 
-<!-- C6 -->
-<h3 id="C6">C6. Segment Tree (Cây phân đoạn)</h3>
-<p><em>💡 Hình dung: BIT chỉ giỏi tính tổng. Cần hỏi min/max đoạn, hoặc sửa cả đoạn cùng lúc? Segment Tree là "BIT nâng cấp": chia lớp thành các nhóm nhỏ (nhóm 1–50, nhóm 1–25, nhóm 26–50...). Mỗi nhóm <strong>nhớ sẵn</strong> điểm cao nhất. Cần hỏi đoạn [20,50]? Ghép 3–4 nhóm nhỏ → trả lời ngay! Thầy sửa điểm 1 bạn? Chỉ cập nhật vài nhóm. Sửa cả đoạn? Dùng "Lazy" — ghi nhớ rồi để dành, chỉ cập nhật thật khi ai hỏi.</em></p>
+<!-- C7 -->
+<h3 id="C7">C7. Segment Tree (Cây phân đoạn)</h3>
+<p><em>💡 Hình dung: BIT chỉ giỏi tính tổng. Cần hỏi min/max đoạn, hoặc sửa cả đoạn cùng lúc? Segment Tree là "BIT nâng cấp": chia lớp thành các nhóm nhỏ (nhóm 1–50, nhóm 1–25, nhóm 26–50...). Mỗi nhóm <strong>nhớ sẵn</strong> điểm cao nhất. Cần hỏi đoạn [20,50]? Ghép 3–4 nhóm nhỏ → trả lời ngay! Thầy sửa điểm 1 bạn? Chỉ cập nhật vài nhóm. Sửa cả đoạn? → dùng <a href="#C8">Lazy Segment Tree</a>.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi truy vấn min/max/tổng duyệt đoạn [L,R] → O(n). Cập nhật đoạn cũng O(n). Với Q thao tác → O(n×Q). Dùng Segment Tree → mọi thao tác <strong>O(log n)</strong>.</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
 <li>"Truy vấn min/max/tổng/GCD trên đoạn [L, R]" + <strong>cập nhật</strong></li>
-<li>"Cập nhật cả đoạn [L, R]" (gán, cộng thêm) → cần Lazy</li>
+<li>"Cập nhật cả đoạn [L, R]" (gán, cộng thêm) → cần <a href="#C8">Lazy Segment Tree</a></li>
 <li>BIT không đủ (cần min/max, hoặc cập nhật đoạn)</li>
 </ul>
 </div>
@@ -1823,7 +2041,7 @@ dq.pop_front();   dq.pop_back();   // Tất cả O(1)
 <tr><th>Yêu cầu</th><th>Chọn</th></tr>
 <tr><td>Tổng đoạn + cập nhật 1 phần tử</td><td><strong>BIT</strong> (đơn giản hơn)</td></tr>
 <tr><td>Min/Max đoạn + cập nhật 1 phần tử</td><td><strong>Segment Tree</strong></td></tr>
-<tr><td>Bất kỳ truy vấn + cập nhật cả đoạn</td><td><strong>Segment Tree + Lazy</strong></td></tr>
+<tr><td>Bất kỳ truy vấn + cập nhật cả đoạn</td><td><strong><a href="#C8">Lazy Segment Tree</a></strong></td></tr>
 <tr><td>Min/Max đoạn, <strong>KHÔNG</strong> cập nhật</td><td><strong>Sparse Table</strong> (O(1) truy vấn)</td></tr>
 </table>
 </div>
@@ -1862,9 +2080,29 @@ int query(int id, int l, int r, int ql, int qr) {
 // Gọi: build(1, 1, n);  update(1, 1, n, pos, val);  query(1, 1, n, L, R);
 </pre>
 
-<p><strong>Segment Tree + Lazy Propagation — Cập nhật cả đoạn:</strong></p>
+
+
+<!-- C8 -->
+<h3 id="C8">C8. Lazy Segment Tree (Cập nhật cả đoạn)</h3>
+<p><em>💡 Hình dung: Segment Tree (C7) sửa từng điểm 1. Nhưng nếu thầy nói "cả nhóm bạn 3→7, ai cũng +5 điểm"? Sửa từng ô thì chậm. Lazy = "ghi chú lười": ghi "+5" lên nhánh phủ cả nhóm, CHƯA sửa con. Khi nào ai hỏi "bạn 5 bao nhiêu điểm?" → lúc ĐÓ mới đẩy ghi chú xuống con. Kỹ thuật "trì hoãn" này giúp cập nhật cả đoạn trong O(log n).</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Cập nhật đoạn [L,R] bằng Segment Tree thường phải sửa từng phần tử → O(n log n). Lazy → <strong>O(log n)</strong> mỗi lần cập nhật đoạn.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "cộng thêm val vào mọi phần tử trong đoạn [L,R]", "gán tất cả phần tử đoạn [L,R] = val", rồi "hỏi tổng/min/max đoạn"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Là nâng cấp của <a href="#C7">Segment Tree</a>: thêm mảng lazy[] để trì hoãn.<br>• Nếu chỉ cập nhật 1 phần tử → <a href="#C7">C7</a> hoặc <a href="#C5">BIT</a> đủ dùng, khỏi cần Lazy.<br>• Kết hợp Lazy + <a href="#A12">Nén tọa độ</a> → xử lý bài tọa độ lớn.</div>
+
+<p><strong>Code mẫu — Lazy cộng đoạn + hỏi tổng đoạn:</strong></p>
 <pre>
+// Bài toán: n phần tử, Q thao tác: cộng val vào đoạn [l,r] hoặc hỏi tổng đoạn [l,r]
+// Input: n, a[1..n], Q thao tác | Output: tổng đoạn mỗi lần hỏi
 long long st[400005], lazy[400005];
+
+void build(int id, int l, int r) {
+    lazy[id] = 0;
+    if (l == r) { st[id] = a[l]; return; }
+    int mid = (l + r) / 2;
+    build(2*id, l, mid);
+    build(2*id+1, mid+1, r);
+    st[id] = st[2*id] + st[2*id+1];
+}
 
 void push_down(int id, int l, int r) {
     if (lazy[id]) {
@@ -1899,10 +2137,45 @@ long long queryRange(int id, int l, int r, int ql, int qr) {
     return queryRange(2*id, l, mid, ql, qr)
          + queryRange(2*id+1, mid+1, r, ql, qr);
 }
+// Gọi: build(1, 1, n); updateRange(1, 1, n, L, R, val); queryRange(1, 1, n, L, R);
 </pre>
 
-<!-- C7 -->
-<h3 id="C7">C7. Sparse Table (Bảng thưa) — Hỏi nhanh min/max đoạn không đổi</h3>
+<!-- C9 -->
+<h3 id="C9">C9. Merge Sort Tree — Cây gộp sắp xếp</h3>
+<p><em>💡 Hình dung: Segment Tree mỗi nút lưu 1 số (tổng/min/max). Merge Sort Tree mỗi nút lưu <b>cả dãy đã sort</b> của đoạn đó. Giống tủ hồ sơ phân cấp: ngăn lớn chứa toàn bộ hồ sơ đã sắp, ngăn nhỏ chứa nửa trái/phải đã sắp. Khi hỏi "đoạn [l,r] có bao nhiêu phần tử ≤ k?" → ghép vài ngăn, mỗi ngăn dùng <a href="#A8">Binary Search</a> để đếm nhanh.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Đếm số phần tử ≤ k trong đoạn [l,r]: duyệt → O(n). Q truy vấn → O(n×Q). Merge Sort Tree → <strong>O(log² n)</strong> mỗi truy vấn.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đếm phần tử ≤ k trong đoạn [l,r]", "tìm phần tử lớn thứ k trong đoạn", "quantile queries"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Kết hợp <a href="#C7">Segment Tree</a> (cấu trúc cây) + <a href="#A8">Binary Search</a> (tìm trong dãy sorted mỗi nút).<br>• Bài "phần tử thứ k" cũng giải được bằng <a href="#C5">BIT</a> + <a href="#A12">Nén tọa độ</a>, nhưng Merge Sort Tree linh hoạt hơn.</div>
+
+<pre>
+// Bài toán: Mảng n phần tử. Trả lời Q truy vấn "đếm phần tử ≤ k trong đoạn [l,r]"
+// Input: n, a[1..n], Q truy vấn (l, r, k) | Output: số phần tử ≤ k trong [l,r]
+vector&lt;int&gt; tree[400005];
+
+void build(int id, int l, int r) {
+    if (l == r) { tree[id] = {a[l]}; return; }
+    int mid = (l + r) / 2;
+    build(2*id, l, mid);
+    build(2*id+1, mid+1, r);
+    merge(tree[2*id].begin(), tree[2*id].end(),
+          tree[2*id+1].begin(), tree[2*id+1].end(),
+          back_inserter(tree[id]));
+}
+
+// Đếm phần tử ≤ k trong đoạn [ql, qr]
+int query(int id, int l, int r, int ql, int qr, int k) {
+    if (ql &gt; r || qr &lt; l) return 0;
+    if (ql &lt;= l &amp;&amp; r &lt;= qr)
+        return upper_bound(tree[id].begin(), tree[id].end(), k) - tree[id].begin();
+    int mid = (l + r) / 2;
+    return query(2*id, l, mid, ql, qr, k)
+         + query(2*id+1, mid+1, r, ql, qr, k);
+}
+// Build O(n log n), Query O(log² n), Bộ nhớ O(n log n)
+</pre>
+
+<!-- C10 -->
+<h3 id="C10">C10. Sparse Table (Bảng thưa) — Hỏi nhanh min/max đoạn không đổi</h3>
 <p><em>💡 Hình dung: Segment Tree mạnh nhưng code dài. Nếu bài chỉ hỏi min/max mà <b>không sửa gì</b> thì có cách nhanh hơn: lập bảng tra sẵn. Ghi lại "min trong 1 bạn", "min trong 2 bạn liên tiếp", "min trong 4 bạn"... Khi thầy hỏi đoạn [3, 10], tra 2 ô đã tính sẵn rồi lấy min → trả lời O(1). Đánh đổi: sửa điểm thì phải <strong>lập lại cả bảng</strong> → chỉ dùng khi dữ liệu không đổi.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi câu hỏi min/max duyệt đoạn [L,R] → O(n). Với Q câu hỏi → O(n×Q). Dùng Sparse Table → dựng bảng O(n log n), mỗi câu hỏi <strong>O(1)</strong>. Đơn giản hơn Segment Tree khi không cần cập nhật.</div>
 
@@ -1942,6 +2215,94 @@ int query(int l, int r) {
 </pre>
 
 <div class="tip"><strong>Lưu ý:</strong> Sparse Table chỉ hoạt động đúng với các phép toán <strong>overlap-friendly</strong> (min, max, GCD, OR, AND). Với phép <strong>tổng</strong> thì phải dùng BIT/Segment Tree vì 2 đoạn chồng nhau sẽ đếm lặp.</div>
+
+
+<!-- C11 -->
+<h3 id="C11">C11. Trie — Cây tiền tố</h3>
+<p><em>💡 Hình dung: Có 1 triệu từ trong từ điển. Kiểm tra "apple" có không? Set → O(L × log n). Trie = cây mà mỗi nhánh là 1 ký tự. Đi theo a→p→p→l→e → đến nút "kết thúc" → có! Giống tra từ điển giấy: mở trang A, tìm AP, tìm APP... Mỗi lần chỉ đi theo 1 nhánh → O(L).</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Set&lt;string&gt; mỗi lần O(L × log n). Trie → O(L). Với 10⁵ từ, L = 20 → nhanh gấp ~17 lần.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "kiểm tra từ tồn tại", "đếm từ có prefix cho trước", "tìm XOR lớn nhất" (Trie nhị phân), "autocomplete"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Code đầy đủ (Trie chữ cái + Trie nhị phân tìm XOR) → xem <a href="#F4">F4</a> trong Nhóm F — Xử lý xâu.<br>• Kết hợp <a href="#B3">DP</a> trên Trie → giải bài "word break".</div>
+
+<pre>
+// Trie chữ cái — Insert + Find + Count Prefix
+struct Trie {
+    int child[26];
+    int cntWord, cntPrefix;
+} nodes[1000005];
+int sz = 1;
+
+void addWord(const string &amp;s) {
+    int cur = 0;
+    for (char c : s) {
+        int ch = c - 'a';
+        if (!nodes[cur].child[ch])
+            nodes[cur].child[ch] = sz++;
+        cur = nodes[cur].child[ch];
+        nodes[cur].cntPrefix++;
+    }
+    nodes[cur].cntWord++;
+}
+
+bool findWord(const string &amp;s) {
+    int cur = 0;
+    for (char c : s) {
+        int ch = c - 'a';
+        if (!nodes[cur].child[ch]) return false;
+        cur = nodes[cur].child[ch];
+    }
+    return nodes[cur].cntWord > 0;
+}
+</pre>
+
+<!-- C12 -->
+<h3 id="C12">C12. Binary Lifting — Nhảy nhanh trên cây</h3>
+<p><em>💡 Hình dung: Cho cây n đỉnh, mỗi đỉnh có 1 cha. Muốn tìm tổ tiên chung gần nhất (LCA) của 2 đỉnh u, v? Nếu nhảy từng bước lên cha → O(n) mỗi truy vấn. Binary Lifting: ghi sẵn "cha cách 1 bước, 2 bước, 4 bước, 8 bước, ..." cho mỗi đỉnh. Giống nhảy cóc trên thang: thay vì bước từng bậc, nhảy 2ᵏ bậc 1 lần → chỉ cần O(log n) bước là tìm được LCA.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Tìm LCA bằng cách nhảy từng cha → O(n). Với Q truy vấn → O(n×Q). Binary Lifting → <strong>O(log n)</strong> mỗi truy vấn.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "LCA (tổ tiên chung gần nhất)", "khoảng cách 2 đỉnh trên cây", "đỉnh thứ k trên đường đi u→v", "tổng/min/max đường đi trên cây"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Dựng bảng up[][] bằng <a href="#D2">DFS</a> (duyệt cây tính depth + cha).<br>• LCA + <a href="#A1">Prefix Sum</a> trên cây → tính tổng đường đi u→v = sum[u] + sum[v] − 2×sum[LCA].<br>• Bài RMQ trên cây cũng giải được bằng Euler Tour + <a href="#C10">Sparse Table</a>.</div>
+
+<pre>
+// Bài toán: Cây n đỉnh. Trả lời Q truy vấn "LCA(u, v) = ?"
+// Input: n, cây (cha mỗi đỉnh), Q truy vấn (u, v) | Output: LCA(u, v) mỗi truy vấn
+const int LOG = 20;
+int up[100005][20];  // up[v][k] = tổ tiên cách v đúng 2^k bước
+int depth[100005];
+vector&lt;int&gt; adj[100005];
+
+void dfs(int v, int p, int d) {
+    up[v][0] = p;
+    depth[v] = d;
+    for (int k = 1; k &lt; LOG; k++)
+        up[v][k] = up[up[v][k-1]][k-1];  // Tổ tiên 2^k = nhảy 2 lần 2^(k-1)
+    for (int u : adj[v])
+        if (u != p) dfs(u, v, d + 1);
+}
+
+int lca(int u, int v) {
+    if (depth[u] &lt; depth[v]) swap(u, v);
+    int diff = depth[u] - depth[v];
+
+    // Bước 1: Đưa u lên cùng độ sâu với v
+    for (int k = 0; k &lt; LOG; k++)
+        if ((diff >> k) &amp; 1) u = up[u][k];
+
+    if (u == v) return u;
+
+    // Bước 2: Nhảy đồng thời u và v lên cho đến khi gặp nhau
+    for (int k = LOG - 1; k >= 0; k--)
+        if (up[u][k] != up[v][k]) {
+            u = up[u][k];
+            v = up[v][k];
+        }
+    return up[u][0];
+}
+
+// Khoảng cách u→v trên cây:
+// dist(u, v) = depth[u] + depth[v] - 2 * depth[lca(u, v)]
+// Gọi: dfs(1, 0, 0) để khởi tạo từ gốc = 1
+</pre>
+
 
 <!-- ════════════════════════════════════ -->
 <!-- NHÓM D: ĐỒ THỊ -->
@@ -2008,7 +2369,7 @@ a.assign(n + 1, vector&lt;bool&gt;(n + 1, false));
 <p><em>💡 Hình dung: Đồ thị đã biết lưu thế nào (D0). Giờ muốn tìm đường ngắn nhất? Ném viên đá xuống hồ — sóng lan ra vòng 1 (các đỉnh cách 1 bước), rồi vòng 2, vòng 3... Vì sóng lan đều nên đỉnh nào sóng đến trước = đường ngắn nhất. Dùng <strong>queue</strong> (hàng đợi) để xử lý ai đến trước làm trước. Chỉ đúng khi mọi cạnh dài bằng nhau — nếu cạnh dài khác nhau thì phải dùng <strong>Dijkstra</strong>.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng DFS tìm đường ngắn nhất → không đảm bảo đúng (đường tìm được có thể dài hơn). Vét cạn mọi đường → O(n!). BFS đảm bảo <strong>đúng + nhanh O(V+E)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" (đồ thị <strong>không trọng số</strong>), "duyệt theo tầng", "lưới/mê cung", "truy vết đường đi"</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• BFS giống sóng lan đều → chỉ đúng khi mọi đường dài bằng nhau. Đường dài ngắn khác nhau → phải dùng <a href="#D3">Dijkstra</a> (ưu tiên đường ngắn trước, dùng <a href="#C2">Priority Queue</a>).<br>• Chỉ cần đếm "mấy nhóm riêng biệt?" → <a href="#D2b">D2b</a> hoặc <a href="#C3">DSU</a>.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• BFS giống sóng lan đều → chỉ đúng khi mọi đường dài bằng nhau. Đường dài ngắn khác nhau → phải dùng <a href="#D3">Dijkstra</a> (ưu tiên đường ngắn trước, dùng <a href="#C3">Priority Queue</a>).<br>• Chỉ cần đếm "mấy nhóm riêng biệt?" → <a href="#D2b">D2b</a> hoặc <a href="#C4">DSU</a>.</div>
 <pre>
 // ═══ BFS tìm đường đi ngắn nhất từ S đến F ═══
 // Bài toán: Đồ thị n đỉnh, m cạnh (không trọ ng số). Tìm đường ngắn nhất từ S đến F.
@@ -2258,7 +2619,7 @@ int main() {
 <p><em>💡 Hình dung: BFS làm sóng lan đều — chỉ đúng khi cạnh dài bằng nhau. Nhưng bản đồ thành phố có đường dài ngắn khác nhau thì sao? Dijkstra = BFS nhưng thay queue bằng <strong>Priority Queue</strong> (ai gần nhất làm trước, không phải ai đến trước). Luôn chọn giao lộ gần nhất chưa thăm → cập nhật khoảng cách → lặp lại.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> BFS chỉ đúng khi tất cả cạnh có trọng số = 1. Với cạnh trọng số khác nhau, BFS cho kết quả <strong>sai</strong>. Dijkstra luôn tìm đường ngắn nhất đúng với O(E log V).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" trên đồ thị <strong>có trọng số dương</strong></div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#D1">BFS</a> xếp hàng ai đến trước làm trước. Dijkstra xếp hàng theo <b>khoảng cách</b>: ai gần nhất làm trước → dùng <a href="#C2">Priority Queue</a> thay queue thường.<br>• Nếu có đường "phí âm" (đi qua được thưởng) → Dijkstra tính sai, phải dùng <a href="#D5">Bellman-Ford</a>.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#D1">BFS</a> xếp hàng ai đến trước làm trước. Dijkstra xếp hàng theo <b>khoảng cách</b>: ai gần nhất làm trước → dùng <a href="#C3">Priority Queue</a> thay queue thường.<br>• Nếu có đường "phí âm" (đi qua được thưởng) → Dijkstra tính sai, phải dùng <a href="#D5">Bellman-Ford</a>.</div>
 <pre>
 // ═══ Dijkstra — O(E log V) ═══
 // Bài toán: Đồ thị có trọng số (≥0). Tìm đường ngắn nhất từ đỉnh S đến mọi đỉnh.
@@ -2485,7 +2846,7 @@ Truy vết: 4←Trace[4]=3←Trace[3]=2←Trace[2]=1
 <p><em>💡 Hình dung: Dijkstra tìm đường ngắn nhất từ 1 điểm. Bài khác: nối TẤT CẢ các nhà lại bằng đường, sao cho tổng chi phí NHỎ NHẤT và không đường thừa. Prim: bắt đầu từ 1 nhà, cứ nối sang nhà gần nhất chưa nối — giống Dijkstra nhưng thay vì tính khoảng cách từ gốc, ta chỉ so <strong>chi phí cạnh</strong> nối qua. Cũng dùng <strong>Priority Queue</strong> để chọn cạnh rẻ nhất.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi cách nối → số cây khung là n^(n-2) (công thức Cayley). Với n = 20 → 20¹⁸ → không khả thi. Prim/Kruskal tìm cây khung nhỏ nhất trong <strong>O(E log V)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "nối tất cả các điểm với chi phí nhỏ nhất", "cây khung nhỏ nhất", "mạng lưới tối ưu"</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Cùng bài "nối tất cả nhà với chi phí rẻ nhất" nhưng 2 cách làm khác nhau:<br>  — <b>Prim</b>: đứng ở 1 nhà, cứ nối sang nhà gần nhất chưa nối (dùng <a href="#C2">Priority Queue</a>).<br>  — <b><a href="#D8">Kruskal</a></b>: liệt kê tất cả đường, <a href="#A7">xếp từ rẻ→đắt</a>, chọn lần lượt đường rẻ nhất mà không tạo vòng (dùng <a href="#C3">DSU</a> kiểm tra).</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Cùng bài "nối tất cả nhà với chi phí rẻ nhất" nhưng 2 cách làm khác nhau:<br>  — <b>Prim</b>: đứng ở 1 nhà, cứ nối sang nhà gần nhất chưa nối (dùng <a href="#C3">Priority Queue</a>).<br>  — <b><a href="#D8">Kruskal</a></b>: liệt kê tất cả đường, <a href="#A9">xếp từ rẻ→đắt</a>, chọn lần lượt đường rẻ nhất mà không tạo vòng (dùng <a href="#C4">DSU</a> kiểm tra).</div>
 <pre>
 // ═══ Prim — O(V²) với ma trận kề ═══
 
@@ -2679,7 +3040,7 @@ Vòng 4: BFS không tìm được đường → Dừng!
 <h3 id="D8">D8. Kruskal — Cây khung nhỏ nhất (dùng DSU)</h3>
 <p><em>💡 Hình dung: Prim nối nhà từ trong ra ngoài. Kruskal làm ngược: liệt kê TẤT CẢ đường, <strong>Sort</strong> từ rẻ→đắt, chọn lần lượt đường rẻ nhất mà không tạo vòng. Dùng <strong>DSU</strong> để hỏi nhanh "2 nhà đã nối chưa?" — nếu chưa thì gộp, nếu rồi thì bỏ qua (đường thừa). Cùng kết quả với Prim nhưng dễ code hơn.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> Giống Prim. <strong>Khi nào chọn Kruskal?</strong> Khi đồ thị có nhiều cạnh, ít đỉnh hoặc đã có sẵn DSU.</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Kruskal cần 2 "đồ nghề": <a href="#A7">Sort</a> (xếp đường từ rẻ→đắt) + <a href="#C3">DSU</a> (hỏi nhanh "2 nhà đã nối chưa?").<br>• So với <a href="#D6">Prim</a>: cùng kết quả, nhưng Kruskal dễ code hơn nếu đã biết DSU.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Kruskal cần 2 "đồ nghề": <a href="#A9">Sort</a> (xếp đường từ rẻ→đắt) + <a href="#C4">DSU</a> (hỏi nhanh "2 nhà đã nối chưa?").<br>• So với <a href="#D6">Prim</a>: cùng kết quả, nhưng Kruskal dễ code hơn nếu đã biết DSU.</div>
 <pre>
 // ═══ Kruskal — O(E log E) dùng DSU ═══
 
@@ -2922,11 +3283,405 @@ int demUoc(int n) {
 int lamTronLen = (a + b - 1) / b;
 </pre>
 
+
+<!-- ════════════════════════════════════ -->
+<!-- NHÓM F: XỬ LÝ XÂU -->
+<!-- ════════════════════════════════════ -->
+<h2 class="green" id="nhomF"><span class="nhom-label nhom-F">NHÓM F</span> XỬ LÝ XÂU (String)</h2>
+
+<!-- F1 -->
+<h3 id="F1">F1. String Hashing — So sánh xâu con trong O(1)</h3>
+<p><em>💡 Hình dung: So sánh 2 xâu con dài L phải duyệt L ký tự → chậm. Hash biến mỗi xâu thành 1 con số. Giống như mỗi người có mã CCCD — muốn kiểm tra 2 người có trùng không, chỉ cần so số CCCD thay vì so từng đặc điểm. Dùng <b>hash đa thức</b>: mỗi ký tự nhân với lũy thừa của base, tổng mod p. Đã tính sẵn prefix hash thì lấy hash đoạn [l, r] chỉ cần 1 phép trừ + 1 phép nhân.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> So sánh xâu con dài L mất O(L). Có Q truy vấn → O(L×Q). Với L = n = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Hash → mỗi lần so O(1).</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đếm xâu con xuất hiện bao nhiêu lần", "so sánh 2 đoạn con bằng nhau không", "tìm xâu con lặp lại dài nhất", "so khớp pattern"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Cùng bài "tìm pattern trong text" nhưng <a href="#F2">KMP</a> và <a href="#F3">Z-function</a> không bị xung đột hash. Hash lợi thế khi cần so sánh <b>nhiều đoạn con linh hoạt</b> (ví dụ: chặt nhị phân + hash tìm xâu con chung dài nhất).<br>• Kết hợp <a href="#A8">Binary Search</a> + Hash → tìm LCP (Longest Common Prefix) trong O(log n).</div>
+
+<div class="good"><strong>CHỐNG XUNG ĐỘT:</strong> Dùng <b>2 hash</b> (2 base, 2 mod khác nhau) → xác suất trùng ≈ 0. Hoặc dùng 1 hash nhưng mod <b>số nguyên tố lớn</b> (10⁹ + 7 hoặc 10⁹ + 9).</div>
+
+<p><strong>Code mẫu — Hash đa thức (double hash):</strong></p>
+<pre>
+// Bài toán: Cho xâu s (n ≤ 10⁵). Trả lời Q truy vấn "xâu con [l1,r1] có bằng [l2,r2] không?"
+// Input: s, Q truy vấn (l1, r1, l2, r2) | Output: YES/NO mỗi truy vấn
+const long long MOD1 = 1e9 + 7, MOD2 = 1e9 + 9;
+const long long BASE1 = 31, BASE2 = 37;
+long long h1[100005], h2[100005], pw1[100005], pw2[100005];
+
+void buildHash(const string &amp;s, int n) {
+    pw1[0] = pw2[0] = 1;
+    for (int i = 1; i &lt;= n; i++) {
+        pw1[i] = pw1[i-1] * BASE1 % MOD1;
+        pw2[i] = pw2[i-1] * BASE2 % MOD2;
+    }
+    h1[0] = h2[0] = 0;
+    for (int i = 1; i &lt;= n; i++) {
+        h1[i] = (h1[i-1] * BASE1 + s[i]) % MOD1;
+        h2[i] = (h2[i-1] * BASE2 + s[i]) % MOD2;
+    }
+}
+
+// Hash đoạn [l, r] (1-indexed)
+pair&lt;long long, long long&gt; getHash(int l, int r) {
+    long long v1 = (h1[r] - h1[l-1] * pw1[r-l+1] % MOD1 + MOD1 * 2) % MOD1;
+    long long v2 = (h2[r] - h2[l-1] * pw2[r-l+1] % MOD2 + MOD2 * 2) % MOD2;
+    return {v1, v2};
+}
+
+// So sánh 2 đoạn con: getHash(l1,r1) == getHash(l2,r2) → bằng nhau
+</pre>
+
+<p><strong>Ứng dụng: Đếm số xâu con distinct có độ dài k</strong></p>
+<pre>
+// Duyệt mọi vị trí i, lấy hash đoạn [i, i+k-1], bỏ vào set
+set&lt;pair&lt;long long,long long&gt;&gt; st;
+for (int i = 1; i + k - 1 &lt;= n; i++)
+    st.insert(getHash(i, i + k - 1));
+cout &lt;&lt; st.size();  // số xâu con distinct
+</pre>
+
+<!-- F2 -->
+<h3 id="F2">F2. KMP — Tìm pattern trong text O(n + m)</h3>
+<p><em>💡 Hình dung: Tìm từ "abc" trong sách dài. Cách thường: đặt từ ở mỗi vị trí, so từng chữ → chậm. KMP thông minh hơn: khi so sai ở vị trí j, nó biết <b>nhảy lùi bao xa</b> nhờ bảng "lùi" (mảng fail/prefix function) đã tính trước. Giống GPS biết đường tắt — không cần quay lại từ đầu. Tổng cộng chỉ đi qua text <b>1 lượt</b>.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Brute force: thử đặt pattern ở mỗi vị trí → O(n×m). Với n = m = 10⁵ → <strong>10¹⁰ → TLE</strong>. KMP → O(n + m).</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "tìm tất cả vị trí pattern xuất hiện trong text", "đếm số lần xuất hiện", "prefix cũng là suffix dài nhất"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#F3">Z-function</a> cũng giải bài "tìm pattern" với cùng O(n + m) nhưng ý tưởng khác.<br>• <a href="#F1">Hash</a> cũng tìm pattern được nhưng có rủi ro xung đột. KMP <b>chính xác 100%</b>.<br>• Mảng fail của KMP còn dùng để tìm <b>prefix = suffix dài nhất</b> — bài thường gặp trong đề thi.</div>
+
+<p><strong>Bước 1: Xây mảng Prefix Function (fail[])</strong></p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+pattern = "abcabd"
+fail[]  = [0, 0, 0, 1, 2, 0]
+                     ↑  ↑
+            fail[3]=1 vì "a" = prefix = suffix của "abca"
+            fail[4]=2 vì "ab" = prefix = suffix của "abcab"
+</pre>
+
+<p><strong>Code mẫu — KMP đầy đủ:</strong></p>
+<pre>
+// Bài toán: Cho text s (n ≤ 10⁶) và pattern p (m ≤ 10⁶). Tìm tất cả vị trí p xuất hiện trong s.
+// Input: s, p | Output: danh sách vị trí (0-indexed)
+// Bước 1: Xây prefix function cho pattern
+vector&lt;int&gt; prefixFunction(const string &amp;p) {
+    int m = p.size();
+    vector&lt;int&gt; fail(m, 0);
+    for (int i = 1; i &lt; m; i++) {
+        int j = fail[i - 1];
+        while (j > 0 &amp;&amp; p[i] != p[j]) j = fail[j - 1];
+        if (p[i] == p[j]) j++;
+        fail[i] = j;
+    }
+    return fail;
+}
+
+// Bước 2: Tìm pattern trong text
+vector&lt;int&gt; KMP(const string &amp;s, const string &amp;p) {
+    vector&lt;int&gt; fail = prefixFunction(p);
+    vector&lt;int&gt; res;
+    int j = 0;
+    for (int i = 0; i &lt; (int)s.size(); i++) {
+        while (j > 0 &amp;&amp; s[i] != p[j]) j = fail[j - 1];
+        if (s[i] == p[j]) j++;
+        if (j == (int)p.size()) {
+            res.push_back(i - j + 1);  // vị trí bắt đầu match
+            j = fail[j - 1];
+        }
+    }
+    return res;
+}
+</pre>
+
+<!-- F3 -->
+<h3 id="F3">F3. Z-function — Mảng Z</h3>
+<p><em>💡 Hình dung: Z[i] = độ dài đoạn dài nhất bắt đầu tại vị trí i mà trùng với đầu xâu. Ví dụ: xâu "aabxaab" → Z[4] = 3 vì "aab" (vị trí 4) trùng với "aab" (đầu xâu). Để tìm pattern p trong text s: ghép "p$s" ($ là ký tự phân cách), tính Z. Vị trí nào Z[i] = len(p) → đó là nơi pattern xuất hiện.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> So sánh brute force → O(n×m). Z-function chạy O(n + m), tương đương <a href="#F2">KMP</a>.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "tìm pattern trong text", "prefix dài nhất tại mỗi vị trí trùng với đầu xâu", "đếm số lần xuất hiện"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Cùng bài với <a href="#F2">KMP</a> nhưng code ngắn hơn, dễ hiểu hơn cho nhiều người.<br>• Z-function + <a href="#A8">Binary Search</a> → tìm xâu con lặp lại (period) ngắn nhất.</div>
+
+<p><strong>Ví dụ chạy tay:</strong></p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+s = "aabxaab"
+Z = [-, 1, 0, 0, 3, 1, 0]
+         ↑           ↑
+    Z[1]=1: "a" khớp đầu      Z[4]=3: "aab" khớp đầu
+
+Tìm pattern "aab" trong text "xaabxaab":
+  Ghép: "aab$xaabxaab"
+  Z =   [-, 1, 0, 0, 0, 3, 1, 0, 0, 3, 1, 0]
+                          ↑              ↑
+              Z[5]=3=len("aab") → match tại vị trí 1 của text
+              Z[9]=3=len("aab") → match tại vị trí 5 của text
+</pre>
+
+<p><strong>Code mẫu — Z-function:</strong></p>
+<pre>
+// Bài toán: Tính mảng Z cho xâu s. Z[i] = độ dài đoạn dài nhất bắt đầu tại i trùng với prefix.
+// Input: s | Output: mảng Z
+vector&lt;int&gt; zFunction(const string &amp;s) {
+    int n = s.size();
+    vector&lt;int&gt; z(n, 0);
+    int l = 0, r = 0;
+    for (int i = 1; i &lt; n; i++) {
+        if (i &lt; r)
+            z[i] = min(r - i, z[i - l]);
+        while (i + z[i] &lt; n &amp;&amp; s[z[i]] == s[i + z[i]])
+            z[i]++;
+        if (i + z[i] > r)
+            l = i, r = i + z[i];
+    }
+    return z;
+}
+
+// Tìm pattern p trong text t:
+// Ghép s = p + "$" + t, tính Z. Vị trí i có Z[i] == p.size() → match tại t[i - p.size() - 1]
+</pre>
+
+<!-- F4 -->
+<h3 id="F4">F4. Trie — Cây tiền tố</h3>
+<p><em>💡 Hình dung: Có 1 triệu từ trong từ điển. Muốn kiểm tra "apple" có trong từ điển không? Nếu dùng set → O(L × log n). Trie = cây mà mỗi nhánh là 1 ký tự. Đi theo nhánh a → p → p → l → e → đến nút đánh dấu "kết thúc" → có! Giống tra từ điển giấy: mở trang A, tìm AP, tìm APP... Mỗi lần chỉ đi theo 1 nhánh → O(L) với L = độ dài từ.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng set&lt;string&gt; → mỗi lần tìm O(L × log n). Trie → O(L) mỗi lần. Với n = 10⁵ từ, L = 20 → Trie nhanh gấp ~17 lần.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "kiểm tra từ có trong tập không", "đếm từ có prefix cho trước", "tìm XOR lớn nhất với một số" (Trie nhị phân), "autocomplete"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Trie nhị phân (mỗi nút chỉ có 2 con: bit 0 và 1) dùng để tìm <b>XOR lớn nhất</b> — bài thi rất hay gặp.<br>• Trie kết hợp <a href="#B3">DP</a> trên cây → giải bài "tách từ" (word break).</div>
+
+<p><strong>Code mẫu — Trie chữ cái (a-z):</strong></p>
+<pre>
+// Bài toán: Cho n từ. Trả lời Q truy vấn "từ x có trong tập không?" và "có bao nhiêu từ bắt đầu bằng prefix x?"
+// Input: n từ, Q truy vấn | Output: YES/NO hoặc số lượng
+struct Trie {
+    int child[26];
+    int cntWord;   // số từ kết thúc tại đây
+    int cntPrefix; // số từ đi qua nút này
+} nodes[1000005]; // tối đa 10⁶ nút
+int sz = 1;        // nút 0 = gốc
+
+void addWord(const string &amp;s) {
+    int cur = 0;
+    for (char c : s) {
+        int ch = c - 'a';
+        if (!nodes[cur].child[ch])
+            nodes[cur].child[ch] = sz++;
+        cur = nodes[cur].child[ch];
+        nodes[cur].cntPrefix++;
+    }
+    nodes[cur].cntWord++;
+}
+
+bool findWord(const string &amp;s) {
+    int cur = 0;
+    for (char c : s) {
+        int ch = c - 'a';
+        if (!nodes[cur].child[ch]) return false;
+        cur = nodes[cur].child[ch];
+    }
+    return nodes[cur].cntWord > 0;
+}
+
+int countPrefix(const string &amp;s) {
+    int cur = 0;
+    for (char c : s) {
+        int ch = c - 'a';
+        if (!nodes[cur].child[ch]) return 0;
+        cur = nodes[cur].child[ch];
+    }
+    return nodes[cur].cntPrefix;
+}
+</pre>
+
+<p><strong>Ứng dụng: Trie nhị phân — Tìm XOR lớn nhất</strong></p>
+<pre>
+// Bài toán: Cho mảng n số. Tìm cặp (i, j) sao cho a[i] XOR a[j] lớn nhất.
+// Ý tưởng: Dựng Trie bit (từ bit cao → thấp). Với mỗi a[i], đi ngược bit (muốn bit 1 thì chọn nhánh 0) để max XOR.
+int trieChild[100005 * 30][2], trieIdx = 1;
+
+void addNum(int x) {
+    int cur = 0;
+    for (int b = 29; b >= 0; b--) {
+        int bit = (x >> b) &amp; 1;
+        if (!trieChild[cur][bit])
+            trieChild[cur][bit] = trieIdx++;
+        cur = trieChild[cur][bit];
+    }
+}
+
+int maxXor(int x) {
+    int cur = 0, res = 0;
+    for (int b = 29; b >= 0; b--) {
+        int bit = (x >> b) &amp; 1;
+        int want = 1 - bit;  // muốn bit ngược
+        if (trieChild[cur][want]) {
+            res |= (1 &lt;&lt; b);
+            cur = trieChild[cur][want];
+        } else {
+            cur = trieChild[cur][bit];
+        }
+    }
+    return res;
+}
+</pre>
+
+<!-- F5 -->
+<h3 id="F5">F5. Palindrome — Xâu đối xứng</h3>
+<p><em>💡 Hình dung: Palindrome là xâu đọc xuôi ngược giống nhau: "abcba", "level", "racecar". Bài toán phổ biến nhất: tìm xâu con đối xứng dài nhất (Longest Palindromic Substring). Có 3 cách tiếp cận: DP O(n²), Expand Around Center O(n²), và Manacher O(n). Trong thi HSG, DP hoặc Expand thường đủ dùng. Ngoài ra, dùng <a href="#F1">Hash</a> để kiểm tra đoạn [l, r] có palindrome không trong O(1).</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi đoạn con rồi kiểm tra → O(n³). DP/Expand → O(n²). Manacher → O(n). Với n = 10⁵ thì chỉ Manacher hoặc Hash mới đủ nhanh.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "xâu con đối xứng dài nhất", "đếm xâu con palindrome", "thêm ít ký tự nhất để thành palindrome", "chia xâu thành ít palindrome nhất"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#F1">Hash</a> + reverse hash → kiểm tra palindrome đoạn [l, r] trong O(1): so hash(l→r) với hash(r→l).<br>• <a href="#B3">DP</a>: dp[i][j] = true nếu s[i..j] là palindrome → dùng cho bài "chia xâu thành ít palindrome nhất".</div>
+
+<p><strong>Cách 1: Expand Around Center — Đơn giản, O(n²), đủ dùng khi n ≤ 5000</strong></p>
+<pre>
+// Bài toán: Tìm xâu con palindrome dài nhất.
+// Input: s | Output: xâu palindrome dài nhất
+string longestPalin(const string &amp;s) {
+    int n = s.size(), start = 0, maxLen = 1;
+    auto expand = [&amp;](int l, int r) {
+        while (l >= 0 &amp;&amp; r &lt; n &amp;&amp; s[l] == s[r]) { l--; r++; }
+        if (r - l - 1 > maxLen) {
+            maxLen = r - l - 1;
+            start = l + 1;
+        }
+    };
+    for (int i = 0; i &lt; n; i++) {
+        expand(i, i);     // palindrome lẻ:  aba
+        expand(i, i + 1); // palindrome chẵn: abba
+    }
+    return s.substr(start, maxLen);
+}
+</pre>
+
+<p><strong>Cách 2: Manacher — O(n), dùng khi n ≤ 10⁵–10⁶</strong></p>
+<pre>
+// Bài toán: Đếm tổng số xâu con palindrome, hoặc tìm palindrome dài nhất O(n).
+// Ý tưởng: Chèn '#' giữa các ký tự để xử lý cả chẵn lẫn lẻ cùng lúc.
+// Ví dụ: "abaab" → "#a#b#a#a#b#"
+vector&lt;int&gt; manacher(const string &amp;s) {
+    string t = "#";
+    for (char c : s) { t += c; t += '#'; }
+    int n = t.size();
+    vector&lt;int&gt; p(n, 0);
+    int c = 0, r = 0;
+    for (int i = 0; i &lt; n; i++) {
+        if (i &lt; r)
+            p[i] = min(r - i, p[2 * c - i]);
+        while (i - p[i] - 1 >= 0 &amp;&amp; i + p[i] + 1 &lt; n &amp;&amp; t[i - p[i] - 1] == t[i + p[i] + 1])
+            p[i]++;
+        if (i + p[i] > r)
+            c = i, r = i + p[i];
+    }
+    return p;
+    // p[i] = bán kính palindrome tại i trong t
+    // Palindrome dài nhất = max(p[i]), vị trí gốc = (i - p[i]) / 2
+}
+</pre>
+
+<p><strong>Cách 3: Hash — Kiểm tra palindrome đoạn [l, r] trong O(1)</strong></p>
+<pre>
+// Dùng 2 mảng hash: h[] (hash xuôi) và rh[] (hash ngược)
+// Palindrome ⟺ hash(l→r) == reverse_hash(l→r)
+// Build hash ngược: rh[i] = rh[i+1] * BASE + s[i]
+// Kết hợp Binary Search + Hash → tìm palindrome dài nhất tại mỗi vị trí trong O(n log n)
+</pre>
+
+<!-- F6 -->
+<h3 id="F6">F6. Suffix Array — Mảng hậu tố</h3>
+<p><em>💡 Hình dung: Lấy tất cả hậu tố (suffix) của xâu s, sắp xếp chúng theo thứ tự từ điển, rồi ghi lại vị trí bắt đầu → đó là Suffix Array. Giống như xé 1 quyển sách thành n tờ (tờ 1 từ trang 1 đến cuối, tờ 2 từ trang 2 đến cuối, …), rồi xếp các tờ theo ABC. Kết hợp với mảng LCP (Longest Common Prefix — tiền tố chung dài nhất giữa 2 suffix liền kề) → giải được hàng loạt bài xâu nâng cao.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Nhiều bài xâu nâng cao (đếm xâu con distinct, tìm xâu con chung dài nhất 2 xâu) nếu brute force → O(n²) hoặc O(n² log n). Suffix Array + LCP → <strong>O(n log n)</strong> build, O(n) trả lời.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong> "đếm số xâu con phân biệt", "xâu con chung dài nhất (LCS) của 2 xâu", "xâu con nhỏ nhất theo thứ tự từ điển", "tìm xâu con lặp lại dài nhất"</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#F1">Hash</a> + <a href="#A8">Binary Search</a> cũng giải được nhiều bài tương tự nhưng bị rủi ro xung đột. Suffix Array <b>chính xác 100%</b>.<br>• Bài "đếm xâu con distinct": tổng kết quả = n(n+1)/2 − tổng LCP → cực kỳ hay gặp trong đề Olympic.<br>• Xây Suffix Array O(n log n) bằng thuật toán <a href="#A9">Sort</a> theo bước nhảy × 2 (doubling).</div>
+
+<p><strong>Ý tưởng xây Suffix Array — Doubling O(n log² n):</strong></p>
+<pre style="background: #1e1e1e; color: #d4d4d4;">
+Xâu s = "banana"
+
+Tất cả suffix:
+  0: banana
+  1: anana
+  2: nana
+  3: ana
+  4: na
+  5: a
+
+Sort theo thứ tự từ điển:
+  5: a
+  3: ana
+  1: anana
+  0: banana
+  4: na
+  2: nana
+
+Suffix Array sa[] = {5, 3, 1, 0, 4, 2}
+
+LCP giữa các suffix liền kề:
+  a      vs ana    → LCP = 1
+  ana    vs anana  → LCP = 3
+  anana  vs banana → LCP = 0
+  banana vs na     → LCP = 0
+  na     vs nana   → LCP = 2
+
+Mảng LCP: lcp[] = {1, 3, 0, 0, 2}
+</pre>
+
+<p><strong>Code mẫu — Suffix Array O(n log² n):</strong></p>
+<pre>
+// Bài toán: Xây Suffix Array cho xâu s (n ≤ 10⁵).
+// Input: s | Output: sa[] = mảng vị trí bắt đầu các suffix sau khi sort
+struct SuffixArray {
+    int n;
+    string s;
+    vector&lt;int&gt; sa, rank_, lcp;
+
+    SuffixArray(const string &amp;s) : s(s), n(s.size()), sa(n), rank_(n), lcp(n) {
+        // Bước 1: Khởi tạo rank theo ký tự đầu
+        iota(sa.begin(), sa.end(), 0);
+        for (int i = 0; i &lt; n; i++) rank_[i] = s[i];
+
+        // Bước 2: Doubling — sort theo 2^k ký tự đầu
+        for (int k = 1; k &lt; n; k *= 2) {
+            auto cmp = [&amp;](int a, int b) {
+                if (rank_[a] != rank_[b]) return rank_[a] &lt; rank_[b];
+                int ra = a + k &lt; n ? rank_[a + k] : -1;
+                int rb = b + k &lt; n ? rank_[b + k] : -1;
+                return ra &lt; rb;
+            };
+            sort(sa.begin(), sa.end(), cmp);
+
+            // Cập nhật rank
+            vector&lt;int&gt; tmp(n);
+            tmp[sa[0]] = 0;
+            for (int i = 1; i &lt; n; i++)
+                tmp[sa[i]] = tmp[sa[i-1]] + (cmp(sa[i-1], sa[i]) ? 1 : 0);
+            rank_ = tmp;
+            if (rank_[sa[n-1]] == n - 1) break; // đã phân biệt hết
+        }
+        buildLCP();
+    }
+
+    // Bước 3: Xây mảng LCP bằng thuật Kasai O(n)
+    void buildLCP() {
+        vector&lt;int&gt; pos(n);
+        for (int i = 0; i &lt; n; i++) pos[sa[i]] = i;
+        int k = 0;
+        for (int i = 0; i &lt; n; i++) {
+            if (pos[i] == 0) { k = 0; continue; }
+            int j = sa[pos[i] - 1];
+            while (i + k &lt; n &amp;&amp; j + k &lt; n &amp;&amp; s[i+k] == s[j+k]) k++;
+            lcp[pos[i]] = k;
+            if (k > 0) k--;
+        }
+    }
+};
+</pre>
+
+<p><strong>Ứng dụng: Đếm số xâu con phân biệt</strong></p>
+<pre>
+// Tổng xâu con = n*(n+1)/2. Trừ đi các xâu trùng = tổng LCP.
+SuffixArray SA(s);
+long long total = (long long)n * (n + 1) / 2;
+for (int i = 1; i &lt; n; i++) total -= SA.lcp[i];
+cout &lt;&lt; total;  // Số xâu con phân biệt
+</pre>
+
+
 <!-- ██████████████████████████████████████████████████████ -->
 <!-- TẦNG 4 -->
 <!-- ██████████████████████████████████████████████████████ -->
 <hr class="section">
-<div class="tang tang-4" id="tang4">TẦNG 4: KỸ THUẬT NÂNG CAO<small>Biến đổi bài toán + Nén tọa độ + Tối ưu DP + Mẫu code</small></div>
+<div class="tang tang-4" id="tang4">TẦNG 4: KỸ THUẬT NÂNG CAO<small>Biến đổi bài toán + Tối ưu DP + Mẫu code</small></div>
 
 <h2 class="blue" id="s41">4.1. BIẾN ĐỔI BÀI TOÁN — Đưa về dạng quen thuộc</h2>
 
@@ -2941,17 +3696,7 @@ int lamTronLen = (a + b - 1) / b;
 <tr><td>Max (freq c1 - freq c2) trong đoạn</td><td>c1→+1, c2→-1, còn lại→0</td><td>Kadane: max subarray sum</td></tr>
 </table>
 
-<!-- ─────────────────────────────────── -->
-<h2 class="blue">4.2. NÉN TỌA ĐỘ — Khi giá trị lớn mà chỉ cần thứ tự</h2>
-<pre>
-// Giá trị đến 10⁹ nhưng chỉ có n ≤ 10⁵ giá trị
-vector&lt;int&gt; vals(a, a + n);
-sort(vals.begin(), vals.end());
-vals.erase(unique(vals.begin(), vals.end()), vals.end());
-for (int i = 0; i &lt; n; i++)
-    a[i] = lower_bound(vals.begin(), vals.end(), a[i]) - vals.begin() + 1;
-// Giờ a[i] nằm trong [1, m] với m ≤ n → dùng được mảng đếm, BIT
-</pre>
+
 
 <!-- ─────────────────────────────────── -->
 <h2 class="blue" id="s43">4.3. TỐI ƯU QUY HOẠCH ĐỘNG</h2>
