@@ -2364,24 +2364,105 @@ a.assign(n + 1, vector&lt;bool&gt;(n + 1, false));
 <strong>MẸO:</strong> Nếu đề cho N ≤ 500 → dùng ma trận kề cho đơn giản. N lớn hơn → bắt buộc dùng danh sách kề.
 </div>
 
-<div class="good"><strong>🔍 HÌNH DUNG: CÙNG 1 ĐỒ THỊ — 2 CÁCH LƯU</strong>
+<div class="good"><strong>🔍 HÌNH DUNG ĐỜI THẬT: 5 bạn kết bạn với nhau — lưu thế nào?</strong>
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #28a745;">
-Đồ thị vô hướng 5 đỉnh, 4 cạnh:           1──2
-1-2, 1-3, 2-4, 3-5                         |
-                                            3──5
-                                            .
-                                            2──4
+Có 5 bạn: ①An  ②Bình  ③Chi  ④Dũng  ⑤Em
 
-═══ CÁCH 1: DANH SÁCH KỀ (ke) ═══         ═══ CÁCH 2: MA TRẬN KỀ (a) ═══
+Quan hệ bạn bè (ai chơi với ai):
+  • An  ↔ Bình       An ─── Bình
+  • An  ↔ Chi         │       │
+  • Bình ↔ Dũng      Chi     Dũng
+  • Chi ↔ Em          │
+                      Em
 
-ke[1] = {2, 3}   ← 1 nối với 2, 3            1  2  3  4  5
-ke[2] = {1, 4}   ← 2 nối với 1, 4         1 [0, 1, 1, 0, 0]
-ke[3] = {1, 5}   ← 3 nối với 1, 5         2 [1, 0, 0, 1, 0]
-ke[4] = {2}      ← 4 nối với 2            3 [1, 0, 0, 0, 1]
-ke[5] = {3}      ← 5 nối với 3            4 [0, 1, 0, 0, 0]
-                                           5 [0, 0, 1, 0, 0]
-Chỉ lưu những ai NỐI thật.               Bảng N×N: ô [u][v]=1 nếu nối.
-→ Bộ nhớ nhỏ, duyệt nhanh                → Bộ nhớ lớn, nhưng hỏi nhanh
+Input file (5 đỉnh, 4 cạnh):
+  5 4
+  1 2        ← An – Bình
+  1 3        ← An – Chi  
+  2 4        ← Bình – Dũng
+  3 5        ← Chi – Em
+</pre>
+</div>
+
+<div class="good"><strong>📒 CÁCH 1: DANH SÁCH KỀ — "Sổ liên lạc"</strong>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #28a745;">
+Mỗi bạn GHI ra giấy: "Tao chơi với ai?"
+
+  📒 An    (1): chơi với → [Bình, Chi]           ke[1] = {2, 3}
+  📒 Bình  (2): chơi với → [An, Dũng]            ke[2] = {1, 4}
+  📒 Chi   (3): chơi với → [An, Em]              ke[3] = {1, 5}
+  📒 Dũng  (4): chơi với → [Bình]                ke[4] = {2}
+  📒 Em    (5): chơi với → [Chi]                  ke[5] = {3}
+
+✅ Ưu điểm: Chỉ ghi những ai chơi THẬT → tiết kiệm giấy!
+   An có 2 bạn → chỉ ghi 2 dòng. Dũng có 1 bạn → ghi 1 dòng.
+   Tổng giấy = số cạnh × 2 = O(M)
+
+❌ Nhược điểm: "An có chơi với Dũng không?" 
+   → Phải lật sổ An, đọc hết danh sách → O(số bạn của An)
+</pre>
+<pre>
+// Code đọc vào:
+int n, m; in >> n >> m;                    // 5 4
+vector&lt;vector&lt;int&gt;&gt; ke(n + 1);
+for (int i = 0; i &lt; m; i++) {
+    int u, v; in >> u >> v;                // đọc: 1 2 → An-Bình
+    ke[u].push_back(v);                    // ke[1] thêm 2
+    ke[v].push_back(u);                    // ke[2] thêm 1 (vô hướng)
+}
+// Kết quả: ke[1]={2,3}  ke[2]={1,4}  ke[3]={1,5}  ke[4]={2}  ke[5]={3}
+</pre>
+</div>
+
+<div class="good"><strong>📊 CÁCH 2: MA TRẬN KỀ — "Bảng kẻ ô đánh dấu"</strong>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #28a745;">
+Kẻ bảng 5×5, mỗi ô hỏi: "Hai bạn này có chơi với nhau không?"
+
+          An(1)  Bình(2)  Chi(3)  Dũng(4)  Em(5)
+An  (1) [  0      1        1       0        0  ]
+Bình(2) [  1      0        0       1        0  ]
+Chi (3) [  1      0        0       0        1  ]
+Dũng(4) [  0      1        0       0        0  ]
+Em  (5) [  0      0        1       0        0  ]
+
+  a[1][2] = 1  ← An chơi với Bình? CÓ ✓
+  a[1][4] = 0  ← An chơi với Dũng? KHÔNG ✗
+  a[3][5] = 1  ← Chi chơi với Em? CÓ ✓
+
+✅ Ưu điểm: "An có chơi với Dũng không?" → Nhìn ô [1][4] → ngay lập tức! O(1)
+❌ Nhược điểm: 5 bạn → bảng 5×5 = 25 ô. 1000 bạn → 1.000.000 ô!
+   → Chỉ dùng khi N nhỏ (≤ 500)
+</pre>
+<pre>
+// Code đọc vào:
+int n, m; in >> n >> m;                    // 5 4
+vector&lt;vector&lt;bool&gt;&gt; a(n + 1, vector&lt;bool&gt;(n + 1, false));
+for (int i = 0; i &lt; m; i++) {
+    int u, v; in >> u >> v;                // đọc: 1 2 → An-Bình
+    a[u][v] = true;                        // a[1][2] = true
+    a[v][u] = true;                        // a[2][1] = true (vô hướng)
+}
+// Kết quả: a[1][2]=a[2][1]=1, a[1][3]=a[3][1]=1, a[2][4]=a[4][2]=1, a[3][5]=a[5][3]=1
+</pre>
+</div>
+
+<div class="tip"><strong>🤔 VÍ DỤ VỚI TRỌNG SỐ (đồ thị có khoảng cách)</strong>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
+5 bạn ở 5 nhà — khoảng cách giữa các nhà (km):
+  An  ↔ Bình: 3km        An ──3── Bình
+  An  ↔ Chi:  5km         │         │
+  Bình ↔ Dũng: 2km       5km      2km
+  Chi ↔ Em:   4km         │         │
+                          Chi ──4── Em       Dũng
+
+Input: 5 4              ═══ DANH SÁCH KỀ ═══           ═══ MA TRẬN KỀ ═══
+  1 2 3                 ke[1] = {{2,3}, {3,5}}             1   2   3   4   5
+  1 3 5                 ke[2] = {{1,3}, {4,2}}          1 [ 0   3   5   ∞   ∞]
+  2 4 2                 ke[3] = {{1,5}, {5,4}}          2 [ 3   0   ∞   2   ∞]
+  3 5 4                 ke[4] = {{2,2}}                 3 [ 5   ∞   0   ∞   4]
+                        ke[5] = {{3,4}}                 4 [ ∞   2   ∞   0   ∞]
+                                                        5 [ ∞   ∞   4   ∞   0]
+                      {đỉnh, trọng_số}                ∞ = không có đường đi trực tiếp
 </pre>
 </div>
 
