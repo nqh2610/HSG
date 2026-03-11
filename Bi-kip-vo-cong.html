@@ -4768,7 +4768,116 @@ for (int i = 0; i &lt;= n; i++) {
 
 <div class="tip"><strong>CÁCH DÙNG:</strong> Đọc đề → xác định đề hỏi gì → tra sơ đồ → tìm thuật toán phù hợp. Mỗi nhánh đều ghi link đến bài học tương ứng.</div>
 
-<div class="good"><strong>🔵 NHÓM 1: BÀI TOÁN TRÊN MẢNG / DÃY SỐ</strong></div>
+<!-- ========== BƯỚC 0: PHÂN LOẠI NHANH ========== -->
+<div class="warn"><strong>🚦 BƯỚC 1: ĐỀ CHO GÌ → VÀO NHÓM NÀO? (5 giây)</strong></div>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #f39c12; font-size: 11pt;">
+📖 ĐỌC ĐỀ → TỰ HỎI:
+│
+├── Đề cho <strong style="color:#5dade2;">mảng / dãy số</strong>? ────────────── → 🔵 <a href="#nhom1-array" style="color:#5dade2;">NHÓM 1</a> Mảng / Dãy số
+│
+├── Đề hỏi <strong style="color:#f5b041;">"bao nhiêu cách?"</strong>
+│   hoặc <strong style="color:#f5b041;">"max / min giá trị"</strong>? ──────────── → 🟠 <a href="#nhom2-optcount" style="color:#f5b041;">NHÓM 2</a> Tối ưu / Đếm
+│
+├── Đề cho <strong style="color:#58d68d;">đồ thị / lưới / bản đồ / quan hệ</strong>?
+│   (các "điểm" nối nhau bằng "đường") ─── → 🟢 <a href="#nhom3-graph" style="color:#58d68d;">NHÓM 3</a> Đồ thị
+│
+├── Đề liên quan <strong style="color:#ec7063;">số nguyên tố / ước / bội
+│   / mod / lũy thừa</strong>? ────────────────── → 🔴 <a href="#nhom4-math" style="color:#ec7063;">NHÓM 4</a> Số học
+│
+├── Đề cho <strong style="color:#bb8fce;">xâu ký tự / chuỗi</strong>? ──────────── → 🟣 <a href="#nhom5-string" style="color:#bb8fce;">NHÓM 5</a> Xâu
+│
+└── <strong style="color:#aaa;">KHÔNG RÕ?</strong> → Xem giới hạn N:
+    ├── N ≤ 20 → thử Bitmask / Quay lui
+    ├── N ≤ 1000 → thử O(n²) vét cạn
+    └── N lớn → đọc kỹ lại, tìm cấu trúc ẩn
+</pre>
+
+<!-- ========== BƯỚC 1: BẢNG TỪ KHÓA ========== -->
+<div class="warn"><strong>🔑 BƯỚC 2: BẢNG TỪ KHÓA — Đọc đề thấy từ gì → dùng thuật gì?</strong></div>
+<table border="1" style="border-collapse:collapse; width:100%; font-size:10pt; background:#1a1a2e; color:#d4d4d4;">
+<thead style="background:#16213e;">
+<tr>
+  <th style="padding:6px; color:#f39c12; width:40%;">🔍 Trong đề có từ / cụm từ...</th>
+  <th style="padding:6px; color:#f39c12; width:30%;">→ Nghĩ đến thuật toán</th>
+  <th style="padding:6px; color:#f39c12; width:30%;">📎 Link bài học</th>
+</tr>
+</thead>
+<tbody>
+<tr><td style="padding:5px;">tổng đoạn [L,R], tổng tiền tố</td>
+    <td style="padding:5px;">Prefix Sum</td>
+    <td style="padding:5px;"><a href="#A1" style="color:#5dade2;">A1</a></td></tr>
+<tr><td style="padding:5px;">đoạn con liên tiếp dài nhất, thu hẹp khoảng</td>
+    <td style="padding:5px;">Two Pointers / Sliding Window</td>
+    <td style="padding:5px;"><a href="#A5" style="color:#5dade2;">A5</a> / <a href="#A6" style="color:#5dade2;">A6</a></td></tr>
+<tr><td style="padding:5px;">max/min trong cửa sổ kích thước k</td>
+    <td style="padding:5px;">Deque đơn điệu</td>
+    <td style="padding:5px;"><a href="#C2" style="color:#5dade2;">C2</a></td></tr>
+<tr><td style="padding:5px;">đoạn con tổng lớn nhất</td>
+    <td style="padding:5px;">Kadane</td>
+    <td style="padding:5px;"><a href="#A11" style="color:#5dade2;">A11</a></td></tr>
+<tr><td style="padding:5px;">phần tử gần nhất lớn/nhỏ hơn, histogram</td>
+    <td style="padding:5px;">Monotonic Stack</td>
+    <td style="padding:5px;"><a href="#A7" style="color:#5dade2;">A7</a></td></tr>
+<tr><td style="padding:5px;">cộng val vào cả đoạn, tăng giảm hàng loạt</td>
+    <td style="padding:5px;">Difference Array</td>
+    <td style="padding:5px;"><a href="#A3" style="color:#5dade2;">A3</a></td></tr>
+<tr><td style="padding:5px;">tìm vị trí, giá trị nhỏ nhất thỏa điều kiện</td>
+    <td style="padding:5px;">Binary Search</td>
+    <td style="padding:5px;"><a href="#A8" style="color:#5dade2;">A8</a></td></tr>
+<tr style="background:#1a1a3e;"><td style="padding:5px;">bao nhiêu cách, số phương án, MOD 10⁹+7</td>
+    <td style="padding:5px;">DP (Quy hoạch động)</td>
+    <td style="padding:5px;"><a href="#B3" style="color:#f5b041;">B3</a></td></tr>
+<tr style="background:#1a1a3e;"><td style="padding:5px;">ba lô, chọn vật max giá trị, giới hạn trọng lượng</td>
+    <td style="padding:5px;">DP Knapsack</td>
+    <td style="padding:5px;"><a href="#B3" style="color:#f5b041;">B3</a></td></tr>
+<tr style="background:#1a1a3e;"><td style="padding:5px;">dãy con tăng dài nhất, LIS</td>
+    <td style="padding:5px;">DP + Binary Search</td>
+    <td style="padding:5px;"><a href="#B3" style="color:#f5b041;">B3</a> + <a href="#A8" style="color:#f5b041;">A8</a></td></tr>
+<tr style="background:#1a1a3e;"><td style="padding:5px;">sắp xếp lịch, chọn đầu tiên kết thúc sớm</td>
+    <td style="padding:5px;">Greedy</td>
+    <td style="padding:5px;"><a href="#B2" style="color:#f5b041;">B2</a></td></tr>
+<tr style="background:#1a1a3e;"><td style="padding:5px;">đếm số trong [L,R] thỏa tính chất chữ số</td>
+    <td style="padding:5px;">Digit DP</td>
+    <td style="padding:5px;"><a href="#B6" style="color:#f5b041;">B6</a></td></tr>
+<tr style="background:#1a2e1a;"><td style="padding:5px;">đường đi ngắn nhất, khoảng cách nhỏ nhất</td>
+    <td style="padding:5px;">BFS / Dijkstra</td>
+    <td style="padding:5px;"><a href="#D1" style="color:#58d68d;">D1</a> / <a href="#D3" style="color:#58d68d;">D3</a></td></tr>
+<tr style="background:#1a2e1a;"><td style="padding:5px;">liên thông, đếm nhóm, có đi được từ A→B?</td>
+    <td style="padding:5px;">DFS / BFS / DSU</td>
+    <td style="padding:5px;"><a href="#D2" style="color:#58d68d;">D2</a> / <a href="#C4" style="color:#58d68d;">C4</a></td></tr>
+<tr style="background:#1a2e1a;"><td style="padding:5px;">cây khung nhỏ nhất, nối tất cả điểm chi phí min</td>
+    <td style="padding:5px;">Kruskal / Prim</td>
+    <td style="padding:5px;"><a href="#D8" style="color:#58d68d;">D8</a> / <a href="#D6" style="color:#58d68d;">D6</a></td></tr>
+<tr style="background:#1a2e1a;"><td style="padding:5px;">thứ tự, tiên quyết, phụ thuộc</td>
+    <td style="padding:5px;">Topo Sort</td>
+    <td style="padding:5px;"><a href="#D9" style="color:#58d68d;">D9</a></td></tr>
+<tr style="background:#1a2e1a;"><td style="padding:5px;">mê cung, lưới ô vuông, robot di chuyển</td>
+    <td style="padding:5px;">BFS 2D</td>
+    <td style="padding:5px;"><a href="#D1b" style="color:#58d68d;">D1b</a></td></tr>
+<tr style="background:#2e1a1a;"><td style="padding:5px;">số nguyên tố, kiểm tra nguyên tố</td>
+    <td style="padding:5px;">Sàng / Kiểm tra O(√n)</td>
+    <td style="padding:5px;"><a href="#E2" style="color:#ec7063;">E2</a> / <a href="#E1" style="color:#ec7063;">E1</a></td></tr>
+<tr style="background:#2e1a1a;"><td style="padding:5px;">ƯCLN, BCNN, chia hết</td>
+    <td style="padding:5px;">GCD / LCM</td>
+    <td style="padding:5px;"><a href="#E4" style="color:#ec7063;">E4</a></td></tr>
+<tr style="background:#2e1a1a;"><td style="padding:5px;">a^n mod m, lũy thừa lớn</td>
+    <td style="padding:5px;">Lũy thừa nhanh</td>
+    <td style="padding:5px;"><a href="#E3" style="color:#ec7063;">E3</a></td></tr>
+<tr style="background:#2e1a2e;"><td style="padding:5px;">tìm pattern trong text, so khớp xâu</td>
+    <td style="padding:5px;">KMP / Z-function / Hash</td>
+    <td style="padding:5px;"><a href="#F2" style="color:#bb8fce;">F2</a> / <a href="#F3" style="color:#bb8fce;">F3</a> / <a href="#F1" style="color:#bb8fce;">F1</a></td></tr>
+<tr style="background:#2e1a2e;"><td style="padding:5px;">palindrome, xâu đối xứng</td>
+    <td style="padding:5px;">Manacher / Expand</td>
+    <td style="padding:5px;"><a href="#F5" style="color:#bb8fce;">F5</a></td></tr>
+<tr style="background:#2e1a2e;"><td style="padding:5px;">tiền tố chung, từ điển, autocomplete</td>
+    <td style="padding:5px;">Trie</td>
+    <td style="padding:5px;"><a href="#F4" style="color:#bb8fce;">F4</a></td></tr>
+</tbody>
+</table>
+<br>
+
+<!-- ========== CÁC NHÓM CHI TIẾT ========== -->
+<div class="good"><strong><a id="nhom1-array"></a>🔵 NHÓM 1: BÀI TOÁN TRÊN MẢNG / DÃY SỐ</strong></div>
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #3498db; font-size: 11pt;">
 Đề cho mảng a[1..n], hỏi gì?
 │
@@ -4807,7 +4916,7 @@ for (int i = 0; i &lt;= n; i++) {
     └── ─────────────────────────────── → <a href="#C9" style="color:#5dade2;">Merge Sort Tree</a>
 </pre>
 
-<div class="good"><strong>🟠 NHÓM 2: BÀI TOÁN TỐI ƯU / ĐẾM SỐ CÁCH</strong></div>
+<div class="good"><strong><a id="nhom2-optcount"></a>🟠 NHÓM 2: BÀI TOÁN TỐI ƯU / ĐẾM SỐ CÁCH</strong></div>
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #e67e22; font-size: 11pt;">
 Đề hỏi "bao nhiêu cách?" hoặc "lớn nhất / nhỏ nhất"?
 │
@@ -4843,7 +4952,7 @@ for (int i = 0; i &lt;= n; i++) {
     └── N ≤ 1000 ──────────────────────── → <a href="#B1d1" style="color:#f5b041;">Vét cạn 2 vòng for</a> O(n²)
 </pre>
 
-<div class="good"><strong>🟢 NHÓM 3: BÀI TOÁN ĐỒ THỊ</strong></div>
+<div class="good"><strong><a id="nhom3-graph"></a>🟢 NHÓM 3: BÀI TOÁN ĐỒ THỊ</strong></div>
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #2ecc71; font-size: 11pt;">
 Đề cho đồ thị / lưới / mối quan hệ nối nhau?
 │
@@ -4876,7 +4985,7 @@ for (int i = 0; i &lt;= n; i++) {
     └── ──────────────────────────────── → <a href="#D2" style="color:#58d68d;">DFS</a> (tô màu / stack)
 </pre>
 
-<div class="good"><strong>🔴 NHÓM 4: BÀI TOÁN SỐ HỌC</strong></div>
+<div class="good"><strong><a id="nhom4-math"></a>🔴 NHÓM 4: BÀI TOÁN SỐ HỌC</strong></div>
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #e74c3c; font-size: 11pt;">
 Đề liên quan đến số nguyên tố, ước, bội, mod?
 │
@@ -4887,7 +4996,7 @@ for (int i = 0; i &lt;= n; i++) {
 └── <strong>"Phân tích n thành tích thừa số?"</strong>── → <a href="#E4" style="color:#ec7063;">Phân tích thừa số O(√n)</a>
 </pre>
 
-<div class="good"><strong>🟣 NHÓM 5: BÀI TOÁN XÂU (STRING)</strong></div>
+<div class="good"><strong><a id="nhom5-string"></a>🟣 NHÓM 5: BÀI TOÁN XÂU (STRING)</strong></div>
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #9b59b6; font-size: 11pt;">
 Đề cho xâu ký tự, hỏi gì?
 │
