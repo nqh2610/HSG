@@ -953,7 +953,11 @@ int main() {
 
 <!-- A6 -->
 <h3 id="A8">A8. Binary Search — Tìm kiếm nhị phân</h3>
-<p><em>💡 Hình dung: Two Pointers quét từ 2 đầu mảng đã sắp → tìm cặp. Nhưng nếu không cần cặp mà chỉ cần tìm 1 phần tử? Binary Search = trò chơi "Đoán số": luôn đoán SỐ GIỮA → mỗi lần loại bỏ NỬA → 1 triệu số chỉ cần ~20 lần đoán! <br>"Chặt nhị phân đáp án" cùng ý tưởng: thử đáp án ở giữa, kiểm tra có được không, rồi thu hẹp phạm vi. Điều kiện: mảng phải được sắp (Sort) trước.</em></p>
+<p><em>💡 Hình dung: Two Pointers quét từ 2 đầu mảng đã sắp → tìm cặp. Nhưng nếu không cần cặp mà chỉ cần tìm 1 phần tử? Binary Search = trò chơi "Đoán số": luôn đoán SỐ GIỮA → mỗi lần loại bỏ NỬA → 1 triệu số chỉ cần ~20 lần đoán!</em></p>
+<p><em>📌 <b>Phân biệt 2 thứ khác nhau — nhiều bạn nhầm:</b><br>
+① <b>Binary Search (tìm kiếm nhị phân)</b> = một <b>thuật toán có sẵn</b> trong C++. Muốn tìm phần tử trong mảng đã sort? Gọi <code>lower_bound</code> / <code>upper_bound</code> là xong, không cần tự viết vòng lặp. Điều kiện: mảng phải <a href="#A9">Sort</a> trước.<br>
+② <b>Chặt nhị phân đáp án</b> = một <b>phương pháp giải bài</b>, KHÔNG phải thuật toán có sẵn. Nó <b>mượn ý tưởng "chia đôi"</b> của Binary Search để tìm đáp án tối ưu: thử đáp án ở giữa → gọi hàm <code>check()</code> xem có khả thi không → thu hẹp khoảng. Phải tự viết vòng lặp + tự viết hàm check.<br>
+Nói ngắn gọn: Binary Search là <b>công cụ dùng liền</b>, Chặt nhị phân đáp án là <b>kỹ thuật giải bài</b> áp dụng cách chia đôi của Binary Search.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Tìm trong mảng 10⁶ phần tử bằng duyệt → 10⁶ bước. Dùng BS → chỉ ~20 bước. Chặt nhị phân đáp án: thử từng giá trị từ 1→10⁹ → TLE. Dùng BS → <strong>chỉ ~30 lần thử</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -962,7 +966,7 @@ int main() {
 <li><strong>"tìm giá trị nhỏ nhất/lớn nhất thỏa..."</strong> → Chặt nhị phân đáp án (RẤT PHỔ BIẾN!)</li>
 </ul>
 </div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống tìm từ trong từ điển — từ điển phải <b>xếp theo ABC</b> trước mới lật giữa được → mảng phải <a href="#A9">Sort</a> trước!<br>• Combo thi HSG rất hay gặp: đề hỏi "giá trị lớn nhất/nhỏ nhất thỏa..." → <b>chặt đáp án</b> kết hợp hàm check dùng <a href="#B2">Greedy</a>.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Binary Search giống tìm từ trong từ điển — từ điển phải <b>xếp theo ABC</b> trước mới lật giữa được → mảng phải <a href="#A9">Sort</a> trước!<br>• Chặt đáp án thì KHÔNG cần mảng sort — nó tìm trên khoảng giá trị, không tìm trong mảng.<br>• Combo thi HSG rất hay gặp: đề hỏi "giá trị lớn nhất/nhỏ nhất thỏa..." → <b>chặt đáp án</b> kết hợp hàm check dùng <a href="#B2">Greedy</a>.</div>
 <pre>
 // ═══ BINARY SEARCH: lower/upper_bound ═══
 #include &lt;bits/stdc++.h&gt;
@@ -992,16 +996,18 @@ int main() {
 // So phan tu = 2: 2
 // So phan tu trong [2,5]: 5
 </pre>
-<div class="warn"><strong>SO SÁNH: Binary Search vs Chặt nhị phân đáp án — cùng 1 khung xương!</strong>
+<div class="warn"><strong>SO SÁNH: Binary Search vs Chặt nhị phân đáp án</strong>
 <table style="width:100%; border-collapse:collapse; margin-top:8px;">
-<tr style="background:#e8f5e9"><th style="padding:6px; border:1px solid #ccc; width:22%"></th><th style="padding:6px; border:1px solid #ccc">Binary Search (tìm trong mảng)</th><th style="padding:6px; border:1px solid #ccc">Chặt nhị phân đáp án</th></tr>
+<tr style="background:#e8f5e9"><th style="padding:6px; border:1px solid #ccc; width:22%"></th><th style="padding:6px; border:1px solid #ccc">Binary Search<br><small>(thuật toán có sẵn)</small></th><th style="padding:6px; border:1px solid #ccc">Chặt nhị phân đáp án<br><small>(phương pháp giải bài)</small></th></tr>
+<tr><td style="padding:6px; border:1px solid #ccc"><b>Bản chất</b></td><td style="padding:6px; border:1px solid #ccc">Thuật toán tìm kiếm — C++ có sẵn <code>lower_bound</code>, <code>upper_bound</code></td><td style="padding:6px; border:1px solid #ccc">Kỹ thuật giải bài — <b>mượn ý tưởng chia đôi</b> của BS, phải tự viết code</td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc"><b>Tìm cái gì?</b></td><td style="padding:6px; border:1px solid #ccc">Tìm <em>vị trí</em> phần tử trong mảng đã sort</td><td style="padding:6px; border:1px solid #ccc">Tìm <em>giá trị đáp án</em> tối ưu (min/max) thỏa điều kiện</td></tr>
 <tr><td style="padding:6px; border:1px solid #ccc"><b>lo, hi là gì?</b></td><td style="padding:6px; border:1px solid #ccc">Chỉ số mảng (0 → n−1)</td><td style="padding:6px; border:1px solid #ccc">Khoảng giá trị đáp án (min_có_thể → max_có_thể)</td></tr>
-<tr><td style="padding:6px; border:1px solid #ccc"><b>mid là gì?</b></td><td style="padding:6px; border:1px solid #ccc">Chỉ số giữa → nhìn a[mid]</td><td style="padding:6px; border:1px solid #ccc">Giá trị đáp án thử → gọi check(mid)</td></tr>
-<tr><td style="padding:6px; border:1px solid #ccc"><b>Câu hỏi</b></td><td style="padding:6px; border:1px solid #ccc">a[mid] có phải phần tử cần tìm?</td><td style="padding:6px; border:1px solid #ccc">Đáp án = mid có khả thi không?</td></tr>
-<tr><td style="padding:6px; border:1px solid #ccc"><b>Thu hẹp</b></td><td style="padding:6px; border:1px solid #ccc">Loại nửa mảng không chứa x</td><td style="padding:6px; border:1px solid #ccc">Loại nửa giá trị không tối ưu</td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc"><b>mid là gì?</b></td><td style="padding:6px; border:1px solid #ccc">Chỉ số giữa → so sánh a[mid] với x</td><td style="padding:6px; border:1px solid #ccc">Đáp án thử → gọi <code>check(mid)</code> xem có khả thi không</td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc"><b>Khi dùng</b></td><td style="padding:6px; border:1px solid #ccc">Gọi hàm có sẵn, 1 dòng là xong</td><td style="padding:6px; border:1px solid #ccc">Tự viết vòng lặp while + tự viết hàm <code>check()</code></td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc"><b>Điều kiện</b></td><td style="padding:6px; border:1px solid #ccc">Mảng phải <b>sort trước</b></td><td style="padding:6px; border:1px solid #ccc">Đáp án phải có tính <b>đơn điệu</b>: nếu mid OK thì mọi giá trị "dễ hơn" cũng OK</td></tr>
 </table>
-<p style="margin-top:8px">→ <b>Cùng vòng lặp:</b> <code>while (lo ≤ hi) { mid = (lo+hi)/2; if (OK) thu hẹp 1 nửa; else thu hẹp nửa kia }</code><br>
-Khác nhau duy nhất: BS tìm <em>vị trí</em> trong mảng có sẵn, Chặt đáp án tìm <em>giá trị</em> tối ưu nhất thỏa điều kiện qua hàm <code>check()</code>.</p>
+<p style="margin-top:8px">→ <b>Điểm chung:</b> đều dùng nguyên lý <em>"chia đôi để loại một nửa"</em>, nên cùng cấu trúc vòng lặp <code>while (lo ≤ hi) { mid = ... }</code>.<br>
+→ <b>Khác nhau:</b> BS là công cụ có sẵn dùng liền. Chặt đáp án là kỹ thuật giải bài — <b>áp dụng cách chia đôi của BS</b> lên khoảng giá trị đáp án, kết hợp hàm <code>check()</code> tự viết.</p>
 </div>
 <pre>
 // ═══ CHẶT NHỊ PHÂN ĐÁP ÁN ═══
