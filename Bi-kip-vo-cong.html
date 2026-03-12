@@ -955,7 +955,10 @@ int main() {
 <h3 id="A8">A8. Binary Search — Tìm kiếm nhị phân</h3>
 <p><em>💡 Hình dung: Tưởng tượng bạn tra từ trong <b>từ điển 1000 trang</b> (xếp ABC). Không ai lật từ trang 1 — bạn luôn <b>lật giữa</b>, nhìn chữ cái, rồi bỏ nửa không chứa từ cần tìm.<br>
 Đó chính là Binary Search: mỗi lần loại NỬA → 1 triệu phần tử chỉ cần ~20 bước!<br>
-C++ có sẵn hàm <code>lower_bound</code> và <code>upper_bound</code> làm sẵn việc này. Mảng phải <a href="#A9">Sort</a> trước.</em></p>
+C++ có sẵn 2 hàm tìm kiếm nhị phân (mảng phải <a href="#A9">Sort</a> trước):</em></p>
+<p><em>• <code>lower_bound(a, a+n, x)</code> → trả về vị trí <b>đầu tiên ≥ x</b>. Ví dụ mảng {1,2,<b>2</b>,3,5}: lower_bound(2) = vị trí 1 (chỗ số 2 đầu tiên).<br>
+• <code>upper_bound(a, a+n, x)</code> → trả về vị trí <b>đầu tiên > x</b>. Ví dụ: upper_bound(2) = vị trí 3 (chỗ số 3, ngay sau số 2 cuối).<br>
+• <b>Đếm bao nhiêu phần tử == x?</b> upper_bound(x) − lower_bound(x). Ví dụ: 3 − 1 = 2 phần tử bằng 2.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Tìm trong mảng 10⁶ phần tử bằng duyệt → 10⁶ bước. Dùng BS → chỉ ~20 bước. Chặt nhị phân đáp án: thử từng giá trị từ 1→10⁹ → TLE. Dùng BS → <strong>chỉ ~30 lần thử</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
