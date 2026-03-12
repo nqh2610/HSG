@@ -839,7 +839,7 @@ xếp từ lớn → nhỏ. Đầu danh sách luôn là MAX hiện tại.
 
 Mỗi lần cửa sổ trượt sang phải 1 ô:
   1. Phần tử mới bước VÀO cửa sổ:
-     → Nó lớn hơn ai trong deque → loại hết (thua chắc, không cần giữ)
+     → Nó lớn hơn ai trong deque → loại bỏ (nhỏ hơn nên không cần giữ)
      → Rồi nó vào cuối deque
   2. Phần tử cũ bước RA khỏi cửa sổ:
      → Nếu nó đang đứng đầu deque → loại (hết hạn)
@@ -863,7 +863,7 @@ int main() {
         // Bước 1: Phần tử đầu deque đã ra khỏi cửa sổ → loại
         while (!dq.empty() &amp;&amp; dq.front() &lt;= i - k)
             dq.pop_front();
-        // Bước 2: Phần tử cuối deque ≤ a[i] → thua chắc, loại hết
+        // Bước 2: Phần tử cuối deque ≤ a[i] → nhỏ hơn, loại bỏ
         while (!dq.empty() &amp;&amp; a[dq.back()] &lt;= a[i])
             dq.pop_back();
         // Bước 3: Đưa i vào cuối deque (ứng viên mới)
@@ -1558,7 +1558,7 @@ int main() {
 <!-- B3 -->
 <h3 id="B3">B3. Dynamic Programming (DP) — Quy hoạch động</h3>
 <p><em>💡 Hình dung: Vét cạn (Brute Force) thử mọi cách → tính lại nhiều bài con giống nhau. Greedy chọn nhanh nhưng đôi khi sai. DP là giải pháp ở giữa: vẫn thử mọi cách như vét cạn, nhưng <b>ghi kết quả vào bảng</b> — bài con nào tính rồi thì tra bảng, khỏi làm lại. Giống xếp gạch lên cầu thang: muốn lên bậc 10, bạn cần kết quả ở bậc 9 (hoặc 8, 7...). Ghi kết quả mỗi bậc vào mảng <code>dp[]</code>, giải từ bậc 1 dần lên bậc n.</em></p>
-<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Đệ quy thường tính lại cùng bài toán con hàng triệu lần. VD Fibonacci bằng đệ quy: f(50) gọi đến <strong>2⁵⁰ ≈ 10¹⁵ lần</strong> → không bao giờ chạy xong. Dùng DP (ghi bảng) → mỗi bài toán con tính đúng 1 lần → O(n).</div>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Đệ quy thường tính lại cùng bài toán con hàng triệu lần. VD Fibonacci bằng đệ quy: f(50) gọi đến <strong>2⁵⁰ ≈ 10¹⁵ lần</strong> → quá chậm, không khả thi. Dùng DP (ghi bảng) → mỗi bài toán con tính đúng 1 lần → O(n).</div>
 
 <div class="warn"><strong>DẤU HIỆU NHẬN BIẾT BÀI DP:</strong>
 <ul>
@@ -2053,8 +2053,8 @@ int main() {
 
 <!-- B6: Digit DP -->
 <h3 id="B6">B6. Digit DP (QHĐ theo chữ số) — Đếm số trong đoạn [L, R]</h3>
-<p><em>💡 Hình dung: DP thông thường chia bài theo mảng, đoạn, dãy. Digit DP là DP đặc biệt: xây SỐ từng chữ số từ trái qua phải. Ví dụ: đếm mật khẩu 9 chữ số có tổng chia hết cho 3? Duyệt cả tỷ thì chết. Nhưng khi điền từng ô, bạn chỉ cần nhớ "tổng mod 3 hiện tại" — không cần nhớ toàn bộ mật khẩu. Trạng thái gọn → DP được. Nếu đã hiểu DP thì DP chữ số chỉ khác ở cách <strong>xây dựng trạng thái</strong>.</em></p>
-<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Duyệt từng số từ L đến R rồi kiểm tra → O(R − L). Với R = 10¹⁸ → <strong>không bao giờ chạy xong</strong>. Digit DP chỉ duyệt theo số chữ số (18 chữ số × vài trạng thái) → cực nhanh.</div>
+<p><em>💡 Hình dung: DP thông thường chia bài theo mảng, đoạn, dãy. Digit DP là DP đặc biệt: xây SỐ từng chữ số từ trái qua phải. Ví dụ: đếm mật khẩu 9 chữ số có tổng chia hết cho 3? Duyệt cả tỷ thì quá chậm. Nhưng khi điền từng ô, bạn chỉ cần nhớ "tổng mod 3 hiện tại" — không cần nhớ toàn bộ mật khẩu. Trạng thái gọn → DP được. Nếu đã hiểu DP thì DP chữ số chỉ khác ở cách <strong>xây dựng trạng thái</strong>.</em></p>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Duyệt từng số từ L đến R rồi kiểm tra → O(R − L). Với R = 10¹⁸ → <strong>quá chậm, không khả thi</strong>. Digit DP chỉ duyệt theo số chữ số (18 chữ số × vài trạng thái) → rất nhanh.</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -2220,7 +2220,7 @@ int main() {
 <!-- B8: Matrix Exponentiation -->
 <h3 id="B8">B8. Matrix Exponentiation (Lũy thừa ma trận) — Tính nhanh công thức truy hồi</h3>
 <p><em>💡 Hình dung: DP tính dp[i] từ dp[i−1], dp[i−2]... Nếu N = 10¹⁸, không thể tính từng bước. Bí quyết: viết phép tính "bước tiếp" thành 1 phép nhân ma trận A. Nhân A mười lần = tiến 10 bước. Và nhờ <strong>lũy thừa nhanh</strong> (Chia để trị: A¹⁰ = (A⁵)²), tính A^(10¹⁸) chỉ cần ~60 phép nhân! Vậy từ DP + Lũy thừa nhanh → giải được DP với N cực lớn.</em></p>
-<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Tính dp[1] → dp[2] → ... → dp[n] tuần tự → O(n). Với n = 10¹⁸ → <strong>không bao giờ chạy xong</strong>. Lũy thừa ma trận → O(k³ × log n) với k nhỏ (2–4) → chỉ vài trăm phép tính.</div>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Tính dp[1] → dp[2] → ... → dp[n] tuần tự → O(n). Với n = 10¹⁸ → <strong>quá chậm, không khả thi</strong>. Lũy thừa ma trận → O(k³ × log n) với k nhỏ (2–4) → chỉ vài trăm phép tính.</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -2407,10 +2407,10 @@ int main() {
 
 <!-- C3 -->
 <h3 id="C3">C3. Priority Queue (Hàng đợi ưu tiên)</h3>
-<p><em>💡 Hình dung: Sort sắp mảng 1 lần xong tra được. Nhưng nếu dữ liệu thêm/bớt liên tục mà luôn cần biết ai lớn nhất? Sort lại mỗi lần thì chậm chết. Priority Queue = hộp bỏ bóng vào, mỗi lần thò tay lấy ra luôn được quả TO NHẤT (hoặc nhỏ nhất). Thêm/lấy đều O(log n). Sẽ gặp lại ở Dijkstra và Prim.</em></p>
+<p><em>💡 Hình dung: Sort sắp mảng 1 lần xong tra được. Nhưng nếu dữ liệu thêm/bớt liên tục mà luôn cần biết ai lớn nhất? Sort lại mỗi lần thì quá chậm. Priority Queue luôn giữ phần tử lớn nhất (hoặc nhỏ nhất) ở đầu, lấy ra ngay O(log n). Thêm/lấy đều O(log n). Sẽ gặp lại ở Dijkstra và Prim.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi lần cần lấy max/min phải duyệt cả mảng → O(n). Lấy n lần → O(n²). Dùng Priority Queue → mỗi lần lấy/thêm chỉ O(log n).</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "lấy max/min liên tục", Dijkstra, trộn k dãy, xử lý theo ưu tiên</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống hộp bóng: bỏ bóng vào bất kỳ lúc nào, thò tay vào luôn lấy ra quả <b>nhỏ nhất</b>. <a href="#D3">Dijkstra</a> và <a href="#D6">Prim</a> đều cần liên tục "lấy cái nhỏ nhất" → dùng hộp này.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Thêm phần tử bất kỳ lúc nào, lấy ra phần tử <b>nhỏ nhất</b> trong O(log n). <a href="#D3">Dijkstra</a> và <a href="#D6">Prim</a> đều cần liên tục "lấy đỉnh gần nhất" → dùng PQ.</div>
 <pre>
 // ═══ PRIORITY QUEUE ═══
 #include &lt;bits/stdc++.h&gt;
@@ -2438,7 +2438,7 @@ int main() {
 
 <!-- C4 -->
 <h3 id="C4">C4. DSU (Disjoint Set Union — Cấu trúc gộp nhóm)</h3>
-<p><em>💡 Hình dung: BFS/DFS trả lời "A nối với B không?" bằng cách loang — mỗi lần hỏi là chạy lại. Nhưng nếu hỏi 100.000 lần giữa lúc liên tục nối thêm cạnh? DSU trả lời gần như O(1)! 40 bạn, ban đầu mỗi bạn 1 nhóm riêng. 2 bạn kết bạn → GỘP 2 nhóm. Hỏi "A và B cùng nhóm không?" → xem có chung Nhóm trưởng không. Gộp + hỏi đều siêu nhanh. Sẽ gặp lại ở Kruskal (D8).</em></p>
+<p><em>💡 Hình dung: BFS/DFS trả lời "A nối với B không?" bằng cách loang — mỗi lần hỏi là chạy lại. Nhưng nếu hỏi 100.000 lần giữa lúc liên tục nối thêm cạnh? DSU trả lời gần như O(1)! 40 bạn, ban đầu mỗi bạn 1 nhóm riêng. 2 bạn kết bạn → GỘP 2 nhóm. Hỏi "A và B cùng nhóm không?" → xem có chung Nhóm trưởng không. Gộp + hỏi đều gần O(1). Sẽ gặp lại ở Kruskal (D8).</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Kiểm tra "A và B cùng nhóm?" bằng BFS/DFS mỗi lần → O(n). Với Q câu hỏi → O(n×Q). Dùng DSU → mỗi thao tác gần như <strong>O(1)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "cùng nhóm không?", "bao nhiêu nhóm riêng biệt (thành phần liên thông)?", "gộp 2 tập hợp", Kruskal</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống lớp học chia nhóm: bạn A kết bạn B → gộp nhóm. Hỏi "A và C cùng nhóm chưa?" → hỏi nhóm trưởng là biết ngay. <a href="#D8">Kruskal</a> dùng DSU để kiểm tra "nối thêm đường này có tạo vòng không?".<br>• <a href="#D1">BFS</a>/<a href="#D2">DFS</a> hỏi liên thông 1 lần thì được, nhưng hỏi nhiều lần → DSU nhanh hơn rất nhiều.</div>
@@ -3393,7 +3393,7 @@ void Dijkstra(int S) {
 
 <!-- D1 -->
 <h3 id="D1">D1. BFS — Duyệt theo chiều rộng</h3>
-<p><em>💡 Hình dung: Đồ thị đã biết lưu thế nào (D0). Giờ muốn tìm đường ngắn nhất? Ném viên đá xuống hồ — sóng lan ra vòng 1 (các đỉnh cách 1 bước), rồi vòng 2, vòng 3... Vì sóng lan đều nên đỉnh nào sóng đến trước = đường ngắn nhất. Dùng <strong>queue</strong> (hàng đợi) để xử lý ai đến trước làm trước. Chỉ đúng khi mọi cạnh dài bằng nhau — nếu cạnh dài khác nhau thì phải dùng <strong>Dijkstra</strong>.</em></p>
+<p><em>💡 Hình dung: Đồ thị đã biết lưu thế nào (D0). Giờ muốn tìm đường ngắn nhất? Sóng lan ra vòng 1 (các đỉnh cách 1 bước), rồi vòng 2, vòng 3... Vì sóng lan đều nên đỉnh nào sóng đến trước = đường ngắn nhất. Dùng <strong>queue</strong> (hàng đợi) để xử lý ai đến trước làm trước. Chỉ đúng khi mọi cạnh dài bằng nhau — nếu cạnh dài khác nhau thì phải dùng <strong>Dijkstra</strong>.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng DFS tìm đường ngắn nhất → không đảm bảo đúng (đường tìm được có thể dài hơn). Vét cạn mọi đường → O(n!). BFS đảm bảo <strong>đúng + nhanh O(V+E)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" (đồ thị <strong>không trọng số</strong>), "duyệt theo tầng", "lưới/mê cung", "truy vết đường đi"</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• BFS giống sóng lan đều → chỉ đúng khi mọi đường dài bằng nhau. Đường dài ngắn khác nhau → phải dùng <a href="#D3">Dijkstra</a> (ưu tiên đường ngắn trước, dùng <a href="#C3">Priority Queue</a>).<br>• Chỉ cần đếm "mấy nhóm riêng biệt?" → <a href="#D2b">D2b</a> hoặc <a href="#C4">DSU</a>.</div>
@@ -3548,7 +3548,7 @@ int main() {
 
 <!-- D2 -->
 <h3 id="D2">D2. DFS — Duyệt theo chiều sâu</h3>
-<p><em>💡 Hình dung: BFS lan từng lớp (lớp 1 xong mới lớp 2) — dùng queue. DFS ngược lại: lao sâu hết 1 ngõ rồi mới quay lại thử ngõ khác — dùng stack (hoặc đệ quy). Ví dụ: đếm bản đồ có bao nhiêu "đảo" riêng biệt? Mỗi lần gặp đỉnh chưa thăm → DFS loang hết đảo đó → +1 đảo. BFS cũng làm được, nhưng DFS code ngắn hơn (dùng đệ quy).</em></p>
+<p><em>💡 Hình dung: BFS lan từng lớp (lớp 1 xong mới lớp 2) — dùng queue. DFS ngược lại: đi sâu hết 1 nhánh rồi mới quay lại thử nhánh khác — dùng stack (hoặc đệ quy). Ví dụ: đếm bản đồ có bao nhiêu "đảo" riêng biệt? Mỗi lần gặp đỉnh chưa thăm → DFS loang hết đảo đó → +1 đảo. BFS cũng làm được, nhưng DFS code ngắn hơn (dùng đệ quy).</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Đếm nhóm liên thông bằng cách thử mọi cặp đỉnh → O(V²). Hoặc kiểm tra chu trình bằng tay → cực khó. DFS làm tất cả trong <strong>O(V+E)</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đếm nhóm riêng biệt (thành phần liên thông)", "kiểm tra chu trình", "tô màu đồ thị"</div>
 <div class="tip"><strong>LƯU Ý:</strong> Dùng stack thay đệ quy để tránh tràn bộ nhớ khi N lớn (N > 10⁴)</div>
@@ -3578,7 +3578,7 @@ int main() {
         stack&lt;int&gt; stk;
         stk.push(s); Free[s] = false;
         cout &lt;&lt; "TPLT " &lt;&lt; soTPLT &lt;&lt; ": ";
-        // KEY: Stack LIFO → lao sâu 1 nhánh trước, quay lại sau
+        // KEY: Stack LIFO → đi sâu 1 nhánh trước, quay lại sau
         while (!stk.empty()) {
             int u = stk.top(); stk.pop();
             cout &lt;&lt; u &lt;&lt; " ";
@@ -3812,7 +3812,7 @@ int main() {
 
 <!-- D5 -->
 <h3 id="D5">D5. Bellman-Ford — Đường đi ngắn nhất (có trọng số ÂM)</h3>
-<p><em>💡 Hình dung: Dijkstra chết khi gặp cạnh âm (VD: đường "giảm giá"). Bellman-Ford chậm hơn nhưng xử lý được trọng số âm. Cách làm: lặp N−1 vòng, mỗi vòng duyệt MỌI cạnh và cập nhật khoảng cách nếu tìm được đường ngắn hơn. Giống như Dijkstra lặp nhiều lần mà không cần Priority Queue. O(V×E), chậm nhưng an toàn.</em></p>
+<p><em>💡 Hình dung: Dijkstra cho kết quả sai khi có cạnh âm (VD: đường "giảm giá"). Bellman-Ford chậm hơn nhưng xử lý được trọng số âm. Cách làm: lặp N−1 vòng, mỗi vòng duyệt MỌI cạnh và cập nhật khoảng cách nếu tìm được đường ngắn hơn. Giống như Dijkstra lặp nhiều lần mà không cần Priority Queue. O(V×E), chậm nhưng an toàn.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" + đồ thị có <strong>trọng số ÂM</strong>, hoặc cần phát hiện <strong>chu trình âm</strong></div>
 <div class="tip"><strong>SO SÁNH:</strong>
 Dijkstra: O(E log V), nhanh, nhưng CHỈ dùng khi trọng số ≥ 0<br>
@@ -4324,7 +4324,7 @@ int main() {
 
 <h3 id="E3">E3. Lũy thừa nhanh — a^n mod m trong O(log n)</h3>
 <p><em>💡 Hình dung: Chia để trị chia đôi bài toán. Lũy thừa nhanh dùng đúng ý đó với số mũ: 2¹⁰ = (2⁵)², và 2⁵ = 2×(2²)² → chỉ vài lần nhân! Với số mũ hàng tỷ, thay vì nhân hàng tỷ lần, ta chia đôi số mũ → ~30 lần nhân. Kết hợp mod sau mỗi bước để số không bị quá lớn. Sẽ gặp lại ở Lũy thừa ma trận (B8).</em></p>
-<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Nhân a với chính nó n lần → O(n). Với n = 10¹⁸ → <strong>không bao giờ chạy xong</strong>. Lũy thừa nhanh → <strong>O(log n) ≈ 60 lần nhân</strong>.</div>
+<div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Nhân a với chính nó n lần → O(n). Với n = 10¹⁸ → <strong>quá chậm, không khả thi</strong>. Lũy thừa nhanh → <strong>O(log n) ≈ 60 lần nhân</strong>.</div>
 <pre>
 // ═══ LŨY THỪA NHANH ═══
 #include &lt;bits/stdc++.h&gt;
@@ -4897,7 +4897,7 @@ int main() {
 <p><em>💡 Hình dung: Lấy tất cả hậu tố (suffix) của xâu s, sắp xếp chúng theo thứ tự từ điển, rồi ghi lại vị trí bắt đầu → đó là Suffix Array. Giống như xé 1 quyển sách thành n tờ (tờ 1 từ trang 1 đến cuối, tờ 2 từ trang 2 đến cuối, …), rồi xếp các tờ theo ABC. Kết hợp với mảng LCP (Longest Common Prefix — tiền tố chung dài nhất giữa 2 suffix liền kề) → giải được hàng loạt bài xâu nâng cao.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Nhiều bài xâu nâng cao (đếm xâu con distinct, tìm xâu con chung dài nhất 2 xâu) nếu brute force → O(n²) hoặc O(n² log n). Suffix Array + LCP → <strong>O(n log n)</strong> build, O(n) trả lời.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đếm số xâu con phân biệt", "xâu con chung dài nhất (LCS) của 2 xâu", "xâu con nhỏ nhất theo thứ tự từ điển", "tìm xâu con lặp lại dài nhất"</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#F1">Hash</a> + <a href="#A8">Binary Search</a> cũng giải được nhiều bài tương tự nhưng bị rủi ro xung đột. Suffix Array <b>chính xác 100%</b>.<br>• Bài "đếm xâu con distinct": tổng kết quả = n(n+1)/2 − tổng LCP → cực kỳ hay gặp trong đề Olympic.<br>• Xây Suffix Array O(n log n) bằng thuật toán <a href="#A9">Sort</a> theo bước nhảy × 2 (doubling).</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#F1">Hash</a> + <a href="#A8">Binary Search</a> cũng giải được nhiều bài tương tự nhưng bị rủi ro xung đột. Suffix Array <b>chính xác 100%</b>.<br>• Bài "đếm xâu con distinct": tổng kết quả = n(n+1)/2 − tổng LCP → hay gặp trong đề Olympic.<br>• Xây Suffix Array O(n log n) bằng thuật toán <a href="#A9">Sort</a> theo bước nhảy × 2 (doubling).</div>
 
 <p><strong>Ý tưởng xây Suffix Array — Doubling O(n log² n):</strong></p>
 <pre style="background: #1e1e1e; color: #d4d4d4;">
@@ -5334,7 +5334,7 @@ out &lt;&lt; (st.empty() ? "YES" : "NO");
 </table>
 
 <h3 id="ref-pq">📌 PRIORITY_QUEUE (Hàng đợi ưu tiên / Heap)</h3>
-<p><em>💡 Hình dung: Thùng bóng — mỗi lần thò tay vào luôn lấy ra quả TO NHẤT (hoặc nhỏ nhất).</em></p>
+<p><em>💡 Hình dung: Luôn giữ phần tử lớn nhất (hoặc nhỏ nhất) ở đầu, lấy ra ngay.</em></p>
 <table>
 <tr><th>Hàm</th><th>Công dụng</th><th>Độ phức tạp</th></tr>
 <tr><td><code>priority_queue&lt;int&gt; pq</code></td><td>Max heap (lấy ra lớn nhất)</td><td></td></tr>
