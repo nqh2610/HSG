@@ -530,16 +530,33 @@ memset(dem, 0, sizeof(dem));   // Nhanh hơn for (int i...) dem[i]=0
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Prefix Sum giống <b>bảng cộng dồn điểm</b>: tính sẵn 1 lần, sau đó hỏi "tổng từ bạn 3→7" chỉ cần 1 phép trừ. Ngược lại, <a href="#A3">Mảng hiệu</a> giống <b>ghi lệnh "cộng điểm"</b>: ghi nhanh rồi cuối cùng cộng dồn lại — hai kỹ thuật này luôn đi cặp.<br>• Thay phép cộng bằng XOR → <a href="#A2">Prefix XOR</a> (cùng ý tưởng, khác phép toán).<br>• Nếu bài vừa hỏi tổng vừa hay thay đổi điểm → bảng cộng dồn bị lỗi thời, phải dùng <a href="#C5">BIT</a> hoặc <a href="#C7">Segment Tree</a> (bảng tự cập nhật).<br>• Bài "đoạn con tổng lớn nhất" → dùng <a href="#A11">Kadane</a> đi 1 lượt là xong, không cần Prefix Sum.</div>
 <pre>
 // ═══ PREFIX SUM 1D ═══
-// Bài toán: Cho mảng n phần tử. Trả lời Q câu hỏi "tổng từ vị trí L đến R?"
-// Input: n, a[1..n], Q câu hỏi (l, r) | Output: tổng a[l..r] mỗi câu
-// Build: O(n) | Query: O(1)
-long long prefix[100005];
-prefix[0] = 0;
-for (int i = 1; i &lt;= n; i++)
-    prefix[i] = prefix[i-1] + a[i];
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Tổng đoạn [l, r]
-long long tong = prefix[r] - prefix[l-1];
+int main() {
+    // --- Dữ liệu mẫu ---
+    int n = 5;
+    int a[] = {0, 3, 1, 4, 1, 5};  // a[1..5], a[0] bỏ trống
+
+    // --- Build prefix sum: O(n) ---
+    long long prefix[6] = {};
+    for (int i = 1; i &lt;= n; i++)
+        prefix[i] = prefix[i-1] + a[i];
+
+    // --- Query: O(1) mỗi câu ---
+    // KEY: tổng [l,r] = prefix[r] - prefix[l-1], chỉ 1 phép trừ
+    int l = 2, r = 4;
+    cout &lt;&lt; "Tong [" &lt;&lt; l &lt;&lt; "," &lt;&lt; r &lt;&lt; "] = "
+         &lt;&lt; prefix[r] - prefix[l-1] &lt;&lt; endl;
+    // Thử thêm truy vấn khác
+    l = 1; r = 5;
+    cout &lt;&lt; "Tong [" &lt;&lt; l &lt;&lt; "," &lt;&lt; r &lt;&lt; "] = "
+         &lt;&lt; prefix[r] - prefix[l-1] &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Tong [2,4] = 6
+// Tong [1,5] = 14
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong>
@@ -564,14 +581,35 @@ Bước 2 — Truy vấn: Tổng đoạn [2, 4] = ?
 </div>
 <pre>
 // ═══ PREFIX SUM 2D ═══
-// Build: O(m×n) | Query: O(1)
-// sum[i][j] = tổng HCN từ (1,1) đến (i,j)
-for (int i = 1; i &lt;= m; i++)
-    for (int j = 1; j &lt;= n; j++)
-        sum[i][j] = a[i][j] + sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1];
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
 
-// Tổng HCN từ (r1,c1) đến (r2,c2)
-ll tong = sum[r2][c2] - sum[r1-1][c2] - sum[r2][c1-1] + sum[r1-1][c1-1];
+int main() {
+    // --- Dữ liệu mẫu: bảng 3×4 ---
+    int m = 3, n = 4;
+    int a[4][5] = {
+        {},
+        {0, 1, 2, 3, 4},   // hàng 1
+        {0, 5, 6, 7, 8},   // hàng 2
+        {0, 9, 10,11,12}    // hàng 3
+    };
+
+    // --- Build: O(m×n) ---
+    ll sum[4][5] = {};
+    for (int i = 1; i &lt;= m; i++)
+        for (int j = 1; j &lt;= n; j++)
+            sum[i][j] = a[i][j] + sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1];
+
+    // --- Query: tổng HCN (2,2) → (3,4) ---
+    // KEY: Bao hàm-Loại trừ: cộng toàn bộ - 2 cạnh + góc chồng
+    int r1=2, c1=2, r2=3, c2=4;
+    ll tong = sum[r2][c2] - sum[r1-1][c2] - sum[r2][c1-1] + sum[r1-1][c1-1];
+    cout &lt;&lt; "Tong HCN (" &lt;&lt; r1 &lt;&lt; "," &lt;&lt; c1 &lt;&lt; ")->(" &lt;&lt; r2 &lt;&lt; "," &lt;&lt; c2 &lt;&lt; ") = " &lt;&lt; tong &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output: Tong HCN (2,2)->(3,4) = 54
+// Kiểm tra: 6+7+8 + 10+11+12 = 54 ✓
 </pre>
 
 <!-- A2 -->
@@ -593,30 +631,54 @@ a ⊕ b = b ⊕ a      (giao hoán)
 
 <p><strong>Code mẫu — XOR đoạn [l, r] trong O(1):</strong></p>
 <pre>
-// Bài toán: Cho mảng n phần tử. Trả lời Q truy vấn "XOR các phần tử từ l đến r".
-// Input: n, a[1..n], Q truy vấn (l, r) | Output: XOR(a[l], a[l+1], ..., a[r])
-int px[100005] = {};  // prefix XOR, px[0] = 0
-for (int i = 1; i &lt;= n; i++)
-    px[i] = px[i - 1] ^ a[i];
+// ═══ PREFIX XOR ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Truy vấn XOR đoạn [l, r]:
-int ans = px[r] ^ px[l - 1];
+int main() {
+    int n = 5;
+    int a[] = {0, 3, 1, 4, 1, 5};  // a[1..5]
+
+    // Build prefix XOR
+    int px[6] = {};
+    for (int i = 1; i &lt;= n; i++)
+        px[i] = px[i - 1] ^ a[i];
+
+    // KEY: a ⊕ a = 0 → prefix[r] ⊕ prefix[l-1] = XOR đoạn [l,r]
+    // Truy vấn XOR đoạn [2, 4]
+    int l = 2, r = 4;
+    int ans = px[r] ^ px[l - 1];
+    cout &lt;&lt; "XOR [" &lt;&lt; l &lt;&lt; "," &lt;&lt; r &lt;&lt; "] = " &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output: XOR [2,4] = 4
+// Kiểm tra: 1^4^1 = 4 ✓
 </pre>
 
 <p><strong>Ứng dụng: Đếm đoạn con có XOR = k</strong></p>
 <pre>
-// Bài toán: Đếm số đoạn con [l, r] có XOR = k
-// Input: n, a[1..n], k | Output: số đoạn con thỏa
-// Nhận xét: px[r] ^ px[l-1] = k  ⟺  px[l-1] = px[r] ^ k
-map&lt;int,int&gt; cnt;
-cnt[0] = 1;  // px[0] = 0
-long long ans = 0;
-int cur = 0;
-for (int i = 1; i &lt;= n; i++) {
-    cur ^= a[i];
-    ans += cnt[cur ^ k];
-    cnt[cur]++;
+// ═══ ĐẾM ĐOẠN CON XOR = K ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 5, k = 4;
+    int a[] = {0, 3, 1, 4, 1, 5};  // a[1..5]
+
+    // KEY: prefix[r] ^ prefix[l-1] = k ⟺ tìm prefix[r] ^ k trong map
+    map&lt;int,int&gt; cnt;
+    cnt[0] = 1;
+    long long ans = 0;
+    int cur = 0;
+    for (int i = 1; i &lt;= n; i++) {
+        cur ^= a[i];
+        ans += cnt[cur ^ k];
+        cnt[cur]++;
+    }
+    cout &lt;&lt; "So doan con XOR = " &lt;&lt; k &lt;&lt; ": " &lt;&lt; ans &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output: So doan con XOR = 4: 3
 </pre>
 
 <h3 id="A3">A3. Difference Array — Mảng hiệu (Cộng cả đoạn trong O(1))</h3>
@@ -648,22 +710,31 @@ Kết quả:    [0, 2, 5, 5,  3,  0]
 
 <p><strong>Code mẫu — Cộng đoạn nhiều lần, hỏi kết quả cuối:</strong></p>
 <pre>
-// Bài toán: Cho mảng n phần tử. Thực hiện Q lệnh "cộng val vào mọi phần tử từ l đến r".
-// Input: n, Q lệnh (l, r, val) | Output: mảng sau khi thực hiện hết lệnh
-int d[100005] = {};  // mảng hiệu, khởi tạo = 0
+// ═══ DIFFERENCE ARRAY 1D ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Mỗi truy vấn: cộng val vào đoạn [l, r]
-while (q--) {
-    int l, r, val;
-    fin >> l >> r >> val;
-    d[l] += val;
-    d[r + 1] -= val;   // r+1 để "huỷ" hiệu ứng sau đoạn
+int main() {
+    int n = 5;
+    int d[7] = {};  // mảng hiệu, khởi tạo = 0
+
+    // KEY: Chỉ ghi 2 đầu mút d[l]+=val, d[r+1]-=val → cập nhật đoạn O(1)
+    // Lệnh 1: cộng 3 vào đoạn [2, 4]
+    d[2] += 3; d[5] -= 3;
+    // Lệnh 2: cộng 2 vào đoạn [1, 3]
+    d[1] += 2; d[4] -= 2;
+
+    // Prefix Sum lại → ra giá trị thực
+    cout &lt;&lt; "Ket qua: ";
+    for (int i = 1; i &lt;= n; i++) {
+        d[i] += d[i - 1];
+        cout &lt;&lt; d[i] &lt;&lt; " ";
+    }
+    cout &lt;&lt; endl;
+    return 0;
 }
-
-// Prefix Sum lại → ra giá trị thực của từng vị trí
-for (int i = 1; i &lt;= n; i++)
-    d[i] += d[i - 1];
-// Giờ d[i] = giá trị thực tại vị trí i
+// ▶ Output: Ket qua: 2 5 5 3 0
+// Vị trí 2,3 được +3 và +2 = 5 ✓
 </pre>
 
 <!-- A3 -->
@@ -688,25 +759,40 @@ Sau prefix sum 2D → mỗi ô trong HCN (2,1)→(3,3) đều được +3
 
 <p><strong>Code mẫu — Cộng HCN nhiều lần, hỏi kết quả cuối:</strong></p>
 <pre>
-// Bài toán: Cho bảng m×n. Thực hiện Q lệnh "cộng val vào mọi ô trong HCN (r1,c1)→(r2,c2)".
-// Input: m, n, Q lệnh (r1, c1, r2, c2, val) | Output: bảng sau khi thực hiện hết lệnh
-int d[1005][1005] = {};  // mảng hiệu 2D
+// ═══ DIFFERENCE 2D ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Mỗi truy vấn: cộng val vào HCN (r1,c1) → (r2,c2)
-while (q--) {
-    int r1, c1, r2, c2, val;
-    fin >> r1 >> c1 >> r2 >> c2 >> val;
-    d[r1][c1]     += val;
-    d[r1][c2 + 1] -= val;
-    d[r2 + 1][c1] -= val;
-    d[r2 + 1][c2 + 1] += val;
+int main() {
+    int m = 4, n = 4;
+    int d[6][6] = {};
+
+    // Lệnh: cộng 3 vào HCN (2,1) → (3,3)
+    int r1=2, c1=1, r2=3, c2=3, val=3;
+    // KEY: Ghi 4 góc HCN, rồi prefix sum 2D khôi phục → O(1) mỗi cập nhật
+    d[r1][c1]       += val;
+    d[r1][c2 + 1]   -= val;
+    d[r2 + 1][c1]   -= val;
+    d[r2 + 1][c2+1] += val;
+
+    // Prefix Sum 2D lại
+    for (int i = 1; i &lt;= m; i++)
+        for (int j = 1; j &lt;= n; j++)
+            d[i][j] += d[i-1][j] + d[i][j-1] - d[i-1][j-1];
+
+    // In bảng kết quả
+    for (int i = 1; i &lt;= m; i++) {
+        for (int j = 1; j &lt;= n; j++)
+            cout &lt;&lt; d[i][j] &lt;&lt; " ";
+        cout &lt;&lt; endl;
+    }
+    return 0;
 }
-
-// Prefix Sum 2D lại → ra giá trị thực
-for (int i = 1; i &lt;= m; i++)
-    for (int j = 1; j &lt;= n; j++)
-        d[i][j] += d[i-1][j] + d[i][j-1] - d[i-1][j-1];
-// Giờ d[i][j] = giá trị thực tại ô (i, j)
+// ▶ Output:
+// 0 0 0 0
+// 3 3 3 0
+// 3 3 3 0
+// 0 0 0 0
 </pre>
 
 <h3 id="A5">A5. Two Pointers — Hai con trỏ</h3>
@@ -715,49 +801,66 @@ for (int i = 1; i &lt;= m; i++)
 <div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con dài nhất có tổng ≤ K", "cặp (i,j) thỏa a[i]+a[j] = k" (mảng đã sort), "đoạn ngắn nhất chứa đủ k giá trị"</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Muốn dùng Two Pointers tìm cặp → thường phải <a href="#A9">Sort</a> trước (giống xếp học sinh theo chiều cao rồi mới ghép cặp).<br>• Nếu trong đoạn cần biết thêm ai cao nhất/thấp nhất → gắn thêm <a href="#C2">Deque</a> thành <a href="#A6">Sliding Window</a>.</div>
 <pre>
-// ═══ Tìm đoạn con dài nhất có tổng ≤ K ═══
-// Bài toán: Cho mảng n phần tử không âm và số K. Tìm đoạn con liên tiếp dài nhất có tổng ≤ K.
-// Input: n, K, a[0..n-1] | Output: độ dài đoạn con dài nhất
-// O(n) — L chỉ tiến, không lùi
-int L = 0, maxLen = 0;
-long long sum = 0;
+// ═══ TWO POINTERS: Đoạn con dài nhất tổng ≤ K ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-for (int R = 0; R &lt; n; R++) {
-    sum += a[R];                    // Mở rộng phải
-    while (sum > K &amp;&amp; L &lt;= R) {    // Thu hẹp trái nếu vi phạm
-        sum -= a[L];
-        L++;
+int main() {
+    int n = 6, K = 7;
+    int a[] = {2, 3, 1, 2, 4, 3};
+
+    // KEY: L chỉ tiến, R chỉ tiến → tổng O(n) thay vì O(n²)
+    int L = 0, maxLen = 0;
+    long long sum = 0;
+    for (int R = 0; R &lt; n; R++) {
+        sum += a[R];
+        while (sum > K &amp;&amp; L &lt;= R) {
+            sum -= a[L];
+            L++;
+        }
+        maxLen = max(maxLen, R - L + 1);
     }
-    maxLen = max(maxLen, R - L + 1);
+    cout &lt;&lt; "Doan con dai nhat tong &lt;= " &lt;&lt; K &lt;&lt; ": " &lt;&lt; maxLen &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output: Doan con dai nhat tong &lt;= 7: 3
 </pre>
 <pre>
-// ═══ Đếm SỐ CẶP CHỈ SỐ (i,j) có a[i]+a[j] = K ═══
-// Bài toán: Cho mảng n phần tử. Đếm số cặp (i,j) với i&lt;j sao cho a[i]+a[j]=K.
-// Input: n, K, a[0..n-1] | Output: số cặp
-sort(a, a + n);
-int L = 0, R = n - 1;
-long long cnt = 0;
-while (L &lt; R) {
-    long long s = (long long)a[L] + a[R];
-    if (s == K) {
-        if (a[L] == a[R]) {
-            // Tất cả phần tử từ L→R bằng nhau: chọn 2 trong (R-L+1)
-            long long len = R - L + 1;
-            cnt += len * (len - 1) / 2;
-            break;
+// ═══ TWO POINTERS: Đếm cặp (i,j) có a[i]+a[j] = K ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 6, K = 6;
+    int a[] = {1, 2, 3, 3, 4, 5};
+
+    // KEY: Sort trước, L từ trái R từ phải, kẹp dần vào giữa
+    sort(a, a + n);
+    int L = 0, R = n - 1;
+    long long cnt = 0;
+    while (L &lt; R) {
+        long long s = (long long)a[L] + a[R];
+        if (s == K) {
+            if (a[L] == a[R]) {
+                long long len = R - L + 1;
+                cnt += len * (len - 1) / 2;
+                break;
+            }
+            int cntL = 1, cntR = 1;
+            while (L + cntL &lt; R &amp;&amp; a[L + cntL] == a[L]) cntL++;
+            while (R - cntR > L &amp;&amp; a[R - cntR] == a[R]) cntR++;
+            cnt += (long long)cntL * cntR;
+            L += cntL;
+            R -= cntR;
         }
-        // Đếm số phần tử trùng ở 2 đầu
-        int cntL = 1, cntR = 1;
-        while (L + cntL &lt; R &amp;&amp; a[L + cntL] == a[L]) cntL++;
-        while (R - cntR > L &amp;&amp; a[R - cntR] == a[R]) cntR++;
-        cnt += (long long)cntL * cntR;
-        L += cntL;
-        R -= cntR;
+        else if (s &lt; K) L++;
+        else             R--;
     }
-    else if (s &lt; K) L++;
-    else             R--;
+    cout &lt;&lt; "So cap co tong = " &lt;&lt; K &lt;&lt; ": " &lt;&lt; cnt &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output: So cap co tong = 6: 3
+// Các cặp: (1,5), (2,4), (3,3)
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Tìm đoạn con dài nhất có tổng ≤ 7
@@ -814,23 +917,30 @@ Mỗi lần cửa sổ trượt sang phải 1 ô:
 </div>
 
 <pre>
-// ═══ Max trong mỗi cửa sổ kích thước k ═══
-// Dùng deque giảm dần — O(n)
-deque&lt;int&gt; dq;  // Lưu chỉ số (vị trí), KHÔNG lưu giá trị
-for (int i = 0; i &lt; n; i++) {
-    //1. Đầu deque ra khỏi cửa sổ rồi → bỏ
-    // Cửa sổ kết thúc ở i, bắt đầu ở i-k+1
-    // Nên vị trí ≤ i-k là ngoài cửa sổ
-    while (!dq.empty() &amp;&amp; dq.front() &lt;= i - k)
-        dq.pop_front();
-    //2. Phần tử mới vào: đá hết ai nhỏ hơn nó
-    while (!dq.empty() &amp;&amp; a[dq.back()] &lt;= a[i])
-        dq.pop_back();
-    dq.push_back(i);  // Cho phần tử mới vào cuối deque
-    //3. Đầu deque = max cửa sổ hiện tại
-    if (i >= k - 1)
-        out &lt;&lt; a[dq.front()] &lt;&lt; " ";
+// ═══ SLIDING WINDOW MAX ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 5, k = 3;
+    int a[] = {1, 3, 2, 5, 4};
+
+    // KEY: Deque giữ ứng viên max giảm dần, đầu deque = max cửa sổ
+    deque&lt;int&gt; dq;  // Lưu chỉ số
+    cout &lt;&lt; "Max moi cua so k=" &lt;&lt; k &lt;&lt; ": ";
+    for (int i = 0; i &lt; n; i++) {
+        while (!dq.empty() &amp;&amp; dq.front() &lt;= i - k)
+            dq.pop_front();
+        while (!dq.empty() &amp;&amp; a[dq.back()] &lt;= a[i])
+            dq.pop_back();
+        dq.push_back(i);
+        if (i >= k - 1)
+            cout &lt;&lt; a[dq.front()] &lt;&lt; " ";
+    }
+    cout &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output: Max moi cua so k=3: 3 5 5
 </pre>
 
 <!-- A7 -->
@@ -862,23 +972,36 @@ Kết quả: [5, 5, 6, -1, 3, -1]
 
 <p><strong>Code mẫu — Phần tử lớn hơn gần nhất bên phải:</strong></p>
 <pre>
-// ═══ Mono Stack: Phần tử lớn hơn gần nhất bên phải ═══
-// Bài toán: Cho mảng n phần tử. Với mỗi a[i], tìm phần tử lớn hơn gần nhất bên phải.
-// Input: n, a[0..n-1] | Output: ans[i] = giá trị lớn hơn gần nhất bên phải (-1 nếu không có)
-// O(n) — Mỗi phần tử chỉ vào/ra stack đúng 1 lần
-stack&lt;int&gt; st;          // Lưu giá trị (hoặc chỉ số tuỳ bài)
-int ans[100005];
+// ═══ MONO STACK ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-for (int i = n - 1; i >= 0; i--) {
-    // Loại phần tử nhỏ hơn hoặc bằng — chúng bị "che" bởi a[i]
-    while (!st.empty() &amp;&amp; st.top() &lt;= a[i])
-        st.pop();
+int main() {
+    int n = 6;
+    int a[] = {2, 1, 5, 6, 2, 3};
+    int ans[6];
 
-    // Đỉnh stack = phần tử lớn hơn gần nhất bên phải
-    ans[i] = st.empty() ? -1 : st.top();
+    // KEY: Pop hết phần tử nhỏ hơn a[i] → stack luôn tăng dần (monotone)
+    stack&lt;int&gt; st;
+    for (int i = n - 1; i >= 0; i--) {
+        while (!st.empty() &amp;&amp; st.top() &lt;= a[i])
+            st.pop();
+        ans[i] = st.empty() ? -1 : st.top();
+        st.push(a[i]);
+    }
 
-    st.push(a[i]);
+    cout &lt;&lt; "Phan tu lon hon gan nhat ben phai:" &lt;&lt; endl;
+    for (int i = 0; i &lt; n; i++)
+        cout &lt;&lt; "a[" &lt;&lt; i &lt;&lt; "]=" &lt;&lt; a[i] &lt;&lt; " -> " &lt;&lt; ans[i] &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output:
+// a[0]=2 -> 5
+// a[1]=1 -> 5
+// a[2]=5 -> 6
+// a[3]=6 -> -1
+// a[4]=2 -> 3
+// a[5]=3 -> -1
 </pre>
 
 <div class="tip"><strong>Khác Sliding Window:</strong> Sliding Window dùng deque để duy trì min/max trong <em>cửa sổ cố định</em>. Mono Stack tìm phần tử lớn/nhỏ hơn gần nhất — <em>không có cửa sổ</em>, duyệt cả mảng.</div>
@@ -906,27 +1029,66 @@ for (int i = n - 1; i >= 0; i--) {
 </div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống tìm từ trong từ điển — từ điển phải <b>xếp theo ABC</b> trước mới lật giữa được → mảng phải <a href="#A9">Sort</a> trước!<br>• Combo thi HSG rất hay gặp: đề hỏi "giá trị lớn nhất/nhỏ nhất thỏa..." → <b>chặt đáp án</b> kết hợp hàm check dùng <a href="#B2">Greedy</a>.</div>
 <pre>
-// ═══ Hàm có sẵn (mảng PHẢI sort trước) ═══
-sort(a, a + n);
+// ═══ BINARY SEARCH: lower/upper_bound ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-int pos1 = lower_bound(a, a+n, x) - a;  // Vị trí đầu tiên >= x
-int pos2 = upper_bound(a, a+n, x) - a;  // Vị trí đầu tiên > x
-int cntX = pos2 - pos1;                  // Số phần tử = x
-int cntLR = upper_bound(a,a+n,R) - lower_bound(a,a+n,L);  // Trong [L,R]
+int main() {
+    int n = 7;
+    int a[] = {1, 2, 2, 3, 5, 5, 8};
+    // Mảng đã sort sẵn
+
+    int x = 2;
+    // KEY: Mảng PHẢI sort; lower_bound = vị trí ≥ x đầu tiên
+    int pos1 = lower_bound(a, a+n, x) - a;
+    int pos2 = upper_bound(a, a+n, x) - a;
+    cout &lt;&lt; "lower_bound(" &lt;&lt; x &lt;&lt; ") = vi tri " &lt;&lt; pos1 &lt;&lt; endl;
+    cout &lt;&lt; "upper_bound(" &lt;&lt; x &lt;&lt; ") = vi tri " &lt;&lt; pos2 &lt;&lt; endl;
+    cout &lt;&lt; "So phan tu = " &lt;&lt; x &lt;&lt; ": " &lt;&lt; pos2 - pos1 &lt;&lt; endl;
+
+    int L = 2, R = 5;
+    int cntLR = upper_bound(a,a+n,R) - lower_bound(a,a+n,L);
+    cout &lt;&lt; "So phan tu trong [" &lt;&lt; L &lt;&lt; "," &lt;&lt; R &lt;&lt; "]: " &lt;&lt; cntLR &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// lower_bound(2) = vi tri 1
+// upper_bound(2) = vi tri 3
+// So phan tu = 2: 2
+// So phan tu trong [2,5]: 5
 </pre>
 <pre>
 // ═══ CHẶT NHỊ PHÂN ĐÁP ÁN ═══
-// "Tìm giá trị nhỏ nhất sao cho check(mid) = true"
-int lo = MIN_ANS, hi = MAX_ANS, ans = -1;
-while (lo &lt;= hi) {
-    int mid = lo + (hi - lo) / 2;
-    if (check(mid)) {   // Hàm kiểm tra mid có thỏa không
-        ans = mid;
-        hi = mid - 1;   // Tìm nhỏ hơn
-    } else {
-        lo = mid + 1;
+// Bài: Chia mảng n phần tử thành k đoạn, max tổng đoạn nhỏ nhất?
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n = 6, k = 3;
+int a[] = {2, 3, 1, 2, 4, 3};
+
+bool check(int maxSum) { // Chia được k đoạn với max tổng ≤ maxSum?
+    int cnt = 1, cur = 0;
+    for (int i = 0; i &lt; n; i++) {
+        if (a[i] > maxSum) return false;
+        if (cur + a[i] > maxSum) { cnt++; cur = a[i]; }
+        else cur += a[i];
     }
+    return cnt &lt;= k;
 }
+
+int main() {
+    // KEY: Binary search trên đáp án: thử mid, check(mid) khả thi không
+    int lo = 4, hi = 15, ans = hi; // lo = max(a[i]), hi = sum(a)
+    while (lo &lt;= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (check(mid)) { ans = mid; hi = mid - 1; }
+        else lo = mid + 1;
+    }
+    cout &lt;&lt; "Max tong doan nho nhat: " &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output: Max tong doan nho nhat: 6
+// Chia: [2,3,1] [2,4] [3] → tổng max = 6
 </pre>
 
 <!-- A9 -->
@@ -936,24 +1098,55 @@ while (lo &lt;= hi) {
 <div class="warn"><strong>DẤU HIỆU:</strong> "ghép cặp tối ưu", "|a[i]-a[j]| ≤ k", "sắp xếp theo nhiều tiêu chí"
 <br><strong>MẸO:</strong> Sort trước → nhiều bài giải được bằng Greedy hoặc Two Pointers</div>
 <pre>
-// Sort cơ bản
-sort(a, a + n);                              // Tăng dần
-sort(a, a + n, greater&lt;int&gt;());              // Giảm dần
+// ═══ SORTING ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Sort struct theo nhiều tiêu chí
+struct SinhVien {
+    string ten;
+    int diem;
+};
+
+// KEY: cmp(a,b) trả true ⟺ a đứng TRƯỚC b trong thứ tự mong muốn
 bool cmp(SinhVien a, SinhVien b) {
-    if (a.diem != b.diem) return a.diem > b.diem;  // Điểm giảm
-    return a.ten &lt; b.ten;                           // Tên tăng
+    if (a.diem != b.diem) return a.diem > b.diem;
+    return a.ten &lt; b.ten;
 }
-sort(sv, sv + n, cmp);
 
-// Sort pair (tự động theo first, rồi second)
-pair&lt;int, int&gt; a[100005];
-sort(a, a + n);
+int main() {
+    // Sort cơ bản
+    int a[] = {5, 2, 8, 1, 9, 3};
+    int n = 6;
+    sort(a, a + n);
+    cout &lt;&lt; "Tang dan: ";
+    for (int i = 0; i &lt; n; i++) cout &lt;&lt; a[i] &lt;&lt; " ";
+    cout &lt;&lt; endl;
 
-// Loại bỏ trùng lặp sau sort
-sort(a, a + n);
-int m = unique(a, a + n) - a;  // m = số phần tử distinct
+    sort(a, a + n, greater&lt;int&gt;());
+    cout &lt;&lt; "Giam dan: ";
+    for (int i = 0; i &lt; n; i++) cout &lt;&lt; a[i] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+
+    // Sort struct nhiều tiêu chí
+    SinhVien sv[] = {{"Binh",8}, {"An",9}, {"Chi",8}};
+    sort(sv, sv + 3, cmp);
+    cout &lt;&lt; "Sap xep SV: ";
+    for (int i = 0; i &lt; 3; i++)
+        cout &lt;&lt; sv[i].ten &lt;&lt; "(" &lt;&lt; sv[i].diem &lt;&lt; ") ";
+    cout &lt;&lt; endl;
+
+    // Loại bỏ trùng lặp
+    int b[] = {3, 1, 2, 3, 1};
+    sort(b, b + 5);
+    int m = unique(b, b + 5) - b;
+    cout &lt;&lt; "Distinct: " &lt;&lt; m &lt;&lt; " phan tu" &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Tang dan: 1 2 3 5 8 9
+// Giam dan: 9 8 5 3 2 1
+// Sap xep SV: An(9) Binh(8) Chi(8)
+// Distinct: 3 phan tu
 </pre>
 
 <!-- A10 -->
@@ -962,15 +1155,40 @@ int m = unique(a, a + n) - a;  // m = số phần tử distinct
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Dùng map → mỗi lần truy cập O(log n). Dùng mảng đếm → O(1). Khi giá trị ≤ 10⁶ và cần truy cập hàng triệu lần, mảng đếm <strong>nhanh gấp 10-20 lần</strong> so với map.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong> "phần tử xuất hiện nhiều nhất", "tần suất ký tự", giá trị ≤ 10⁶ → dùng mảng đếm thay map</div>
 <pre>
-// Bài toán: Cho mảng n phần tử (0 ≤ a[i] ≤ 10⁶). Tìm phần tử xuất hiện nhiều nhất.
-// Input: n, a[0..n-1] | Output: giá trị xuất hiện nhiều nhất
-int dem[1000001] = {0};
-for (int i = 0; i &lt; n; i++) dem[a[i]]++;
+// ═══ MẢNG ĐẾM ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Tìm mode (phần tử xuất hiện nhiều nhất)
-int maxCnt = 0, mode = 0;
-for (int i = 0; i &lt;= 1000000; i++)
-    if (dem[i] > maxCnt) { maxCnt = dem[i]; mode = i; }
+int main() {
+    int n = 8;
+    int a[] = {3, 1, 4, 1, 5, 9, 2, 5};
+
+    // KEY: Giá trị → chỉ số mảng → truy cập O(1), nhanh hơn map
+    int dem[10] = {};  // giá trị max = 9
+    for (int i = 0; i &lt; n; i++) dem[a[i]]++;
+
+    // Tìm mode (xuất hiện nhiều nhất)
+    int maxCnt = 0, mode = 0;
+    for (int v = 0; v &lt;= 9; v++)
+        if (dem[v] > maxCnt) { maxCnt = dem[v]; mode = v; }
+
+    cout &lt;&lt; "Phan tu xuat hien nhieu nhat: " &lt;&lt; mode
+         &lt;&lt; " (" &lt;&lt; maxCnt &lt;&lt; " lan)" &lt;&lt; endl;
+
+    // In tần suất
+    for (int v = 0; v &lt;= 9; v++)
+        if (dem[v] > 0)
+            cout &lt;&lt; "  " &lt;&lt; v &lt;&lt; ": " &lt;&lt; dem[v] &lt;&lt; " lan" &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Phan tu xuat hien nhieu nhat: 1 (2 lan)
+//   1: 2 lan
+//   2: 1 lan
+//   3: 1 lan
+//   4: 1 lan
+//   5: 2 lan
+//   9: 1 lan
 </pre>
 
 <!-- A11 -->
@@ -980,13 +1198,25 @@ for (int i = 0; i &lt;= 1000000; i++)
 <div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con liên tiếp có tổng lớn nhất", "max subarray sum"</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#A1">Prefix Sum</a> phải thử mọi cặp đầu-cuối → chậm. Kadane chỉ đi 1 lượt: "túi đang lỗ thì vứt, bắt túi mới" — cùng bài nhưng nhanh hơn nhiều.</div>
 <pre>
-// Bài toán: Cho mảng n phần tử (có thể âm). Tìm đoạn con liên tiếp có tổng lớn nhất.
-// Input: n, a[0..n-1] | Output: tổng lớn nhất
-long long maxSum = a[0], cur = a[0];
-for (int i = 1; i &lt; n; i++) {
-    cur = max((long long)a[i], cur + a[i]);  // Tiếp tục hoặc bắt đầu mới
-    maxSum = max(maxSum, cur);
+// ═══ KADANE ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 8;
+    int a[] = {-2, 1, -3, 4, -1, 2, 1, -5};
+
+    // KEY: Tổng hiện tại âm → vứt, bắt đầu đoạn mới từ a[i]
+    long long maxSum = a[0], cur = a[0];
+    for (int i = 1; i &lt; n; i++) {
+        cur = max((long long)a[i], cur + a[i]);
+        maxSum = max(maxSum, cur);
+    }
+    cout &lt;&lt; "Doan con tong lon nhat: " &lt;&lt; maxSum &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output: Doan con tong lon nhat: 6
+// Đoạn [4, -1, 2, 1] có tổng = 6
 </pre>
 
 
@@ -999,14 +1229,34 @@ for (int i = 1; i &lt; n; i++) {
 
 <p><strong>Code mẫu — Nén tọa độ:</strong></p>
 <pre>
-// Bài toán: Cho mảng n phần tử (giá trị đến 10⁹). Nén về [1, m] giữ nguyên thứ tự.
-// Input: n, a[0..n-1] | Output: mảng a[] đã nén
-vector&lt;int&gt; vals(a, a + n);
-sort(vals.begin(), vals.end());
-vals.erase(unique(vals.begin(), vals.end()), vals.end());
-for (int i = 0; i &lt; n; i++)
-    a[i] = lower_bound(vals.begin(), vals.end(), a[i]) - vals.begin() + 1;
-// Giờ a[i] nằm trong [1, m] với m ≤ n → dùng được mảng đếm, BIT
+// ═══ NÉN TỌĐỘ ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 5;
+    int a[] = {100, 999999, 50, 100, 7777};
+
+    // KEY: Sort → loại trùng → lower_bound đánh số lại 0,1,2,...
+    vector&lt;int&gt; vals(a, a + n);
+    sort(vals.begin(), vals.end());
+    vals.erase(unique(vals.begin(), vals.end()), vals.end());
+
+    cout &lt;&lt; "Truoc nen: ";
+    for (int i = 0; i &lt; n; i++) cout &lt;&lt; a[i] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+
+    for (int i = 0; i &lt; n; i++)
+        a[i] = lower_bound(vals.begin(), vals.end(), a[i]) - vals.begin() + 1;
+
+    cout &lt;&lt; "Sau nen:   ";
+    for (int i = 0; i &lt; n; i++) cout &lt;&lt; a[i] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Truoc nen: 100 999999 50 100 7777
+// Sau nen:   2 4 1 2 3
 </pre>
 
 <p><strong>Ví dụ chạy tay:</strong></p>
@@ -1043,19 +1293,36 @@ Bước 3: a[] = {2, 4, 1, 2, 3}
 <h4 id="B1d1">Dạng 1: Duyệt vòng for — Đơn giản nhất</h4>
 <p><em>Dùng khi N nhỏ (≤ 5000) và cần thử mọi cặp/bộ ba.</em></p>
 <pre>
-// Thử tất cả cặp (i, j) — O(N²)
-for (int i = 0; i &lt; n; i++)
-    for (int j = i + 1; j &lt; n; j++)
-        if (a[i] + a[j] == k) ans++;
+// ═══ BRUTE FORCE VÒNG FOR ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Thử tất cả đoạn con [i..j] — O(N²)
-for (int i = 0; i &lt; n; i++) {
-    int sum = 0;
-    for (int j = i; j &lt; n; j++) {
-        sum += a[j];
-        ans = max(ans, sum);
+int main() {
+    int n = 5, k = 7;
+    int a[] = {2, 3, 1, 4, 5};
+
+    // Ví dụ 1: Đếm cặp (i,j) có a[i]+a[j] = k
+    int ans1 = 0;
+    for (int i = 0; i &lt; n; i++)
+        for (int j = i + 1; j &lt; n; j++)
+            if (a[i] + a[j] == k) ans1++;
+    cout &lt;&lt; "So cap co tong = " &lt;&lt; k &lt;&lt; ": " &lt;&lt; ans1 &lt;&lt; endl;
+
+    // Ví dụ 2: Đoạn con tổng lớn nhất
+    int ans2 = a[0];
+    for (int i = 0; i &lt; n; i++) {
+        int sum = 0;
+        for (int j = i; j &lt; n; j++) {
+            sum += a[j];
+            ans2 = max(ans2, sum);
+        }
     }
+    cout &lt;&lt; "Doan con tong lon nhat: " &lt;&lt; ans2 &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output:
+// So cap co tong = 7: 2
+// Doan con tong lon nhat: 15
 </pre>
 
 <h4 id="B1d2">Dạng 2: Bitmask — Duyệt tập con</h4>
@@ -1076,16 +1343,43 @@ for (int i = 0; i &lt; n; i++) {
 
 <div class="warn"><strong>DẤU HIỆU:</strong> "tập con có tổng = k", "chọn/không chọn", N ≤ 20 (vì 2²⁰ ≈ 10⁶)</div>
 <pre>
-// Duyệt tất cả 2^n tập con
-for (int mask = 0; mask &lt; (1 &lt;&lt; n); mask++) {
-    long long sum = 0;
-    for (int i = 0; i &lt; n; i++)
-        if (mask &amp; (1 &lt;&lt; i))   // Bit i bật → chọn a[i]
-            sum += a[i];
-    if (sum == K) ans++;
-}
+// ═══ BITMASK: DUYỆT TẬP CON ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Các phép toán bit
+int main() {
+    int n = 4, K = 7;
+    int a[] = {3, 1, 4, 5};
+
+    int ans = 0;
+    // KEY: mask từ 0→2^n-1 = duyệt mọi tập con; bit i bật = chọn phần tử i
+    for (int mask = 0; mask &lt; (1 &lt;&lt; n); mask++) {
+        long long sum = 0;
+        for (int i = 0; i &lt; n; i++)
+            if (mask &amp; (1 &lt;&lt; i))
+                sum += a[i];
+        if (sum == K) {
+            ans++;
+            // In tập con
+            cout &lt;&lt; "Tap con: {";
+            bool first = true;
+            for (int i = 0; i &lt; n; i++)
+                if (mask &amp; (1 &lt;&lt; i)) {
+                    if (!first) cout &lt;&lt; ", ";
+                    cout &lt;&lt; a[i]; first = false;
+                }
+            cout &lt;&lt; "}" &lt;&lt; endl;
+        }
+    }
+    cout &lt;&lt; "Tong so tap con co tong = " &lt;&lt; K &lt;&lt; ": " &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Tap con: {3, 4}
+// Tong so tap con co tong = 7: 1
+</pre>
+<pre>
+// Các phép toán bit hay dùng:
 int setBit   = mask | (1 &lt;&lt; i);      // Bật bit i
 int clearBit = mask &amp; ~(1 &lt;&lt; i);     // Tắt bit i
 bool isSet   = mask &amp; (1 &lt;&lt; i);      // Kiểm tra bit i
@@ -1096,59 +1390,116 @@ int cntBit   = __builtin_popcount(mask);  // Đếm bit 1
 <p><em>💡 Hình dung: Bitmask thử mọi cách CHỌN (có/không). Nhưng nếu cần thử mọi THỨ TỰ? Hoán vị: 3 bạn A, B, C → 3! = 6 cách xếp (ABC, ACB, BAC...). C++ có sẵn <code>next_permutation</code>. Chỉ dùng khi N ≤ 10 (10! ≈ 3.6 triệu).</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "liệt kê tất cả thứ tự", "tìm cách sắp tối ưu", N ≤ 10</div>
 <pre>
-vector&lt;int&gt; a = {1, 2, 3};
-sort(a.begin(), a.end());  // PHẢI sort trước
-do {
-    // Xử lý hoán vị hiện tại
-} while (next_permutation(a.begin(), a.end()));
+// ═══ SINH HOÁN VỊ ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; a = {1, 2, 3};
+    // KEY: PHẢI sort trước → next_permutation sinh hoán vị tiếp theo
+    sort(a.begin(), a.end());
+    int cnt = 0;
+    do {
+        for (int x : a) cout &lt;&lt; x &lt;&lt; " ";
+        cout &lt;&lt; endl;
+        cnt++;
+    } while (next_permutation(a.begin(), a.end()));
+    cout &lt;&lt; "Tong: " &lt;&lt; cnt &lt;&lt; " hoan vi" &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// 1 2 3
+// 1 3 2
+// 2 1 3
+// 2 3 1
+// 3 1 2
+// 3 2 1
+// Tong: 6 hoan vi
 </pre>
 
 <h4 id="B1d4">Dạng 4: Quay lui (Backtracking) — Đệ quy + cắt nhánh</h4>
 <p><em>💡 Hình dung: Bitmask thử mọi tổ hợp, hoán vị thử mọi thứ tự — nhưng N lớn hơn 10–20 là bùng nổ. Backtracking = vét cạn thông minh: đi trong mê cung, mỗi ngã rẽ chọn 1 hướng, ngõ cụt thì quay lui thử hướng khác. Bí quyết: nếu phát hiện sớm "đi tiếp cũng vô ích" → <strong>cắt nhánh</strong>, bỏ qua luôn. Nhờ cắt nhánh, thực tế chạy nhanh hơn vét cạn rất nhiều.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "liệt kê tất cả cách chọn k phần tử từ n" (tổ hợp), "tìm đường đi", "đặt N quân hậu". Mạnh hơn brute force nhờ <strong>cắt nhánh sớm</strong>.</div>
 <pre>
-// Mẫu quay lui tổng quát
-int chon[25];       // Lưu các phần tử đã chọn
-bool used[25];      // Đánh dấu đã dùng chưa
+// ═══ QUAY LUI (BÀI N QUÂN HẬU) ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-void Try(int k) {   // Đang chọn vị trí thứ k
-    if (k > m) {     // Đã chọn đủ m phần tử → xử lý
-        xuLy();
+int n = 5;
+int col[10];          // col[i] = cột đặt hậu ở hàng i
+bool usedCol[10], usedD1[20], usedD2[20];
+int dem = 0;
+
+void Try(int row) {
+    if (row > n) {
+        dem++;
+        if (dem &lt;= 2) {  // In 2 nghiệm đầu
+            for (int i = 1; i &lt;= n; i++) cout &lt;&lt; col[i] &lt;&lt; " ";
+            cout &lt;&lt; endl;
+        }
         return;
     }
-    for (int i = 1; i &lt;= n; i++) {
-        if (!used[i]) {
-            // CẮT NHÁNH: bỏ qua nếu biết chắc không tối ưu
-            if (khongTheToiUu()) continue;
+    for (int c = 1; c &lt;= n; c++) {
+        // KEY: CẮT NHÁNH = bỏ sớm nhánh chắc chắn không có lời giải
+        if (usedCol[c] || usedD1[row - c + n] || usedD2[row + c]) continue;
 
-            chon[k] = i;
-            used[i] = true;
-            Try(k + 1);        // Đệ quy tiếp
-            used[i] = false;   // QUAY LUI — hoàn tác để thử cách khác
-        }
+        col[row] = c;
+        usedCol[c] = usedD1[row - c + n] = usedD2[row + c] = true;
+        Try(row + 1);        // Đệ quy tiếp
+        usedCol[c] = usedD1[row - c + n] = usedD2[row + c] = false; // QUAY LUI
     }
 }
+
+int main() {
+    Try(1);
+    cout &lt;&lt; "Tong so cach dat " &lt;&lt; n &lt;&lt; " quan hau: " &lt;&lt; dem &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// 1 3 5 2 4
+// 1 4 2 5 3
+// Tong so cach dat 5 quan hau: 10
 </pre>
 
 <p><strong>Ví dụ: Liệt kê tổ hợp chập k của n</strong> (chọn k từ n phần tử, không quan tâm thứ tự):</p>
 <pre>
+// ═══ LIỆT KÊ TỔ HỢP CHẬP K CỦA N ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n = 5, k = 3;
 int chon[25];
 
-void Try(int pos, int start) {  // pos: vị trí đang chọn, start: bắt đầu từ đâu
+void Try(int pos, int start) {
     if (pos > k) {
-        for (int i = 1; i &lt;= k; i++) fout &lt;&lt; chon[i] &lt;&lt; " ";
-        fout &lt;&lt; "\n";
+        for (int i = 1; i &lt;= k; i++) cout &lt;&lt; chon[i] &lt;&lt; " ";
+        cout &lt;&lt; endl;
         return;
     }
-    // CẮT NHÁNH: còn lại không đủ phần tử để chọn
+    // KEY: CẮT NHÁNH — còn lại không đủ phần tử thì bỏ sớm
     if (n - start + 1 &lt; k - pos + 1) return;
 
     for (int i = start; i &lt;= n; i++) {
         chon[pos] = i;
-        Try(pos + 1, i + 1);   // i+1 vì tổ hợp, không lấy lại
+        Try(pos + 1, i + 1);
     }
 }
-// Gọi: Try(1, 1);
+
+int main() {
+    Try(1, 1);
+    return 0;
+}
+// ▶ Output: C(5,3) = 10 tổ hợp
+// 1 2 3
+// 1 2 4
+// 1 2 5
+// 1 3 4
+// 1 3 5
+// 1 4 5
+// 2 3 4
+// 2 3 5
+// 2 4 5
+// 3 4 5
 </pre>
 
 <div class="tip"><strong>Mẹo cắt nhánh thường gặp:</strong>
@@ -1178,36 +1529,48 @@ Bước 3: Sort 1 danh sách, dùng binary search ghép kết quả
 
 <p><strong>Ví dụ: Đếm số tập con có tổng = K</strong></p>
 <pre>
-// N ≤ 40 → chia đôi, mỗi nửa ≤ 20
-int half = n / 2;
-vector&lt;long long&gt; sumA, sumB;
+// ═══ MEET IN THE MIDDLE ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Bước 1-2: Sinh tổng tất cả tập con nửa trái
-for (int mask = 0; mask &lt; (1 &lt;&lt; half); mask++) {
-    long long s = 0;
-    for (int i = 0; i &lt; half; i++)
-        if (mask &amp; (1 &lt;&lt; i)) s += a[i];
-    sumA.push_back(s);
-}
+int main() {
+    int n = 4;
+    long long K = 5;
+    long long a[] = {1, 2, 3, 4};
 
-// Sinh tổng tất cả tập con nửa phải
-int half2 = n - half;
-for (int mask = 0; mask &lt; (1 &lt;&lt; half2); mask++) {
-    long long s = 0;
-    for (int i = 0; i &lt; half2; i++)
-        if (mask &amp; (1 &lt;&lt; i)) s += a[half + i];
-    sumB.push_back(s);
-}
+    int half = n / 2;
+    vector&lt;long long&gt; sumA, sumB;
 
-// Bước 3: Sort nửa B, duyệt nửa A + binary search
-sort(sumB.begin(), sumB.end());
-long long ans = 0;
-for (long long sa : sumA) {
-    long long need = K - sa;
-    // Đếm số phần tử trong sumB = need
-    ans += upper_bound(sumB.begin(), sumB.end(), need)
-         - lower_bound(sumB.begin(), sumB.end(), need);
+    // Sinh tổng tất cả tập con nửa trái
+    for (int mask = 0; mask &lt; (1 &lt;&lt; half); mask++) {
+        long long s = 0;
+        for (int i = 0; i &lt; half; i++)
+            if (mask &amp; (1 &lt;&lt; i)) s += a[i];
+        sumA.push_back(s);
+    }
+
+    // Sinh tổng tất cả tập con nửa phải
+    int half2 = n - half;
+    for (int mask = 0; mask &lt; (1 &lt;&lt; half2); mask++) {
+        long long s = 0;
+        for (int i = 0; i &lt; half2; i++)
+            if (mask &amp; (1 &lt;&lt; i)) s += a[half + i];
+        sumB.push_back(s);
+    }
+
+    // KEY: Chia đôi 2^N → 2×2^(N/2), ghép bằng binary search
+    sort(sumB.begin(), sumB.end());
+    long long ans = 0;
+    for (long long sa : sumA) {
+        long long need = K - sa;
+        ans += upper_bound(sumB.begin(), sumB.end(), need)
+             - lower_bound(sumB.begin(), sumB.end(), need);
+    }
+    cout &lt;&lt; "So tap con co tong = " &lt;&lt; K &lt;&lt; ": " &lt;&lt; ans &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output: So tap con co tong = 5: 2
+// Các tập: {1,4} và {2,3}
 </pre>
 
 <div class="tip"><strong>Độ phức tạp:</strong> O(2^(N/2) × log) — với N=40 thì ≈ 2²⁰ × 20 ≈ 20 triệu phép tính → chạy tốt.</div>
@@ -1220,15 +1583,36 @@ for (long long sa : sumA) {
 <br><strong>MẸO:</strong> Thường đi kèm Sort → chọn tốt nhất tại mỗi bước</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống đi buffet: phải <a href="#A9">xếp món theo độ ngon</a> rồi mới lấy từ ngon nhất → Sort trước, chọn Greedy sau.<br>• Combo hay gặp: <a href="#A8">chặt đáp án</a> + check bằng Greedy.<br>• Greedy đôi khi "tham lầm" (chọn sai) → phải dùng <a href="#B3">DP</a> xét kỹ hơn.</div>
 <pre>
-// Mẫu: Sort + chọn tham lam
-sort(a, a + n);  // hoặc sort theo tiêu chí phù hợp
-int ans = 0;
-for (int i = 0; i &lt; n; i++) {
-    if (/* a[i] thỏa điều kiện */) {
-        ans++;
-        // Cập nhật trạng thái
+// ═══ GREEDY ═══
+// Bài: Chọn nhiều hoạt động không trùng giờ nhất (Activity Selection)
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 5;
+    // Mỗi hoạt động có (bắt đầu, kết thúc)
+    pair&lt;int,int&gt; a[] = {{1,3}, {2,5}, {4,7}, {1,8}, {6,9}};
+
+    // KEY: Sort theo thời gian KẾT THÚC → chọn hoạt động kết thúc sớm nhất
+    sort(a, a + n, [](pair&lt;int,int&gt; x, pair&lt;int,int&gt; y) {
+        return x.second &lt; y.second;
+    });
+
+    int ans = 0, lastEnd = 0;
+    cout &lt;&lt; "Chon: ";
+    for (int i = 0; i &lt; n; i++) {
+        if (a[i].first >= lastEnd) {
+            ans++;
+            lastEnd = a[i].second;
+            cout &lt;&lt; "[" &lt;&lt; a[i].first &lt;&lt; "," &lt;&lt; a[i].second &lt;&lt; "] ";
+        }
     }
+    cout &lt;&lt; endl &lt;&lt; "Tong: " &lt;&lt; ans &lt;&lt; " hoat dong" &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output:
+// Chon: [1,3] [4,7]
+// Tong: 2 hoat dong
 </pre>
 
 <!-- B3: QUY HOẠCH ĐỘNG -->
@@ -1340,15 +1724,27 @@ Bước 3: dp[i] = dp[i-1] + dp[i-2]   ← "bước cuối": cộng 2 số trư�
 Bước 4: Đáp án = dp[n]
 </pre>
 <pre>
-// Bài toán: Tính số Fibonacci thứ n. Input: n (≥0) | Output: F(n)
-int fibo(int n) {
-    if (n &lt;= 1) return n;                   // n=0 → 0, n=1 → 1
+// ═══ FIBONACCI ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 10;
     vector&lt;int&gt; dp(n + 1);
-    dp[0] = 0; dp[1] = 1;                   // Bước 2: Biên
+    // KEY: Ghi kết quả vào bảng dp[], bài con nào tính rồi thì không tính lại
+    dp[0] = 0; dp[1] = 1;
     for (int i = 2; i &lt;= n; i++)
-        dp[i] = dp[i-1] + dp[i-2];          // Bước 3: Công thức
-    return dp[n];                            // Bước 4: Đáp án
+        dp[i] = dp[i-1] + dp[i-2];
+    cout &lt;&lt; "Fibonacci(" &lt;&lt; n &lt;&lt; ") = " &lt;&lt; dp[n] &lt;&lt; endl;
+    // In dãy
+    cout &lt;&lt; "Day: ";
+    for (int i = 0; i &lt;= n; i++) cout &lt;&lt; dp[i] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output:
+// Fibonacci(10) = 55
+// Day: 0 1 1 2 3 5 8 13 21 34 55
 </pre>
 
 <!-- ── VÍ DỤ 2: BALO 0/1 ── -->
@@ -1367,41 +1763,42 @@ Bước 4: Đáp án = dp[n][W]
 
 <p><strong>Code 2D (dễ hiểu):</strong></p>
 <pre>
-// Bước 1: dp[i][w] = giá trị max xét i món, balo chứa w
-vector&lt;vector&lt;int&gt;&gt; dp(n+1, vector&lt;int&gt;(W+1, 0));
-// Bước 2: dp[0][w] = 0 (đã khởi tạo)
-// Bước 3: Công thức chuyển trạng thái
-for (int i = 1; i &lt;= n; i++)
-    for (int w = 0; w &lt;= W; w++) {
-        dp[i][w] = dp[i-1][w];              // Không chọn món i
-        if (weights[i-1] &lt;= w)
-            dp[i][w] = max(dp[i][w],
-                dp[i-1][w - weights[i-1]] + values[i-1]); // Chọn
-    }
-// Bước 4: Đáp án
-cout &lt;&lt; dp[n][W];
-</pre>
+// ═══ KNAPSACK 0/1 (2D) ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-<p><strong>Code 1D tối ưu (duyệt NGƯỢC — mỗi vật chỉ dùng 1 lần):</strong></p>
-<pre>
-long long dp[MAX_W + 1] = {0};
-for (int i = 0; i &lt; n; i++)
-    for (int j = W; j >= w[i]; j--)          // ← NGƯỢC! (vật i chỉ dùng 1 lần)
-        dp[j] = max(dp[j], dp[j - w[i]] + v[i]);
-// Đáp án: dp[W]
-</pre>
+int main() {
+    int n = 3, W = 5;
+    int weights[] = {2, 3, 4};
+    int values[]  = {3, 4, 5};
 
-<p><strong>Truy vết — In ra các món đã chọn (từ bảng 2D):</strong></p>
-<pre>
-// Bước 4: Truy ngược từ dp[n][W]
-int i = n, w = W;
-while (i &gt; 0 &amp;&amp; w &gt; 0) {
-    if (dp[i][w] != dp[i-1][w]) {            // Giá trị thay đổi → đã chọn món i
-        cout &lt;&lt; "Chọn món " &lt;&lt; i &lt;&lt; endl;
-        w -= weights[i-1];
+    vector&lt;vector&lt;int&gt;&gt; dp(n+1, vector&lt;int&gt;(W+1, 0));
+    // KEY: Mỗi món: không chọn (dp[i-1][w]) hoặc chọn (dp[i-1][w-wi]+vi)
+    for (int i = 1; i &lt;= n; i++)
+        for (int w = 0; w &lt;= W; w++) {
+            dp[i][w] = dp[i-1][w];
+            if (weights[i-1] &lt;= w)
+                dp[i][w] = max(dp[i][w],
+                    dp[i-1][w - weights[i-1]] + values[i-1]);
+        }
+    cout &lt;&lt; "Gia tri max: " &lt;&lt; dp[n][W] &lt;&lt; endl;
+
+    // Truy vết
+    int i = n, w = W;
+    while (i > 0 &amp;&amp; w > 0) {
+        if (dp[i][w] != dp[i-1][w]) {
+            cout &lt;&lt; "Chon mon " &lt;&lt; i &lt;&lt; " (w=" &lt;&lt; weights[i-1]
+                 &lt;&lt; ", v=" &lt;&lt; values[i-1] &lt;&lt; ")" &lt;&lt; endl;
+            w -= weights[i-1];
+        }
+        i--;
     }
-    i--;
+    return 0;
 }
+// ▶ Output:
+// Gia tri max: 7
+// Chon mon 2 (w=3, v=4)
+// Chon mon 1 (w=2, v=3)
 </pre>
 
 <!-- ── VÍ DỤ 3: ĐỔI TIỀN ── -->
@@ -1414,21 +1811,26 @@ Bước 3: dp[w] += dp[w - coin]  ← "nếu dùng đồng coin, còn lại w-co
 Bước 4: Đáp án = dp[amount]
 </pre>
 <pre>
-long long soCach[MAX_SUM + 1] = {0};
-soCach[0] = 1;                               // Bước 2: Biên
-for (int coin : coins)                        // Duyệt từng mệnh giá
-    for (int j = coin; j &lt;= S; j++)          // ← XUÔI! (dùng không giới hạn)
-        soCach[j] += soCach[j - coin];        // Bước 3: Cộng dồn số cách
-// Đáp án: soCach[S]
-</pre>
+// ═══ ĐỔI TIỀN (Unbounded Knapsack) ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-<pre>
-// ═══ DP ĐẾM SỐ CÁCH ĐẠT TỔNG ═══
-// Dùng các giá trị 1..k đạt tổng n
-soCach[0] = 1;
-for (int val = 1; val &lt;= k; val++)
-    for (int t = val; t &lt;= n; t++)
-        soCach[t] += soCach[t - val];
+int main() {
+    int coins[] = {1, 2, 5};
+    int nCoins = 3, S = 5;
+
+    long long soCach[6] = {};
+    // KEY: Duyệt XUÔI j → dùng lại coin (unbounded). NGƯỢC → dùng 1 lần (0/1)
+    soCach[0] = 1;
+    for (int c = 0; c &lt; nCoins; c++)
+        for (int j = coins[c]; j &lt;= S; j++)
+            soCach[j] += soCach[j - coins[c]];
+
+    cout &lt;&lt; "So cach doi " &lt;&lt; S &lt;&lt; " dong: " &lt;&lt; soCach[S] &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output: So cach doi 5 dong: 4
+// Các cách: {5}, {2+2+1}, {2+1+1+1}, {1+1+1+1+1}
 </pre>
 
 <div class="tip">
@@ -1458,38 +1860,67 @@ Bước 4: Đáp án = max(dp[0..n-1]). Truy vết theo trace[] từ vị trí �
 
 <p><strong>LIS — O(n²) dễ hiểu (dùng khi N ≤ 5000):</strong></p>
 <pre>
-// Bước 1: dp[i] = độ dài LIS kết thúc tại i
-int dp[5005], trace[5005];
-int ans = 1, lastIdx = 0;
-for (int i = 0; i &lt; n; i++) {
-    dp[i] = 1; trace[i] = -1;               // Bước 2: Biên
-    for (int j = 0; j &lt; i; j++)
-        if (a[j] &lt; a[i] &amp;&amp; dp[j] + 1 &gt; dp[i]) {
-            dp[i] = dp[j] + 1;              // Bước 3: Công thức
-            trace[i] = j;                   // Lưu vết
-        }
-    if (dp[i] &gt; ans) { ans = dp[i]; lastIdx = i; }
-}
+// ═══ LIS O(n²) ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Bước 4: Truy vết
-vector&lt;int&gt; lis;
-for (int i = lastIdx; i != -1; i = trace[i])
-    lis.push_back(a[i]);
-reverse(lis.begin(), lis.end());
+int main() {
+    int n = 6;
+    int a[] = {3, 1, 4, 1, 5, 9};
+
+    int dp[6], trace[6];
+    int ans = 1, lastIdx = 0;
+    for (int i = 0; i &lt; n; i++) {
+        dp[i] = 1; trace[i] = -1;
+        // KEY: Duyệt mọi j trước i: nếu a[j] < a[i] thì nối a[i] vào sau
+        for (int j = 0; j &lt; i; j++)
+            if (a[j] &lt; a[i] &amp;&amp; dp[j] + 1 > dp[i]) {
+                dp[i] = dp[j] + 1;
+                trace[i] = j;
+            }
+        if (dp[i] > ans) { ans = dp[i]; lastIdx = i; }
+    }
+    cout &lt;&lt; "Do dai LIS: " &lt;&lt; ans &lt;&lt; endl;
+
+    // Truy vết
+    vector&lt;int&gt; lis;
+    for (int i = lastIdx; i != -1; i = trace[i])
+        lis.push_back(a[i]);
+    reverse(lis.begin(), lis.end());
+    cout &lt;&lt; "LIS: ";
+    for (int x : lis) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Do dai LIS: 4
+// LIS: 3 4 5 9
 </pre>
 
 <p><strong>LIS — O(n log n) tối ưu dùng Binary Search:</strong></p>
 <pre>
-// dp[i] = phần tử nhỏ nhất kết thúc dãy tăng dài i+1
-vector&lt;int&gt; dp;
-for (int i = 0; i &lt; n; i++) {
-    int pos = lower_bound(dp.begin(), dp.end(), a[i]) - dp.begin();
-    if (pos == (int)dp.size())
-        dp.push_back(a[i]);                  // Mở rộng dãy
-    else
-        dp[pos] = a[i];                      // Thay thế để giữ dãy "tốt" hơn
+// ═══ LIS O(n log n) ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 8;
+    int a[] = {10, 9, 2, 5, 3, 7, 101, 18};
+
+    // KEY: dp[] giữ "đuôi nhỏ nhất" mỗi độ dài → lower_bound thay thế
+    vector&lt;int&gt; dp;
+    for (int i = 0; i &lt; n; i++) {
+        int pos = lower_bound(dp.begin(), dp.end(), a[i]) - dp.begin();
+        if (pos == (int)dp.size())
+            dp.push_back(a[i]);
+        else
+            dp[pos] = a[i];
+    }
+    cout &lt;&lt; "Do dai LIS: " &lt;&lt; dp.size() &lt;&lt; endl;
+    return 0;
 }
-int LIS = dp.size();
+// ▶ Output: Do dai LIS: 4
+// Ví dụ: dãy 2, 3, 7, 101 (hoặc 2, 5, 7, 101 hoặc 2, 3, 7, 18)
 </pre>
 
 <!-- ── CHẠY TAY ── -->
@@ -1549,6 +1980,10 @@ void solve(int l, int r) {
 
 <p><strong>Ví dụ: Đếm nghịch thế</strong> (số cặp i &lt; j mà a[i] > a[j]) — dùng Merge Sort biến đổi:</p>
 <pre>
+// ═══ ĐẾM NGHỊCH THẾ ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 long long cnt = 0;
 int temp[100005];
 
@@ -1559,7 +1994,7 @@ void mergeCount(int a[], int l, int mid, int r) {
             temp[k++] = a[i++];
         else {
             temp[k++] = a[j++];
-            cnt += mid - i + 1;  // Tất cả a[i..mid] > a[j] → đều là nghịch thế
+            cnt += mid - i + 1;  // KEY: a[j] nhỏ hơn tất cả a[i..mid] → đếm 1 lúc
         }
     }
     while (i &lt;= mid) temp[k++] = a[i++];
@@ -1574,6 +2009,17 @@ void solve(int a[], int l, int r) {
     solve(a, mid + 1, r);
     mergeCount(a, l, mid, r);
 }
+
+int main() {
+    int n = 5;
+    int a[] = {5, 3, 2, 4, 1};
+    cnt = 0;
+    solve(a, 0, n - 1);
+    cout &lt;&lt; "So nghich the: " &lt;&lt; cnt &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output: So nghich the: 8
+// Các cặp: (5,3)(5,2)(5,4)(5,1)(3,2)(3,1)(2,1)(4,1) = 8
 </pre>
 
 <div class="tip"><strong>Độ phức tạp:</strong> O(N log N) — vì mỗi tầng chia đôi xử lý O(N), có log N tầng.</div>
@@ -1611,22 +2057,46 @@ Cách đóng góp — a[i] nằm trong bao nhiêu đoạn con?
 
 <p><strong>Code mẫu — Tổng mọi đoạn con:</strong></p>
 <pre>
-long long ans = 0;
-for (int i = 1; i &lt;= n; i++) {
-    long long soDoạn = (long long)i * (n - i + 1);
-    ans += a[i] * soDoạn;
+// ═══ CONTRIBUTION: TỔNG MỌI ĐOẠN CON ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 3;
+    int a[] = {0, 2, 5, 3};  // 1-indexed
+
+    long long ans = 0;
+    // KEY: a[i] nằm trong i × (n-i+1) đoạn con → nhân đóng góp
+    for (int i = 1; i &lt;= n; i++) {
+        long long soDoan = (long long)i * (n - i + 1);
+        ans += a[i] * soDoan;
+    }
+    cout &lt;&lt; "Tong cac phan tu cua moi doan con: " &lt;&lt; ans &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output: Tong cac phan tu cua moi doan con: 35
+// Kiểm tra: [2]+[5]+[3]+[2,5]+[5,3]+[2,5,3] = 2+5+3+7+8+10 = 35 ✓
 </pre>
 
 <p><strong>Ví dụ 2:</strong> Tổng |a[i] - a[j]| với mọi cặp i &lt; j → sort trước, rồi mỗi a[i] đóng góp:</p>
 <pre>
-sort(a + 1, a + n + 1);
-long long ans = 0;
-for (int i = 1; i &lt;= n; i++) {
-    // a[i] lớn hơn (i-1) phần tử trước nó
-    // → đóng góp +a[i] × (i-1) lần, -a[i] × (n-i) lần
-    ans += (long long)a[i] * (2 * i - n - 1);
+// ═══ CONTRIBUTION: TỔNG |a[i]-a[j]| ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 4;
+    int a[] = {0, 1, 3, 7, 2};  // 1-indexed
+
+    // KEY: Sort trước, a[i] đóng góp a[i]×(2i-n-1) vào tổng
+    sort(a + 1, a + n + 1);
+    long long ans = 0;
+    for (int i = 1; i &lt;= n; i++)
+        ans += (long long)a[i] * (2 * i - n - 1);
+    cout &lt;&lt; "Tong |a[i]-a[j]|: " &lt;&lt; ans &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output: Tong |a[i]-a[j]|: 19
 </pre>
 
 <div class="tip"><strong>Công thức nhớ:</strong> Phần tử ở vị trí i (1-indexed) nằm trong <code>i × (n − i + 1)</code> đoạn con liên tiếp.</div>
@@ -1655,18 +2125,23 @@ for (int i = 1; i &lt;= n; i++) {
 
 <p><strong>Khuôn mẫu: Đếm số từ 1..N có tổng chữ số = S</strong></p>
 <pre>
-string num;           // N dạng chuỗi
-int memo[20][200][2]; // [vị trí][tổng hiện tại][tight]
+// ═══ DIGIT DP ═══
+// Đếm số trong [L, R] có tổng chữ số = S
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// pos: chữ số đang xét, sum: tổng chữ số đã chọn
-// tight: có bị giới hạn bởi N không
+string num;
+int S;
+int memo[20][200][2];
+
 int solve(int pos, int sum, bool tight) {
     if (pos == (int)num.size())
-        return (sum == S) ? 1 : 0;          // Đã xây xong
+        return (sum == S) ? 1 : 0;
     if (memo[pos][sum][tight] != -1)
         return memo[pos][sum][tight];
 
-    int lim = tight ? (num[pos] - '0') : 9; // Giới hạn chữ số
+    // KEY: tight = true → chữ số bị giới hạn bởi N; false → tự do chọn 0-9
+    int lim = tight ? (num[pos] - '0') : 9;
     int res = 0;
     for (int d = 0; d &lt;= lim; d++)
         res += solve(pos + 1, sum + d, tight &amp;&amp; (d == lim));
@@ -1674,14 +2149,29 @@ int solve(int pos, int sum, bool tight) {
     return memo[pos][sum][tight] = res;
 }
 
-// Đếm số trong [1, N] có tổng chữ số = S
 int countUpTo(long long N) {
     num = to_string(N);
     memset(memo, -1, sizeof(memo));
     return solve(0, 0, true);
 }
 
-// Đếm trong [L, R]: countUpTo(R) - countUpTo(L - 1)
+int main() {
+    S = 10;
+    long long L = 1, R = 100;
+    int ans = countUpTo(R) - countUpTo(L - 1);
+    cout &lt;&lt; "So trong [" &lt;&lt; L &lt;&lt; ", " &lt;&lt; R
+         &lt;&lt; "] co tong chu so = " &lt;&lt; S &lt;&lt; ": " &lt;&lt; ans &lt;&lt; endl;
+
+    S = 5;
+    L = 1; R = 50;
+    ans = countUpTo(R) - countUpTo(L - 1);
+    cout &lt;&lt; "So trong [" &lt;&lt; L &lt;&lt; ", " &lt;&lt; R
+         &lt;&lt; "] co tong chu so = " &lt;&lt; S &lt;&lt; ": " &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// So trong [1, 100] co tong chu so = 10: 9
+// So trong [1, 50] co tong chu so = 5: 6
 </pre>
 
 <div class="tip"><strong>Các biến thể phổ biến:</strong>
@@ -1718,40 +2208,53 @@ int countUpTo(long long N) {
 </div>
 
 <pre>
-// ═══ Mo's Algorithm — Đếm số phần tử khác nhau trong đoạn [L,R] ═══
-int BLOCK;
-struct Query {
-    int l, r, idx;
-};
+// ═══ MO'S ALGORITHM ═══
+// Đếm số phần tử khác nhau trong đoạn [L,R]
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-int cnt[1000005];   // cnt[v] = số lần v xuất hiện trong đoạn hiện tại
-int curAns = 0;     // Số phần tử khác nhau hiện tại
+int a[100005], cnt[100005], ans[100005];
+int BLOCK, curAns = 0;
 
-void add(int val) {
-    if (cnt[val] == 0) curAns++;
-    cnt[val]++;
+struct Query { int l, r, idx; };
+
+void add(int val) { if (cnt[val]++ == 0) curAns++; }
+void rem(int val) { if (--cnt[val] == 0) curAns--; }
+
+bool cmpQuery(const Query &amp;x, const Query &amp;y) {
+    if (x.l / BLOCK != y.l / BLOCK) return x.l / BLOCK &lt; y.l / BLOCK;
+    return (x.l / BLOCK &amp; 1) ? x.r > y.r : x.r &lt; y.r;
 }
 
-void remove(int val) {
-    cnt[val]--;
-    if (cnt[val] == 0) curAns--;
-}
+int main() {
+    int n = 7, q = 3;
+    int arr[] = {0, 1, 2, 1, 3, 2, 1, 4};  // 1-indexed
+    for (int i = 1; i &lt;= n; i++) a[i] = arr[i];
 
-// Trong main:
-BLOCK = max(1, (int)sqrt(n));
-sort(queries, queries + q, [](const Query &amp;a, const Query &amp;b) {
-    if (a.l / BLOCK != b.l / BLOCK) return a.l / BLOCK &lt; b.l / BLOCK;
-    return (a.l / BLOCK &amp; 1) ? a.r &gt; b.r : a.r &lt; b.r; // Tối ưu zigzag
-});
+    Query queries[] = {{1, 4, 0}, {2, 6, 1}, {3, 7, 2}};
 
-int curL = 0, curR = -1;
-for (int i = 0; i &lt; q; i++) {
-    while (curR &lt; queries[i].r) add(a[++curR]);
-    while (curL &gt; queries[i].l) add(a[--curL]);
-    while (curR &gt; queries[i].r) remove(a[curR--]);
-    while (curL &lt; queries[i].l) remove(a[curL++]);
-    ans[queries[i].idx] = curAns;
+    // KEY: Sort query theo block √N → L,R di chuyển tổng O((N+Q)√N)
+    BLOCK = max(1, (int)sqrt(n));
+    sort(queries, queries + q, cmpQuery);
+
+    int curL = 1, curR = 0;
+    for (int i = 0; i &lt; q; i++) {
+        while (curR &lt; queries[i].r) add(a[++curR]);
+        while (curL > queries[i].l) add(a[--curL]);
+        while (curR > queries[i].r) rem(a[curR--]);
+        while (curL &lt; queries[i].l) rem(a[curL++]);
+        ans[queries[i].idx] = curAns;
+    }
+
+    for (int i = 0; i &lt; q; i++)
+        cout &lt;&lt; "Query " &lt;&lt; i + 1 &lt;&lt; ": " &lt;&lt; ans[i]
+             &lt;&lt; " phan tu khac nhau" &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output:
+// Query 1: 3 phan tu khac nhau   [1,4]={1,2,1,3}
+// Query 2: 3 phan tu khac nhau   [2,6]={2,1,3,2,1}
+// Query 3: 4 phan tu khac nhau   [3,7]={1,3,2,1,4}
 </pre>
 
 <!-- B8: Matrix Exponentiation -->
@@ -1784,6 +2287,9 @@ Suy ra:
 
 <p><strong>Bước 2: Code nhân ma trận + lũy thừa nhanh</strong></p>
 <pre>
+// ═══ MATRIX EXPONENTIATION ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 typedef vector&lt;vector&lt;long long&gt;&gt; Matrix;
 const long long MOD = 1e9 + 7;
 
@@ -1797,25 +2303,33 @@ Matrix multiply(const Matrix &amp;A, const Matrix &amp;B) {
     return C;
 }
 
+// KEY: Viết truy hồi thành nhân ma trận A → A^n trong O(k³ × log n)
 Matrix matpow(Matrix A, long long p) {
     int n = A.size();
     Matrix res(n, vector&lt;long long&gt;(n, 0));
-    for (int i = 0; i &lt; n; i++) res[i][i] = 1;  // Ma trận đơn vị
-    while (p &gt; 0) {
+    for (int i = 0; i &lt; n; i++) res[i][i] = 1;
+    while (p > 0) {
         if (p &amp; 1) res = multiply(res, A);
         A = multiply(A, A);
-        p &gt;&gt;= 1;
+        p >>= 1;
     }
     return res;
 }
 
-// Fibonacci thứ n (n ≤ 10¹⁸):
-long long fib(long long n) {
-    if (n &lt;= 1) return n;
+int main() {
+    long long n = 10;
     Matrix A = {{1, 1}, {1, 0}};
     Matrix R = matpow(A, n - 1);
-    return R[0][0];                   // f(n) = R[0][0]*f(1) + R[0][1]*f(0)
+    cout &lt;&lt; "Fibonacci(" &lt;&lt; n &lt;&lt; ") = " &lt;&lt; R[0][0] &lt;&lt; endl;
+
+    n = 50;
+    R = matpow(A, n - 1);
+    cout &lt;&lt; "Fibonacci(" &lt;&lt; n &lt;&lt; ") mod 10^9+7 = " &lt;&lt; R[0][0] &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output:
+// Fibonacci(10) = 55
+// Fibonacci(50) mod 10^9+7 = 586268941
 </pre>
 
 <div class="tip"><strong>Các hệ truy hồi thường gặp:</strong>
@@ -1847,46 +2361,55 @@ long long fib(long long n) {
 </div>
 
 <pre>
-// ═══ VECTOR ═══
-vector&lt;int&gt; a;                     // Khai báo rỗng
-vector&lt;int&gt; b(n, 0);              // n phần tử, giá trị ban đầu = 0
-vector&lt;vector&lt;int&gt;&gt; c(m, vector&lt;int&gt;(n));  // Ma trận m×n
+// ═══ VECTOR / SET / MAP ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-a.push_back(5);                    // Thêm cuối: {5}
-a.push_back(3);                    // {5, 3}
-a.pop_back();                      // Xóa cuối: {5}
-int sz = a.size();                 // Kích thước
+int main() {
+    // ═══ VECTOR ═══
+    vector&lt;int&gt; a = {3, 1, 4, 1, 5, 9};
+    a.push_back(2);
+    cout &lt;&lt; "Vector: ";
+    for (int x : a) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; "\nSize = " &lt;&lt; a.size() &lt;&lt; endl;
 
-// Duyệt
-for (int i = 0; i &lt; a.size(); i++) { /* a[i] */ }
-for (int x : a) { /* x */ }
+    sort(a.begin(), a.end());
+    a.erase(unique(a.begin(), a.end()), a.end());
+    cout &lt;&lt; "Sort+unique: ";
+    for (int x : a) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; endl;
 
-// Sort + loại trùng
-sort(a.begin(), a.end());
-a.erase(unique(a.begin(), a.end()), a.end());
+    // ═══ SET ═══ (tự sắp, không trùng)
+    set&lt;int&gt; s = {5, 3, 5, 1, 4};
+    cout &lt;&lt; "Set: ";
+    for (int x : s) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; "| min=" &lt;&lt; *s.begin() &lt;&lt; " max=" &lt;&lt; *s.rbegin() &lt;&lt; endl;
 
-// ═══ SET ═══
-set&lt;int&gt; s;
-s.insert(5);  s.insert(3);  s.insert(5);  // {3, 5} — không trùng
-int minVal = *s.begin();     // 3
-int maxVal = *s.rbegin();    // 5
-if (s.count(5)) { ... }     // Kiểm tra tồn tại
+    // ═══ MULTISET ═══ (xóa đúng cách!)
+    multiset&lt;int&gt; ms = {5, 3, 5, 1};
+    // KEY: erase(find(x)) = xóa MỘT; erase(x) = xóa TẤT CẢ giá trị x!
+    ms.erase(ms.find(5));              // ✅ Xóa MỘT phần tử 5
+    // ms.erase(5);                    // ❌ Xóa TẤT CẢ phần tử 5!
+    cout &lt;&lt; "Multiset sau erase(find(5)): ";
+    for (int x : ms) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; endl;
 
-// ═══ MULTISET ═══ (QUAN TRỌNG: xóa đúng cách)
-multiset&lt;int&gt; ms;
-ms.insert(5);  ms.insert(3);  ms.insert(5);  // {3, 5, 5}
-ms.erase(ms.find(5));   // ✅ Xóa MỘT phần tử 5 → {3, 5}
-ms.erase(5);             // ❌ Xóa TẤT CẢ phần tử 5!
-
-// Tìm phần tử nhỏ nhất >= x
-auto it = ms.lower_bound(x);
-if (it != ms.end()) { int val = *it; ms.erase(it); }
-
-// ═══ MAP ═══
-map&lt;string, int&gt; diem;
-diem["An"] = 9;
-if (diem.count("An")) out &lt;&lt; diem["An"];
-for (auto &amp;[k, v] : diem) out &lt;&lt; k &lt;&lt; ": " &lt;&lt; v &lt;&lt; '\n';
+    // ═══ MAP ═══
+    map&lt;string, int&gt; diem;
+    diem["An"] = 9; diem["Binh"] = 7;
+    cout &lt;&lt; "Map: ";
+    for (auto &amp;[k, v] : diem)
+        cout &lt;&lt; k &lt;&lt; "=" &lt;&lt; v &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Vector: 3 1 4 1 5 9 2
+// Size = 7
+// Sort+unique: 1 2 3 4 5 9
+// Set: 1 3 4 5 | min=1 max=5
+// Multiset sau erase(find(5)): 1 3 5
+// Map: An=9 Binh=7
 </pre>
 
 <!-- C2 -->
@@ -1896,11 +2419,27 @@ for (auto &amp;[k, v] : diem) out &lt;&lt; k &lt;&lt; ": " &lt;&lt; v &lt;&lt; '
 <div class="warn"><strong>DẤU HIỆU:</strong> "min/max trong cửa sổ trượt", "thêm/xóa ở cả hai đầu"</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống ống nhựa 2 đầu hở: nhét vào đầu nào, rút ra đầu nào đều được. <a href="#A6">Sliding Window</a> cần rút đầu trái (hết hạn) và nhét đầu phải (mới vào) → Deque làm cả hai.</div>
 <pre>
-deque&lt;int&gt; dq;
-dq.push_back(1);   dq.push_front(2);  dq.push_back(3);  // {2, 1, 3}
-dq.front();   // 2
-dq.back();    // 3
-dq.pop_front();   dq.pop_back();   // Tất cả O(1)
+// ═══ DEQUE ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    deque&lt;int&gt; dq;
+    // KEY: push/pop cả 2 đầu đều O(1) — cần cho Sliding Window min/max
+    dq.push_back(1);  dq.push_front(2);  dq.push_back(3);  // {2, 1, 3}
+    cout &lt;&lt; "Deque: ";
+    for (int x : dq) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    cout &lt;&lt; "front=" &lt;&lt; dq.front() &lt;&lt; " back=" &lt;&lt; dq.back() &lt;&lt; endl;
+
+    dq.pop_front();  dq.pop_back();  // Tất cả O(1)
+    cout &lt;&lt; "Sau pop 2 dau: " &lt;&lt; dq.front() &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Deque: 2 1 3
+// front=2 back=3
+// Sau pop 2 dau: 1
 </pre>
 
 <!-- C3 -->
@@ -1910,15 +2449,28 @@ dq.pop_front();   dq.pop_back();   // Tất cả O(1)
 <div class="warn"><strong>DẤU HIỆU:</strong> "lấy max/min liên tục", Dijkstra, trộn k dãy, xử lý theo ưu tiên</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống hộp bóng: bỏ bóng vào bất kỳ lúc nào, thò tay vào luôn lấy ra quả <b>nhỏ nhất</b>. <a href="#D3">Dijkstra</a> và <a href="#D6">Prim</a> đều cần liên tục "lấy cái nhỏ nhất" → dùng hộp này.</div>
 <pre>
-// Max heap (mặc định)
-priority_queue&lt;int&gt; maxPQ;
+// ═══ PRIORITY QUEUE ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Min heap
-priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minPQ;
+int main() {
+    // Max heap (mặc định)
+    priority_queue&lt;int&gt; maxPQ;
+    maxPQ.push(5);  maxPQ.push(3);  maxPQ.push(8);
+    cout &lt;&lt; "Max heap top: " &lt;&lt; maxPQ.top() &lt;&lt; endl;
+    maxPQ.pop();
+    cout &lt;&lt; "Sau pop: " &lt;&lt; maxPQ.top() &lt;&lt; endl;
 
-maxPQ.push(5);  maxPQ.push(3);  maxPQ.push(8);
-out &lt;&lt; maxPQ.top();  // 8
-maxPQ.pop();          // Xóa 8
+    // KEY: greater = min heap (nhỏ nhất lên top), mặc định = max heap
+    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minPQ;
+    minPQ.push(5);  minPQ.push(3);  minPQ.push(8);
+    cout &lt;&lt; "Min heap top: " &lt;&lt; minPQ.top() &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Max heap top: 8
+// Sau pop: 5
+// Min heap top: 3
 </pre>
 
 <!-- C4 -->
@@ -1928,54 +2480,66 @@ maxPQ.pop();          // Xóa 8
 <div class="warn"><strong>DẤU HIỆU:</strong> "cùng nhóm không?", "bao nhiêu nhóm riêng biệt (thành phần liên thông)?", "gộp 2 tập hợp", Kruskal</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống lớp học chia nhóm: bạn A kết bạn B → gộp nhóm. Hỏi "A và C cùng nhóm chưa?" → hỏi nhóm trưởng là biết ngay. <a href="#D8">Kruskal</a> dùng DSU để kiểm tra "nối thêm đường này có tạo vòng không?".<br>• <a href="#D1">BFS</a>/<a href="#D2">DFS</a> hỏi liên thông 1 lần thì được, nhưng hỏi nhiều lần → DSU nhanh hơn rất nhiều.</div>
 <pre>
-// ═══ DSU — Phong cách quen thuộc ═══
-// Bài toán: n phần tử, Q thao tác: gộp 2 nhóm hoặc hỏi "u và v cùng nhóm?"
-// Input: n, Q thao tác (union u v / query u v) | Output: YES/NO mỗi lần hỏi
+// ═══ DSU ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
 const int MAXN = 100005;
-int cha[MAXN];                // cha[i] = cha của đỉnh i
-int hang[MAXN];               // hang[i] = chiều cao cây gốc i
+int cha[MAXN], hang[MAXN];
 
 void khoiTao(int n) {
-    for (int i = 1; i &lt;= n; i++) {
-        cha[i] = i;            // Ban đầu mỗi đỉnh là gốc của chính nó
-        hang[i] = 0;
-    }
+    for (int i = 1; i &lt;= n; i++) { cha[i] = i; hang[i] = 0; }
 }
 
 int tim_goc(int v) {
     if (v == cha[v]) return v;
-    return cha[v] = tim_goc(cha[v]);  // Nén đường đi — RẤT QUAN TRỌNG!
+    // KEY: Nén đường đi → mọi nút trỏ thẳng gốc → gần O(1)
+    return cha[v] = tim_goc(cha[v]);
 }
 
 void hop_nhat(int a, int b) {
-    a = tim_goc(a);
-    b = tim_goc(b);
-    if (a == b) return;               // Đã cùng nhóm rồi
-    // Union by rank: gốc nhỏ treo vào gốc lớn
+    a = tim_goc(a); b = tim_goc(b);
+    if (a == b) return;
     if (hang[a] &lt; hang[b]) swap(a, b);
     cha[b] = a;
     if (hang[a] == hang[b]) hang[a]++;
 }
 
-bool cungNhom(int u, int v) {
-    return tim_goc(u) == tim_goc(v);
+int main() {
+    int n = 6;
+    khoiTao(n);
+    hop_nhat(1, 2);  hop_nhat(3, 4);
+    hop_nhat(1, 3);  hop_nhat(5, 6);
+
+    cout &lt;&lt; "1 va 4 cung nhom? " &lt;&lt; (tim_goc(1)==tim_goc(4) ? "YES" : "NO") &lt;&lt; endl;
+    cout &lt;&lt; "1 va 5 cung nhom? " &lt;&lt; (tim_goc(1)==tim_goc(5) ? "YES" : "NO") &lt;&lt; endl;
+
+    int soNhom = 0;
+    for (int i = 1; i &lt;= n; i++)
+        if (tim_goc(i) == i) soNhom++;
+    cout &lt;&lt; "So nhom: " &lt;&lt; soNhom &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output:
+// 1 va 4 cung nhom? YES   (1-2, 3-4, rồi gộp 1-3 → cả 4 chung)
+// 1 va 5 cung nhom? NO    (5-6 riêng)
+// So nhom: 2
 </pre>
 <pre>
-// ═══ Ứng dụng: Đếm số nhóm / Tổng diện tích nhóm lớn nhất ═══
+// ═══ DSU ỨNG DỤNG: ĐẾm nhóm + Tổng nhóm lớn nhất ═══
+// (Dùng lại DSU ở trên, thêm mảng tongDienTich)
+// Khi hop_nhat(a, b): tongDienTich[gocA] += tongDienTich[gocB]
+long long tongDienTich[MAXN];
 
-// Đếm số nhóm (thành phần liên thông)
+// Đếm số nhóm:
 int soNhom = 0;
 for (int i = 1; i &lt;= n; i++)
-    if (cha[i] == i) soNhom++;
+    if (tim_goc(i) == i) soNhom++;
 
-// Tổng giá trị nhóm lớn nhất (ví dụ: bài LATGACH)
-long long tongDienTich[MAXN];
-// Khi hop_nhat: tongDienTich[a] += tongDienTich[b];
+// Tìm nhóm có tổng lớn nhất:
 long long maxTong = 0;
 for (int i = 1; i &lt;= n; i++)
-    if (cha[i] == i)
+    if (tim_goc(i) == i)
         maxTong = max(maxTong, tongDienTich[i]);
 </pre>
 
@@ -1986,11 +2550,14 @@ for (int i = 1; i &lt;= n; i++)
 <div class="warn"><strong>DẤU HIỆU:</strong> "tổng đoạn [L,R]" <strong>+ sửa giá trị</strong> (tổng tiền tố thường không sửa được), "đếm nghịch thế đảo"</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#A1">Prefix Sum</a> giống bảng tính Excel bị "đóng băng": hỏi nhanh nhưng sửa 1 ô thì cả cột phải tính lại. BIT = Excel "tự cập nhật": sửa xong vẫn hỏi nhanh.<br>• BIT chỉ giỏi cộng. Cần tìm min/max hoặc sửa cả đoạn → phải lên <a href="#C7">Segment Tree</a> (mạnh hơn).</div>
 <pre>
-// Bài toán: n phần tử, Q thao tác: cập nhật a[i] += delta hoặc hỏi tổng a[l..r]
-// Input: n, Q thao tác | Output: tổng đoạn mỗi lần hỏi
+// ═══ BIT (FENWICK TREE) ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 long long bit[100005];
 int n;
 
+// KEY: i & (-i) = bit thấp nhất → nhảy theo cây nhị phân
 void capNhat(int i, long long delta) {
     for (; i &lt;= n; i += i &amp; (-i))
         bit[i] += delta;
@@ -2006,6 +2573,21 @@ long long tong(int i) {
 long long tongDoan(int l, int r) {
     return tong(r) - tong(l - 1);
 }
+
+int main() {
+    n = 6;
+    int a[] = {0, 3, 1, 4, 1, 5, 9};  // 1-indexed
+    for (int i = 1; i &lt;= n; i++) capNhat(i, a[i]);
+
+    cout &lt;&lt; "Tong [2,5] = " &lt;&lt; tongDoan(2, 5) &lt;&lt; endl;
+
+    capNhat(3, 6);  // a[3] += 6 (4 → 10)
+    cout &lt;&lt; "Sau a[3]+=6, Tong [2,5] = " &lt;&lt; tongDoan(2, 5) &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Tong [2,5] = 11       (1+4+1+5)
+// Sau a[3]+=6, Tong [2,5] = 17  (1+10+1+5)
 </pre>
 
 <!-- C6 -->
@@ -2016,11 +2598,14 @@ long long tongDoan(int l, int r) {
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Là mở rộng 2D của <a href="#C5">BIT 1D</a>. Nếu chỉ hỏi mà không sửa → dùng <a href="#A1">Prefix Sum 2D</a> (đơn giản hơn).<br>• Nếu cần cập nhật cả HCN (không chỉ 1 ô) → dùng <a href="#A4">Mảng hiệu 2D</a> hoặc Segment Tree 2D.</div>
 
 <pre>
-// Bài toán: Bảng m×n. Cập nhật a[x][y] += delta. Hỏi tổng HCN (1,1)→(r,c).
-// Input: m, n, Q thao tác | Output: tổng HCN mỗi lần hỏi
-long long bit2d[1005][1005];
+// ═══ BIT 2D ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+long long bit2d[105][105];
 int M, N;
 
+// KEY: 2 vòng for lồng, mỗi vòng nhảy theo bit thấp nhất → BIT mở rộng 2D
 void update2D(int x, int y, long long delta) {
     for (int i = x; i &lt;= M; i += i &amp; (-i))
         for (int j = y; j &lt;= N; j += j &amp; (-j))
@@ -2035,10 +2620,28 @@ long long query2D(int x, int y) {
     return s;
 }
 
-// Tổng HCN (r1,c1)→(r2,c2):
 long long tongHCN(int r1, int c1, int r2, int c2) {
-    return query2D(r2, c2) - query2D(r1-1, c2) - query2D(r2, c1-1) + query2D(r1-1, c1-1);
+    return query2D(r2,c2) - query2D(r1-1,c2) - query2D(r2,c1-1) + query2D(r1-1,c1-1);
 }
+
+int main() {
+    M = 3; N = 3;
+    int grid[4][4] = {{0,0,0,0}, {0,1,2,3}, {0,4,5,6}, {0,7,8,9}};
+    for (int i = 1; i &lt;= M; i++)
+        for (int j = 1; j &lt;= N; j++)
+            update2D(i, j, grid[i][j]);
+
+    cout &lt;&lt; "Tong HCN (1,1)->(2,2) = " &lt;&lt; tongHCN(1,1,2,2) &lt;&lt; endl;
+    cout &lt;&lt; "Tong HCN (2,2)->(3,3) = " &lt;&lt; tongHCN(2,2,3,3) &lt;&lt; endl;
+
+    update2D(2, 2, 10);  // grid[2][2] += 10 (5 → 15)
+    cout &lt;&lt; "Sau +10, Tong (1,1)->(2,2) = " &lt;&lt; tongHCN(1,1,2,2) &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Tong HCN (1,1)->(2,2) = 12    (1+2+4+5)
+// Tong HCN (2,2)->(3,3) = 28    (5+6+8+9)
+// Sau +10, Tong (1,1)->(2,2) = 22
 </pre>
 
 <!-- C7 -->
@@ -2066,9 +2669,11 @@ long long tongHCN(int r1, int c1, int r2, int c2) {
 
 <p><strong>Segment Tree cơ bản — Truy vấn tổng + Cập nhật điểm:</strong></p>
 <pre>
-// Bài toán: n phần tử, Q thao tác: sửa a[pos]=val hoặc hỏi tổng/min/max đoạn [l,r]
-// Input: n, a[1..n], Q thao tác | Output: kết quả mỗi lần hỏi
-int st[400005]; // Kích thước 4 × n
+// ═══ SEGMENT TREE ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int st[400005];
 int a[100005], n;
 
 void build(int id, int l, int r) {
@@ -2076,7 +2681,7 @@ void build(int id, int l, int r) {
     int mid = (l + r) / 2;
     build(2*id, l, mid);
     build(2*id+1, mid+1, r);
-    st[id] = st[2*id] + st[2*id+1];         // Đổi thành min/max/GCD tùy bài
+    st[id] = st[2*id] + st[2*id+1];
 }
 
 void update(int id, int l, int r, int pos, int val) {
@@ -2087,15 +2692,30 @@ void update(int id, int l, int r, int pos, int val) {
     st[id] = st[2*id] + st[2*id+1];
 }
 
+// KEY: Đoạn [ql,qr] được ghép từ O(log n) nút → truy vấn nhanh
 int query(int id, int l, int r, int ql, int qr) {
-    if (ql &gt; r || qr &lt; l) return 0;         // Ngoài đoạn → giá trị trung tính
-    if (ql &lt;= l &amp;&amp; r &lt;= qr) return st[id]; // Nằm trọn trong
+    if (ql &gt; r || qr &lt; l) return 0;           // ngoài phạm vi → bỏ
+    if (ql &lt;= l &amp;&amp; r &lt;= qr) return st[id];    // nằm trọn → lấy luôn
     int mid = (l + r) / 2;
     return query(2*id, l, mid, ql, qr)
          + query(2*id+1, mid+1, r, ql, qr);
 }
 
-// Gọi: build(1, 1, n);  update(1, 1, n, pos, val);  query(1, 1, n, L, R);
+int main() {
+    n = 6;
+    int arr[] = {0, 3, 1, 4, 1, 5, 9};
+    for (int i = 1; i &lt;= n; i++) a[i] = arr[i];
+    build(1, 1, n);
+
+    cout &lt;&lt; "Tong [2,5] = " &lt;&lt; query(1, 1, n, 2, 5) &lt;&lt; endl;
+
+    update(1, 1, n, 3, 10);  // a[3] = 10
+    cout &lt;&lt; "Sau a[3]=10, Tong [2,5] = " &lt;&lt; query(1, 1, n, 2, 5) &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Tong [2,5] = 11       (1+4+1+5)
+// Sau a[3]=10, Tong [2,5] = 17  (1+10+1+5)
 </pre>
 
 
@@ -2109,8 +2729,10 @@ int query(int id, int l, int r, int ql, int qr) {
 
 <p><strong>Code mẫu — Lazy cộng đoạn + hỏi tổng đoạn:</strong></p>
 <pre>
-// Bài toán: n phần tử, Q thao tác: cộng val vào đoạn [l,r] hoặc hỏi tổng đoạn [l,r]
-// Input: n, a[1..n], Q thao tác | Output: tổng đoạn mỗi lần hỏi
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int a[100005];
 long long st[400005], lazy[400005];
 
 void build(int id, int l, int r) {
@@ -2122,6 +2744,7 @@ void build(int id, int l, int r) {
     st[id] = st[2*id] + st[2*id+1];
 }
 
+// KEY: push_down = đẩy "ghi chú lười" xuống con khi cần truy vấn/cập nhật
 void push_down(int id, int l, int r) {
     if (lazy[id]) {
         int mid = (l + r) / 2;
@@ -2155,7 +2778,24 @@ long long queryRange(int id, int l, int r, int ql, int qr) {
     return queryRange(2*id, l, mid, ql, qr)
          + queryRange(2*id+1, mid+1, r, ql, qr);
 }
-// Gọi: build(1, 1, n); updateRange(1, 1, n, L, R, val); queryRange(1, 1, n, L, R);
+
+int main() {
+    int n = 5;
+    // a[1..5] = {1, 2, 3, 4, 5}
+    a[1]=1; a[2]=2; a[3]=3; a[4]=4; a[5]=5;
+    build(1, 1, n);
+    cout &lt;&lt; "Tong [2,4]: " &lt;&lt; queryRange(1, 1, n, 2, 4) &lt;&lt; endl;
+    updateRange(1, 1, n, 2, 4, 10); // cong 10 vao doan [2,4]
+    cout &lt;&lt; "Sau +10 doan [2,4]:" &lt;&lt; endl;
+    cout &lt;&lt; "Tong [2,4]: " &lt;&lt; queryRange(1, 1, n, 2, 4) &lt;&lt; endl;
+    cout &lt;&lt; "Tong [1,5]: " &lt;&lt; queryRange(1, 1, n, 1, 5) &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Tong [2,4]: 9
+// Sau +10 doan [2,4]:
+// Tong [2,4]: 39
+// Tong [1,5]: 45
 </pre>
 
 <!-- C9 -->
@@ -2166,8 +2806,11 @@ long long queryRange(int id, int l, int r, int ql, int qr) {
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Kết hợp <a href="#C7">Segment Tree</a> (cấu trúc cây) + <a href="#A8">Binary Search</a> (tìm trong dãy sorted mỗi nút).<br>• Bài "phần tử thứ k" cũng giải được bằng <a href="#C5">BIT</a> + <a href="#A12">Nén tọa độ</a>, nhưng Merge Sort Tree linh hoạt hơn.</div>
 
 <pre>
-// Bài toán: Mảng n phần tử. Trả lời Q truy vấn "đếm phần tử ≤ k trong đoạn [l,r]"
-// Input: n, a[1..n], Q truy vấn (l, r, k) | Output: số phần tử ≤ k trong [l,r]
+// ═══ MERGE SORT TREE ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int a[100005], n;
 vector&lt;int&gt; tree[400005];
 
 void build(int id, int l, int r) {
@@ -2180,16 +2823,29 @@ void build(int id, int l, int r) {
           back_inserter(tree[id]));
 }
 
-// Đếm phần tử ≤ k trong đoạn [ql, qr]
 int query(int id, int l, int r, int ql, int qr, int k) {
     if (ql &gt; r || qr &lt; l) return 0;
+    // KEY: Mỗi nút lưu dãy sorted → upper_bound đếm phần tử ≤ k
     if (ql &lt;= l &amp;&amp; r &lt;= qr)
         return upper_bound(tree[id].begin(), tree[id].end(), k) - tree[id].begin();
     int mid = (l + r) / 2;
     return query(2*id, l, mid, ql, qr, k)
          + query(2*id+1, mid+1, r, ql, qr, k);
 }
-// Build O(n log n), Query O(log² n), Bộ nhớ O(n log n)
+
+int main() {
+    n = 7;
+    int arr[] = {0, 5, 1, 3, 7, 2, 8, 4};
+    for (int i = 1; i &lt;= n; i++) a[i] = arr[i];
+    build(1, 1, n);
+
+    cout &lt;&lt; "Phan tu &lt;= 4 trong [2,6]: " &lt;&lt; query(1, 1, n, 2, 6, 4) &lt;&lt; endl;
+    cout &lt;&lt; "Phan tu &lt;= 7 trong [1,7]: " &lt;&lt; query(1, 1, n, 1, 7, 7) &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Phan tu &lt;= 4 trong [2,6]: 3   (1, 3, 2)
+// Phan tu &lt;= 7 trong [1,7]: 6   (5,1,3,7,2,4)
 </pre>
 
 <!-- C10 -->
@@ -2206,30 +2862,46 @@ int query(int id, int l, int r, int ql, int qr, int k) {
 </div>
 
 <pre>
-// ═══ Sparse Table — RMQ (Range Minimum Query) O(1) ═══
-// Bài toán: Mảng n phần tử (KHÔNG sửa). Trả lời Q câu hỏi "min/max đoạn [l,r]?"
-// Input: n, a[1..n], Q câu hỏi (l, r) | Output: min a[l..r] mỗi câu
-// Build: O(n log n) | Query: O(1)
-int sp[100005][17]; // sp[i][j] = min đoạn dài 2^j bắt đầu từ i
+// ═══ SPARSE TABLE ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int a[100005];
+int sp[100005][17];
 int LOG[100005];
 
 void build(int n) {
     LOG[1] = 0;
     for (int i = 2; i &lt;= n; i++)
         LOG[i] = LOG[i/2] + 1;
-
     for (int i = 1; i &lt;= n; i++)
-        sp[i][0] = a[i];                    // Đoạn dài 1
-
+        sp[i][0] = a[i];
     for (int j = 1; (1 &lt;&lt; j) &lt;= n; j++)
         for (int i = 1; i + (1 &lt;&lt; j) - 1 &lt;= n; i++)
             sp[i][j] = min(sp[i][j-1], sp[i + (1 &lt;&lt; (j-1))][j-1]);
 }
 
+// KEY: 2 đoạn chồng nhau đều cho min đúng → truy vấn O(1)
 int query(int l, int r) {
     int k = LOG[r - l + 1];
-    return min(sp[l][k], sp[r - (1 &lt;&lt; k) + 1][k]);  // O(1)!
+    return min(sp[l][k], sp[r - (1 &lt;&lt; k) + 1][k]);
 }
+
+int main() {
+    int n = 7;
+    int arr[] = {0, 5, 1, 3, 7, 2, 8, 4};
+    for (int i = 1; i &lt;= n; i++) a[i] = arr[i];
+    build(n);
+
+    cout &lt;&lt; "Min [2,5] = " &lt;&lt; query(2, 5) &lt;&lt; endl;
+    cout &lt;&lt; "Min [1,7] = " &lt;&lt; query(1, 7) &lt;&lt; endl;
+    cout &lt;&lt; "Min [4,6] = " &lt;&lt; query(4, 6) &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Min [2,5] = 1    (1,3,7,2 → min=1)
+// Min [1,7] = 1    (5,1,3,7,2,8,4 → min=1)
+// Min [4,6] = 2    (7,2,8 → min=2)
 </pre>
 
 <div class="tip"><strong>Lưu ý:</strong> Sparse Table chỉ hoạt động đúng với các phép toán <strong>overlap-friendly</strong> (min, max, GCD, OR, AND). Với phép <strong>tổng</strong> thì phải dùng BIT/Segment Tree vì 2 đoạn chồng nhau sẽ đếm lặp.</div>
@@ -2243,7 +2915,10 @@ int query(int l, int r) {
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Code đầy đủ (Trie chữ cái + Trie nhị phân tìm XOR) → xem <a href="#F4">F4</a> trong Nhóm F — Xử lý xâu.<br>• Kết hợp <a href="#B3">DP</a> trên Trie → giải bài "word break".</div>
 
 <pre>
-// Trie chữ cái — Insert + Find + Count Prefix
+// ═══ TRIE ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 struct Trie {
     int child[26];
     int cntWord, cntPrefix;
@@ -2259,7 +2934,7 @@ void addWord(const string &amp;s) {
         cur = nodes[cur].child[ch];
         nodes[cur].cntPrefix++;
     }
-    nodes[cur].cntWord++;
+    nodes[cur].cntWord++;  // KEY: cntWord = kết thúc từ, cntPrefix = đi qua
 }
 
 bool findWord(const string &amp;s) {
@@ -2271,6 +2946,32 @@ bool findWord(const string &amp;s) {
     }
     return nodes[cur].cntWord > 0;
 }
+
+int countPrefix(const string &amp;s) {
+    int cur = 0;
+    for (char c : s) {
+        int ch = c - 'a';
+        if (!nodes[cur].child[ch]) return 0;
+        cur = nodes[cur].child[ch];
+    }
+    return nodes[cur].cntPrefix;
+}
+
+int main() {
+    memset(nodes, 0, sizeof(nodes));
+    addWord("apple"); addWord("app"); addWord("banana");
+
+    cout &lt;&lt; "Tim 'app': " &lt;&lt; (findWord("app") ? "CO" : "KHONG") &lt;&lt; endl;
+    cout &lt;&lt; "Tim 'ap': " &lt;&lt; (findWord("ap") ? "CO" : "KHONG") &lt;&lt; endl;
+    cout &lt;&lt; "So tu co prefix 'app': " &lt;&lt; countPrefix("app") &lt;&lt; endl;
+    cout &lt;&lt; "So tu co prefix 'b': " &lt;&lt; countPrefix("b") &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Tim 'app': CO
+// Tim 'ap': KHONG
+// So tu co prefix 'app': 2   (app, apple)
+// So tu co prefix 'b': 1     (banana)
 </pre>
 
 <!-- C12 -->
@@ -2281,18 +2982,21 @@ bool findWord(const string &amp;s) {
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Dựng bảng up[][] bằng <a href="#D2">DFS</a> (duyệt cây tính depth + cha).<br>• LCA + <a href="#A1">Prefix Sum</a> trên cây → tính tổng đường đi u→v = sum[u] + sum[v] − 2×sum[LCA].<br>• Bài RMQ trên cây cũng giải được bằng Euler Tour + <a href="#C10">Sparse Table</a>.</div>
 
 <pre>
-// Bài toán: Cây n đỉnh. Trả lời Q truy vấn "LCA(u, v) = ?"
-// Input: n, cây (cha mỗi đỉnh), Q truy vấn (u, v) | Output: LCA(u, v) mỗi truy vấn
-const int LOG = 20;
-int up[100005][20];  // up[v][k] = tổ tiên cách v đúng 2^k bước
+// ═══ BINARY LIFTING (LCA) ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int LOGN = 20;
+int up[100005][20];
 int depth[100005];
 vector&lt;int&gt; adj[100005];
 
 void dfs(int v, int p, int d) {
     up[v][0] = p;
     depth[v] = d;
-    for (int k = 1; k &lt; LOG; k++)
-        up[v][k] = up[up[v][k-1]][k-1];  // Tổ tiên 2^k = nhảy 2 lần 2^(k-1)
+    // KEY: up[v][k] = cha cách 2^k bước = nhảy 2 lần 2^(k-1)
+    for (int k = 1; k &lt; LOGN; k++)
+        up[v][k] = up[up[v][k-1]][k-1];
     for (int u : adj[v])
         if (u != p) dfs(u, v, d + 1);
 }
@@ -2300,15 +3004,10 @@ void dfs(int v, int p, int d) {
 int lca(int u, int v) {
     if (depth[u] &lt; depth[v]) swap(u, v);
     int diff = depth[u] - depth[v];
-
-    // Bước 1: Đưa u lên cùng độ sâu với v
-    for (int k = 0; k &lt; LOG; k++)
+    for (int k = 0; k &lt; LOGN; k++)
         if ((diff >> k) &amp; 1) u = up[u][k];
-
     if (u == v) return u;
-
-    // Bước 2: Nhảy đồng thời u và v lên cho đến khi gặp nhau
-    for (int k = LOG - 1; k >= 0; k--)
+    for (int k = LOGN - 1; k >= 0; k--)
         if (up[u][k] != up[v][k]) {
             u = up[u][k];
             v = up[v][k];
@@ -2316,9 +3015,36 @@ int lca(int u, int v) {
     return up[u][0];
 }
 
-// Khoảng cách u→v trên cây:
-// dist(u, v) = depth[u] + depth[v] - 2 * depth[lca(u, v)]
-// Gọi: dfs(1, 0, 0) để khởi tạo từ gốc = 1
+int main() {
+    //       1
+    //      / \
+    //     2   3
+    //    / \   \
+    //   4   5   6
+    //  /
+    // 7
+    int n = 7;
+    int edges[][2] = {{1,2},{1,3},{2,4},{2,5},{3,6},{4,7}};
+    for (auto &amp;e : edges) {
+        adj[e[0]].push_back(e[1]);
+        adj[e[1]].push_back(e[0]);
+    }
+    dfs(1, 0, 0);
+
+    cout &lt;&lt; "LCA(4,5) = " &lt;&lt; lca(4, 5) &lt;&lt; endl;
+    cout &lt;&lt; "LCA(7,5) = " &lt;&lt; lca(7, 5) &lt;&lt; endl;
+    cout &lt;&lt; "LCA(7,6) = " &lt;&lt; lca(7, 6) &lt;&lt; endl;
+
+    int u = 7, v = 6;
+    cout &lt;&lt; "Dist(" &lt;&lt; u &lt;&lt; "," &lt;&lt; v &lt;&lt; ") = "
+         &lt;&lt; depth[u] + depth[v] - 2 * depth[lca(u, v)] &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// LCA(4,5) = 2
+// LCA(7,5) = 2
+// LCA(7,6) = 1
+// Dist(7,6) = 5
 </pre>
 
 
@@ -2332,22 +3058,41 @@ int lca(int u, int v) {
 <p><em>💡 Hình dung: Trước khi dùng bất kỳ thuật toán đồ thị nào, phải lưu được đồ thị. Dùng <strong>vector</strong> (CTDL đã học): mỗi giao lộ (= đỉnh) ghi danh sách giao lộ kề bên (= cạnh). VD: giao lộ 1 nối với 2 và 3 → ke[1] = {2, 3}. Bản đồ thành phố: giao lộ = đỉnh, đường = cạnh. Lưu xong rồi mới BFS, DFS, Dijkstra... được.</em></p>
 <div class="tip"><strong>CÁCH LƯU ĐỒ THỊ PHỔ BIẾN NHẤT:</strong> Dùng <code>vector&lt;vector&lt;int&gt;&gt; ke</code></div>
 <pre>
-int n, m;                           // n đỉnh, m cạnh
-vector&lt;vector&lt;int&gt;&gt; ke;             // Danh sách kề
+// ═══ DANH SÁCH KỀ ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Đọc đồ thị vô hướng
-ke.assign(n + 1, vector&lt;int&gt;());    // Khởi tạo n+1 vector rỗng
-for (int i = 0; i &lt; m; i++) {
-    int u, v;
-    in >> u >> v;
-    ke[u].push_back(v);
-    ke[v].push_back(u);             // Bỏ dòng này nếu đồ thị CÓ HƯỚNG
+int main() {
+    int n = 5, m = 6;
+    int edges[][2] = {{1,2},{1,3},{2,4},{3,4},{4,5},{3,5}};
+
+    // KEY: ke[u] = danh sách đỉnh kề → tiết kiệm O(N+M) thay vì O(N²)
+    vector&lt;vector&lt;int&gt;&gt; ke(n + 1);        // Danh sách kề
+    for (int i = 0; i &lt; m; i++) {
+        int u = edges[i][0], v = edges[i][1];
+        ke[u].push_back(v);
+        ke[v].push_back(u);               // Bỏ dòng này nếu CÓ HƯỚNG
+    }
+
+    for (int u = 1; u &lt;= n; u++) {
+        cout &lt;&lt; "ke[" &lt;&lt; u &lt;&lt; "] = {";
+        for (int j = 0; j &lt; (int)ke[u].size(); j++) {
+            if (j) cout &lt;&lt; ", ";
+            cout &lt;&lt; ke[u][j];
+        }
+        cout &lt;&lt; "}" &lt;&lt; endl;
+    }
+
+    // Đồ thị CÓ TRỌNG SỐ → dùng pair
+    // vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke;  ke[u].push_back({v, w});
+    return 0;
 }
-
-// Đồ thị CÓ TRỌNG SỐ → dùng pair
-vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke;  // ke[u] = {{v, w}, ...}
-ke[u].push_back({v, w});
-ke[v].push_back({u, w});
+// ▶ Output:
+// ke[1] = {2, 3}
+// ke[2] = {1, 4}
+// ke[3] = {1, 4, 5}
+// ke[4] = {2, 3, 5}
+// ke[5] = {4, 3}
 </pre>
 
 <div class="tip"><strong>CÁCH 2: MA TRẬN KỀ</strong> — Dùng cho Floyd, Bellman-Ford, Prim, Ford-Fulkerson (khi N nhỏ ≤ 500)</div>
@@ -2670,56 +3415,54 @@ void Dijkstra(int S) {
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" (đồ thị <strong>không trọng số</strong>), "duyệt theo tầng", "lưới/mê cung", "truy vết đường đi"</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• BFS giống sóng lan đều → chỉ đúng khi mọi đường dài bằng nhau. Đường dài ngắn khác nhau → phải dùng <a href="#D3">Dijkstra</a> (ưu tiên đường ngắn trước, dùng <a href="#C3">Priority Queue</a>).<br>• Chỉ cần đếm "mấy nhóm riêng biệt?" → <a href="#D2b">D2b</a> hoặc <a href="#C4">DSU</a>.</div>
 <pre>
-// ═══ BFS tìm đường đi ngắn nhất từ S đến F ═══
-// Bài toán: Đồ thị n đỉnh, m cạnh (không trọ ng số). Tìm đường ngắn nhất từ S đến F.
-// Input: n, m, các cạnh (u,v), S, F | Output: đường đi S→F (hoặc -1)
-// Phong cách: Free (đánh dấu) + Trace (truy vết)
+// ═══ BFS TÌM ĐƯỜNG NGẮN NHẤT ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-vector&lt;vector&lt;int&gt;&gt; ke;
-vector&lt;bool&gt; Free;
-vector&lt;int&gt; Trace;
-int n;
+int main() {
+    int n = 5;
+    int edges[][2] = {{1,2},{1,3},{2,4},{3,4},{4,5}};
+    int m = 5, S = 1, F = 5;
 
-void BFS(int S) {
-    Free.assign(n + 1, true);
-    Trace.assign(n + 1, -1);
-    
+    vector&lt;vector&lt;int&gt;&gt; ke(n + 1);
+    for (int i = 0; i &lt; m; i++) {
+        ke[edges[i][0]].push_back(edges[i][1]);
+        ke[edges[i][1]].push_back(edges[i][0]);
+    }
+
+    // BFS
+    vector&lt;bool&gt; Free(n + 1, true);
+    vector&lt;int&gt; Trace(n + 1, -1);
     queue&lt;int&gt; q;
-    q.push(S);
-    Free[S] = false;
-    Trace[S] = S;
-    
+    // KEY: Queue FIFO → đỉnh gần nhất xử lý trước → đường đi ngắn nhất
+    q.push(S); Free[S] = false; Trace[S] = S;
+
     while (!q.empty()) {
-        int u = q.front();
-        q.pop();
-        
-        for (int v : ke[u]) {
+        int u = q.front(); q.pop();
+        for (int v : ke[u])
             if (Free[v]) {
                 Free[v] = false;
                 Trace[v] = u;
                 q.push(v);
             }
-        }
     }
-}
 
-// ═══ Truy vết đường đi từ F về S ═══
-void TruyVet(int S, int F) {
-    if (Trace[F] == -1) {
-        out &lt;&lt; -1;  // Không có đường đi
-        return;
-    }
-    vector&lt;int&gt; duongDi;
-    int cur = F;
-    while (cur != S) {
-        duongDi.push_back(cur);
-        cur = Trace[cur];
-    }
-    duongDi.push_back(S);
-    reverse(duongDi.begin(), duongDi.end());
-    
-    for (int x : duongDi) out &lt;&lt; x &lt;&lt; " ";
+    // Truy vết
+    if (Trace[F] == -1) { cout &lt;&lt; -1; return 0; }
+    vector&lt;int&gt; path;
+    for (int cur = F; cur != S; cur = Trace[cur])
+        path.push_back(cur);
+    path.push_back(S);
+    reverse(path.begin(), path.end());
+
+    cout &lt;&lt; "Duong di " &lt;&lt; S &lt;&lt; " -> " &lt;&lt; F &lt;&lt; ": ";
+    for (int x : path) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; "\nSo buoc: " &lt;&lt; path.size() - 1 &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output:
+// Duong di 1 -> 5: 1 2 4 5
+// So buoc: 3
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY BFS:</strong> Tìm đường đi ngắn nhất từ đỉnh 1 đến đỉnh 5
@@ -2776,29 +3519,26 @@ for (int i = 1; i &lt;= n; i++) {
 <p><em>💡 Hình dung: BFS trên đồ thị = sóng lan qua đỉnh. BFS 2D = sóng lan trên bản đồ ô vuông. Tường ('#') = chắn, đường ('.') = đi được. Mỗi bước đi sang 4 ô kề (lên/xuống/trái/phải). Cùng queue, cùng sóng lan — chỉ khác: thay vì ke[đỉnh] thì dùng 4 hướng dx/dy.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "lưới ô vuông", "mê cung", "số bước ít nhất từ ô (r1,c1) đến (r2,c2)"</div>
 <pre>
-// ═══ BFS trên lưới m×n ═══
-int m, n;                           // số hàng, số cột
-char a[105][105];                   // '.' = đi được, '#' = tường
-int dist[105][105];                 // dist[i][j] = số bước đến ô (i,j)
+// ═══ BFS TRÊN LƯỚI 2D ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// 4 hướng: lên, xuống, trái, phải
+int m, n;
+char a[105][105];
+int dist[105][105];
+// KEY: 4 hướng dx/dy thay cho danh sách kề trong đồ thị lưới
 int dx[] = {-1, 1, 0, 0};
 int dy[] = {0, 0, -1, 1};
 
-void BFS_Luoi(int sr, int sc) {     // Xuất phát từ ô (sr, sc)
-    memset(dist, -1, sizeof(dist)); // -1 = chưa thăm
+void BFS_Luoi(int sr, int sc) {
+    memset(dist, -1, sizeof(dist));
     dist[sr][sc] = 0;
     queue&lt;pair&lt;int,int&gt;&gt; q;
     q.push({sr, sc});
-    
     while (!q.empty()) {
-        auto [x, y] = q.front();
-        q.pop();
-        
-        for (int k = 0; k &lt; 4; k++) {    // Thử 4 hướng
-            int nx = x + dx[k];
-            int ny = y + dy[k];
-            // Kiểm tra: trong lưới + đi được + chưa thăm
+        auto [x, y] = q.front(); q.pop();
+        for (int k = 0; k &lt; 4; k++) {
+            int nx = x + dx[k], ny = y + dy[k];
             if (nx >= 0 &amp;&amp; nx &lt; m &amp;&amp; ny >= 0 &amp;&amp; ny &lt; n
                 &amp;&amp; a[nx][ny] != '#' &amp;&amp; dist[nx][ny] == -1) {
                 dist[nx][ny] = dist[x][y] + 1;
@@ -2808,8 +3548,19 @@ void BFS_Luoi(int sr, int sc) {     // Xuất phát từ ô (sr, sc)
     }
 }
 
-// Kết quả: dist[er][ec] = số bước ngắn nhất đến ô (đích)
-//         dist[er][ec] == -1 → không có đường đi
+int main() {
+    // Lưới 5x5: S = xuất phát, E = đích, # = tường
+    m = 5; n = 5;
+    string grid[] = {"S....", ".###.", ".#...", ".#.#.", "...#E"};
+    for (int i = 0; i &lt; m; i++)
+        for (int j = 0; j &lt; n; j++)
+            a[i][j] = grid[i][j];
+
+    BFS_Luoi(0, 0);
+    cout &lt;&lt; "So buoc ngan nhat S -> E: " &lt;&lt; dist[4][4] &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output: So buoc ngan nhat S -> E: 8
 </pre>
 
 <!-- D2 -->
@@ -2819,34 +3570,46 @@ void BFS_Luoi(int sr, int sc) {     // Xuất phát từ ô (sr, sc)
 <div class="warn"><strong>DẤU HIỆU:</strong> "đếm nhóm riêng biệt (thành phần liên thông)", "kiểm tra chu trình", "tô màu đồ thị"</div>
 <div class="tip"><strong>LƯU Ý:</strong> Dùng stack thay đệ quy để tránh tràn bộ nhớ khi N lớn (N > 10⁴)</div>
 <pre>
-// ═══ DFS dùng STACK (an toàn, không tràn) ═══
+// ═══ DFS (STACK) ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-vector&lt;vector&lt;int&gt;&gt; ke;
-vector&lt;bool&gt; Free;
-vector&lt;int&gt; Trace;
-int n;
+int main() {
+    int n = 6;
+    int edges[][2] = {{1,2},{1,3},{2,4},{3,5},{5,6}};
+    int m = 5;
 
-void DFS(int S) {
-    Free.assign(n + 1, true);
-    Trace.assign(n + 1, -1);
-    
-    stack&lt;int&gt; stk;
-    stk.push(S);
-    Free[S] = false;
-    
-    while (!stk.empty()) {
-        int u = stk.top();
-        stk.pop();
-        
-        for (int v : ke[u]) {
-            if (Free[v]) {
-                Free[v] = false;
-                Trace[v] = u;
-                stk.push(v);
-            }
-        }
+    vector&lt;vector&lt;int&gt;&gt; ke(n + 1);
+    for (int i = 0; i &lt; m; i++) {
+        ke[edges[i][0]].push_back(edges[i][1]);
+        ke[edges[i][1]].push_back(edges[i][0]);
     }
+
+    // DFS + đếm TPLT
+    vector&lt;bool&gt; Free(n + 1, true);
+    int soTPLT = 0;
+
+    for (int s = 1; s &lt;= n; s++) {
+        if (!Free[s]) continue;
+        soTPLT++;
+        stack&lt;int&gt; stk;
+        stk.push(s); Free[s] = false;
+        cout &lt;&lt; "TPLT " &lt;&lt; soTPLT &lt;&lt; ": ";
+        // KEY: Stack LIFO → lao sâu 1 nhánh trước, quay lại sau
+        while (!stk.empty()) {
+            int u = stk.top(); stk.pop();
+            cout &lt;&lt; u &lt;&lt; " ";
+            for (int v : ke[u])
+                if (Free[v]) { Free[v] = false; stk.push(v); }
+        }
+        cout &lt;&lt; endl;
+    }
+    cout &lt;&lt; "So TPLT: " &lt;&lt; soTPLT &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output:
+// TPLT 1: 1 3 5 6 2 4
+// So TPLT: 1
 </pre>
 <pre>
 // ═══ DFS đệ quy (code ngắn, chỉ dùng khi N nhỏ ≤ 10⁴) ═══
@@ -2920,62 +3683,58 @@ int main() {
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất" trên đồ thị <strong>có trọng số dương</strong></div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <a href="#D1">BFS</a> xếp hàng ai đến trước làm trước. Dijkstra xếp hàng theo <b>khoảng cách</b>: ai gần nhất làm trước → dùng <a href="#C3">Priority Queue</a> thay queue thường.<br>• Nếu có đường "phí âm" (đi qua được thưởng) → Dijkstra tính sai, phải dùng <a href="#D5">Bellman-Ford</a>.</div>
 <pre>
-// ═══ Dijkstra — O(E log V) ═══
-// Bài toán: Đồ thị có trọng số (≥0). Tìm đường ngắn nhất từ đỉnh S đến mọi đỉnh.
-// Input: n đỉnh, m cạnh (u, v, w), đỉnh nguồn S | Output: khoảng cách ngắn nhất + đường đi
+// ═══ DIJKSTRA ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke;   // ke[u] = {{v, w}, ...}
-vector&lt;long long&gt; dist;
-vector&lt;int&gt; Trace;
-vector&lt;bool&gt; Free;
-int n;
+int main() {
+    int n = 5;
+    // Cạnh: {u, v, w}
+    int edges[][3] = {{1,2,2},{1,3,5},{2,3,1},{2,4,7},{3,4,3},{4,5,1}};
+    int m = 6, S = 1, F = 5;
 
-void Dijkstra(int S) {
-    dist.assign(n + 1, 1e18);
-    Trace.assign(n + 1, -1);
-    Free.assign(n + 1, true);
-    
-    // Min heap: {khoảng cách, đỉnh}
-    priority_queue&lt;pair&lt;long long,int&gt;, 
-                   vector&lt;pair&lt;long long,int&gt;&gt;, 
+    vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke(n + 1);
+    for (int i = 0; i &lt; m; i++) {
+        ke[edges[i][0]].push_back({edges[i][1], edges[i][2]});
+        ke[edges[i][1]].push_back({edges[i][0], edges[i][2]});
+    }
+
+    vector&lt;long long&gt; dist(n + 1, 1e18);
+    vector&lt;int&gt; Trace(n + 1, -1);
+    vector&lt;bool&gt; Free(n + 1, true);
+    priority_queue&lt;pair&lt;long long,int&gt;,
+                   vector&lt;pair&lt;long long,int&gt;&gt;,
                    greater&lt;pair&lt;long long,int&gt;&gt;&gt; pq;
-    
-    dist[S] = 0;
-    Trace[S] = S;
-    pq.push({0, S});
-    
+    // KEY: Min heap → luôn chọn đỉnh gần nhất chưa thăm trước
+    dist[S] = 0; Trace[S] = S; pq.push({0, S});
+
     while (!pq.empty()) {
-        auto [d, u] = pq.top();
-        pq.pop();
-        
-        if (!Free[u]) continue;   // Đã xét rồi → bỏ qua
+        auto [d, u] = pq.top(); pq.pop();
+        if (!Free[u]) continue;  // đã thăm rồi → bỏ (lazy deletion)
         Free[u] = false;
-        
-        for (auto [v, w] : ke[u]) {
+        for (auto [v, w] : ke[u])
             if (Free[v] &amp;&amp; dist[u] + w &lt; dist[v]) {
                 dist[v] = dist[u] + w;
                 Trace[v] = u;
                 pq.push({dist[v], v});
             }
-        }
     }
-}
 
-// Truy vết đường đi ngắn nhất từ S đến F
-void TruyVet(int S, int F) {
-    if (dist[F] >= 1e18) { out &lt;&lt; -1; return; }
-    vector&lt;int&gt; duongDi;
-    int cur = F;
-    while (cur != S) {
-        duongDi.push_back(cur);
-        cur = Trace[cur];
-    }
-    duongDi.push_back(S);
-    reverse(duongDi.begin(), duongDi.end());
-    
-    out &lt;&lt; "Khoang cach: " &lt;&lt; dist[F] &lt;&lt; '\n';
-    for (int x : duongDi) out &lt;&lt; x &lt;&lt; " ";
+    // Truy vết
+    vector&lt;int&gt; path;
+    for (int cur = F; cur != S; cur = Trace[cur]) path.push_back(cur);
+    path.push_back(S);
+    reverse(path.begin(), path.end());
+
+    cout &lt;&lt; "Khoang cach " &lt;&lt; S &lt;&lt; " -> " &lt;&lt; F &lt;&lt; ": " &lt;&lt; dist[F] &lt;&lt; endl;
+    cout &lt;&lt; "Duong di: ";
+    for (int x : path) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
 }
+// ▶ Output:
+// Khoang cach 1 -> 5: 7
+// Duong di: 1 2 3 4 5
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY DIJKSTRA:</strong> Tìm đường ngắn nhất từ đỉnh 1 đến đỉnh 5
@@ -3022,26 +3781,50 @@ Truy vết: 5←4←3←2←1 → Đường đi: <strong>1 → 2 → 3 → 4 →
 <p><em>💡 Hình dung: Dijkstra tìm đường ngắn từ 1 điểm. Floyd tìm đường ngắn giữa MỌI CẶP điểm cùng lúc. Code cực ngắn — chỉ 3 vòng for lồng nhau: "nếu đi từ A qua trung gian K đến B ngắn hơn đi thẳng A→B thì cập nhật". Nhược điểm: O(N³) nên chỉ dùng khi N ≤ 400. N lớn hơn thì chạy Dijkstra nhiều lần.</em></p>
 <div class="warn"><strong>DẤU HIỆU:</strong> "đường đi ngắn nhất giữa mọi cặp đỉnh", N ≤ 400, "kiểm tra 2 đỉnh có đường đi không"</div>
 <pre>
-// ═══ Floyd-Warshall — O(N³) ═══
-// Bài toán: Đồ thị N đỉnh (N ≤ 400). Tìm đường ngắn nhất giữa MỌI cặp đỉnh.
-// Input: n, ma trận trọng số | Output: d[i][j] = khoảng cách ngắn nhất từ i→j
-long long d[405][405];   // d[i][j] = khoảng cách ngắn nhất từ i đến j
+// ═══ FLOYD-WARSHALL ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+long long d[405][405];
 int n;
 
-void Floyd() {
-    // Khởi tạo: d[i][j] = trọng số cạnh (i,j)
-    // Nếu không có cạnh: d[i][j] = 1e18
-    // d[i][i] = 0
-    
-    for (int k = 1; k &lt;= n; k++)          // Đỉnh trung gian
-        for (int i = 1; i &lt;= n; i++)      // Đỉnh xuất phát
-            for (int j = 1; j &lt;= n; j++)  // Đỉnh đích
+int main() {
+    n = 4;
+    // Khởi tạo vô cực
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 1; j &lt;= n; j++)
+            d[i][j] = (i == j) ? 0 : 1e18;
+
+    // Cạnh: {u, v, w}
+    int edges[][3] = {{1,2,3},{1,3,7},{2,3,1},{2,4,5},{3,4,2}};
+    for (auto &amp;e : edges) {
+        d[e[0]][e[1]] = e[2];
+        d[e[1]][e[0]] = e[2];
+    }
+
+    // Floyd
+    // KEY: 3 vòng for k-i-j: "đi qua trung gian k có ngắn hơn đi thẳng?"
+    for (int k = 1; k &lt;= n; k++)
+        for (int i = 1; i &lt;= n; i++)
+            for (int j = 1; j &lt;= n; j++)
                 if (d[i][k] + d[k][j] &lt; d[i][j])
                     d[i][j] = d[i][k] + d[k][j];
-}
 
-// Sau Floyd: d[u][v] = khoảng cách ngắn nhất u → v
-// Nếu d[u][v] >= 1e18 → không có đường đi
+    // In bảng khoảng cách
+    for (int i = 1; i &lt;= n; i++) {
+        for (int j = 1; j &lt;= n; j++)
+            cout &lt;&lt; d[i][j] &lt;&lt; "\t";
+        cout &lt;&lt; endl;
+    }
+    cout &lt;&lt; "Dist(1,4) = " &lt;&lt; d[1][4] &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// 0	3	4	6
+// 3	0	1	3
+// 4	1	0	2
+// 6	3	2	0
+// Dist(1,4) = 6   (đường 1→2→3→4 = 3+1+2)
 </pre>
 
 <!-- D5 -->
@@ -3062,7 +3845,7 @@ vector&lt;int&gt; Trace;
 int n, m, S, F;
 
 void BellmanFord() {
-    // Lặp n-1 vòng
+    // KEY: Lặp n-1 vòng duyệt MỌI cạnh → xử lý được trọng số âm
     for (int lap = 1; lap &lt;= n - 1; lap++) {
         bool coCapNhat = false;
         // Duyệt tất cả các cạnh (u, v)
@@ -3154,6 +3937,7 @@ vector&lt;bool&gt; Free;
 int n, m, total = 0;
 vector&lt;pair&lt;int,int&gt;&gt; result;        // Lưu các cạnh trong cây khung
 
+// KEY: Cứ nối sang đỉnh gần nhất chưa chọn — giống Dijkstra nhưng so chi phí cạnh
 void Prim() {
     Free[1] = false;                 // Bắt đầu từ đỉnh 1
     int dem = 0;
@@ -3261,7 +4045,7 @@ bool BFS_TimDuong() {
 
 void MaxFlow() {
     while (BFS_TimDuong()) {
-        // Tìm lượng nước nhỏ nhất trên đường tăng
+        // KEY: BFS tìm đường tăng S→T, đẩy nước max, lặp đến hết đường
         int minCap = INT_MAX;
         for (int v = F; v != S; v = Trace[v]) {
             int u = Trace[v];
@@ -3373,7 +4157,8 @@ int main() {
     for (int i = 0; i &lt; m; i++)
         in >> edges[i].u >> edges[i].v >> edges[i].w;
     
-    sort(edges.begin(), edges.end());  // Sắp cạnh tăng theo trọng số
+    // KEY: Sort cạnh rẻ→đắt + DSU kiểm tra chu trình → chọn n-1 cạnh
+    sort(edges.begin(), edges.end());
     
     for (int i = 1; i &lt;= n; i++) { cha[i] = i; hang[i] = 0; }
     
@@ -3420,7 +4205,7 @@ vector&lt;int&gt; bacVao;            // bacVao[v] = số cạnh đi VÀO v
 
 void TopoSort() {
     queue&lt;int&gt; q;
-    // Bước 1: Đẩy các đỉnh có bậc vào = 0 vào queue
+    // KEY: Bắt đầu từ đỉnh không phụ thuộc ai (bậc vào=0), xóa rồi mở khóa tiếp
     for (int i = 1; i &lt;= n; i++)
         if (bacVao[i] == 0) q.push(i);
     
@@ -3493,38 +4278,77 @@ Kết quả: <strong>1 2 3 4 5</strong> (thứ tự học môn hợp lệ)
 <p><em>💡 Số nguyên tố là số chỉ chia hết cho 1 và chính nó (ví dụ: 2, 3, 5, 7, 11...). Để kiểm tra số n có phải SNT không, không cần thử chia từ 2 đến n. Chỉ cần thử đến √n là đủ — ví dụ: kiểm tra 100 chỉ cần thử đến 10.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử chia từ 2 đến n → O(n). Với n = 10¹⁸ → không khả thi. Dùng O(√n) → chỉ cần thử đến <strong>10⁹ ≈ 1 tỷ lần</strong> — chấp nhận được.</div>
 <pre>
+// ═══ KIỂM TRA NGUYÊN TỐ ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 bool laSNT(long long n) {
     if (n &lt; 2) return false;
     if (n == 2) return true;
     if (n % 2 == 0) return false;
+    // KEY: Chỉ thử chia đến √n, bỏ số chẵn (i += 2)
     for (long long i = 3; i * i &lt;= n; i += 2)
         if (n % i == 0) return false;
     return true;
 }
+
+int main() {
+    int a[] = {1, 2, 7, 15, 97, 100};
+    for (int x : a)
+        cout &lt;&lt; x &lt;&lt; (laSNT(x) ? " YES" : " NO") &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// 1 NO
+// 2 YES
+// 7 YES
+// 15 NO
+// 97 YES
+// 100 NO
 </pre>
 
 <h3 id="E2">E2. Sàng Eratosthenes — Liệt kê SNT đến N</h3>
 <p><em>💡 Hình dung: Kiểm tra 1 số nguyên tố: O(√N). Nhưng nếu cần biết TẤT CẢ số nguyên tố đến N? Kiểm tra từng số thì chậm. Sàng: viết tất cả số 2→N lên bảng. Số 2 giữ lại, xóa bội 2 (4,6,8...). Số 3 giữ, xóa bội 3 (6,9,12...). Tiếp tục... Số còn lại = số nguyên tố. Làm 1 lần, sau đó tra O(1). Giống <strong>Mảng đếm</strong> — tính sẵn 1 lần, hỏi bao nhiêu lần cũng nhanh.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Kiểm tra từng số bằng O(√n) → tổng O(n√n). Với n = 10⁷ → ~3×10¹⁰ → chậm. Sàng 1 lần O(n log log n) → sau đó tra "có phải SNT không?" trong <strong>O(1)</strong>.</div>
 <pre>
+// ═══ SÀNG ERATOSTHENES ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 bool snt[10000001];
 void sang(int n) {
     fill(snt, snt + n + 1, true);
     snt[0] = snt[1] = false;
+    // KEY: Bắt từ i*i vì bội nhỏ hơn đã bị xóa bởi thừa số nhỏ hơn
     for (int i = 2; i * i &lt;= n; i++)
         if (snt[i])
             for (int j = i * i; j &lt;= n; j += i)
                 snt[j] = false;
 }
+
+int main() {
+    sang(30);
+    cout &lt;&lt; "SNT den 30: ";
+    for (int i = 2; i &lt;= 30; i++)
+        if (snt[i]) cout &lt;&lt; i &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output: SNT den 30: 2 3 5 7 11 13 17 19 23 29
 </pre>
 
 <h3 id="E3">E3. Lũy thừa nhanh — a^n mod m trong O(log n)</h3>
 <p><em>💡 Hình dung: Chia để trị chia đôi bài toán. Lũy thừa nhanh dùng đúng ý đó với số mũ: 2¹⁰ = (2⁵)², và 2⁵ = 2×(2²)² → chỉ vài lần nhân! Với số mũ hàng tỷ, thay vì nhân hàng tỷ lần, ta chia đôi số mũ → ~30 lần nhân. Kết hợp mod sau mỗi bước để số không bị quá lớn. Sẽ gặp lại ở Lũy thừa ma trận (B8).</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Nhân a với chính nó n lần → O(n). Với n = 10¹⁸ → <strong>không bao giờ chạy xong</strong>. Lũy thừa nhanh → <strong>O(log n) ≈ 60 lần nhân</strong>.</div>
 <pre>
+// ═══ LŨY THỪA NHANH ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 long long power(long long a, long long n, long long mod) {
     long long res = 1;
     a %= mod;
+    // KEY: n lẻ → nhân a vào res; luôn bình phương a; chia đôi n → O(log n)
     while (n > 0) {
         if (n &amp; 1) res = res * a % mod;
         a = a * a % mod;
@@ -3532,6 +4356,15 @@ long long power(long long a, long long n, long long mod) {
     }
     return res;
 }
+
+int main() {
+    cout &lt;&lt; "3^13 mod 10^9+7 = " &lt;&lt; power(3, 13, 1000000007) &lt;&lt; endl;
+    cout &lt;&lt; "2^10 = " &lt;&lt; power(2, 10, 1000000007) &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// 3^13 mod 10^9+7 = 1594323
+// 2^10 = 1024
 </pre>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Tính 3¹³ mod 1000000007
@@ -3551,11 +4384,10 @@ Kết quả: 3¹³ = 1594323.  Chỉ cần 4 lần nhân thay vì 13!
 <h3 id="E4">E4. GCD / LCM / Phân tích thừa số</h3>
 <p><em>💡 GCD (Ước Chung Lớn Nhất): số lớn nhất chia hết cho cả a và b. Ví dụ: GCD(12, 18) = 6. LCM (Bội Chung Nhỏ Nhất): số nhỏ nhất chia hết cho cả a và b. Ví dụ: LCM(4, 6) = 12. Mẹo: LCM = a ÷ GCD × b. Phân tích thừa số: tách số ra thành tích các số nguyên tố, ví dụ: 60 = 2² × 3 × 5.</em></p>
 <pre>
-// GCD &amp; LCM
-int gcd = __gcd(a, b);
-long long lcm = (long long)a / __gcd(a, b) * b;  // Tránh tràn: chia trước rồi nhân
+// ═══ GCD / LCM / PHÂN TÍCH THỮA SỐ ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-// Phân tích thừa số nguyên tố — O(√n)
 vector&lt;pair&lt;int,int&gt;&gt; phanTich(int n) {
     vector&lt;pair&lt;int,int&gt;&gt; res;
     for (int i = 2; i * i &lt;= n; i++) {
@@ -3569,17 +4401,36 @@ vector&lt;pair&lt;int,int&gt;&gt; phanTich(int n) {
     return res;
 }
 
-// Đếm số ước — O(√n)
 int demUoc(int n) {
     int cnt = 0;
-    for (int i = 1; i * i &lt;= n; i++) {
+    for (int i = 1; i * i &lt;= n; i++)
         if (n % i == 0) { cnt++; if (i != n/i) cnt++; }
-    }
     return cnt;
 }
 
-// Chia làm tròn lên
-int lamTronLen = (a + b - 1) / b;
+int main() {
+    int a = 12, b = 18;
+    cout &lt;&lt; "GCD(" &lt;&lt; a &lt;&lt; "," &lt;&lt; b &lt;&lt; ") = " &lt;&lt; __gcd(a, b) &lt;&lt; endl;
+    // KEY: LCM = a / GCD × b (chia TRƯỚC nhân SAU tránh tràn)
+    cout &lt;&lt; "LCM(" &lt;&lt; a &lt;&lt; "," &lt;&lt; b &lt;&lt; ") = "
+         &lt;&lt; (long long)a / __gcd(a, b) * b &lt;&lt; endl;
+
+    int n = 60;
+    cout &lt;&lt; n &lt;&lt; " = ";
+    auto kq = phanTich(n);
+    for (int i = 0; i &lt; (int)kq.size(); i++) {
+        if (i) cout &lt;&lt; " x ";
+        cout &lt;&lt; kq[i].first &lt;&lt; "^" &lt;&lt; kq[i].second;
+    }
+    cout &lt;&lt; endl;
+    cout &lt;&lt; "So uoc cua " &lt;&lt; n &lt;&lt; ": " &lt;&lt; demUoc(n) &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// GCD(12,18) = 6
+// LCM(12,18) = 36
+// 60 = 2^2 x 3^1 x 5^1
+// So uoc cua 60: 12
 </pre>
 
 
@@ -3599,8 +4450,56 @@ int lamTronLen = (a + b - 1) / b;
 
 <p><strong>Code mẫu — Hash đa thức (double hash):</strong></p>
 <pre>
-// Bài toán: Cho xâu s (n ≤ 10⁵). Trả lời Q truy vấn "xâu con [l1,r1] có bằng [l2,r2] không?"
-// Input: s, Q truy vấn (l1, r1, l2, r2) | Output: YES/NO mỗi truy vấn
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const long long MOD1 = 1e9 + 7, MOD2 = 1e9 + 9;
+const long long BASE1 = 31, BASE2 = 37;
+long long h1[100005], h2[100005], pw1[100005], pw2[100005];
+
+// KEY: 2 hash (2 base, 2 mod) → xác suất xung đột ≈ 0
+void buildHash(const string &amp;s, int n) {
+    pw1[0] = pw2[0] = 1;
+    for (int i = 1; i &lt;= n; i++) {
+        pw1[i] = pw1[i-1] * BASE1 % MOD1;
+        pw2[i] = pw2[i-1] * BASE2 % MOD2;
+    }
+    h1[0] = h2[0] = 0;
+    for (int i = 1; i &lt;= n; i++) {
+        h1[i] = (h1[i-1] * BASE1 + s[i]) % MOD1;
+        h2[i] = (h2[i-1] * BASE2 + s[i]) % MOD2;
+    }
+}
+
+// KEY: getHash(l,r) = hash đoạn [l,r] chỉ 1 phép trừ + 1 nhân → O(1)
+pair&lt;long long, long long&gt; getHash(int l, int r) {
+    long long v1 = (h1[r] - h1[l-1] * pw1[r-l+1] % MOD1 + MOD1 * 2) % MOD1;
+    long long v2 = (h2[r] - h2[l-1] * pw2[r-l+1] % MOD2 + MOD2 * 2) % MOD2;
+    return {v1, v2};
+}
+
+int main() {
+    // s 1-indexed: s[0] bo trong, s[1..8] = "abcabcba"
+    string s = " abcabcba";
+    int n = 8;
+    buildHash(s, n);
+    auto h13 = getHash(1, 3), h46 = getHash(4, 6), h68 = getHash(6, 8);
+    cout &lt;&lt; "s = \"abcabcba\"" &lt;&lt; endl;
+    cout &lt;&lt; "s[1..3] vs s[4..6]: " &lt;&lt; (h13 == h46 ? "BANG NHAU" : "KHAC") &lt;&lt; endl;
+    cout &lt;&lt; "s[1..3] vs s[6..8]: " &lt;&lt; (h13 == h68 ? "BANG NHAU" : "KHAC") &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// s = "abcabcba"
+// s[1..3] vs s[4..6]: BANG NHAU
+// s[1..3] vs s[6..8]: KHAC
+</pre>
+
+<p><strong>Ứng dụng: Đếm số xâu con distinct có độ dài k</strong></p>
+<pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 const long long MOD1 = 1e9 + 7, MOD2 = 1e9 + 9;
 const long long BASE1 = 31, BASE2 = 37;
 long long h1[100005], h2[100005], pw1[100005], pw2[100005];
@@ -3618,23 +4517,26 @@ void buildHash(const string &amp;s, int n) {
     }
 }
 
-// Hash đoạn [l, r] (1-indexed)
 pair&lt;long long, long long&gt; getHash(int l, int r) {
     long long v1 = (h1[r] - h1[l-1] * pw1[r-l+1] % MOD1 + MOD1 * 2) % MOD1;
     long long v2 = (h2[r] - h2[l-1] * pw2[r-l+1] % MOD2 + MOD2 * 2) % MOD2;
     return {v1, v2};
 }
 
-// So sánh 2 đoạn con: getHash(l1,r1) == getHash(l2,r2) → bằng nhau
-</pre>
-
-<p><strong>Ứng dụng: Đếm số xâu con distinct có độ dài k</strong></p>
-<pre>
-// Duyệt mọi vị trí i, lấy hash đoạn [i, i+k-1], bỏ vào set
-set&lt;pair&lt;long long,long long&gt;&gt; st;
-for (int i = 1; i + k - 1 &lt;= n; i++)
-    st.insert(getHash(i, i + k - 1));
-cout &lt;&lt; st.size();  // số xâu con distinct
+int main() {
+    string s = " abcabc"; // 1-indexed
+    int n = 6, k = 3;
+    buildHash(s, n);
+    set&lt;pair&lt;long long,long long&gt;&gt; st;
+    for (int i = 1; i + k - 1 &lt;= n; i++)
+        st.insert(getHash(i, i + k - 1));
+    cout &lt;&lt; "s = \"abcabc\", k = " &lt;&lt; k &lt;&lt; endl;
+    cout &lt;&lt; "So xau con distinct do dai " &lt;&lt; k &lt;&lt; ": " &lt;&lt; st.size() &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// s = "abcabc", k = 3
+// So xau con distinct do dai 3: 3   ("abc", "bca", "cab")
 </pre>
 
 <!-- F2 -->
@@ -3655,12 +4557,13 @@ fail[]  = [0, 0, 0, 1, 2, 0]
 
 <p><strong>Code mẫu — KMP đầy đủ:</strong></p>
 <pre>
-// Bài toán: Cho text s (n ≤ 10⁶) và pattern p (m ≤ 10⁶). Tìm tất cả vị trí p xuất hiện trong s.
-// Input: s, p | Output: danh sách vị trí (0-indexed)
-// Bước 1: Xây prefix function cho pattern
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 vector&lt;int&gt; prefixFunction(const string &amp;p) {
     int m = p.size();
     vector&lt;int&gt; fail(m, 0);
+    // KEY: fail[i] = prefix dài nhất cũng là suffix → biết nhảy lùi bao xa
     for (int i = 1; i &lt; m; i++) {
         int j = fail[i - 1];
         while (j > 0 &amp;&amp; p[i] != p[j]) j = fail[j - 1];
@@ -3670,7 +4573,6 @@ vector&lt;int&gt; prefixFunction(const string &amp;p) {
     return fail;
 }
 
-// Bước 2: Tìm pattern trong text
 vector&lt;int&gt; KMP(const string &amp;s, const string &amp;p) {
     vector&lt;int&gt; fail = prefixFunction(p);
     vector&lt;int&gt; res;
@@ -3679,12 +4581,30 @@ vector&lt;int&gt; KMP(const string &amp;s, const string &amp;p) {
         while (j > 0 &amp;&amp; s[i] != p[j]) j = fail[j - 1];
         if (s[i] == p[j]) j++;
         if (j == (int)p.size()) {
-            res.push_back(i - j + 1);  // vị trí bắt đầu match
+            res.push_back(i - j + 1);
             j = fail[j - 1];
         }
     }
     return res;
 }
+
+int main() {
+    string text = "abcabcabdabcabd";
+    string pattern = "abcabd";
+    vector&lt;int&gt; res = KMP(text, pattern);
+    cout &lt;&lt; "Text:    \"" &lt;&lt; text &lt;&lt; "\"" &lt;&lt; endl;
+    cout &lt;&lt; "Pattern: \"" &lt;&lt; pattern &lt;&lt; "\"" &lt;&lt; endl;
+    cout &lt;&lt; "So lan xuat hien: " &lt;&lt; res.size() &lt;&lt; endl;
+    cout &lt;&lt; "Vi tri (0-indexed):";
+    for (int x : res) cout &lt;&lt; " " &lt;&lt; x;
+    cout &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Text:    "abcabcabdabcabd"
+// Pattern: "abcabd"
+// So lan xuat hien: 2
+// Vi tri (0-indexed): 3 9
 </pre>
 
 <!-- F3 -->
@@ -3711,12 +4631,14 @@ Tìm pattern "aab" trong text "xaabxaab":
 
 <p><strong>Code mẫu — Z-function:</strong></p>
 <pre>
-// Bài toán: Tính mảng Z cho xâu s. Z[i] = độ dài đoạn dài nhất bắt đầu tại i trùng với prefix.
-// Input: s | Output: mảng Z
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 vector&lt;int&gt; zFunction(const string &amp;s) {
     int n = s.size();
     vector&lt;int&gt; z(n, 0);
     int l = 0, r = 0;
+    // KEY: Z[i] = đoạn dài nhất tại i trùng đầu xâu; tận dụng vùng [l,r] đã biết
     for (int i = 1; i &lt; n; i++) {
         if (i &lt; r)
             z[i] = min(r - i, z[i - l]);
@@ -3728,8 +4650,31 @@ vector&lt;int&gt; zFunction(const string &amp;s) {
     return z;
 }
 
-// Tìm pattern p trong text t:
-// Ghép s = p + "$" + t, tính Z. Vị trí i có Z[i] == p.size() → match tại t[i - p.size() - 1]
+int main() {
+    string text = "xaabxaab";
+    string pattern = "aab";
+    // Ghep p + "$" + t, tinh Z
+    string s = pattern + "$" + text;
+    vector&lt;int&gt; z = zFunction(s);
+    int m = pattern.size();
+    cout &lt;&lt; "Text:    \"" &lt;&lt; text &lt;&lt; "\"" &lt;&lt; endl;
+    cout &lt;&lt; "Pattern: \"" &lt;&lt; pattern &lt;&lt; "\"" &lt;&lt; endl;
+    cout &lt;&lt; "Vi tri xuat hien (0-indexed trong text):";
+    for (int i = m + 1; i &lt; (int)s.size(); i++)
+        if (z[i] == m) cout &lt;&lt; " " &lt;&lt; i - m - 1;
+    cout &lt;&lt; endl;
+    // Z-array cua "aabxaab"
+    vector&lt;int&gt; z2 = zFunction("aabxaab");
+    cout &lt;&lt; "Z-array cua \"aabxaab\":";
+    for (int v : z2) cout &lt;&lt; " " &lt;&lt; v;
+    cout &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// Text:    "xaabxaab"
+// Pattern: "aab"
+// Vi tri xuat hien (0-indexed trong text): 1 5
+// Z-array cua "aabxaab": 0 1 0 0 3 1 0
 </pre>
 
 <!-- F4 -->
@@ -3741,14 +4686,15 @@ vector&lt;int&gt; zFunction(const string &amp;s) {
 
 <p><strong>Code mẫu — Trie chữ cái (a-z):</strong></p>
 <pre>
-// Bài toán: Cho n từ. Trả lời Q truy vấn "từ x có trong tập không?" và "có bao nhiêu từ bắt đầu bằng prefix x?"
-// Input: n từ, Q truy vấn | Output: YES/NO hoặc số lượng
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 struct Trie {
     int child[26];
-    int cntWord;   // số từ kết thúc tại đây
-    int cntPrefix; // số từ đi qua nút này
-} nodes[1000005]; // tối đa 10⁶ nút
-int sz = 1;        // nút 0 = gốc
+    int cntWord;
+    int cntPrefix;
+} nodes[1000005];
+int sz = 1;
 
 void addWord(const string &amp;s) {
     int cur = 0;
@@ -3781,12 +4727,33 @@ int countPrefix(const string &amp;s) {
     }
     return nodes[cur].cntPrefix;
 }
+
+int main() {
+    memset(nodes, 0, sizeof(nodes));
+    addWord("apple");
+    addWord("app");
+    addWord("application");
+    addWord("banana");
+    cout &lt;&lt; "findWord(\"apple\"): "     &lt;&lt; (findWord("apple") ? "YES" : "NO") &lt;&lt; endl;
+    cout &lt;&lt; "findWord(\"app\"): "       &lt;&lt; (findWord("app") ? "YES" : "NO") &lt;&lt; endl;
+    cout &lt;&lt; "findWord(\"ap\"): "        &lt;&lt; (findWord("ap") ? "YES" : "NO") &lt;&lt; endl;
+    cout &lt;&lt; "countPrefix(\"app\"): "   &lt;&lt; countPrefix("app") &lt;&lt; endl;
+    cout &lt;&lt; "countPrefix(\"b\"): "     &lt;&lt; countPrefix("b") &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// findWord("apple"): YES
+// findWord("app"): YES
+// findWord("ap"): NO
+// countPrefix("app"): 3   (apple, app, application)
+// countPrefix("b"): 1     (banana)
 </pre>
 
 <p><strong>Ứng dụng: Trie nhị phân — Tìm XOR lớn nhất</strong></p>
 <pre>
-// Bài toán: Cho mảng n số. Tìm cặp (i, j) sao cho a[i] XOR a[j] lớn nhất.
-// Ý tưởng: Dựng Trie bit (từ bit cao → thấp). Với mỗi a[i], đi ngược bit (muốn bit 1 thì chọn nhánh 0) để max XOR.
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 int trieChild[100005 * 30][2], trieIdx = 1;
 
 void addNum(int x) {
@@ -3803,7 +4770,8 @@ int maxXor(int x) {
     int cur = 0, res = 0;
     for (int b = 29; b >= 0; b--) {
         int bit = (x >> b) &amp; 1;
-        int want = 1 - bit;  // muốn bit ngược
+        // KEY: Muốn XOR lớn → chọn bit ngược (want = 1-bit) nếu có
+        int want = 1 - bit;
         if (trieChild[cur][want]) {
             res |= (1 &lt;&lt; b);
             cur = trieChild[cur][want];
@@ -3813,6 +4781,23 @@ int maxXor(int x) {
     }
     return res;
 }
+
+int main() {
+    memset(trieChild, 0, sizeof(trieChild));
+    int a[] = {3, 10, 5, 25, 2, 8};
+    int n = 6;
+    for (int i = 0; i &lt; n; i++) addNum(a[i]);
+    int best = 0;
+    for (int i = 0; i &lt; n; i++)
+        best = max(best, maxXor(a[i]));
+    cout &lt;&lt; "a[] = {3, 10, 5, 25, 2, 8}" &lt;&lt; endl;
+    cout &lt;&lt; "Max XOR cua mot cap: " &lt;&lt; best &lt;&lt; endl;
+    // 5 XOR 25 = 00101 XOR 11001 = 11100 = 28
+    return 0;
+}
+// ▶ Output:
+// a[] = {3, 10, 5, 25, 2, 8}
+// Max XOR cua mot cap: 28
 </pre>
 
 <!-- F5 -->
@@ -3824,8 +4809,9 @@ int maxXor(int x) {
 
 <p><strong>Cách 1: Expand Around Center — Đơn giản, O(n²), đủ dùng khi n ≤ 5000</strong></p>
 <pre>
-// Bài toán: Tìm xâu con palindrome dài nhất.
-// Input: s | Output: xâu palindrome dài nhất
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 string longestPalin(const string &amp;s) {
     int n = s.size(), start = 0, maxLen = 1;
     auto expand = [&amp;](int l, int r) {
@@ -3835,25 +4821,38 @@ string longestPalin(const string &amp;s) {
             start = l + 1;
         }
     };
+    // KEY: Thử mỗi vị trí làm tâm, mở rộng 2 cánh ra ngoài
     for (int i = 0; i &lt; n; i++) {
         expand(i, i);     // palindrome lẻ:  aba
         expand(i, i + 1); // palindrome chẵn: abba
     }
     return s.substr(start, maxLen);
 }
+
+int main() {
+    cout &lt;&lt; "s = \"babad\" -> " &lt;&lt; longestPalin("babad") &lt;&lt; endl;
+    cout &lt;&lt; "s = \"cbbd\"  -> " &lt;&lt; longestPalin("cbbd") &lt;&lt; endl;
+    cout &lt;&lt; "s = \"racecar\" -> " &lt;&lt; longestPalin("racecar") &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// s = "babad" -> bab
+// s = "cbbd"  -> bb
+// s = "racecar" -> racecar
 </pre>
 
 <p><strong>Cách 2: Manacher — O(n), dùng khi n ≤ 10⁵–10⁶</strong></p>
 <pre>
-// Bài toán: Đếm tổng số xâu con palindrome, hoặc tìm palindrome dài nhất O(n).
-// Ý tưởng: Chèn '#' giữa các ký tự để xử lý cả chẵn lẫn lẻ cùng lúc.
-// Ví dụ: "abaab" → "#a#b#a#a#b#"
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 vector&lt;int&gt; manacher(const string &amp;s) {
     string t = "#";
     for (char c : s) { t += c; t += '#'; }
     int n = t.size();
     vector&lt;int&gt; p(n, 0);
     int c = 0, r = 0;
+    // KEY: Tận dụng đối xứng p[2c-i] tránh tính lại → O(n)
     for (int i = 0; i &lt; n; i++) {
         if (i &lt; r)
             p[i] = min(r - i, p[2 * c - i]);
@@ -3863,9 +4862,28 @@ vector&lt;int&gt; manacher(const string &amp;s) {
             c = i, r = i + p[i];
     }
     return p;
-    // p[i] = bán kính palindrome tại i trong t
-    // Palindrome dài nhất = max(p[i]), vị trí gốc = (i - p[i]) / 2
 }
+
+int main() {
+    string s = "abaab";
+    vector&lt;int&gt; p = manacher(s);
+    // Tim palindrome dai nhat
+    int maxP = 0, center = 0;
+    for (int i = 0; i &lt; (int)p.size(); i++)
+        if (p[i] > maxP) { maxP = p[i]; center = i; }
+    int start = (center - maxP) / 2;
+    cout &lt;&lt; "s = \"" &lt;&lt; s &lt;&lt; "\"" &lt;&lt; endl;
+    cout &lt;&lt; "Palindrome dai nhat: \"" &lt;&lt; s.substr(start, maxP) &lt;&lt; "\" (do dai " &lt;&lt; maxP &lt;&lt; ")" &lt;&lt; endl;
+    // Dem tong so xau con palindrome
+    long long cnt = 0;
+    for (int i = 0; i &lt; (int)p.size(); i++) cnt += (p[i] + 1) / 2;
+    cout &lt;&lt; "Tong so xau con palindrome: " &lt;&lt; cnt &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// s = "abaab"
+// Palindrome dai nhat: "baab" (do dai 4)
+// Tong so xau con palindrome: 8
 </pre>
 
 <p><strong>Cách 3: Hash — Kiểm tra palindrome đoạn [l, r] trong O(1)</strong></p>
@@ -3917,19 +4935,17 @@ Mảng LCP: lcp[] = {1, 3, 0, 0, 2}
 
 <p><strong>Code mẫu — Suffix Array O(n log² n):</strong></p>
 <pre>
-// Bài toán: Xây Suffix Array cho xâu s (n ≤ 10⁵).
-// Input: s | Output: sa[] = mảng vị trí bắt đầu các suffix sau khi sort
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
 struct SuffixArray {
     int n;
     string s;
     vector&lt;int&gt; sa, rank_, lcp;
 
     SuffixArray(const string &amp;s) : s(s), n(s.size()), sa(n), rank_(n), lcp(n) {
-        // Bước 1: Khởi tạo rank theo ký tự đầu
         iota(sa.begin(), sa.end(), 0);
         for (int i = 0; i &lt; n; i++) rank_[i] = s[i];
-
-        // Bước 2: Doubling — sort theo 2^k ký tự đầu
         for (int k = 1; k &lt; n; k *= 2) {
             auto cmp = [&amp;](int a, int b) {
                 if (rank_[a] != rank_[b]) return rank_[a] &lt; rank_[b];
@@ -3938,19 +4954,16 @@ struct SuffixArray {
                 return ra &lt; rb;
             };
             sort(sa.begin(), sa.end(), cmp);
-
-            // Cập nhật rank
             vector&lt;int&gt; tmp(n);
             tmp[sa[0]] = 0;
             for (int i = 1; i &lt; n; i++)
                 tmp[sa[i]] = tmp[sa[i-1]] + (cmp(sa[i-1], sa[i]) ? 1 : 0);
             rank_ = tmp;
-            if (rank_[sa[n-1]] == n - 1) break; // đã phân biệt hết
+            if (rank_[sa[n-1]] == n - 1) break;
         }
         buildLCP();
     }
 
-    // Bước 3: Xây mảng LCP bằng thuật Kasai O(n)
     void buildLCP() {
         vector&lt;int&gt; pos(n);
         for (int i = 0; i &lt; n; i++) pos[sa[i]] = i;
@@ -3964,15 +4977,89 @@ struct SuffixArray {
         }
     }
 };
+
+int main() {
+    string s = "banana";
+    SuffixArray SA(s);
+    int n = s.size();
+    cout &lt;&lt; "s = \"banana\"" &lt;&lt; endl;
+    cout &lt;&lt; "Suffix Array: ";
+    for (int x : SA.sa) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    cout &lt;&lt; "LCP Array:    ";
+    for (int x : SA.lcp) cout &lt;&lt; x &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    for (int i = 0; i &lt; n; i++)
+        cout &lt;&lt; "  sa[" &lt;&lt; i &lt;&lt; "]=" &lt;&lt; SA.sa[i]
+             &lt;&lt; ": " &lt;&lt; s.substr(SA.sa[i])
+             &lt;&lt; " (LCP=" &lt;&lt; SA.lcp[i] &lt;&lt; ")" &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// s = "banana"
+// Suffix Array: 5 3 1 0 4 2
+// LCP Array:    0 1 3 0 0 2
+//   sa[0]=5: a (LCP=0)
+//   sa[1]=3: ana (LCP=1)
+//   sa[2]=1: anana (LCP=3)
+//   sa[3]=0: banana (LCP=0)
+//   sa[4]=4: na (LCP=0)
+//   sa[5]=2: nana (LCP=2)
 </pre>
 
 <p><strong>Ứng dụng: Đếm số xâu con phân biệt</strong></p>
 <pre>
-// Tổng xâu con = n*(n+1)/2. Trừ đi các xâu trùng = tổng LCP.
-SuffixArray SA(s);
-long long total = (long long)n * (n + 1) / 2;
-for (int i = 1; i &lt; n; i++) total -= SA.lcp[i];
-cout &lt;&lt; total;  // Số xâu con phân biệt
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+struct SuffixArray {
+    int n; string s;
+    vector&lt;int&gt; sa, rank_, lcp;
+    SuffixArray(const string &amp;s) : s(s), n(s.size()), sa(n), rank_(n), lcp(n) {
+        iota(sa.begin(), sa.end(), 0);
+        for (int i = 0; i &lt; n; i++) rank_[i] = s[i];
+        for (int k = 1; k &lt; n; k *= 2) {
+            auto cmp = [&amp;](int a, int b) {
+                if (rank_[a] != rank_[b]) return rank_[a] &lt; rank_[b];
+                int ra = a+k&lt;n ? rank_[a+k] : -1, rb = b+k&lt;n ? rank_[b+k] : -1;
+                return ra &lt; rb;
+            };
+            sort(sa.begin(), sa.end(), cmp);
+            vector&lt;int&gt; tmp(n); tmp[sa[0]] = 0;
+            for (int i = 1; i &lt; n; i++)
+                tmp[sa[i]] = tmp[sa[i-1]] + (cmp(sa[i-1], sa[i]) ? 1 : 0);
+            rank_ = tmp;
+            if (rank_[sa[n-1]] == n-1) break;
+        }
+        vector&lt;int&gt; pos(n);
+        for (int i = 0; i &lt; n; i++) pos[sa[i]] = i;
+        int h = 0;
+        for (int i = 0; i &lt; n; i++) {
+            if (pos[i] == 0) { h = 0; continue; }
+            int j = sa[pos[i]-1];
+            while (i+h &lt; n &amp;&amp; j+h &lt; n &amp;&amp; s[i+h] == s[j+h]) h++;
+            lcp[pos[i]] = h;
+            if (h > 0) h--;
+        }
+    }
+};
+
+int main() {
+    string s = "banana";
+    int n = s.size();
+    SuffixArray SA(s);
+    // KEY: Số xâu con phân biệt = n(n+1)/2 − tổng LCP
+    long long total = (long long)n * (n + 1) / 2;
+    for (int i = 1; i &lt; n; i++) total -= SA.lcp[i];
+    cout &lt;&lt; "s = \"banana\"" &lt;&lt; endl;
+    cout &lt;&lt; "Tong xau con: " &lt;&lt; n*(n+1)/2 &lt;&lt; ", Tru LCP: " &lt;&lt; n*(n+1)/2 - total &lt;&lt; endl;
+    cout &lt;&lt; "So xau con phan biet: " &lt;&lt; total &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output:
+// s = "banana"
+// Tong xau con: 21, Tru LCP: 6
+// So xau con phan biet: 15
 </pre>
 
 
