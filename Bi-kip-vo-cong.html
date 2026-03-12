@@ -953,10 +953,9 @@ int main() {
 
 <!-- A6 -->
 <h3 id="A8">A8. Binary Search — Tìm kiếm nhị phân</h3>
-<p><em>💡 Hình dung: Binary Search = trò chơi "Đoán số": luôn đoán SỐ GIỮA → loại NỬA → 1 triệu số chỉ cần ~20 lần đoán!</em></p>
-<p><em>📌 <b>Phân biệt — nhiều bạn nhầm:</b><br>
-① <b>Binary Search</b> = <b>thuật toán có sẵn</b> trong C++ (<code>lower_bound</code>, <code>upper_bound</code>). Mảng phải <a href="#A9">Sort</a> trước.<br>
-② <b>Chặt nhị phân đáp án</b> = <b>kỹ thuật giải bài</b> — mượn ý tưởng "chia đôi" của BS, nhưng tìm trên khoảng giá trị (không cần mảng sort), phải tự viết vòng lặp + hàm <code>check()</code>.</em></p>
+<p><em>💡 Hình dung: Tưởng tượng bạn tra từ trong <b>từ điển 1000 trang</b> (xếp ABC). Không ai lật từ trang 1 — bạn luôn <b>lật giữa</b>, nhìn chữ cái, rồi bỏ nửa không chứa từ cần tìm.<br>
+Đó chính là Binary Search: mỗi lần loại NỬA → 1 triệu phần tử chỉ cần ~20 bước!<br>
+C++ có sẵn hàm <code>lower_bound</code> và <code>upper_bound</code> làm sẵn việc này. Mảng phải <a href="#A9">Sort</a> trước.</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Tìm trong mảng 10⁶ phần tử bằng duyệt → 10⁶ bước. Dùng BS → chỉ ~20 bước. Chặt nhị phân đáp án: thử từng giá trị từ 1→10⁹ → TLE. Dùng BS → <strong>chỉ ~30 lần thử</strong>.</div>
 <div class="warn"><strong>DẤU HIỆU:</strong>
 <ul>
@@ -967,7 +966,10 @@ int main() {
 </div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• BS cần mảng <a href="#A9">Sort</a> trước (giống từ điển phải xếp ABC mới lật giữa được).<br>• Combo HSG hay gặp: "tìm min/max thỏa..." → <b>chặt đáp án</b> + hàm check dùng <a href="#B2">Greedy</a>.</div>
 <pre>
-// ═══ BINARY SEARCH: lower/upper_bound ═══
+// ═══ HÀM CÓ SẴN: lower_bound / upper_bound ═══
+// lower_bound(x) = vị trí đầu tiên có giá trị ≥ x
+// upper_bound(x) = vị trí đầu tiên có giá trị > x
+// → Số phần tử == x: upper_bound(x) - lower_bound(x)
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
@@ -995,8 +997,9 @@ int main() {
 // So phan tu = 2: 2
 // So phan tu trong [2,5]: 5
 </pre>
+<p><em>📌 <code>lower_bound</code> / <code>upper_bound</code> làm sẵn cho ta, nhưng bên trong chúng hoạt động thế nào? Dưới đây viết tay để hiểu nguyên lý:</em></p>
 <pre>
-// ═══ BINARY SEARCH VIẾT TAY — để hiểu thuật toán hoạt động thế nào ═══
+// ═══ BINARY SEARCH VIẾT TAY — nguyên lý "chia đôi" ═══
 // Tìm vị trí của x = 5 trong mảng đã sort: {1, 2, 3, 5, 8, 13, 21}
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
@@ -1022,9 +1025,9 @@ int main() {
 // (Thực tế dùng lower_bound cho nhanh, đây chỉ để hiểu nguyên lý "chia đôi")
 // ▶ Output: 5 o vi tri 3
 </pre>
-<p><em>📌 Ở trên là Binary Search — tìm <b>vị trí phần tử</b> trong mảng sort bằng cách chia đôi.<br>
-Ở dưới là <b>Chặt nhị phân đáp án</b> — mượn đúng nguyên lý "chia đôi" đó, nhưng thay vì tìm phần tử trong mảng,<br>
-ta tìm <b>giá trị đáp án tối ưu</b> trong 1 khoảng giá trị, mỗi lần thử mid thì gọi hàm <code>check(mid)</code> xem có khả thi không.</em></p>
+<p><em>📌 Nguyên lý trên rất mạnh: không chỉ tìm phần tử trong mảng, ta còn <b>mượn ý tưởng "chia đôi"</b> này để tìm <b>giá trị đáp án tối ưu</b>.<br>
+Thay vì so sánh <code>a[mid] == x</code>, ta gọi <code>check(mid)</code> để hỏi: "đáp án = mid có khả thi không?"<br>
+Đó chính là <b>Chặt nhị phân đáp án</b> — kỹ thuật giải bài rất phổ biến trong thi HSG:</em></p>
 <pre>
 // ═══ CHẶT NHỊ PHÂN ĐÁP ÁN ═══
 // Bài: Chia mảng n phần tử thành k đoạn sao cho đoạn có tổng lớn nhất → nhỏ nhất?
