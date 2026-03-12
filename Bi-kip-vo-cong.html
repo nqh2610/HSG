@@ -992,38 +992,69 @@ int main() {
 // So phan tu = 2: 2
 // So phan tu trong [2,5]: 5
 </pre>
+<div class="warn"><strong>SO SÁNH: Binary Search vs Chặt nhị phân đáp án — cùng 1 khung xương!</strong>
+<table style="width:100%; border-collapse:collapse; margin-top:8px;">
+<tr style="background:#e8f5e9"><th style="padding:6px; border:1px solid #ccc; width:22%"></th><th style="padding:6px; border:1px solid #ccc">Binary Search (tìm trong mảng)</th><th style="padding:6px; border:1px solid #ccc">Chặt nhị phân đáp án</th></tr>
+<tr><td style="padding:6px; border:1px solid #ccc"><b>lo, hi là gì?</b></td><td style="padding:6px; border:1px solid #ccc">Chỉ số mảng (0 → n−1)</td><td style="padding:6px; border:1px solid #ccc">Khoảng giá trị đáp án (min_có_thể → max_có_thể)</td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc"><b>mid là gì?</b></td><td style="padding:6px; border:1px solid #ccc">Chỉ số giữa → nhìn a[mid]</td><td style="padding:6px; border:1px solid #ccc">Giá trị đáp án thử → gọi check(mid)</td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc"><b>Câu hỏi</b></td><td style="padding:6px; border:1px solid #ccc">a[mid] có phải phần tử cần tìm?</td><td style="padding:6px; border:1px solid #ccc">Đáp án = mid có khả thi không?</td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc"><b>Thu hẹp</b></td><td style="padding:6px; border:1px solid #ccc">Loại nửa mảng không chứa x</td><td style="padding:6px; border:1px solid #ccc">Loại nửa giá trị không tối ưu</td></tr>
+</table>
+<p style="margin-top:8px">→ <b>Cùng vòng lặp:</b> <code>while (lo ≤ hi) { mid = (lo+hi)/2; if (OK) thu hẹp 1 nửa; else thu hẹp nửa kia }</code><br>
+Khác nhau duy nhất: BS tìm <em>vị trí</em> trong mảng có sẵn, Chặt đáp án tìm <em>giá trị</em> tối ưu nhất thỏa điều kiện qua hàm <code>check()</code>.</p>
+</div>
 <pre>
 // ═══ CHẶT NHỊ PHÂN ĐÁP ÁN ═══
-// Bài: Chia mảng n phần tử thành k đoạn, max tổng đoạn nhỏ nhất?
+// Bài: Chia mảng n phần tử thành k đoạn sao cho đoạn có tổng lớn nhất → nhỏ nhất?
+//
+// Ý tưởng: Đáp án (max tổng đoạn) nằm trong khoảng [max(a[i]) .. sum(a)].
+//   - Nhỏ nhất có thể = max(a[i]) = 4  (mỗi đoạn ít nhất chứa phần tử lớn nhất)
+//   - Lớn nhất có thể = sum(a) = 15     (gom hết vào 1 đoạn)
+//   → Thay vì thử từng giá trị 4,5,6,...,15 → dùng BS thu hẹp chỉ ~log2(12) ≈ 4 bước!
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int n = 6, k = 3;
 int a[] = {2, 3, 1, 2, 4, 3};
 
-bool check(int maxSum) { // Chia được k đoạn với max tổng ≤ maxSum?
-    int cnt = 1, cur = 0;
+// Hàm check: "Nếu giới hạn mỗi đoạn tổng ≤ maxSum, có chia được ≤ k đoạn không?"
+// Dùng Greedy: duyệt từ trái sang, cứ gộp được thì gộp, vượt thì cắt đoạn mới.
+bool check(int maxSum) {
+    int cnt = 1, cur = 0;            // cnt = số đoạn (bắt đầu 1), cur = tổng đoạn đang xây
     for (int i = 0; i &lt; n; i++) {
-        if (a[i] > maxSum) return false;
-        if (cur + a[i] > maxSum) { cnt++; cur = a[i]; }
-        else cur += a[i];
+        if (a[i] > maxSum) return false; // 1 phần tử đã > maxSum → chắc chắn không được
+        if (cur + a[i] > maxSum) {       // Thêm a[i] vào đoạn hiện tại bị vượt
+            cnt++;                        //   → cắt đoạn mới
+            cur = a[i];                   //   → đoạn mới bắt đầu bằng a[i]
+        }
+        else cur += a[i];                // Còn chỗ → gộp a[i] vào đoạn hiện tại
     }
-    return cnt &lt;= k;
+    return cnt &lt;= k;                    // Chia xong, cần ≤ k đoạn → khả thi
 }
+// Ví dụ: check(6) với a = {2,3,1,2,4,3}, k=3:
+//   Đoạn 1: 2+3+1=6 ≤ 6 ✓, thêm 2→8 > 6 → cắt!
+//   Đoạn 2: 2+4=6 ≤ 6 ✓, thêm 3→9 > 6 → cắt!
+//   Đoạn 3: 3 ≤ 6 ✓ → cnt=3 ≤ k=3 → return true!
 
 int main() {
     // KEY: Binary search trên đáp án: thử mid, check(mid) khả thi không
-    int lo = 4, hi = 15, ans = hi; // lo = max(a[i]), hi = sum(a)
+    int lo = 4, hi = 15, ans = hi;   // lo = max(a[i]), hi = sum(a)
+    //
+    // Vòng BS: thử đáp án ở giữa, thu hẹp khoảng
     while (lo &lt;= hi) {
-        int mid = lo + (hi - lo) / 2;
-        if (check(mid)) { ans = mid; hi = mid - 1; }
-        else lo = mid + 1;
+        int mid = lo + (hi - lo) / 2; // Đáp án thử = giữa khoảng [lo, hi]
+        if (check(mid)) {              // mid khả thi (chia được ≤ k đoạn)
+            ans = mid;                 //   → ghi nhận đáp án
+            hi = mid - 1;             //   → thử nhỏ hơn (tìm min tối ưu)
+        }
+        else lo = mid + 1;            // mid không được → cần giá trị lớn hơn
     }
+    // Quá trình: lo=4,hi=15 → mid=9✓ → mid=6✓ → mid=4✗ → mid=5✗ → dừng, ans=6
     cout &lt;&lt; "Max tong doan nho nhat: " &lt;&lt; ans &lt;&lt; endl;
     return 0;
 }
 // ▶ Output: Max tong doan nho nhat: 6
-// Chia: [2,3,1] [2,4] [3] → tổng max = 6
+// Chia: [2,3,1] [2,4] [3] → tổng max đoạn = 6 (nhỏ nhất có thể)
 </pre>
 
 <!-- A9 -->
