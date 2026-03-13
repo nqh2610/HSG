@@ -880,7 +880,10 @@ int main() {
 
 <!-- A7 -->
 <h3 id="A7">A7. Monotonic Stack — Ngăn xếp đơn điệu</h3>
-<p><em>💡 Hình dung: Sliding Window duy trì 1 cửa sổ tối ưu khi trượt qua mảng. Mono Stack cũng quét 1 lượt O(n) — nhưng thay vì duy trì cửa sổ, nó duy trì 1 <strong>stack luôn giữ thứ tự tăng/giảm</strong>. Hình ảnh: bạn đứng xếp hàng nhìn sang phải — chỉ thấy người đầu tiên CAO HƠN mình (người thấp bị "che"). Stack giúp tìm "ai cao hơn gần nhất bên phải" cho tất cả mọi người chỉ trong 1 lượt quét.</em></p>
+<p><em>💡 Hình dung: Mono Stack = stack mà các phần tử bên trong <b>luôn xếp theo thứ tự</b> (tăng hoặc giảm từ đáy lên đỉnh).<br>
+Cách duy trì: trước khi push phần tử mới, <b>pop bỏ hết phần tử vi phạm thứ tự</b>. Nhờ vậy lấy từ đỉnh stack ra luôn đúng thứ tự.<br>
+Ví dụ stack tăng dần [3, 5, 8], push 6 → pop 8 (vì 8 ≥ 6) → stack thành [3, 5, 6].<br>
+Ứng dụng: tìm <b>"phần tử lớn/nhỏ hơn gần nhất"</b> cho mọi phần tử chỉ trong 1 lượt quét O(n).</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Với mỗi phần tử, duyệt sang phải tìm phần tử lớn hơn → O(n²). Với n = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Mono Stack → mỗi phần tử vào/ra stack đúng 1 lần → O(n).</div>
 
 <div class="warn"><strong>DẤU HIỆU:</strong>
@@ -891,41 +894,68 @@ int main() {
 </ul>
 </div>
 
-<p><strong>Ví dụ:</strong> Cho mảng <code>a = [2, 1, 5, 6, 2, 3]</code>. Tìm phần tử lớn hơn gần nhất bên phải của mỗi phần tử.</p>
+<p><strong>Ví dụ:</strong> Mảng <code>a = [2, 1, 5, 6, 2, 3]</code>. Tìm phần tử lớn hơn gần nhất <b>bên phải</b>.</p>
 <pre style="background: #1e1e1e; color: #d4d4d4;">
-Duyệt từ phải sang trái, giữ stack tăng dần (đáy → đỉnh):
+Duyệt từ phải sang trái. Stack lưu các phần tử bên phải đã gặp.
+Mỗi bước: lấy ra hết phần tử ≤ a[i] ở đỉnh stack → đỉnh còn lại = đáp án.
 
-  i=5: a[5]=3  stack=[]       → không có → ans=-1, push 3     stack=[3]
-  i=4: a[4]=2  stack=[3]      → 3>2      → ans=3,  push 2     stack=[3,2]
-  i=3: a[3]=6  pop 2, pop 3   → hết      → ans=-1, push 6     stack=[6]
-  i=2: a[2]=5  stack=[6]      → 6>5      → ans=6,  push 5     stack=[6,5]
-  i=1: a[1]=1  stack=[6,5]    → 5>1      → ans=5,  push 1     stack=[6,5,1]
-  i=0: a[0]=2  pop 1          → 5>2      → ans=5,  push 2     stack=[6,5,2]
+Bước 1: xét a[5]=3
+  Stack: []  (rỗng, chưa có gì)
+  → Không có phần tử nào bên phải → ans[5] = -1
+  → Cho 3 vào stack → Stack: [3]
 
-Kết quả: [5, 5, 6, -1, 3, -1]
+Bước 2: xét a[4]=2
+  Stack: [3]  →  đỉnh = 3
+  → 3 > 2 → giữ lại → ans[4] = 3  (số 3 ở vị trí 5 là phần tử lớn hơn gần nhất)
+  → Cho 2 vào stack → Stack: [3, 2]
+
+Bước 3: xét a[3]=6
+  Stack: [3, 2]  →  đỉnh = 2
+  → 2 ≤ 6 → lấy 2 ra  → Stack: [3]
+  → 3 ≤ 6 → lấy 3 ra  → Stack: []  (rỗng)
+  → Không còn ai → ans[3] = -1  (bên phải không có số nào lớn hơn 6)
+  → Cho 6 vào stack → Stack: [6]
+
+Bước 4: xét a[2]=5
+  Stack: [6]  →  đỉnh = 6
+  → 6 > 5 → giữ lại → ans[2] = 6
+  → Cho 5 vào stack → Stack: [6, 5]
+
+Bước 5: xét a[1]=1
+  Stack: [6, 5]  →  đỉnh = 5
+  → 5 > 1 → giữ lại → ans[1] = 5
+  → Cho 1 vào stack → Stack: [6, 5, 1]
+
+Bước 6: xét a[0]=2
+  Stack: [6, 5, 1]  →  đỉnh = 1
+  → 1 ≤ 2 → lấy 1 ra  → Stack: [6, 5]
+  → đỉnh = 5, 5 > 2 → giữ lại → ans[0] = 5
+  → Cho 2 vào stack → Stack: [6, 5, 2]
+
+Tổng kết:
+  a[]   = [ 2,  1,  5,  6,  2,  3]
+  ans[] = [ 5,  5,  6, -1,  3, -1]  ← phần tử lớn hơn gần nhất bên phải
 </pre>
 
 <p><strong>Code mẫu — Phần tử lớn hơn gần nhất bên phải:</strong></p>
 <pre>
-// ═══ MONO STACK ═══
+// ═══ MONO STACK — Tìm phần tử lớn hơn gần nhất bên phải ═══
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
-    int n = 6;
-    int a[] = {2, 1, 5, 6, 2, 3};
-    int ans[6];
+    int n   = 6;
+    int a[] = {2, 1, 5, 6, 2, 3};  // Mảng đầu vào
+    int ans[6];                      // ans[i] = phần tử lớn hơn gần nhất bên phải a[i]
 
-    // KEY: Pop hết phần tử nhỏ hơn a[i] → stack luôn tăng dần (monotone)
-    stack&lt;int&gt; st;
-    for (int i = n - 1; i >= 0; i--) {
-        while (!st.empty() &amp;&amp; st.top() &lt;= a[i])
-            st.pop();
-        ans[i] = st.empty() ? -1 : st.top();
-        st.push(a[i]);
+    stack&lt;int&gt; st;                   // Stack lưu phần tử bên phải đã gặp
+    for (int i = n - 1; i >= 0; i--) {          // Duyệt từ phải sang trái
+        while (!st.empty() &amp;&amp; st.top() &lt;= a[i]) // Đỉnh stack ≤ a[i]?
+            st.pop();                             //   → lấy ra (không thể là đáp án)
+        ans[i] = st.empty() ? -1 : st.top();    // Đỉnh còn lại = đáp án (hoặc -1 nếu rỗng)
+        st.push(a[i]);                           // Đưa a[i] vào stack cho các phần tử bên trái dùng
     }
 
-    cout &lt;&lt; "Phan tu lon hon gan nhat ben phai:" &lt;&lt; endl;
     for (int i = 0; i &lt; n; i++)
         cout &lt;&lt; "a[" &lt;&lt; i &lt;&lt; "]=" &lt;&lt; a[i] &lt;&lt; " -> " &lt;&lt; ans[i] &lt;&lt; endl;
     return 0;
