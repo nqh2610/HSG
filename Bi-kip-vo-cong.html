@@ -3301,7 +3301,7 @@ Input: 5 4              ═══ DANH SÁCH KỀ ═══           ═══ 
 </pre>
 </div>
 
-<div class="tip"><strong>⭐ DÒNG "THẦN KỲ" — CHỖ DUY NHẤT THAY ĐỔI KHI ĐỔI CÁCH LƯU</strong><br>
+<div class="tip"><strong>⭐ KHI ĐỔI CÁCH LƯU — CHỈ CẦN ĐỔI VÒNG FOR DUYỆT ĐỈNH KỀ</strong><br>
 Thực ra, trong mọi thuật toán đồ thị, chỗ khác nhau chỉ là <strong>vòng for duyệt đỉnh kề của u</strong>:
 <pre>
 // ═══ DANH SÁCH KỀ ═══                  ║  // ═══ MA TRẬN KỀ ═══
@@ -3498,20 +3498,14 @@ void Dijkstra(int S) {
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-int main() {
-    int n = 5;
-    int edges[][2] = {{1,2},{1,3},{2,4},{3,4},{4,5}};
-    int m = 5, S = 1, F = 5;
+int n, m, S, F;
+vector&lt;vector&lt;int&gt;&gt; ke;
+vector&lt;bool&gt; Free;
+vector&lt;int&gt; Trace;
 
-    vector&lt;vector&lt;int&gt;&gt; ke(n + 1);
-    for (int i = 0; i &lt; m; i++) {
-        ke[edges[i][0]].push_back(edges[i][1]);
-        ke[edges[i][1]].push_back(edges[i][0]);
-    }
-
-    // BFS
-    vector&lt;bool&gt; Free(n + 1, true);
-    vector&lt;int&gt; Trace(n + 1, -1);
+void BFS() {
+    Free.assign(n + 1, true);
+    Trace.assign(n + 1, -1);
     queue&lt;int&gt; q;
     // KEY: Queue FIFO → đỉnh gần nhất xử lý trước → đường đi ngắn nhất
     q.push(S); Free[S] = false; Trace[S] = S;
@@ -3525,24 +3519,54 @@ int main() {
                 q.push(v);
             }
     }
+}
+
+int main() {
+    ifstream in("TENBAI.INP");
+    ofstream out("TENBAI.OUT");
+    in >> n >> m >> S >> F;
+    ke.assign(n + 1, vector&lt;int&gt;());
+    while (m--) {
+        int u, v;
+        in >> u >> v;
+        ke[u].push_back(v);
+        ke[v].push_back(u);
+    }
+
+    BFS();
 
     // Truy vết
-    if (Trace[F] == -1) { cout &lt;&lt; -1; return 0; }
+    if (Trace[F] == -1) { out &lt;&lt; -1; in.close(); out.close(); return 0; }
     vector&lt;int&gt; path;
     for (int cur = F; cur != S; cur = Trace[cur])
         path.push_back(cur);
     path.push_back(S);
     reverse(path.begin(), path.end());
 
-    cout &lt;&lt; "Duong di " &lt;&lt; S &lt;&lt; " -> " &lt;&lt; F &lt;&lt; ": ";
-    for (int x : path) cout &lt;&lt; x &lt;&lt; " ";
-    cout &lt;&lt; "\nSo buoc: " &lt;&lt; path.size() - 1 &lt;&lt; endl;
+    out &lt;&lt; "Duong di " &lt;&lt; S &lt;&lt; " -> " &lt;&lt; F &lt;&lt; ": ";
+    for (int x : path) out &lt;&lt; x &lt;&lt; " ";
+    out &lt;&lt; "\nSo buoc: " &lt;&lt; path.size() - 1 &lt;&lt; endl;
+    in.close(); out.close();
     return 0;
 }
 // ▶ Output:
 // Duong di 1 -> 5: 1 2 4 5
 // So buoc: 3
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">5 5 1 5
+1 2
+1 3
+2 4
+3 4
+4 5</pre></td>
+<td><pre style="margin:0">Duong di 1 -> 5: 1 2 4 5
+So buoc: 3</pre></td></tr>
+</table>
+<em>Dòng 1: n m S F (5 đỉnh, 5 cạnh, đi từ 1 đến 5). Các dòng sau: mỗi dòng 1 cạnh u v.</em>
+</div>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY BFS:</strong> Tìm đường đi ngắn nhất từ đỉnh 1 đến đỉnh 5
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
@@ -3604,43 +3628,65 @@ for (int i = 1; i &lt;= n; i++) {
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-int main() {
-    int n = 6;
-    int edges[][2] = {{1,2},{1,3},{2,4},{3,5},{5,6}};
-    int m = 5;
+int n, m;
+vector&lt;vector&lt;int&gt;&gt; ke;
+vector&lt;bool&gt; Free;
+ifstream in("TENBAI.INP");
+ofstream out("TENBAI.OUT");
+int soTPLT = 0;
 
-    vector&lt;vector&lt;int&gt;&gt; ke(n + 1);
-    for (int i = 0; i &lt; m; i++) {
-        ke[edges[i][0]].push_back(edges[i][1]);
-        ke[edges[i][1]].push_back(edges[i][0]);
+void DFS(int s) {
+    stack&lt;int&gt; stk;
+    stk.push(s); Free[s] = false;
+    soTPLT++;
+    out &lt;&lt; "TPLT " &lt;&lt; soTPLT &lt;&lt; ": ";
+    // KEY: Stack LIFO → đi sâu 1 nhánh trước, quay lại sau
+    while (!stk.empty()) {
+        int u = stk.top(); stk.pop();
+        out &lt;&lt; u &lt;&lt; " ";
+        for (int v : ke[u])
+            if (Free[v]) { Free[v] = false; stk.push(v); }
+    }
+    out &lt;&lt; endl;
+}
+
+int main() {
+    in >> n >> m;
+    ke.assign(n + 1, vector&lt;int&gt;());
+    while (m--) {
+        int u, v;
+        in >> u >> v;
+        ke[u].push_back(v);
+        ke[v].push_back(u);
     }
 
-    // DFS + đếm TPLT
-    vector&lt;bool&gt; Free(n + 1, true);
-    int soTPLT = 0;
-
+    Free.assign(n + 1, true);
     for (int s = 1; s &lt;= n; s++) {
         if (!Free[s]) continue;
-        soTPLT++;
-        stack&lt;int&gt; stk;
-        stk.push(s); Free[s] = false;
-        cout &lt;&lt; "TPLT " &lt;&lt; soTPLT &lt;&lt; ": ";
-        // KEY: Stack LIFO → đi sâu 1 nhánh trước, quay lại sau
-        while (!stk.empty()) {
-            int u = stk.top(); stk.pop();
-            cout &lt;&lt; u &lt;&lt; " ";
-            for (int v : ke[u])
-                if (Free[v]) { Free[v] = false; stk.push(v); }
-        }
-        cout &lt;&lt; endl;
+        DFS(s);
     }
-    cout &lt;&lt; "So TPLT: " &lt;&lt; soTPLT &lt;&lt; endl;
+    out &lt;&lt; "So TPLT: " &lt;&lt; soTPLT &lt;&lt; endl;
+    in.close(); out.close();
     return 0;
 }
 // ▶ Output:
 // TPLT 1: 1 3 5 6 2 4
 // So TPLT: 1
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">6 5
+1 2
+1 3
+2 4
+3 5
+5 6</pre></td>
+<td><pre style="margin:0">TPLT 1: 1 3 5 6 2 4
+So TPLT: 1</pre></td></tr>
+</table>
+<em>Dòng 1: n m (6 đỉnh, 5 cạnh). Các dòng sau: mỗi dòng 1 cạnh u v.</em>
+</div>
 <pre>
 // ═══ DFS đệ quy (code ngắn, chỉ dùng khi N nhỏ ≤ 10⁴) ═══
 vector&lt;bool&gt; Free;
@@ -3668,37 +3714,61 @@ for (int i = 1; i &lt;= n; i++)
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-int main() {
-    int n = 6, m = 4;
-    int edges[][2] = {{1,2},{2,3},{4,5},{5,6}};
+int n, m;
+vector&lt;vector&lt;int&gt;&gt; ke;
+vector&lt;bool&gt; Free;
 
-    // KEY: Dùng danh sách kề (giống D1, D2)
-    vector&lt;vector&lt;int&gt;&gt; ke(n + 1);
-    for (int i = 0; i &lt; m; i++) {
-        ke[edges[i][0]].push_back(edges[i][1]);
-        ke[edges[i][1]].push_back(edges[i][0]);
-    }
-
-    // DFS từ đỉnh 1
-    vector&lt;bool&gt; Free(n + 1, true);
+void DFS(int s) {
     stack&lt;int&gt; st;
-    st.push(1); Free[1] = false;
+    st.push(s); Free[s] = false;
     while (!st.empty()) {
         int u = st.top(); st.pop();
         for (int v : ke[u])              // ← danh sách kề
             if (Free[v]) { Free[v] = false; st.push(v); }
     }
+}
+
+int main() {
+    ifstream in("TENBAI.INP");
+    ofstream out("TENBAI.OUT");
+    in >> n >> m;
+
+    // KEY: Dùng danh sách kề (giống D1, D2)
+    ke.assign(n + 1, vector&lt;int&gt;());
+    while (m--) {
+        int u, v;
+        in >> u >> v;
+        ke[u].push_back(v);
+        ke[v].push_back(u);
+    }
+
+    // DFS từ đỉnh 1
+    Free.assign(n + 1, true);
+    DFS(1);
 
     // Kiểm tra: còn đỉnh nào chưa thăm?
     bool lienThong = true;
     for (int i = 1; i &lt;= n; i++)
         if (Free[i]) { lienThong = false; break; }
 
-    cout &lt;&lt; (lienThong ? "YES" : "NO") &lt;&lt; endl;
+    out &lt;&lt; (lienThong ? "YES" : "NO") &lt;&lt; endl;
+    in.close(); out.close();
     return 0;
 }
 // ▶ Output: NO  (vì {1,2,3} và {4,5,6} tách rời nhau)
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">6 4
+1 2
+2 3
+4 5
+5 6</pre></td>
+<td><pre style="margin:0">NO</pre></td></tr>
+</table>
+<em>Dòng 1: n m (6 đỉnh, 4 cạnh). {1,2,3} và {4,5,6} tách rời → không liên thông.</em>
+</div>
 
 <!-- D4 -->
 <h3 id="D4">D4. BFS trên lưới 2D (Mê cung)</h3>
@@ -3715,8 +3785,9 @@ int dist[105][105];
 // KEY: 4 hướng dx/dy thay cho danh sách kề trong đồ thị lưới
 int dx[] = {-1, 1, 0, 0};
 int dy[] = {0, 0, -1, 1};
+int sr, sc, er, ec;
 
-void BFS_Luoi(int sr, int sc) {
+void BFS_Luoi() {
     memset(dist, -1, sizeof(dist));
     dist[sr][sc] = 0;
     queue&lt;pair&lt;int,int&gt;&gt; q;
@@ -3735,19 +3806,40 @@ void BFS_Luoi(int sr, int sc) {
 }
 
 int main() {
-    // Lưới 5x5: S = xuất phát, E = đích, # = tường
-    m = 5; n = 5;
-    string grid[] = {"S....", ".###.", ".#...", ".#.#.", "...#E"};
+    ifstream in("TENBAI.INP");
+    ofstream out("TENBAI.OUT");
+    in >> m >> n;
     for (int i = 0; i &lt; m; i++)
         for (int j = 0; j &lt; n; j++)
-            a[i][j] = grid[i][j];
+            in >> a[i][j];
 
-    BFS_Luoi(0, 0);
-    cout &lt;&lt; "So buoc ngan nhat S -> E: " &lt;&lt; dist[4][4] &lt;&lt; endl;
+    // Tìm vị trí S và E
+    for (int i = 0; i &lt; m; i++)
+        for (int j = 0; j &lt; n; j++) {
+            if (a[i][j] == 'S') { sr = i; sc = j; }
+            if (a[i][j] == 'E') { er = i; ec = j; }
+        }
+
+    BFS_Luoi();
+    out &lt;&lt; "So buoc ngan nhat S -> E: " &lt;&lt; dist[er][ec] &lt;&lt; endl;
+    in.close(); out.close();
     return 0;
 }
 // ▶ Output: So buoc ngan nhat S -> E: 8
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">5 5
+S . . . .
+. # # # .
+. # . . .
+. # . # .
+. . . # E</pre></td>
+<td><pre style="margin:0">So buoc ngan nhat S -> E: 8</pre></td></tr>
+</table>
+<em>Dòng 1: m n (5 hàng, 5 cột). Các dòng sau: lưới ký tự (S=start, E=end, #=tường, .=đường đi).</em>
+</div>
 
 
 <div class="warn" style="border-left: 4px solid #f39c12; background: #3a2f1a; color: #e0e0e0; padding: 12px 16px; margin: 20px 0 10px 0;">
@@ -3767,20 +3859,14 @@ int main() {
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-int main() {
-    int n = 5;
-    // Cạnh: {u, v, w}
-    int edges[][3] = {{1,2,2},{1,3,5},{2,3,1},{2,4,7},{3,4,3},{4,5,1}};
-    int m = 6, S = 1, F = 5;
+int n, m, S, F;
+vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke;
+vector&lt;long long&gt; dist;
+vector&lt;int&gt; Trace;
 
-    vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke(n + 1);
-    for (int i = 0; i &lt; m; i++) {
-        ke[edges[i][0]].push_back({edges[i][1], edges[i][2]});
-        ke[edges[i][1]].push_back({edges[i][0], edges[i][2]});
-    }
-
-    vector&lt;long long&gt; dist(n + 1, 1e18);
-    vector&lt;int&gt; Trace(n + 1, -1);
+void Dijkstra() {
+    dist.assign(n + 1, 1e18);
+    Trace.assign(n + 1, -1);
     vector&lt;bool&gt; Free(n + 1, true);
     priority_queue&lt;pair&lt;long long,int&gt;,
                    vector&lt;pair&lt;long long,int&gt;&gt;,
@@ -3799,6 +3885,21 @@ int main() {
                 pq.push({dist[v], v});
             }
     }
+}
+
+int main() {
+    ifstream in("TENBAI.INP");
+    ofstream out("TENBAI.OUT");
+    in >> n >> m >> S >> F;
+    ke.assign(n + 1, vector&lt;pair&lt;int,int&gt;&gt;());
+    while (m--) {
+        int u, v, w;
+        in >> u >> v >> w;
+        ke[u].push_back({v, w});
+        ke[v].push_back({u, w});
+    }
+
+    Dijkstra();
 
     // Truy vết
     vector&lt;int&gt; path;
@@ -3806,16 +3907,32 @@ int main() {
     path.push_back(S);
     reverse(path.begin(), path.end());
 
-    cout &lt;&lt; "Khoang cach " &lt;&lt; S &lt;&lt; " -> " &lt;&lt; F &lt;&lt; ": " &lt;&lt; dist[F] &lt;&lt; endl;
-    cout &lt;&lt; "Duong di: ";
-    for (int x : path) cout &lt;&lt; x &lt;&lt; " ";
-    cout &lt;&lt; endl;
+    out &lt;&lt; "Khoang cach " &lt;&lt; S &lt;&lt; " -> " &lt;&lt; F &lt;&lt; ": " &lt;&lt; dist[F] &lt;&lt; endl;
+    out &lt;&lt; "Duong di: ";
+    for (int x : path) out &lt;&lt; x &lt;&lt; " ";
+    out &lt;&lt; endl;
+    in.close(); out.close();
     return 0;
 }
 // ▶ Output:
 // Khoang cach 1 -> 5: 7
 // Duong di: 1 2 3 4 5
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">5 6 1 5
+1 2 2
+1 3 5
+2 3 1
+2 4 7
+3 4 3
+4 5 1</pre></td>
+<td><pre style="margin:0">Khoang cach 1 -> 5: 7
+Duong di: 1 2 3 4 5</pre></td></tr>
+</table>
+<em>Dòng 1: n m S F (5 đỉnh, 6 cạnh, đi từ 1 đến 5). Các dòng sau: u v w (cạnh có trọng số).</em>
+</div>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY DIJKSTRA:</strong> Tìm đường ngắn nhất từ đỉnh 1 đến đỉnh 5
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
@@ -3870,20 +3987,22 @@ Bellman-Ford: O(V × E), chậm hơn, nhưng chấp nhận trọng số âm
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-int main() {
-    int n = 4, m = 5, S = 1, F = 4;
-    // Cạnh có hướng: {u, v, w}
-    int edges[][3] = {{1,2,2},{1,3,4},{2,3,-3},{2,4,3},{3,4,2}};
+struct Edge { int u, v, w; };
 
-    vector&lt;long long&gt; d(n + 1, 1e18);
-    vector&lt;int&gt; Trace(n + 1, -1);
+int n, m, S, F;
+vector&lt;Edge&gt; edges;
+vector&lt;long long&gt; d;
+vector&lt;int&gt; Trace;
+
+void BellmanFord() {
+    d.assign(n + 1, 1e18);
+    Trace.assign(n + 1, -1);
     d[S] = 0; Trace[S] = S;
 
     // KEY: Lặp n-1 vòng, mỗi vòng duyệt TẤT CẢ cạnh → O(V × E)
     for (int lap = 1; lap &lt;= n - 1; lap++) {
         bool coCapNhat = false;
-        for (int i = 0; i &lt; m; i++) {   // Duyệt danh sách cạnh
-            int u = edges[i][0], v = edges[i][1], w = edges[i][2];
+        for (auto &amp;[u, v, w] : edges) {  // Duyệt danh sách cạnh
             if (d[u] &lt; 1e18 &amp;&amp; d[u] + w &lt; d[v]) {
                 d[v] = d[u] + w;
                 Trace[v] = u;
@@ -3892,24 +4011,50 @@ int main() {
         }
         if (!coCapNhat) break;       // Dừng sớm nếu không cập nhật gì
     }
+}
+
+int main() {
+    ifstream in("TENBAI.INP");
+    ofstream out("TENBAI.OUT");
+    in >> n >> m >> S >> F;
+    edges.resize(m);
+    for (int i = 0; i &lt; m; i++)
+        in >> edges[i].u >> edges[i].v >> edges[i].w;
+
+    BellmanFord();
 
     // Truy vết
-    if (d[F] >= 1e18) { cout &lt;&lt; "Khong co duong di"; return 0; }
+    if (d[F] >= 1e18) { out &lt;&lt; "Khong co duong di"; in.close(); out.close(); return 0; }
     vector&lt;int&gt; path;
     for (int cur = F; cur != S; cur = Trace[cur]) path.push_back(cur);
     path.push_back(S);
     reverse(path.begin(), path.end());
 
-    cout &lt;&lt; "Khoang cach " &lt;&lt; S &lt;&lt; " -> " &lt;&lt; F &lt;&lt; ": " &lt;&lt; d[F] &lt;&lt; endl;
-    cout &lt;&lt; "Duong di: ";
-    for (int x : path) cout &lt;&lt; x &lt;&lt; " ";
-    cout &lt;&lt; endl;
+    out &lt;&lt; "Khoang cach " &lt;&lt; S &lt;&lt; " -> " &lt;&lt; F &lt;&lt; ": " &lt;&lt; d[F] &lt;&lt; endl;
+    out &lt;&lt; "Duong di: ";
+    for (int x : path) out &lt;&lt; x &lt;&lt; " ";
+    out &lt;&lt; endl;
+    in.close(); out.close();
     return 0;
 }
 // ▶ Output:
 // Khoang cach 1 -> 4: 1
 // Duong di: 1 2 3 4
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">4 5 1 4
+1 2 2
+1 3 4
+2 3 -3
+2 4 3
+3 4 2</pre></td>
+<td><pre style="margin:0">Khoang cach 1 -> 4: 1
+Duong di: 1 2 3 4</pre></td></tr>
+</table>
+<em>Dòng 1: n m S F. Các dòng sau: u v w (cạnh CÓ HƯỚNG, w có thể âm).</em>
+</div>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY BELLMAN-FORD:</strong> Tìm đường ngắn nhất từ đỉnh 1 đến đỉnh 4
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
@@ -3944,37 +4089,44 @@ Truy vết: 4←Trace[4]=3←Trace[3]=2←Trace[2]=1
 using namespace std;
 
 long long d[405][405];
-int n;
+int n, m;
 
-int main() {
-    n = 4;
-    // Khởi tạo vô cực
-    for (int i = 1; i &lt;= n; i++)
-        for (int j = 1; j &lt;= n; j++)
-            d[i][j] = (i == j) ? 0 : 1e18;
-
-    // Cạnh: {u, v, w}
-    int edges[][3] = {{1,2,3},{1,3,7},{2,3,1},{2,4,5},{3,4,2}};
-    for (auto &amp;e : edges) {
-        d[e[0]][e[1]] = e[2];
-        d[e[1]][e[0]] = e[2];
-    }
-
-    // Floyd
+void Floyd() {
     // KEY: 3 vòng for k-i-j: "đi qua trung gian k có ngắn hơn đi thẳng?"
     for (int k = 1; k &lt;= n; k++)
         for (int i = 1; i &lt;= n; i++)
             for (int j = 1; j &lt;= n; j++)
                 if (d[i][k] + d[k][j] &lt; d[i][j])
                     d[i][j] = d[i][k] + d[k][j];
+}
+
+int main() {
+    ifstream in("TENBAI.INP");
+    ofstream out("TENBAI.OUT");
+    in >> n >> m;
+
+    // Khởi tạo vô cực
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 1; j &lt;= n; j++)
+            d[i][j] = (i == j) ? 0 : 1e18;
+
+    while (m--) {
+        int u, v, w;
+        in >> u >> v >> w;
+        d[u][v] = w;
+        d[v][u] = w;
+    }
+
+    Floyd();
 
     // In bảng khoảng cách
     for (int i = 1; i &lt;= n; i++) {
         for (int j = 1; j &lt;= n; j++)
-            cout &lt;&lt; d[i][j] &lt;&lt; "\t";
-        cout &lt;&lt; endl;
+            out &lt;&lt; d[i][j] &lt;&lt; "\t";
+        out &lt;&lt; endl;
     }
-    cout &lt;&lt; "Dist(1,4) = " &lt;&lt; d[1][4] &lt;&lt; endl;
+    out &lt;&lt; "Dist(1,4) = " &lt;&lt; d[1][4] &lt;&lt; endl;
+    in.close(); out.close();
     return 0;
 }
 // ▶ Output:
@@ -3984,6 +4136,23 @@ int main() {
 // 6	3	2	0
 // Dist(1,4) = 6   (đường 1→2→3→4 = 3+1+2)
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">4 5
+1 2 3
+1 3 7
+2 3 1
+2 4 5
+3 4 2</pre></td>
+<td><pre style="margin:0">0	3	4	6
+3	0	1	3
+4	1	0	2
+6	3	2	0
+Dist(1,4) = 6</pre></td></tr>
+</table>
+<em>Dòng 1: n m (4 đỉnh, 5 cạnh). Các dòng sau: u v w (cạnh vô hướng có trọng số).</em>
+</div>
 
 
 <div class="warn" style="border-left: 4px solid #e74c3c; background: #3a1a1a; color: #e0e0e0; padding: 12px 16px; margin: 20px 0 10px 0;">
@@ -4031,6 +4200,8 @@ void Prim() {
 }
 
 int main() {
+    ifstream in("TENBAI.INP");
+    ofstream out("TENBAI.OUT");
     in >> n >> m;
     a.assign(n + 1, vector&lt;int&gt;(n + 1, INT_MAX));
     Free.assign(n + 1, true);
@@ -4048,9 +4219,26 @@ int main() {
             out &lt;&lt; "(" &lt;&lt; u &lt;&lt; ", " &lt;&lt; v &lt;&lt; ") = " &lt;&lt; a[u][v] &lt;&lt; '\n';
         out &lt;&lt; "Tong trong so: " &lt;&lt; total;
     }
+    in.close(); out.close();
     return 0;
 }
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">4 5
+1 2 1
+1 3 4
+2 3 2
+2 4 6
+3 4 3</pre></td>
+<td><pre style="margin:0">(1, 2) = 1
+(2, 3) = 2
+(3, 4) = 3
+Tong trong so: 6</pre></td></tr>
+</table>
+<em>Dòng 1: n m (4 đỉnh, 5 cạnh). Các dòng sau: u v w (cạnh vô hướng có trọng số).</em>
+</div>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY PRIM:</strong> Tìm cây khung nhỏ nhất
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
@@ -4139,9 +4327,23 @@ int main() {
         out &lt;&lt; "Tong trong so: " &lt;&lt; total;
     else
         out &lt;&lt; "Do thi khong lien thong";
+    in.close(); out.close();
     return 0;
 }
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">4 5
+1 2 1
+1 3 4
+2 3 2
+2 4 6
+3 4 3</pre></td>
+<td><pre style="margin:0">Tong trong so: 6</pre></td></tr>
+</table>
+<em>Dòng 1: n m. Các dòng sau: u v w. Cùng dữ liệu với Prim → cùng kết quả.</em>
+</div>
 
 <div class="tip"><strong>SO SÁNH PRIM vs KRUSKAL:</strong>
 <table>
@@ -4170,6 +4372,8 @@ int main() {
 int n, m;
 vector&lt;vector&lt;int&gt;&gt; ke;        // Danh sách kề (đồ thị CÓ HƯỚNG)
 vector&lt;int&gt; bacVao;            // bacVao[v] = số cạnh đi VÀO v
+ifstream in("TENBAI.INP");
+ofstream out("TENBAI.OUT");
 
 void TopoSort() {
     queue&lt;int&gt; q;
@@ -4197,8 +4401,6 @@ void TopoSort() {
 }
 
 int main() {
-    ifstream in("TENBAI.INP");
-    ofstream out("TENBAI.OUT");
     in >> n >> m;
     ke.assign(n + 1, vector&lt;int&gt;());
     bacVao.assign(n + 1, 0);
@@ -4209,9 +4411,24 @@ int main() {
         bacVao[v]++;
     }
     TopoSort();
+    in.close(); out.close();
     return 0;
 }
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">5 6
+1 2
+1 3
+2 4
+3 4
+2 5
+4 5</pre></td>
+<td><pre style="margin:0">1 2 3 4 5</pre></td></tr>
+</table>
+<em>Dòng 1: n m. Các dòng sau: u v (cạnh CÓ HƯỚNG: u phải xong trước v).</em>
+</div>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY TOPO SORT:</strong>
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
@@ -4289,6 +4506,8 @@ void MaxFlow() {
 }
 
 int main() {
+    ifstream in("TENBAI.INP");
+    ofstream out("TENBAI.OUT");
     in >> n >> m >> S >> F;
     Cap.assign(n + 1, vector&lt;int&gt;(n + 1, 0));
     Flow.assign(n + 1, vector&lt;int&gt;(n + 1, 0));
@@ -4302,9 +4521,23 @@ int main() {
     int res = 0;
     for (int i = 1; i &lt;= n; i++) res += Flow[S][i];
     out &lt;&lt; "Max flow: " &lt;&lt; res;
+    in.close(); out.close();
     return 0;
 }
 </pre>
+<div class="tip"><strong>📋 FILE MẪU:</strong>
+<table>
+<tr><th>TENBAI.INP</th><th>TENBAI.OUT</th></tr>
+<tr><td><pre style="margin:0">4 5 1 4
+1 2 3
+1 3 2
+2 4 2
+3 4 3
+2 3 1</pre></td>
+<td><pre style="margin:0">Max flow: 5</pre></td></tr>
+</table>
+<em>Dòng 1: n m S F (4 đỉnh, 5 cạnh, nguồn 1, đích 4). Các dòng sau: u v w (sức chứa).</em>
+</div>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY FORD-FULKERSON:</strong>
 <pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
