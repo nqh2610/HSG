@@ -2450,8 +2450,8 @@ int main() {
     map&lt;string, int&gt; diem;
     diem["An"] = 9; diem["Binh"] = 7;
     cout &lt;&lt; "Map: ";
-    for (auto &amp;[k, v] : diem)
-        cout &lt;&lt; k &lt;&lt; "=" &lt;&lt; v &lt;&lt; " ";
+    for (auto &amp;p : diem)
+        cout &lt;&lt; p.first &lt;&lt; "=" &lt;&lt; p.second &lt;&lt; " ";
     cout &lt;&lt; endl;
     return 0;
 }
@@ -3156,7 +3156,7 @@ int main() {
     }
 
     // Đồ thị CÓ TRỌNG SỐ → dùng pair
-    // vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke;  ke[u].push_back({v, w});
+    // vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke;  ke[u].push_back(make_pair(v, w));
     return 0;
 }
 // ▶ Output:
@@ -3424,21 +3424,22 @@ void DFS(int S) {
 // DIJKSTRA — DANH SÁCH KỀ + Priority Queue — O(E log V)
 // ═══════════════════════════════════════════════
 vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke(n + 1);  // ke[u] = {{v, w}, ...}
-// Đọc: ke[u].push_back({v, w}); ke[v].push_back({u, w});
+// Đọc: ke[u].push_back(make_pair(v, w)); ke[v].push_back(make_pair(u, w));
 
 void Dijkstra(int S) {
     vector&lt;long long&gt; dist(n + 1, 1e18);
     vector&lt;bool&gt; Free(n + 1, true);
-    priority_queue&lt;pair&lt;long long,int&gt;, vector&lt;pair&lt;long long,int&gt;&gt;, greater&lt;&gt;&gt; pq;
-    dist[S] = 0; pq.push({0, S});
+    priority_queue&lt;pair&lt;long long,int&gt;, vector&lt;pair&lt;long long,int&gt;&gt;, greater&lt;pair&lt;long long,int&gt;&gt;&gt; pq;
+    dist[S] = 0; pq.push(make_pair(0LL, S));
     while (!pq.empty()) {
-        auto [d, u] = pq.top(); pq.pop();
+        long long d = pq.top().first; int u = pq.top().second; pq.pop();
         if (!Free[u]) continue;
         Free[u] = false;
-        for (auto [v, w] : ke[u]) {      // ← chỉ duyệt hàng xóm thật
+        for (int i = 0; i &lt; (int)ke[u].size(); i++) {  // ← chỉ duyệt hàng xóm thật
+            int v = ke[u][i].first, w = ke[u][i].second;
             if (Free[v] &amp;&amp; dist[u] + w &lt; dist[v]) {
                 dist[v] = dist[u] + w;
-                pq.push({dist[v], v});
+                pq.push(make_pair(dist[v], v));
             }
         }
     }
@@ -3793,7 +3794,7 @@ void BFS_Luoi() {
     queue&lt;pair&lt;int,int&gt;&gt; q;
     q.push({sr, sc});
     while (!q.empty()) {
-        auto [x, y] = q.front(); q.pop();
+        int x = q.front().first, y = q.front().second; q.pop();
         for (int k = 0; k &lt; 4; k++) {
             int nx = x + dx[k], ny = y + dy[k];
             if (nx >= 0 &amp;&amp; nx &lt; m &amp;&amp; ny >= 0 &amp;&amp; ny &lt; n
@@ -3875,15 +3876,17 @@ void Dijkstra() {
     dist[S] = 0; Trace[S] = S; pq.push({0, S});
 
     while (!pq.empty()) {
-        auto [d, u] = pq.top(); pq.pop();
+        long long d = pq.top().first; int u = pq.top().second; pq.pop();
         if (!Free[u]) continue;  // đã thăm rồi → bỏ (lazy deletion)
         Free[u] = false;
-        for (auto [v, w] : ke[u])
+        for (int i = 0; i &lt; (int)ke[u].size(); i++) {
+            int v = ke[u][i].first, w = ke[u][i].second;
             if (Free[v] &amp;&amp; dist[u] + w &lt; dist[v]) {
                 dist[v] = dist[u] + w;
                 Trace[v] = u;
-                pq.push({dist[v], v});
+                pq.push(make_pair(dist[v], v));
             }
+        }
     }
 }
 
@@ -3895,8 +3898,8 @@ int main() {
     while (m--) {
         int u, v, w;
         in >> u >> v >> w;
-        ke[u].push_back({v, w});
-        ke[v].push_back({u, w});
+        ke[u].push_back(make_pair(v, w));
+        ke[v].push_back(make_pair(u, w));
     }
 
     Dijkstra();
@@ -4002,7 +4005,8 @@ void BellmanFord() {
     // KEY: Lặp n-1 vòng, mỗi vòng duyệt TẤT CẢ cạnh → O(V × E)
     for (int lap = 1; lap &lt;= n - 1; lap++) {
         bool coCapNhat = false;
-        for (auto &amp;[u, v, w] : edges) {  // Duyệt danh sách cạnh
+        for (int i = 0; i &lt; (int)edges.size(); i++) {  // Duyệt danh sách cạnh
+            int u = edges[i].u, v = edges[i].v, w = edges[i].w;
             if (d[u] &lt; 1e18 &amp;&amp; d[u] + w &lt; d[v]) {
                 d[v] = d[u] + w;
                 Trace[v] = u;
@@ -4168,6 +4172,8 @@ Dist(1,4) = 6</pre></td></tr>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Cùng bài "nối tất cả nhà với chi phí rẻ nhất" nhưng 2 cách làm khác nhau:<br>  — <b>Prim</b>: đứng ở 1 nhà, cứ nối sang nhà gần nhất chưa nối (dùng <a href="#C3">Priority Queue</a>).<br>  — <b><a href="#D9">Kruskal</a></b>: liệt kê tất cả đường, <a href="#A9">xếp từ rẻ→đắt</a>, chọn lần lượt đường rẻ nhất mà không tạo vòng (dùng <a href="#C4">DSU</a> kiểm tra).</div>
 <pre>
 // ═══ Prim — O(V²) với ma trận kề ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
 vector&lt;vector&lt;int&gt;&gt; a;              // Ma trận kề: a[u][v] = trọng số
 vector&lt;bool&gt; Free;
@@ -4215,8 +4221,8 @@ int main() {
     if ((int)result.size() != n - 1) {
         out &lt;&lt; "Do thi khong lien thong";
     } else {
-        for (auto [u, v] : result)
-            out &lt;&lt; "(" &lt;&lt; u &lt;&lt; ", " &lt;&lt; v &lt;&lt; ") = " &lt;&lt; a[u][v] &lt;&lt; '\n';
+        for (int i = 0; i &lt; (int)result.size(); i++)
+            out &lt;&lt; "(" &lt;&lt; result[i].first &lt;&lt; ", " &lt;&lt; result[i].second &lt;&lt; ") = " &lt;&lt; a[result[i].first][result[i].second] &lt;&lt; '\n';
         out &lt;&lt; "Tong trong so: " &lt;&lt; total;
     }
     in.close(); out.close();
@@ -4276,6 +4282,8 @@ Kết quả: Cây khung có 3 cạnh: (1,2)=1, (2,3)=2, (3,4)=3
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Kruskal cần 2 "đồ nghề": <a href="#A9">Sort</a> (xếp đường từ rẻ→đắt) + <a href="#C4">DSU</a> (hỏi nhanh "2 nhà đã nối chưa?").<br>• So với <a href="#D8">Prim</a>: cùng kết quả, nhưng Kruskal dễ code hơn nếu đã biết DSU.</div>
 <pre>
 // ═══ Kruskal — O(E log E) dùng DSU ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
 struct Edge {
     int u, v, w;
@@ -4314,7 +4322,8 @@ int main() {
     
     long long total = 0;
     int dem = 0;
-    for (auto &amp;[u, v, w] : edges) {
+    for (int i = 0; i &lt; (int)edges.size(); i++) {
+        int u = edges[i].u, v = edges[i].v, w = edges[i].w;
         if (tim_goc(u) != tim_goc(v)) {   // Không cùng nhóm → không tạo vòng
             hop_nhat(u, v);
             total += w;
@@ -4368,6 +4377,8 @@ int main() {
 <div class="warn"><strong>DẤU HIỆU:</strong> "thứ tự thực hiện công việc", "môn tiên quyết", "đồ thị có hướng không chu trình (DAG)"</div>
 <pre>
 // ═══ Topo Sort (Kahn's Algorithm — BFS) — O(V + E) ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
 int n, m;
 vector&lt;vector&lt;int&gt;&gt; ke;        // Danh sách kề (đồ thị CÓ HƯỚNG)
@@ -4463,6 +4474,8 @@ Kết quả: <strong>1 2 3 4 5</strong> (thứ tự học môn hợp lệ)
 <div class="warn"><strong>DẤU HIỆU:</strong> "luồng cực đại", "lưu lượng tối đa", "cắt nhỏ nhất" (max-flow min-cut)</div>
 <pre>
 // ═══ Ford-Fulkerson (dùng BFS — Edmonds-Karp) — O(V × E²) ═══
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
 vector&lt;vector&lt;int&gt;&gt; Cap, Flow;      // Cap = sức chứa, Flow = luồng hiện tại
 vector&lt;int&gt; Trace;
