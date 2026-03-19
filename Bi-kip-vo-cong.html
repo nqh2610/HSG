@@ -3427,7 +3427,7 @@ vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; ke(n + 1);  // ke[u] = {{v, w}, 
 // Đọc: ke[u].push_back(make_pair(v, w)); ke[v].push_back(make_pair(u, w));
 
 void Dijkstra(int S) {
-    vector&lt;long long&gt; dist(n + 1, 1e18);
+    vector&lt;long long&gt; dist(n + 1, LLONG_MAX);
     vector&lt;bool&gt; Free(n + 1, true);
     priority_queue&lt;pair&lt;long long,int&gt;, vector&lt;pair&lt;long long,int&gt;&gt;, greater&lt;pair&lt;long long,int&gt;&gt;&gt; pq;
     dist[S] = 0; pq.push(make_pair(0LL, S));
@@ -3454,7 +3454,7 @@ vector&lt;vector&lt;int&gt;&gt; a(n + 1, vector&lt;int&gt;(n + 1, INT_MAX));
 // Đọc: a[u][v] = a[v][u] = w;
 
 void Dijkstra(int S) {
-    vector&lt;long long&gt; dist(n + 1, 1e18);
+    vector&lt;long long&gt; dist(n + 1, LLONG_MAX);
     vector&lt;bool&gt; Free(n + 1, true);
     dist[S] = 0;
     for (int lap = 0; lap &lt; n; lap++) {
@@ -3463,7 +3463,7 @@ void Dijkstra(int S) {
         for (int v = 1; v &lt;= n; v++)
             if (Free[v] &amp;&amp; (u == -1 || dist[v] &lt; dist[u]))
                 u = v;
-        if (u == -1 || dist[u] >= 1e18) break;
+        if (u == -1 || dist[u] == LLONG_MAX) break;
         Free[u] = false;
         for (int v = 1; v &lt;= n; v++) {   // ← thử tất cả n đỉnh
             if (a[u][v] != INT_MAX &amp;&amp; Free[v]) {
@@ -3866,7 +3866,7 @@ vector&lt;long long&gt; dist;
 vector&lt;int&gt; Trace;
 
 void Dijkstra() {
-    dist.assign(n + 1, 1e18);
+    dist.assign(n + 1, LLONG_MAX);
     Trace.assign(n + 1, -1);
     vector&lt;bool&gt; Free(n + 1, true);
     priority_queue&lt;pair&lt;long long,int&gt;,
@@ -3998,7 +3998,7 @@ vector&lt;long long&gt; d;
 vector&lt;int&gt; Trace;
 
 void BellmanFord() {
-    d.assign(n + 1, 1e18);
+    d.assign(n + 1, LLONG_MAX);
     Trace.assign(n + 1, -1);
     d[S] = 0; Trace[S] = S;
 
@@ -4007,7 +4007,7 @@ void BellmanFord() {
         bool coCapNhat = false;
         for (int i = 0; i &lt; (int)edges.size(); i++) {  // Duyệt danh sách cạnh
             int u = edges[i].u, v = edges[i].v, w = edges[i].w;
-            if (d[u] &lt; 1e18 &amp;&amp; d[u] + w &lt; d[v]) {
+            if (d[u] != LLONG_MAX &amp;&amp; d[u] + w &lt; d[v]) {
                 d[v] = d[u] + w;
                 Trace[v] = u;
                 coCapNhat = true;
@@ -4028,7 +4028,7 @@ int main() {
     BellmanFord();
 
     // Truy vết
-    if (d[F] >= 1e18) { out &lt;&lt; "Khong co duong di"; in.close(); out.close(); return 0; }
+    if (d[F] == LLONG_MAX) { out &lt;&lt; "Khong co duong di"; in.close(); out.close(); return 0; }
     vector&lt;int&gt; path;
     for (int cur = F; cur != S; cur = Trace[cur]) path.push_back(cur);
     path.push_back(S);
@@ -4100,7 +4100,7 @@ void Floyd() {
     for (int k = 1; k &lt;= n; k++)
         for (int i = 1; i &lt;= n; i++)
             for (int j = 1; j &lt;= n; j++)
-                if (d[i][k] + d[k][j] &lt; d[i][j])
+                if (d[i][k] != LLONG_MAX &amp;&amp; d[k][j] != LLONG_MAX &amp;&amp; d[i][k] + d[k][j] &lt; d[i][j])
                     d[i][j] = d[i][k] + d[k][j];
 }
 
@@ -4112,7 +4112,7 @@ int main() {
     // Khởi tạo vô cực
     for (int i = 1; i &lt;= n; i++)
         for (int j = 1; j &lt;= n; j++)
-            d[i][j] = (i == j) ? 0 : 1e18;
+            d[i][j] = (i == j) ? 0 : LLONG_MAX;
 
     while (m--) {
         int u, v, w;
@@ -5967,7 +5967,7 @@ for (int i = 0; i &lt; m; i++)
 // ═══ Bài: Tìm đoạn con [i..j] có tổng lớn nhất ═══
 // Thuật tối ưu: Kadane O(n). Nhưng BÍ → duyệt hết O(n²) cũng được 40-60%!
 
-long long best = -1e18;
+long long best = LLONG_MIN;
 for (int i = 1; i &lt;= n; i++) {
     long long sum = 0;
     for (int j = i; j &lt;= n; j++) {
