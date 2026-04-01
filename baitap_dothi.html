@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Luyện HSG - Nhóm D: Đồ Thị</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        .problem {
+            border: 1px solid #333;
+            padding: 25px;
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        .problem-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        .problem-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .problem-file {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 12px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .format-box {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95em;
+            border-left: 3px solid #333;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style-type: disc;
+        }
+        .format-box li {
+            margin-bottom: 5px;
+        }
+        .example {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+        }
+        .example-box {
+            flex: 1;
+            border: 1px solid #333;
+        }
+        .example-box h4 {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9em;
+        }
+        .example-box pre {
+            padding: 10px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95em;
+            white-space: pre;
+            margin: 0;
+        }
+        .constraints {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f0f0;
+        }
+        .constraints strong {
+            color: #333;
+        }
+        /* ========== SOLUTION TOGGLE STYLES ========== */
+        .solution-toggle {
+            margin-top: 20px;
+            border-top: 1px dashed #ccc;
+            padding-top: 15px;
+        }
+        .solution-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95em;
+            border: none;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .solution-btn:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        .solution-btn:active {
+            transform: translateY(0);
+        }
+        .solution-btn .icon {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+        .solution-btn.active .icon {
+            transform: rotate(90deg);
+        }
+        .solution-content {
+            display: none;
+            margin-top: 15px;
+            animation: fadeIn 0.4s ease;
+        }
+        .solution-content.show {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .solution-box {
+            background: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .solution-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .solution-header .tech-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+        .solution-code {
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #d4d4d4;
+            white-space: pre;
+            border-left: 4px solid #007acc;
+        }
+        .solution-code .comment { color: #6a9955; }
+        .solution-code .keyword { color: #569cd6; }
+        .solution-code .type { color: #4ec9b0; }
+        .solution-code .string { color: #ce9178; }
+        .solution-code .number { color: #b5cea8; }
+        .solution-code .include { color: #c586c0; }
+        .solution-code .function { color: #dcdcaa; }
+        .solution-note {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 12px 15px;
+            margin-top: 10px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9em;
+            color: #0c5460;
+        }
+        .solution-note strong {
+            color: #0c5460;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        .copy-btn.copied {
+            background: #27ae60;
+            border-color: #27ae60;
+        }
+        @media (max-width: 768px) {
+            .solution-btn {
+                padding: 8px 16px;
+                font-size: 0.85em;
+            }
+            .solution-code {
+                font-size: 0.75em;
+                padding: 10px;
+            }
+            .solution-header {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        @media print {
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+            .problem {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bài Tập Đồ Thị</h1>
+        <p class="subtitle">Bộ đề rèn luyện kỹ năng Đồ Thị dành cho HSG Tin học</p>
+
+        <!-- ========== BÀI 1 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 1: BẬC ĐỈNH</div>
+                <div class="problem-file">BACDINH.INP / BACDINH.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho đồ thị vô hướng gồm N đỉnh (đánh số 1 đến N) và M cạnh. Hãy tính bậc (số cạnh nối) của mỗi đỉnh.</p>
+                
+                <div class="section-title">Dữ liệu vào (BACDINH.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ M ≤ 10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Mỗi dòng hai số u, v — cạnh nối đỉnh u và v</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (BACDINH.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng gồm N số nguyên: bậc của đỉnh 1, 2, ..., N (cách nhau bởi dấu cách)</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>BACDINH.INP</h4>
+                        <pre>5 4
+1 2
+1 3
+2 3
+3 4</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>BACDINH.OUT</h4>
+                        <pre>2 2 3 1 0</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D0. Biểu diễn đồ thị</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 1: BACDINH — Biểu diễn đồ thị, tính bậc đỉnh</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"BACDINH.INP"</span>);
+    ofstream out(<span class="string">"BACDINH.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    vector&lt;<span class="keyword">int</span>&gt; deg(n + <span class="number">1</span>, <span class="number">0</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        in >> u >> v;
+        deg[u]++;
+        deg[v]++;
+    }
+
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        <span class="keyword">if</span>(i > <span class="number">1</span>) out &lt;&lt; <span class="string">" "</span>;
+        out &lt;&lt; deg[i];
+    }
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Đọc từng cạnh (u, v), tăng bậc cả hai đỉnh. Độ phức tạp: O(N + M).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 2 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 2: TÌM ĐƯỜNG</div>
+                <div class="problem-file">TIMDUONG.INP / TIMDUONG.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho đồ thị vô hướng không trọng số gồm N đỉnh và M cạnh. Tìm khoảng cách ngắn nhất (số cạnh ít nhất) từ đỉnh S đến đỉnh T. Nếu không tồn tại đường đi, in -1.</p>
+                
+                <div class="section-title">Dữ liệu vào (TIMDUONG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Bốn số nguyên N, M, S, T (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ M ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Mỗi dòng hai số u, v — cạnh nối u và v</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (TIMDUONG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là khoảng cách ngắn nhất, hoặc -1</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>TIMDUONG.INP</h4>
+                        <pre>5 5 1 5
+1 2
+1 3
+2 4
+3 4
+4 5</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>TIMDUONG.OUT</h4>
+                        <pre>3</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D1. BFS</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 2: TIMDUONG — BFS tìm đường ngắn nhất</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"TIMDUONG.INP"</span>);
+    ofstream out(<span class="string">"TIMDUONG.OUT"</span>);
+
+    <span class="keyword">int</span> n, m, s, t;
+    in >> n >> m >> s >> t;
+
+    vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; adj(n + <span class="number">1</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        in >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector&lt;<span class="keyword">int</span>&gt; dist(n + <span class="number">1</span>, -<span class="number">1</span>);
+    queue&lt;<span class="keyword">int</span>&gt; q;
+    dist[s] = <span class="number">0</span>;
+    q.push(s);
+
+    <span class="keyword">while</span>(!q.empty()) {
+        <span class="keyword">int</span> u = q.front(); q.pop();
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)adj[u].size(); i++) {
+            <span class="keyword">int</span> v = adj[u][i];
+            <span class="keyword">if</span>(dist[v] == -<span class="number">1</span>) {
+                dist[v] = dist[u] + <span class="number">1</span>;
+                q.push(v);
+            }
+        }
+    }
+
+    out &lt;&lt; dist[t];
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>BFS</em> từ đỉnh S. Mỗi đỉnh được thăm đúng 1 lần, dist[v] = dist[u] + 1. Đảm bảo đường ngắn nhất trên đồ thị không trọng số. Độ phức tạp: O(N + M).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 3 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 3: CHU TRÌNH</div>
+                <div class="problem-file">CHUTRINH.INP / CHUTRINH.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho đồ thị <b>có hướng</b> gồm N đỉnh và M cung. Hãy kiểm tra đồ thị có chứa chu trình hay không.</p>
+                
+                <div class="section-title">Dữ liệu vào (CHUTRINH.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ M ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Mỗi dòng hai số u, v — cung từ u đến v</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (CHUTRINH.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>In "YES" nếu có chu trình, ngược lại in "NO"</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CHUTRINH.INP</h4>
+                        <pre>4 4
+1 2
+2 3
+3 4
+4 2</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CHUTRINH.OUT</h4>
+                        <pre>YES</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D2. DFS phát hiện chu trình</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 3: CHUTRINH — DFS tô màu phát hiện chu trình</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">const int</span> MAXN = <span class="number">100005</span>;
+vector&lt;<span class="keyword">int</span>&gt; adj[MAXN];
+<span class="keyword">int</span> color[MAXN]; <span class="comment">// 0=trắng, 1=xám, 2=đen</span>
+<span class="keyword">bool</span> hasCycle;
+
+<span class="keyword">void</span> <span class="function">dfs</span>(<span class="keyword">int</span> u) {
+    color[u] = <span class="number">1</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)adj[u].size(); i++) {
+        <span class="keyword">int</span> v = adj[u][i];
+        <span class="keyword">if</span>(color[v] == <span class="number">1</span>) { hasCycle = <span class="keyword">true</span>; <span class="keyword">return</span>; }
+        <span class="keyword">if</span>(color[v] == <span class="number">0</span>) { dfs(v); <span class="keyword">if</span>(hasCycle) <span class="keyword">return</span>; }
+    }
+    color[u] = <span class="number">2</span>;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHUTRINH.INP"</span>);
+    ofstream out(<span class="string">"CHUTRINH.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        in >> u >> v;
+        adj[u].push_back(v);
+    }
+
+    hasCycle = <span class="keyword">false</span>;
+    memset(color, <span class="number">0</span>, <span class="keyword">sizeof</span>(color));
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        <span class="keyword">if</span>(color[i] == <span class="number">0</span>) {
+            dfs(i);
+            <span class="keyword">if</span>(hasCycle) <span class="keyword">break</span>;
+        }
+    }
+
+    out &lt;&lt; (hasCycle ? <span class="string">"YES"</span> : <span class="string">"NO"</span>);
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>DFS tô 3 màu</em>: trắng (chưa thăm), xám (đang thăm), đen (đã xong). Nếu gặp đỉnh xám → có chu trình. Độ phức tạp: O(N + M).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 4 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 4: LIÊN THÔNG</div>
+                <div class="problem-file">LIENTHONG.INP / LIENTHONG.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho đồ thị vô hướng gồm N đỉnh và M cạnh. Hãy đếm số thành phần liên thông của đồ thị.</p>
+                
+                <div class="section-title">Dữ liệu vào (LIENTHONG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ M ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Mỗi dòng hai số u, v — cạnh nối u và v</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (LIENTHONG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số thành phần liên thông</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>LIENTHONG.INP</h4>
+                        <pre>7 4
+1 2
+2 3
+4 5
+6 7</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>LIENTHONG.OUT</h4>
+                        <pre>3</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D3. Liên thông (BFS)</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 4: LIENTHONG — Đếm thành phần liên thông</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"LIENTHONG.INP"</span>);
+    ofstream out(<span class="string">"LIENTHONG.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; adj(n + <span class="number">1</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        in >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector&lt;<span class="keyword">bool</span>&gt; visited(n + <span class="number">1</span>, <span class="keyword">false</span>);
+    <span class="keyword">int</span> cnt = <span class="number">0</span>;
+
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        <span class="keyword">if</span>(!visited[i]) {
+            cnt++;
+            queue&lt;<span class="keyword">int</span>&gt; q;
+            visited[i] = <span class="keyword">true</span>;
+            q.push(i);
+            <span class="keyword">while</span>(!q.empty()) {
+                <span class="keyword">int</span> u = q.front(); q.pop();
+                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (<span class="keyword">int</span>)adj[u].size(); j++) {
+                    <span class="keyword">int</span> v = adj[u][j];
+                    <span class="keyword">if</span>(!visited[v]) {
+                        visited[v] = <span class="keyword">true</span>;
+                        q.push(v);
+                    }
+                }
+            }
+        }
+    }
+
+    out &lt;&lt; cnt;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Với mỗi đỉnh chưa thăm, chạy BFS/DFS để đánh dấu toàn bộ thành phần liên thông. Đếm số lần khởi tạo BFS mới. Độ phức tạp: O(N + M).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 5 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 5: MÊ CUNG</div>
+                <div class="problem-file">MECUNG.INP / MECUNG.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho mê cung hình chữ nhật kích thước M×N ô. Mỗi ô là đường đi ('.') hoặc tường ('#'). Một nhân vật đứng ở ô (1,1) và muốn đi đến ô (M,N). Mỗi bước, nhân vật di chuyển sang một ô kề cạnh (lên, xuống, trái, phải).</p>
+                <p>Hãy tìm số bước đi ít nhất. Nếu không thể đến được, in -1.</p>
+                
+                <div class="section-title">Dữ liệu vào (MECUNG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên M, N (1 ≤ M, N ≤ 1000)</li>
+                        <li>M dòng tiếp theo: Mỗi dòng một xâu N ký tự ('.' hoặc '#')</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (MECUNG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số bước ít nhất, hoặc -1</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>MECUNG.INP</h4>
+                        <pre>4 4
+....
+.##.
+.#..
+....</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>MECUNG.OUT</h4>
+                        <pre>6</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D4. BFS trên lưới 2D</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 5: MECUNG — BFS trên lưới 2D</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"MECUNG.INP"</span>);
+    ofstream out(<span class="string">"MECUNG.OUT"</span>);
+
+    <span class="keyword">int</span> m, n;
+    in >> m >> n;
+    vector&lt;string&gt; grid(m);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) in >> grid[i];
+
+    vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; dist(m, vector&lt;<span class="keyword">int</span>&gt;(n, -<span class="number">1</span>));
+    queue&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; q;
+    dist[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;
+    q.push(make_pair(<span class="number">0</span>, <span class="number">0</span>));
+
+    <span class="keyword">int</span> dx[] = {<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>};
+    <span class="keyword">int</span> dy[] = {<span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>};
+
+    <span class="keyword">while</span>(!q.empty()) {
+        pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; cur = q.front(); q.pop();
+        <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">0</span>; d &lt; <span class="number">4</span>; d++) {
+            <span class="keyword">int</span> nx = cur.first + dx[d];
+            <span class="keyword">int</span> ny = cur.second + dy[d];
+            <span class="keyword">if</span>(nx >= <span class="number">0</span> &amp;&amp; nx &lt; m &amp;&amp; ny >= <span class="number">0</span> &amp;&amp; ny &lt; n
+               &amp;&amp; grid[nx][ny] == <span class="string">'.'</span> &amp;&amp; dist[nx][ny] == -<span class="number">1</span>) {
+                dist[nx][ny] = dist[cur.first][cur.second] + <span class="number">1</span>;
+                q.push(make_pair(nx, ny));
+            }
+        }
+    }
+
+    out &lt;&lt; dist[m - <span class="number">1</span>][n - <span class="number">1</span>];
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Coi mỗi ô '.' là một đỉnh, hai ô kề cạnh là một cạnh. Chạy <em>BFS</em> trên lưới từ (0,0) → tìm dist[m-1][n-1]. Độ phức tạp: O(M × N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 6 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 6: THÀNH PHỐ</div>
+                <div class="problem-file">THANHPHO.INP / THANHPHO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Đất nước có N thành phố và M con đường hai chiều, mỗi đường nối hai thành phố với chi phí di chuyển dương. Hãy tìm chi phí nhỏ nhất để đi từ thành phố 1 đến thành phố N.</p>
+                
+                <div class="section-title">Dữ liệu vào (THANHPHO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ M ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Ba số u, v, w — đường nối u và v với chi phí w (1 ≤ w ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (THANHPHO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là chi phí nhỏ nhất, hoặc -1 nếu không đi được</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>THANHPHO.INP</h4>
+                        <pre>5 6
+1 2 2
+1 3 5
+2 3 1
+2 4 7
+3 4 3
+4 5 1</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>THANHPHO.OUT</h4>
+                        <pre>7</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D5. Dijkstra</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 6: THANHPHO — Dijkstra đường đi ngắn nhất</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"THANHPHO.INP"</span>);
+    ofstream out(<span class="string">"THANHPHO.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    vector&lt;vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;&gt; adj(n + <span class="number">1</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v, w;
+        in >> u >> v >> w;
+        adj[u].push_back(make_pair(v, w));
+        adj[v].push_back(make_pair(u, w));
+    }
+
+    <span class="keyword">const long long</span> INF = 1e18;
+    vector&lt;<span class="keyword">long long</span>&gt; dist(n + <span class="number">1</span>, INF);
+    priority_queue&lt;pair&lt;<span class="keyword">long long</span>,<span class="keyword">int</span>&gt;,
+        vector&lt;pair&lt;<span class="keyword">long long</span>,<span class="keyword">int</span>&gt;&gt;,
+        greater&lt;pair&lt;<span class="keyword">long long</span>,<span class="keyword">int</span>&gt;&gt;&gt; pq;
+
+    dist[<span class="number">1</span>] = <span class="number">0</span>;
+    pq.push(make_pair(<span class="number">0</span>LL, <span class="number">1</span>));
+
+    <span class="keyword">while</span>(!pq.empty()) {
+        <span class="keyword">long long</span> d = pq.top().first;
+        <span class="keyword">int</span> u = pq.top().second;
+        pq.pop();
+        <span class="keyword">if</span>(d > dist[u]) <span class="keyword">continue</span>;
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)adj[u].size(); i++) {
+            <span class="keyword">int</span> v = adj[u][i].first;
+            <span class="keyword">int</span> w = adj[u][i].second;
+            <span class="keyword">if</span>(dist[u] + w &lt; dist[v]) {
+                dist[v] = dist[u] + w;
+                pq.push(make_pair(dist[v], v));
+            }
+        }
+    }
+
+    out &lt;&lt; (dist[n] >= INF ? -<span class="number">1</span>LL : dist[n]);
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>Dijkstra</em> với hàng đợi ưu tiên (min-heap). Mỗi bước lấy đỉnh có dist nhỏ nhất để cập nhật các đỉnh kề. Chỉ áp dụng cho trọng số dương. Độ phức tạp: O((N + M) log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 7 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 7: CHI PHÍ VẬN CHUYỂN</div>
+                <div class="problem-file">CHIPHI.INP / CHIPHI.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Mạng lưới vận chuyển gồm N kho hàng và M tuyến đường <b>một chiều</b>. Tuyến thứ i đi từ kho u<sub>i</sub> đến kho v<sub>i</sub> với chi phí w<sub>i</sub> (chi phí có thể âm do được trợ giá). Hãy tìm chi phí vận chuyển nhỏ nhất từ kho 1 đến kho N. Nếu không tới được, in "NO".</p>
+                
+                <div class="section-title">Dữ liệu vào (CHIPHI.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N ≤ 1000; 0 ≤ M ≤ 5000)</li>
+                        <li>M dòng tiếp theo: Ba số u, v, w — tuyến từ u đến v chi phí w (-10<sup>6</sup> ≤ w ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (CHIPHI.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Chi phí nhỏ nhất, hoặc "NO" nếu không tới được</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CHIPHI.INP</h4>
+                        <pre>4 5
+1 2 1
+1 3 4
+2 3 -2
+2 4 5
+3 4 1</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CHIPHI.OUT</h4>
+                        <pre>0</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D6. Bellman-Ford</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 7: CHIPHI — Bellman-Ford (trọng số âm)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHIPHI.INP"</span>);
+    ofstream out(<span class="string">"CHIPHI.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    vector&lt;<span class="keyword">int</span>&gt; eu(m), ev(m), ew(m);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)
+        in >> eu[i] >> ev[i] >> ew[i];
+
+    <span class="keyword">const long long</span> INF = 1e18;
+    vector&lt;<span class="keyword">long long</span>&gt; dist(n + <span class="number">1</span>, INF);
+    dist[<span class="number">1</span>] = <span class="number">0</span>;
+
+    <span class="keyword">for</span>(<span class="keyword">int</span> iter = <span class="number">0</span>; iter &lt; n - <span class="number">1</span>; iter++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+            <span class="keyword">if</span>(dist[eu[i]] &lt; INF &amp;&amp;
+               dist[eu[i]] + ew[i] &lt; dist[ev[i]]) {
+                dist[ev[i]] = dist[eu[i]] + ew[i];
+            }
+        }
+    }
+
+    <span class="keyword">if</span>(dist[n] >= INF)
+        out &lt;&lt; <span class="string">"NO"</span>;
+    <span class="keyword">else</span>
+        out &lt;&lt; dist[n];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>Bellman-Ford</em>: lặp N-1 vòng, mỗi vòng duyệt tất cả cạnh và cập nhật dist. Hỗ trợ trọng số âm (không có chu trình âm). Độ phức tạp: O(N × M).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 8 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 8: KHOẢNG CÁCH</div>
+                <div class="problem-file">KHOANGCACH.INP / KHOANGCACH.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Có N thành phố và M đường hai chiều có trọng số. Cho Q truy vấn, mỗi truy vấn hỏi khoảng cách ngắn nhất giữa hai thành phố u và v. Nếu không có đường đi, trả lời -1.</p>
+                
+                <div class="section-title">Dữ liệu vào (KHOANGCACH.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Ba số nguyên N, M, Q (1 ≤ N ≤ 400; 0 ≤ M ≤ N×(N-1)/2; 1 ≤ Q ≤ 10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Ba số u, v, w (1 ≤ w ≤ 10<sup>6</sup>)</li>
+                        <li>Q dòng tiếp theo: Hai số u, v cho mỗi truy vấn</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (KHOANGCACH.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Q dòng, mỗi dòng một số nguyên là khoảng cách ngắn nhất hoặc -1</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>KHOANGCACH.INP</h4>
+                        <pre>4 5 2
+1 2 3
+1 3 8
+2 3 2
+2 4 5
+3 4 1
+1 4
+3 1</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>KHOANGCACH.OUT</h4>
+                        <pre>6
+5</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D7. Floyd-Warshall</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 8: KHOANGCACH — Floyd all-pairs shortest path</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">const long long</span> INF = 1e18;
+<span class="keyword">long long</span> dist[<span class="number">405</span>][<span class="number">405</span>];
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"KHOANGCACH.INP"</span>);
+    ofstream out(<span class="string">"KHOANGCACH.OUT"</span>);
+
+    <span class="keyword">int</span> n, m, q;
+    in >> n >> m >> q;
+
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)
+            dist[i][j] = (i == j) ? <span class="number">0</span> : INF;
+
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        <span class="keyword">long long</span> w;
+        in >> u >> v >> w;
+        dist[u][v] = min(dist[u][v], w);
+        dist[v][u] = min(dist[v][u], w);
+    }
+
+    <span class="comment">// Floyd-Warshall</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= n; k++)
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)
+            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)
+                <span class="keyword">if</span>(dist[i][k] + dist[k][j] &lt; dist[i][j])
+                    dist[i][j] = dist[i][k] + dist[k][j];
+
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; i++) {
+        <span class="keyword">int</span> u, v;
+        in >> u >> v;
+        out &lt;&lt; (dist[u][v] >= INF ? -<span class="number">1</span>LL : dist[u][v]) &lt;&lt; <span class="string">"\n"</span>;
+    }
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>Floyd-Warshall</em>: 3 vòng lặp k, i, j. Cập nhật dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]). Tính đường ngắn nhất giữa mọi cặp đỉnh. Độ phức tạp: O(N³).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 9 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 9: MẠNG LƯỚI ĐIỆN</div>
+                <div class="problem-file">MANGLUOI.INP / MANGLUOI.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Thành phố có N trạm điện. Có thể xây M đường dây nối giữa các trạm, đường thứ i nối trạm u<sub>i</sub> và v<sub>i</sub> với chi phí w<sub>i</sub>. Hãy tìm chi phí nhỏ nhất để kết nối tất cả các trạm (xây dựng cây khung nhỏ nhất).</p>
+                
+                <div class="section-title">Dữ liệu vào (MANGLUOI.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ M ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Ba số u, v, w (1 ≤ w ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (MANGLUOI.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Chi phí nhỏ nhất. Nếu không thể kết nối tất cả, in -1</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>MANGLUOI.INP</h4>
+                        <pre>4 5
+1 2 1
+1 3 4
+2 3 2
+2 4 6
+3 4 3</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>MANGLUOI.OUT</h4>
+                        <pre>6</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D8. Prim</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 9: MANGLUOI — Prim MST</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"MANGLUOI.INP"</span>);
+    ofstream out(<span class="string">"MANGLUOI.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    vector&lt;vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;&gt; adj(n + <span class="number">1</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v, w;
+        in >> u >> v >> w;
+        adj[u].push_back(make_pair(v, w));
+        adj[v].push_back(make_pair(u, w));
+    }
+
+    vector&lt;<span class="keyword">bool</span>&gt; inMST(n + <span class="number">1</span>, <span class="keyword">false</span>);
+    priority_queue&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;,
+        vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;,
+        greater&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;&gt; pq;
+    pq.push(make_pair(<span class="number">0</span>, <span class="number">1</span>));
+
+    <span class="keyword">long long</span> total = <span class="number">0</span>;
+    <span class="keyword">int</span> cnt = <span class="number">0</span>;
+
+    <span class="keyword">while</span>(!pq.empty() &amp;&amp; cnt &lt; n) {
+        <span class="keyword">int</span> w = pq.top().first;
+        <span class="keyword">int</span> u = pq.top().second;
+        pq.pop();
+        <span class="keyword">if</span>(inMST[u]) <span class="keyword">continue</span>;
+        inMST[u] = <span class="keyword">true</span>;
+        total += w;
+        cnt++;
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)adj[u].size(); i++) {
+            <span class="keyword">int</span> v = adj[u][i].first;
+            <span class="keyword">int</span> ww = adj[u][i].second;
+            <span class="keyword">if</span>(!inMST[v]) pq.push(make_pair(ww, v));
+        }
+    }
+
+    out &lt;&lt; (cnt &lt; n ? -<span class="number">1</span>LL : total);
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>Prim</em> dùng min-heap. Bắt đầu từ đỉnh 1, mỗi bước thêm cạnh trọng số nhỏ nhất nối cây hiện tại với đỉnh mới. Độ phức tạp: O((N + M) log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 10 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 10: NỐI CẦU</div>
+                <div class="problem-file">NOICAU.INP / NOICAU.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Quần đảo có N hòn đảo. Có thể xây M cây cầu, cầu thứ i nối đảo u<sub>i</sub> với đảo v<sub>i</sub> với chi phí w<sub>i</sub>. Hãy tìm chi phí nhỏ nhất để kết nối tất cả các đảo. Nếu không thể, in -1.</p>
+                
+                <div class="section-title">Dữ liệu vào (NOICAU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ M ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Ba số u, v, w (1 ≤ w ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (NOICAU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Chi phí nhỏ nhất, hoặc -1 nếu không kết nối được</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>NOICAU.INP</h4>
+                        <pre>5 7
+1 2 4
+1 3 2
+2 3 1
+2 4 5
+3 4 8
+3 5 10
+4 5 3</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>NOICAU.OUT</h4>
+                        <pre>11</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D9. Kruskal + DSU</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 10: NOICAU — Kruskal + Union-Find (DSU)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> par[<span class="number">100005</span>];
+
+<span class="keyword">int</span> <span class="function">find</span>(<span class="keyword">int</span> x) {
+    <span class="keyword">if</span>(par[x] != x) par[x] = find(par[x]);
+    <span class="keyword">return</span> par[x];
+}
+
+<span class="keyword">bool</span> <span class="function">unite</span>(<span class="keyword">int</span> x, <span class="keyword">int</span> y) {
+    x = find(x); y = find(y);
+    <span class="keyword">if</span>(x == y) <span class="keyword">return</span> <span class="keyword">false</span>;
+    par[x] = y;
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}
+
+<span class="keyword">struct</span> Edge { <span class="keyword">int</span> u, v, w; };
+
+<span class="keyword">bool</span> <span class="function">cmpEdge</span>(<span class="keyword">const</span> Edge &amp;a, <span class="keyword">const</span> Edge &amp;b) {
+    <span class="keyword">return</span> a.w &lt; b.w;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"NOICAU.INP"</span>);
+    ofstream out(<span class="string">"NOICAU.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    vector&lt;Edge&gt; edges(m);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)
+        in >> edges[i].u >> edges[i].v >> edges[i].w;
+
+    sort(edges.begin(), edges.end(), cmpEdge);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) par[i] = i;
+
+    <span class="keyword">long long</span> total = <span class="number">0</span>;
+    <span class="keyword">int</span> cnt = <span class="number">0</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m &amp;&amp; cnt &lt; n - <span class="number">1</span>; i++) {
+        <span class="keyword">if</span>(unite(edges[i].u, edges[i].v)) {
+            total += edges[i].w;
+            cnt++;
+        }
+    }
+
+    out &lt;&lt; (cnt &lt; n - <span class="number">1</span> ? -<span class="number">1</span>LL : total);
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>Kruskal</em>: sắp xếp cạnh theo trọng số tăng dần, dùng <em>Disjoint Set Union (DSU)</em> để kiểm tra/hợp nhất thành phần liên thông. Chọn N-1 cạnh nhẹ nhất không tạo chu trình. Độ phức tạp: O(M log M).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 11 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 11: MÔN HỌC</div>
+                <div class="problem-file">MONHOC.INP / MONHOC.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Chương trình đào tạo có N môn học, đánh số 1 đến N. Có M điều kiện tiên quyết: muốn học môn v phải học xong môn u trước. Hãy sắp xếp một thứ tự học hợp lệ. Nếu có nhiều cách, ưu tiên môn có số nhỏ hơn trước. Nếu không thể sắp xếp (có phụ thuộc vòng), in -1.</p>
+                
+                <div class="section-title">Dữ liệu vào (MONHOC.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ M ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Hai số u, v — phải học u trước v</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (MONHOC.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>N số trên một dòng là thứ tự học hợp lệ, hoặc -1</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>MONHOC.INP</h4>
+                        <pre>5 4
+1 3
+2 3
+3 4
+3 5</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>MONHOC.OUT</h4>
+                        <pre>1 2 3 4 5</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D10. Topological Sort (Kahn)</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 11: MONHOC — Topo Sort (Kahn's BFS, ưu tiên nhỏ)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"MONHOC.INP"</span>);
+    ofstream out(<span class="string">"MONHOC.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; adj(n + <span class="number">1</span>);
+    vector&lt;<span class="keyword">int</span>&gt; indeg(n + <span class="number">1</span>, <span class="number">0</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        in >> u >> v;
+        adj[u].push_back(v);
+        indeg[v]++;
+    }
+
+    <span class="comment">// Min-heap để ưu tiên số nhỏ</span>
+    priority_queue&lt;<span class="keyword">int</span>, vector&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt;&gt; pq;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)
+        <span class="keyword">if</span>(indeg[i] == <span class="number">0</span>) pq.push(i);
+
+    vector&lt;<span class="keyword">int</span>&gt; order;
+    <span class="keyword">while</span>(!pq.empty()) {
+        <span class="keyword">int</span> u = pq.top(); pq.pop();
+        order.push_back(u);
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)adj[u].size(); i++) {
+            <span class="keyword">int</span> v = adj[u][i];
+            indeg[v]--;
+            <span class="keyword">if</span>(indeg[v] == <span class="number">0</span>) pq.push(v);
+        }
+    }
+
+    <span class="keyword">if</span>((<span class="keyword">int</span>)order.size() &lt; n) {
+        out &lt;&lt; -<span class="number">1</span>;
+    } <span class="keyword">else</span> {
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+            <span class="keyword">if</span>(i > <span class="number">0</span>) out &lt;&lt; <span class="string">" "</span>;
+            out &lt;&lt; order[i];
+        }
+    }
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>Kahn's Algorithm</em> (BFS-based Topo Sort): dùng min-heap chứa đỉnh có bậc vào = 0. Lấy đỉnh nhỏ nhất, giảm bậc vào hàng xóm. Nếu output &lt; N đỉnh → có chu trình. Độ phức tạp: O((N + M) log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 12 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 12: LUỒNG CỰC ĐẠI</div>
+                <div class="problem-file">LUONGMAX.INP / LUONGMAX.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Mạng lưới ống nước gồm N nút và M ống một chiều. Ống thứ i dẫn nước từ nút u<sub>i</sub> sang nút v<sub>i</sub> với lưu lượng tối đa c<sub>i</sub>. Hãy tìm lưu lượng nước lớn nhất có thể chuyển từ nút nguồn S đến nút đích T.</p>
+                
+                <div class="section-title">Dữ liệu vào (LUONGMAX.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Bốn số N, M, S, T (2 ≤ N ≤ 100; 0 ≤ M ≤ N×(N-1); 1 ≤ S, T ≤ N)</li>
+                        <li>M dòng tiếp theo: Ba số u, v, c (1 ≤ c ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (LUONGMAX.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là lưu lượng cực đại</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>LUONGMAX.INP</h4>
+                        <pre>4 5 1 4
+1 2 3
+1 3 2
+2 3 1
+2 4 2
+3 4 3</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>LUONGMAX.OUT</h4>
+                        <pre>5</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — D11. Edmonds-Karp (Ford-Fulkerson BFS)</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 12: LUONGMAX — Edmonds-Karp (Max Flow)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> cap[<span class="number">105</span>][<span class="number">105</span>];
+<span class="keyword">int</span> n, m, S, T;
+
+<span class="keyword">int</span> <span class="function">bfs</span>(vector&lt;<span class="keyword">int</span>&gt; &amp;parent) {
+    fill(parent.begin(), parent.end(), -<span class="number">1</span>);
+    parent[S] = S;
+    queue&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; q;
+    q.push(make_pair(S, <span class="number">1000000000</span>));
+    <span class="keyword">while</span>(!q.empty()) {
+        <span class="keyword">int</span> u = q.front().first;
+        <span class="keyword">int</span> flow = q.front().second;
+        q.pop();
+        <span class="keyword">for</span>(<span class="keyword">int</span> v = <span class="number">1</span>; v &lt;= n; v++) {
+            <span class="keyword">if</span>(parent[v] == -<span class="number">1</span> &amp;&amp; cap[u][v] > <span class="number">0</span>) {
+                parent[v] = u;
+                <span class="keyword">int</span> new_flow = min(flow, cap[u][v]);
+                <span class="keyword">if</span>(v == T) <span class="keyword">return</span> new_flow;
+                q.push(make_pair(v, new_flow));
+            }
+        }
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"LUONGMAX.INP"</span>);
+    ofstream out(<span class="string">"LUONGMAX.OUT"</span>);
+
+    in >> n >> m >> S >> T;
+    memset(cap, <span class="number">0</span>, <span class="keyword">sizeof</span>(cap));
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v, c;
+        in >> u >> v >> c;
+        cap[u][v] += c;
+    }
+
+    <span class="keyword">long long</span> maxflow = <span class="number">0</span>;
+    vector&lt;<span class="keyword">int</span>&gt; parent(n + <span class="number">1</span>);
+    <span class="keyword">int</span> aug;
+    <span class="keyword">while</span>((aug = bfs(parent)) > <span class="number">0</span>) {
+        maxflow += aug;
+        <span class="keyword">int</span> v = T;
+        <span class="keyword">while</span>(v != S) {
+            <span class="keyword">int</span> u = parent[v];
+            cap[u][v] -= aug;
+            cap[v][u] += aug;
+            v = u;
+        }
+    }
+
+    out &lt;&lt; maxflow;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>Edmonds-Karp</em> (Ford-Fulkerson + BFS): lặp tìm đường tăng luồng bằng BFS trên đồ thị thặng dư. Mỗi lần tăng luồng bằng bottleneck. Cập nhật cung thuận/nghịch. Độ phức tạp: O(V × E²).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 13 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 13: HAI PHAN</div>
+                <div class="problem-file">HAIPHAN.INP / HAIPHAN.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho đồ thị vô hướng gồm N đỉnh và M cạnh. Hãy kiểm tra đồ thị có phải là đồ thị hai phía (bipartite) hay không. Đồ thị hai phía là đồ thị mà tập đỉnh có thể chia thành hai nhóm sao cho mỗi cạnh chỉ nối đỉnh thuộc hai nhóm khác nhau.</p>
+                
+                <div class="section-title">Dữ liệu vào (HAIPHAN.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ M ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Hai số u, v — cạnh nối u và v</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (HAIPHAN.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>In "YES" nếu đồ thị hai phía, ngược lại in "NO"</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>HAIPHAN.INP</h4>
+                        <pre>4 4
+1 2
+2 3
+3 4
+4 1</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>HAIPHAN.OUT</h4>
+                        <pre>YES</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Kiểm tra đồ thị hai phía (BFS tô màu)</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 13: HAIPHAN — BFS tô màu kiểm tra bipartite</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"HAIPHAN.INP"</span>);
+    ofstream out(<span class="string">"HAIPHAN.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; adj(n + <span class="number">1</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        in >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector&lt;<span class="keyword">int</span>&gt; color(n + <span class="number">1</span>, -<span class="number">1</span>);
+    <span class="keyword">bool</span> bipartite = <span class="keyword">true</span>;
+
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n &amp;&amp; bipartite; i++) {
+        <span class="keyword">if</span>(color[i] != -<span class="number">1</span>) <span class="keyword">continue</span>;
+        queue&lt;<span class="keyword">int</span>&gt; q;
+        color[i] = <span class="number">0</span>;
+        q.push(i);
+        <span class="keyword">while</span>(!q.empty() &amp;&amp; bipartite) {
+            <span class="keyword">int</span> u = q.front(); q.pop();
+            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (<span class="keyword">int</span>)adj[u].size(); j++) {
+                <span class="keyword">int</span> v = adj[u][j];
+                <span class="keyword">if</span>(color[v] == -<span class="number">1</span>) {
+                    color[v] = <span class="number">1</span> - color[u];
+                    q.push(v);
+                } <span class="keyword">else if</span>(color[v] == color[u]) {
+                    bipartite = <span class="keyword">false</span>;
+                }
+            }
+        }
+    }
+
+    out &lt;&lt; (bipartite ? <span class="string">"YES"</span> : <span class="string">"NO"</span>);
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>BFS tô 2 màu</em>: tô đỉnh kề bằng màu đối. Nếu gặp đỉnh kề cùng màu → không phải hai phía. Đồ thị hai phía ⇔ không chứa chu trình lẻ. Độ phức tạp: O(N + M).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 14 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 14: LAN DỊCH</div>
+                <div class="problem-file">LANDICH.INP / LANDICH.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Vùng dân cư hình chữ nhật M×N ô. Ban đầu có K ổ dịch tại các vị trí cho trước. Mỗi giây, dịch bệnh lan sang các ô kề cạnh (lên, xuống, trái, phải). Hỏi sau bao nhiêu giây thì toàn bộ vùng đều bị nhiễm?</p>
+                
+                <div class="section-title">Dữ liệu vào (LANDICH.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Ba số nguyên M, N, K (1 ≤ M, N ≤ 1000; 1 ≤ K ≤ M×N)</li>
+                        <li>K dòng tiếp theo: Hai số r, c — toạ độ ổ dịch (1-indexed)</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (LANDICH.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số giây cần thiết</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>LANDICH.INP</h4>
+                        <pre>3 3 2
+1 1
+3 3</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>LANDICH.OUT</h4>
+                        <pre>2</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Multi-source BFS trên lưới</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 14: LANDICH — Multi-source BFS</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"LANDICH.INP"</span>);
+    ofstream out(<span class="string">"LANDICH.OUT"</span>);
+
+    <span class="keyword">int</span> m, n, k;
+    in >> m >> n >> k;
+
+    vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; dist(m, vector&lt;<span class="keyword">int</span>&gt;(n, -<span class="number">1</span>));
+    queue&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; q;
+
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) {
+        <span class="keyword">int</span> r, c;
+        in >> r >> c;
+        r--; c--;
+        dist[r][c] = <span class="number">0</span>;
+        q.push(make_pair(r, c));
+    }
+
+    <span class="keyword">int</span> dx[] = {<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>};
+    <span class="keyword">int</span> dy[] = {<span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>};
+    <span class="keyword">int</span> ans = <span class="number">0</span>;
+
+    <span class="keyword">while</span>(!q.empty()) {
+        pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; cur = q.front(); q.pop();
+        <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">0</span>; d &lt; <span class="number">4</span>; d++) {
+            <span class="keyword">int</span> nx = cur.first + dx[d];
+            <span class="keyword">int</span> ny = cur.second + dy[d];
+            <span class="keyword">if</span>(nx >= <span class="number">0</span> &amp;&amp; nx &lt; m &amp;&amp; ny >= <span class="number">0</span> &amp;&amp; ny &lt; n
+               &amp;&amp; dist[nx][ny] == -<span class="number">1</span>) {
+                dist[nx][ny] = dist[cur.first][cur.second] + <span class="number">1</span>;
+                <span class="keyword">if</span>(dist[nx][ny] > ans) ans = dist[nx][ny];
+                q.push(make_pair(nx, ny));
+            }
+        }
+    }
+
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> <em>Multi-source BFS</em>: đưa tất cả K ổ dịch vào hàng đợi ban đầu (dist = 0), sau đó BFS bình thường. Kết quả = max dist trong toàn lưới. Độ phức tạp: O(M × N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 15 ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 15: ĐẾM ĐƯỜNG ĐI</div>
+                <div class="problem-file">DEMDUONG.INP / DEMDUONG.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho đồ thị có hướng không chu trình (DAG) gồm N đỉnh và M cung. Hãy đếm số đường đi khác nhau từ đỉnh 1 đến đỉnh N. Kết quả chia dư cho 10<sup>9</sup>+7.</p>
+                
+                <div class="section-title">Dữ liệu vào (DEMDUONG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ M ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Hai số u, v — cung từ u đến v</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title">Kết quả ra (DEMDUONG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Số đường đi khác nhau (mod 10<sup>9</sup>+7)</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <div class="example-box">
+                        <h4>DEMDUONG.INP</h4>
+                        <pre>4 5
+1 2
+1 3
+2 3
+2 4
+3 4</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>DEMDUONG.OUT</h4>
+                        <pre>3</pre>
+                    </div>
+                </div>
+                
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Topo Sort + DP đếm đường</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 15: DEMDUONG — Topo Sort + DP đếm đường trên DAG</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">const int</span> MOD = <span class="number">1e9</span> + <span class="number">7</span>;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DEMDUONG.INP"</span>);
+    ofstream out(<span class="string">"DEMDUONG.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; adj(n + <span class="number">1</span>);
+    vector&lt;<span class="keyword">int</span>&gt; indeg(n + <span class="number">1</span>, <span class="number">0</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        in >> u >> v;
+        adj[u].push_back(v);
+        indeg[v]++;
+    }
+
+    <span class="comment">// Topo sort (Kahn)</span>
+    queue&lt;<span class="keyword">int</span>&gt; q;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)
+        <span class="keyword">if</span>(indeg[i] == <span class="number">0</span>) q.push(i);
+
+    vector&lt;<span class="keyword">int</span>&gt; order;
+    <span class="keyword">while</span>(!q.empty()) {
+        <span class="keyword">int</span> u = q.front(); q.pop();
+        order.push_back(u);
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)adj[u].size(); i++) {
+            <span class="keyword">int</span> v = adj[u][i];
+            indeg[v]--;
+            <span class="keyword">if</span>(indeg[v] == <span class="number">0</span>) q.push(v);
+        }
+    }
+
+    <span class="comment">// DP đếm đường</span>
+    vector&lt;<span class="keyword">long long</span>&gt; dp(n + <span class="number">1</span>, <span class="number">0</span>);
+    dp[<span class="number">1</span>] = <span class="number">1</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)order.size(); i++) {
+        <span class="keyword">int</span> u = order[i];
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (<span class="keyword">int</span>)adj[u].size(); j++) {
+            <span class="keyword">int</span> v = adj[u][j];
+            dp[v] = (dp[v] + dp[u]) % MOD;
+        }
+    }
+
+    out &lt;&lt; dp[n];
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Sắp xếp topo, rồi DP theo thứ tự topo: dp[v] += dp[u] với mỗi cung u→v. dp[1] = 1. Kết hợp <em>Topological Sort</em> và <em>DP trên DAG</em>. Độ phức tạp: O(N + M).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    function toggleSolution(btn) {
+        const content = btn.nextElementSibling;
+        btn.classList.toggle('active');
+        content.classList.toggle('show');
+        const icon = btn.querySelector('.icon');
+        if (content.classList.contains('show')) {
+            icon.textContent = '▼';
+            btn.innerHTML = '<span class="icon">▼</span> Ẩn lời giải';
+        } else {
+            icon.textContent = '▶';
+            btn.innerHTML = '<span class="icon">▶</span> Xem lời giải';
+        }
+    }
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const code = codeBlock.textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            btn.textContent = '✓ Đã copy';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = '📋 Copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

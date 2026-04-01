@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Luyện HSG - Nhóm E: Tham Lam</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        .problem {
+            border: 1px solid #333;
+            padding: 25px;
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        .problem-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        .problem-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .problem-file {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 12px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .format-box {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95em;
+            border-left: 3px solid #333;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style-type: disc;
+        }
+        .format-box li {
+            margin-bottom: 5px;
+        }
+        .example {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+        }
+        .example-box {
+            flex: 1;
+            border: 1px solid #333;
+        }
+        .example-box h4 {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9em;
+        }
+        .example-box pre {
+            padding: 10px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95em;
+            white-space: pre;
+            margin: 0;
+        }
+        .constraints {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f0f0;
+        }
+        .constraints strong {
+            color: #333;
+        }
+        /* ========== SOLUTION TOGGLE STYLES ========== */
+        .solution-toggle {
+            margin-top: 20px;
+            border-top: 1px dashed #ccc;
+            padding-top: 15px;
+        }
+        .solution-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95em;
+            border: none;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .solution-btn:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        .solution-btn:active {
+            transform: translateY(0);
+        }
+        .solution-btn .icon {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+        .solution-btn.active .icon {
+            transform: rotate(90deg);
+        }
+        .solution-content {
+            display: none;
+            margin-top: 15px;
+            animation: fadeIn 0.4s ease;
+        }
+        .solution-content.show {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .solution-box {
+            background: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .solution-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .solution-header .tech-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+        .solution-code {
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #d4d4d4;
+            white-space: pre;
+            border-left: 4px solid #007acc;
+        }
+        .solution-code .comment { color: #6a9955; }
+        .solution-code .keyword { color: #569cd6; }
+        .solution-code .type { color: #4ec9b0; }
+        .solution-code .string { color: #ce9178; }
+        .solution-code .number { color: #b5cea8; }
+        .solution-code .include { color: #c586c0; }
+        .solution-code .function { color: #dcdcaa; }
+        .solution-note {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 12px 15px;
+            margin-top: 10px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9em;
+            color: #0c5460;
+        }
+        .solution-note strong {
+            color: #0c5460;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        .copy-btn.copied {
+            background: #27ae60;
+            border-color: #27ae60;
+        }
+        @media (max-width: 768px) {
+            .solution-btn {
+                padding: 8px 16px;
+                font-size: 0.85em;
+            }
+            .solution-code {
+                font-size: 0.75em;
+                padding: 10px;
+            }
+            .solution-header {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        @media print {
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+            .problem {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bài Tập Tham Lam</h1>
+        <p class="subtitle">Bộ đề rèn luyện kỹ năng Tham Lam (Greedy) dành cho HSG Tin học</p>
+
+        <!-- ========== BÀI 1: XEPSUA ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 1: XẾP SỮA</div>
+                <div class="problem-file">XEPSUA.INP / XEPSUA.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Nông trại có N con bò và M chai sữa. Con bò thứ i chỉ chấp nhận sữa có giá không quá p<sub>i</sub> đồng. Chai sữa thứ j có giá c<sub>j</sub> đồng. Mỗi con bò uống tối đa 1 chai, mỗi chai cho tối đa 1 con bò. Tìm số con bò được uống sữa nhiều nhất.</p>
+
+                <div class="section-title">Dữ liệu vào (XEPSUA.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, M (1 ≤ N, M ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên p<sub>1</sub>, p<sub>2</sub>, ..., p<sub>N</sub> (1 ≤ p<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                        <li>Dòng 3: M số nguyên c<sub>1</sub>, c<sub>2</sub>, ..., c<sub>M</sub> (1 ≤ c<sub>j</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (XEPSUA.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất — số con bò được uống sữa tối đa</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>XEPSUA.INP</h4>
+                        <pre>4 5
+3 5 2 4
+4 1 6 2 3</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>XEPSUA.OUT</h4>
+                        <pre>4</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E1. Sort + Matching</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 1: XEPSUA — Greedy sort + two-pointer matching</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"XEPSUA.INP"</span>);
+    ofstream fout(<span class="string">"XEPSUA.OUT"</span>);
+    <span class="keyword">int</span> n, m;
+    fin >> n >> m;
+    vector&lt;<span class="keyword">int</span>&gt; p(n), c(m);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> p[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) fin >> c[i];
+    <span class="function">sort</span>(p.begin(), p.end());
+    <span class="function">sort</span>(c.begin(), c.end());
+    <span class="keyword">int</span> ans = <span class="number">0</span>, j = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n <span class="keyword">&amp;&amp;</span> j &lt; m; i++) {
+        <span class="keyword">if</span> (c[j] &lt;= p[i]) {
+            ans++;
+            j++;
+        }
+    }
+    fout &lt;&lt; ans;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Sắp xếp cả hai mảng tăng dần. Duyệt hai con trỏ: nếu sữa rẻ nhất hiện tại ≤ giá chấp nhận của bò, ghép cặp; ngược lại chuyển sang bò có yêu cầu cao hơn. Độ phức tạp: O(N log N + M log M).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 2: CHONDOAN ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 2: CHỌN ĐOẠN</div>
+                <div class="problem-file">CHONDOAN.INP / CHONDOAN.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Có N hoạt động, hoạt động thứ i diễn ra từ thời điểm a<sub>i</sub> đến b<sub>i</sub>. Hai hoạt động chồng chéo nếu chúng có thời điểm chung (một hoạt động kết thúc đúng lúc hoạt động kia bắt đầu thì KHÔNG chồng chéo). Chọn nhiều hoạt động nhất sao cho không có hai hoạt động nào chồng chéo.</p>
+
+                <div class="section-title">Dữ liệu vào (CHONDOAN.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>N dòng tiếp theo: Mỗi dòng hai số a<sub>i</sub>, b<sub>i</sub> (1 ≤ a<sub>i</sub> &lt; b<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (CHONDOAN.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất — số hoạt động tối đa chọn được</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CHONDOAN.INP</h4>
+                        <pre>5
+1 3
+2 5
+4 7
+6 8
+8 10</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CHONDOAN.OUT</h4>
+                        <pre>3</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E2. Activity Selection</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 2: CHONDOAN — Greedy sort by end time</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">bool</span> <span class="function">cmp</span>(pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; a, pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; b) {
+    <span class="keyword">return</span> a.second &lt; b.second;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"CHONDOAN.INP"</span>);
+    ofstream fout(<span class="string">"CHONDOAN.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i].first >> a[i].second;
+    <span class="function">sort</span>(a.begin(), a.end(), cmp);
+    <span class="keyword">int</span> ans = <span class="number">0</span>, last = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">if</span> (a[i].first >= last) {
+            ans++;
+            last = a[i].second;
+        }
+    }
+    fout &lt;&lt; ans;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Sắp xếp hoạt động theo thời điểm kết thúc tăng dần. Chọn hoạt động kết thúc sớm nhất không chồng chéo với hoạt động đã chọn trước đó. Tham lam dạng <em>Activity Selection</em> kinh điển. Độ phức tạp: O(N log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 3: GHEPSO ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 3: GHÉP SỐ</div>
+                <div class="problem-file">GHEPSO.INP / GHEPSO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho dãy N số nguyên dương (N chẵn). Ghép chúng thành N/2 cặp. Tổng của mỗi cặp là tổng hai số trong cặp. Hãy tìm cách ghép sao cho tổng lớn nhất trong các cặp là nhỏ nhất có thể.</p>
+
+                <div class="section-title">Dữ liệu vào (GHEPSO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (2 ≤ N ≤ 10<sup>5</sup>, N chẵn)</li>
+                        <li>Dòng 2: N số nguyên a<sub>1</sub>, ..., a<sub>N</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (GHEPSO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất — giá trị tổng lớn nhất nhỏ nhất</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>GHEPSO.INP</h4>
+                        <pre>6
+1 3 5 2 8 4</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>GHEPSO.OUT</h4>
+                        <pre>9</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E3. Pair Balance</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 3: GHEPSO — Sắp xếp, ghép nhỏ nhất với lớn nhất</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"GHEPSO.INP"</span>);
+    ofstream fout(<span class="string">"GHEPSO.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    vector&lt;<span class="keyword">int</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i];
+    <span class="function">sort</span>(a.begin(), a.end());
+    <span class="keyword">int</span> ans = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n / <span class="number">2</span>; i++)
+        ans = max(ans, a[i] + a[n - <span class="number">1</span> - i]);
+    fout &lt;&lt; ans;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Sắp xếp dãy tăng dần. Ghép phần tử nhỏ nhất với lớn nhất, nhỏ nhì với lớn nhì, ... Cách ghép này cân bằng tổng các cặp, tối thiểu hóa giá trị lớn nhất. Độ phức tạp: O(N log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 4: THUYENBUOM ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 4: THUYỀN BUỒM</div>
+                <div class="problem-file">THUYENBUOM.INP / THUYENBUOM.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Có N người muốn qua sông. Mỗi thuyền chở tối đa 2 người và tổng trọng lượng không vượt quá C. Mỗi người có trọng lượng w<sub>i</sub> (đảm bảo w<sub>i</sub> ≤ C). Tìm số thuyền ít nhất để chở hết tất cả mọi người.</p>
+
+                <div class="section-title">Dữ liệu vào (THUYENBUOM.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, C (1 ≤ N ≤ 10<sup>5</sup>; 1 ≤ C ≤ 10<sup>9</sup>)</li>
+                        <li>Dòng 2: N số nguyên w<sub>1</sub>, ..., w<sub>N</sub> (1 ≤ w<sub>i</sub> ≤ C)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (THUYENBUOM.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất — số thuyền ít nhất</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>THUYENBUOM.INP</h4>
+                        <pre>5 100
+40 60 80 50 30</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>THUYENBUOM.OUT</h4>
+                        <pre>3</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E4. Two-Pointer</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 4: THUYENBUOM — Greedy two-pointer</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"THUYENBUOM.INP"</span>);
+    ofstream fout(<span class="string">"THUYENBUOM.OUT"</span>);
+    <span class="keyword">int</span> n, C;
+    fin >> n >> C;
+    vector&lt;<span class="keyword">int</span>&gt; w(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> w[i];
+    <span class="function">sort</span>(w.begin(), w.end());
+    <span class="keyword">int</span> left = <span class="number">0</span>, right = n - <span class="number">1</span>, boats = <span class="number">0</span>;
+    <span class="keyword">while</span> (left &lt;= right) {
+        <span class="keyword">if</span> (left == right) {
+            boats++;
+            <span class="keyword">break</span>;
+        }
+        <span class="keyword">if</span> (w[left] + w[right] &lt;= C) left++;
+        right--;
+        boats++;
+    }
+    fout &lt;&lt; boats;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Sắp xếp trọng lượng tăng dần. Thử ghép người nhẹ nhất (left) với nặng nhất (right). Nếu vừa thuyền thì ghép cặp (left++, right--), nếu không thì người nặng đi riêng (right--). Độ phức tạp: O(N log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 5: SANBAY ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 5: SÂN BAY</div>
+                <div class="problem-file">SANBAY.INP / SANBAY.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Sân bay có N chuyến bay, chuyến thứ i đến lúc a<sub>i</sub> và khởi hành lúc d<sub>i</sub>. Cổng được sử dụng trong khoảng [a<sub>i</sub>, d<sub>i</sub>]. Một chuyến bay rời cổng lúc d<sub>i</sub> thì cổng có thể nhận chuyến mới đến cũng lúc d<sub>i</sub>. Tìm số cổng tối thiểu cần thiết để phục vụ tất cả chuyến bay.</p>
+
+                <div class="section-title">Dữ liệu vào (SANBAY.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>N dòng tiếp theo: Mỗi dòng hai số a<sub>i</sub>, d<sub>i</sub> (1 ≤ a<sub>i</sub> ≤ d<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (SANBAY.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất — số cổng tối thiểu</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>SANBAY.INP</h4>
+                        <pre>6
+900 910
+940 1200
+950 1120
+1100 1130
+1500 1900
+1800 2000</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>SANBAY.OUT</h4>
+                        <pre>3</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E5. Sweep Line</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 5: SANBAY — Sweep line (quét sự kiện)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"SANBAY.INP"</span>);
+    ofstream fout(<span class="string">"SANBAY.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    <span class="comment">// Sự kiện: (thời gian, loại). Đến = +1, Đi = -1</span>
+    vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; ev;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">int</span> a, d;
+        fin >> a >> d;
+        ev.push_back(make_pair(a, <span class="number">1</span>));
+        ev.push_back(make_pair(d, -<span class="number">1</span>));
+    }
+    <span class="comment">// Sort: cùng thời điểm, xử lý đi (-1) trước đến (+1)</span>
+    <span class="function">sort</span>(ev.begin(), ev.end());
+    <span class="keyword">int</span> cur = <span class="number">0</span>, ans = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)ev.size(); i++) {
+        cur += ev[i].second;
+        ans = max(ans, cur);
+    }
+    fout &lt;&lt; ans;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Tạo sự kiện đến (+1) và đi (−1). Sắp xếp theo thời gian (cùng thời điểm thì xử lý sự kiện đi trước, do pair sắp xếp −1 trước +1). Quét qua và đếm tối đa đồng thời — đó là số cổng cần. Kỹ thuật <em>Sweep Line</em>. Độ phức tạp: O(N log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 6: BALOPL ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 6: BA LÔ PHÂN LƯỢNG</div>
+                <div class="problem-file">BALOPL.INP / BALOPL.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Có N vật phẩm, vật thứ i có khối lượng w<sub>i</sub> và giá trị v<sub>i</sub>. Ba lô chứa tối đa W đơn vị khối lượng. Khác với bài toán ba lô 0/1, ở đây có thể lấy một phần (phân số) của mỗi vật. Tìm tổng giá trị lớn nhất có thể mang theo.</p>
+
+                <div class="section-title">Dữ liệu vào (BALOPL.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N, W (1 ≤ N ≤ 10<sup>5</sup>; 1 ≤ W ≤ 10<sup>9</sup>)</li>
+                        <li>N dòng tiếp theo: Mỗi dòng hai số w<sub>i</sub>, v<sub>i</sub> (1 ≤ w<sub>i</sub>, v<sub>i</sub> ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (BALOPL.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số thực — giá trị lớn nhất (in chính xác 2 chữ số thập phân)</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>BALOPL.INP</h4>
+                        <pre>3 50
+10 60
+20 100
+30 120</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>BALOPL.OUT</h4>
+                        <pre>240.00</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E6. Fractional Knapsack</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 6: BALOPL — Greedy sort by value/weight ratio</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">struct</span> <span class="type">Item</span> { <span class="keyword">int</span> w, v; };
+
+<span class="keyword">bool</span> <span class="function">cmp</span>(<span class="type">Item</span> a, <span class="type">Item</span> b) {
+    <span class="keyword">return</span> (<span class="keyword">long long</span>)a.v * b.w > (<span class="keyword">long long</span>)b.v * a.w;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"BALOPL.INP"</span>);
+    ofstream fout(<span class="string">"BALOPL.OUT"</span>);
+    <span class="keyword">int</span> n, W;
+    fin >> n >> W;
+    vector&lt;<span class="type">Item</span>&gt; items(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> items[i].w >> items[i].v;
+    <span class="function">sort</span>(items.begin(), items.end(), cmp);
+    <span class="keyword">double</span> ans = <span class="number">0</span>;
+    <span class="keyword">int</span> rem = W;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n <span class="keyword">&amp;&amp;</span> rem > <span class="number">0</span>; i++) {
+        <span class="keyword">if</span> (items[i].w &lt;= rem) {
+            ans += items[i].v;
+            rem -= items[i].w;
+        } <span class="keyword">else</span> {
+            ans += (<span class="keyword">double</span>)items[i].v * rem / items[i].w;
+            rem = <span class="number">0</span>;
+        }
+    }
+    fout &lt;&lt; fixed &lt;&lt; setprecision(<span class="number">2</span>) &lt;&lt; ans;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Sắp xếp vật theo tỉ lệ giá trị/khối lượng giảm dần (dùng nhân chéo tránh sai số thực). Lấy trọn vật nếu còn đủ chỗ, lấy phần phân số nếu không. Đây là bài <em>Fractional Knapsack</em> kinh điển. Độ phức tạp: O(N log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 7: NOITEP ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 7: NỐI TỆP</div>
+                <div class="problem-file">NOITEP.INP / NOITEP.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Có N tệp tin, kích thước lần lượt là a<sub>1</sub>, a<sub>2</sub>, ..., a<sub>N</sub>. Mỗi lần nối hai tệp thành một tệp mới, chi phí bằng tổng kích thước hai tệp đó. Hãy nối tất cả các tệp thành một tệp duy nhất với tổng chi phí nhỏ nhất.</p>
+
+                <div class="section-title">Dữ liệu vào (NOITEP.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (2 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>1</sub>, ..., a<sub>N</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (NOITEP.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất — tổng chi phí nhỏ nhất</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>NOITEP.INP</h4>
+                        <pre>4
+4 3 2 6</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>NOITEP.OUT</h4>
+                        <pre>29</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E7. Min-Heap Merge</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 7: NOITEP — Min-heap, luôn nối 2 tệp nhỏ nhất</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"NOITEP.INP"</span>);
+    ofstream fout(<span class="string">"NOITEP.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    priority_queue&lt;<span class="keyword">long long</span>, vector&lt;<span class="keyword">long long</span>&gt;, greater&lt;<span class="keyword">long long</span>&gt;&gt; pq;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">long long</span> x;
+        fin >> x;
+        pq.push(x);
+    }
+    <span class="keyword">long long</span> ans = <span class="number">0</span>;
+    <span class="keyword">while</span> (pq.size() > <span class="number">1</span>) {
+        <span class="keyword">long long</span> a = pq.top(); pq.pop();
+        <span class="keyword">long long</span> b = pq.top(); pq.pop();
+        ans += a + b;
+        pq.push(a + b);
+    }
+    fout &lt;&lt; ans;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng hàng đợi ưu tiên (min-heap). Luôn lấy 2 tệp nhỏ nhất ra nối, rồi đẩy kết quả lại heap. Chiến lược tương tự mã Huffman. Độ phức tạp: O(N log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 8: NHIENLIEU ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 8: NHIÊN LIỆU</div>
+                <div class="problem-file">NHIENLIEU.INP / NHIENLIEU.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Xe ô tô cần đi từ vị trí 0 đến vị trí L trên đường thẳng. Bình xăng chứa tối đa C lít (1 lít đi được 1 km). Ban đầu bình đầy. Trên đường có N trạm xăng ở các vị trí d<sub>1</sub> &lt; d<sub>2</sub> &lt; ... &lt; d<sub>N</sub>. Mỗi lần dừng đổ xăng sẽ đổ đầy bình. Tìm số lần đổ xăng ít nhất. Nếu không thể đến đích, in -1.</p>
+
+                <div class="section-title">Dữ liệu vào (NHIENLIEU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Ba số nguyên L, C, N (1 ≤ L, C ≤ 10<sup>9</sup>; 0 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên d<sub>1</sub>, d<sub>2</sub>, ..., d<sub>N</sub> đã sắp xếp tăng (1 ≤ d<sub>i</sub> &lt; L)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (NHIENLIEU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên — số lần đổ xăng ít nhất, hoặc -1</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>NHIENLIEU.INP</h4>
+                        <pre>20 10 4
+3 7 12 16</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>NHIENLIEU.OUT</h4>
+                        <pre>2</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E8. Forward Greedy</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 8: NHIENLIEU — Đi xa nhất có thể, đổ khi cần</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"NHIENLIEU.INP"</span>);
+    ofstream fout(<span class="string">"NHIENLIEU.OUT"</span>);
+    <span class="keyword">int</span> L, C, n;
+    fin >> L >> C >> n;
+    vector&lt;<span class="keyword">int</span>&gt; d(n + <span class="number">2</span>);
+    d[<span class="number">0</span>] = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fin >> d[i];
+    d[n + <span class="number">1</span>] = L;
+    <span class="comment">// Kiểm tra khả thi: mọi khoảng cách liên tiếp ≤ C</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n + <span class="number">1</span>; i++) {
+        <span class="keyword">if</span> (d[i] - d[i - <span class="number">1</span>] > C) {
+            fout &lt;&lt; -<span class="number">1</span>;
+            <span class="keyword">return</span> <span class="number">0</span>;
+        }
+    }
+    <span class="keyword">int</span> fuel = C, stops = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n + <span class="number">1</span>; i++) {
+        fuel -= (d[i] - d[i - <span class="number">1</span>]);
+        <span class="comment">// Tại trạm i: nếu không đủ xăng đến trạm tiếp, đổ đầy</span>
+        <span class="keyword">if</span> (i &lt;= n <span class="keyword">&amp;&amp;</span> fuel &lt; d[i + <span class="number">1</span>] - d[i]) {
+            fuel = C;
+            stops++;
+        }
+    }
+    fout &lt;&lt; stops;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Thêm điểm đầu (0) và đích (L) vào danh sách trạm. Đi qua từng trạm, trừ xăng. Tại mỗi trạm xăng, chỉ đổ khi không đủ nhiên liệu đến trạm kế tiếp. Nếu khoảng cách giữa 2 trạm liên tiếp vượt quá C thì không thể. Độ phức tạp: O(N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 9: NHAYBAC ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 9: NHẢY BẬC</div>
+                <div class="problem-file">NHAYBAC.INP / NHAYBAC.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Dãy gồm N ô (đánh số 1 đến N). Ô thứ i cho phép nhảy tối đa a<sub>i</sub> bước sang phải. Bắt đầu từ ô 1, hãy tìm số bước nhảy ít nhất để đến được ô N. Nếu không thể, in -1.</p>
+
+                <div class="section-title">Dữ liệu vào (NHAYBAC.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>1</sub>, ..., a<sub>N</sub> (0 ≤ a<sub>i</sub> ≤ N)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (NHAYBAC.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên — số bước nhảy ít nhất, hoặc -1</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>NHAYBAC.INP</h4>
+                        <pre>7
+2 3 1 1 4 2 1</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>NHAYBAC.OUT</h4>
+                        <pre>3</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E9. BFS-like Jump</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 9: NHAYBAC — Greedy BFS-like (Jump Game II)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"NHAYBAC.INP"</span>);
+    ofstream fout(<span class="string">"NHAYBAC.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    vector&lt;<span class="keyword">int</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i];
+    <span class="keyword">if</span> (n == <span class="number">1</span>) { fout &lt;&lt; <span class="number">0</span>; <span class="keyword">return</span> <span class="number">0</span>; }
+    <span class="comment">// curEnd: biên phải vùng đang xét, farthest: xa nhất có thể tới</span>
+    <span class="keyword">int</span> jumps = <span class="number">0</span>, curEnd = <span class="number">0</span>, farthest = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) {
+        farthest = max(farthest, i + a[i]);
+        <span class="keyword">if</span> (i == curEnd) {
+            <span class="keyword">if</span> (farthest == curEnd) {
+                fout &lt;&lt; -<span class="number">1</span>;
+                <span class="keyword">return</span> <span class="number">0</span>;
+            }
+            jumps++;
+            curEnd = farthest;
+            <span class="keyword">if</span> (curEnd >= n - <span class="number">1</span>) <span class="keyword">break</span>;
+        }
+    }
+    fout &lt;&lt; jumps;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Kỹ thuật giống BFS theo tầng: <code>curEnd</code> là biên phải vùng đang xét, <code>farthest</code> là vị trí xa nhất có thể nhảy tới. Khi duyệt đến <code>curEnd</code>, tăng bước nhảy và cập nhật biên mới. Độ phức tạp: O(N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 10: PHUDOAN ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 10: PHỦ ĐOẠN</div>
+                <div class="problem-file">PHUDOAN.INP / PHUDOAN.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho đoạn [A, B] trên trục số và N đoạn [l<sub>i</sub>, r<sub>i</sub>]. Hãy chọn ít đoạn nhất để phủ kín đoạn [A, B] (mọi điểm trong [A, B] đều thuộc ít nhất một đoạn được chọn). Nếu không thể phủ kín, in -1.</p>
+
+                <div class="section-title">Dữ liệu vào (PHUDOAN.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên A, B (0 ≤ A &lt; B ≤ 10<sup>9</sup>)</li>
+                        <li>Dòng 2: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>N dòng tiếp theo: Mỗi dòng hai số l<sub>i</sub>, r<sub>i</sub> (0 ≤ l<sub>i</sub> &lt; r<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (PHUDOAN.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên — số đoạn ít nhất, hoặc -1</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>PHUDOAN.INP</h4>
+                        <pre>1 10
+5
+1 4
+3 7
+6 10
+2 5
+8 11</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>PHUDOAN.OUT</h4>
+                        <pre>3</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E10. Interval Cover</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 10: PHUDOAN — Sort by left, greedy extend</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">bool</span> <span class="function">cmp</span>(pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; a, pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; b) {
+    <span class="keyword">if</span> (a.first != b.first) <span class="keyword">return</span> a.first &lt; b.first;
+    <span class="keyword">return</span> a.second > b.second;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"PHUDOAN.INP"</span>);
+    ofstream fout(<span class="string">"PHUDOAN.OUT"</span>);
+    <span class="keyword">int</span> A, B, n;
+    fin >> A >> B >> n;
+    vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; seg(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> seg[i].first >> seg[i].second;
+    <span class="function">sort</span>(seg.begin(), seg.end(), cmp);
+    <span class="keyword">int</span> ans = <span class="number">0</span>, cur = A, idx = <span class="number">0</span>;
+    <span class="keyword">while</span> (cur &lt; B) {
+        <span class="keyword">int</span> best = cur;
+        <span class="keyword">while</span> (idx &lt; n <span class="keyword">&amp;&amp;</span> seg[idx].first &lt;= cur) {
+            best = max(best, seg[idx].second);
+            idx++;
+        }
+        <span class="keyword">if</span> (best == cur) {
+            fout &lt;&lt; -<span class="number">1</span>;
+            <span class="keyword">return</span> <span class="number">0</span>;
+        }
+        cur = best;
+        ans++;
+    }
+    fout &lt;&lt; ans;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Sắp xếp đoạn theo đầu trái tăng dần. Tham lam: tại mỗi bước, trong tất cả đoạn bắt đầu trước hoặc đúng vùng đã phủ, chọn đoạn kéo dài xa nhất sang phải. Nếu không tiến thêm được → không phủ kín. Độ phức tạp: O(N log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 11: PHATKEO ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 11: PHÁT KẸO</div>
+                <div class="problem-file">PHATKEO.INP / PHATKEO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>N em học sinh xếp hàng, em thứ i có điểm r<sub>i</sub>. Phát kẹo sao cho: mỗi em ít nhất 1 viên kẹo; em nào có điểm cao hơn bạn ngay bên cạnh (trái hoặc phải) phải được nhiều kẹo hơn bạn đó. Tìm tổng số kẹo ít nhất cần phát.</p>
+
+                <div class="section-title">Dữ liệu vào (PHATKEO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên r<sub>1</sub>, ..., r<sub>N</sub> (1 ≤ r<sub>i</sub> ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (PHATKEO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất — tổng kẹo ít nhất</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>PHATKEO.INP</h4>
+                        <pre>5
+1 2 2 3 1</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>PHATKEO.OUT</h4>
+                        <pre>7</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E11. Two-Pass Greedy</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 11: PHATKEO — Duyệt 2 lượt trái→phải, phải→trái</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"PHATKEO.INP"</span>);
+    ofstream fout(<span class="string">"PHATKEO.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    vector&lt;<span class="keyword">int</span>&gt; r(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> r[i];
+    vector&lt;<span class="keyword">int</span>&gt; candy(n, <span class="number">1</span>);
+    <span class="comment">// Lượt 1: trái → phải</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++)
+        <span class="keyword">if</span> (r[i] > r[i - <span class="number">1</span>]) candy[i] = candy[i - <span class="number">1</span>] + <span class="number">1</span>;
+    <span class="comment">// Lượt 2: phải → trái</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">2</span>; i >= <span class="number">0</span>; i--)
+        <span class="keyword">if</span> (r[i] > r[i + <span class="number">1</span>]) candy[i] = max(candy[i], candy[i + <span class="number">1</span>] + <span class="number">1</span>);
+    <span class="keyword">long long</span> ans = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) ans += candy[i];
+    fout &lt;&lt; ans;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Duyệt trái→phải: nếu điểm cao hơn bạn bên trái thì tăng kẹo. Duyệt phải→trái: nếu điểm cao hơn bạn bên phải thì cập nhật max. Kết hợp hai lượt đảm bảo cả hai hướng. Độ phức tạp: O(N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 12: SOTOTHAT ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 12: SỐ TO NHẤT</div>
+                <div class="problem-file">SOTOTHAT.INP / SOTOTHAT.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho N số nguyên không âm. Hãy sắp xếp (ghép nối) chúng thành một số lớn nhất có thể. Ví dụ: các số 3, 30, 34, 9 ghép thành 934330.</p>
+
+                <div class="section-title">Dữ liệu vào (SOTOTHAT.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>1</sub>, ..., a<sub>N</sub> (0 ≤ a<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (SOTOTHAT.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — số lớn nhất tạo thành (không có số 0 thừa ở đầu)</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>SOTOTHAT.INP</h4>
+                        <pre>4
+3 30 34 9</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>SOTOTHAT.OUT</h4>
+                        <pre>934330</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E12. Custom Comparator</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 12: SOTOTHAT — Sắp xếp bằng bộ so sánh tùy chỉnh</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">bool</span> <span class="function">cmp</span>(string a, string b) {
+    <span class="keyword">return</span> a + b > b + a;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"SOTOTHAT.INP"</span>);
+    ofstream fout(<span class="string">"SOTOTHAT.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    vector&lt;string&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">int</span> x;
+        fin >> x;
+        a[i] = to_string(x);
+    }
+    <span class="function">sort</span>(a.begin(), a.end(), cmp);
+    <span class="comment">// Trường hợp toàn số 0</span>
+    <span class="keyword">if</span> (a[<span class="number">0</span>] == <span class="string">"0"</span>) {
+        fout &lt;&lt; <span class="string">"0"</span>;
+        <span class="keyword">return</span> <span class="number">0</span>;
+    }
+    string result;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) result += a[i];
+    fout &lt;&lt; result;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Chuyển các số thành chuỗi. Sắp xếp bằng bộ so sánh: a đứng trước b nếu ghép <code>ab > ba</code> (so sánh chuỗi). Trường hợp đặc biệt: nếu số lớn nhất sau sắp xếp là "0" thì tất cả đều 0, in "0". Độ phức tạp: O(N log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 13: XAUMIN ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 13: XÂU TỐI THIỂU</div>
+                <div class="problem-file">XAUMIN.INP / XAUMIN.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho xâu S gồm N chữ cái thường. Hãy xóa đúng K ký tự để xâu còn lại nhỏ nhất theo thứ tự từ điển.</p>
+
+                <div class="section-title">Dữ liệu vào (XAUMIN.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Xâu S (1 ≤ |S| ≤ 10<sup>5</sup>, chỉ gồm chữ cái thường)</li>
+                        <li>Dòng 2: Số nguyên K (1 ≤ K &lt; |S|)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (XAUMIN.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — xâu nhỏ nhất theo thứ tự từ điển</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>XAUMIN.INP</h4>
+                        <pre>bcabc
+2</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>XAUMIN.OUT</h4>
+                        <pre>abc</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E13. Stack Greedy</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 13: XAUMIN — Ngăn xếp đơn điệu tăng</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"XAUMIN.INP"</span>);
+    ofstream fout(<span class="string">"XAUMIN.OUT"</span>);
+    string s;
+    <span class="keyword">int</span> k;
+    fin >> s >> k;
+    string result;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size(); i++) {
+        <span class="comment">// Bỏ đỉnh stack nếu nó lớn hơn ký tự hiện tại và còn được xóa</span>
+        <span class="keyword">while</span> (k > <span class="number">0</span> <span class="keyword">&amp;&amp;</span> !result.empty() <span class="keyword">&amp;&amp;</span> result.back() > s[i]) {
+            result.pop_back();
+            k--;
+        }
+        result.push_back(s[i]);
+    }
+    <span class="comment">// Nếu K còn dư, xóa từ cuối</span>
+    <span class="keyword">while</span> (k > <span class="number">0</span>) { result.pop_back(); k--; }
+    fout &lt;&lt; result;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng ngăn xếp (string) đơn điệu tăng. Duyệt từng ký tự: nếu đỉnh stack lớn hơn ký tự hiện tại và còn quota xóa, bỏ đỉnh stack. Cuối cùng nếu K còn dư thì xóa từ cuối. Độ phức tạp: O(N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 14: TREHAN ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 14: TRỄ HẠN</div>
+                <div class="problem-file">TREHAN.INP / TREHAN.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Có N công việc, mỗi công việc cần t<sub>i</sub> đơn vị thời gian và có hạn chót d<sub>i</sub>. Xử lý tuần tự (một lúc chỉ 1 việc, không ngắt ngang). Thời gian trễ của một công việc = max(0, thời điểm hoàn thành − hạn chót). Hãy lập lịch sao cho thời gian trễ lớn nhất là nhỏ nhất có thể.</p>
+
+                <div class="section-title">Dữ liệu vào (TREHAN.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>N dòng tiếp theo: Mỗi dòng hai số t<sub>i</sub>, d<sub>i</sub> (1 ≤ t<sub>i</sub>, d<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (TREHAN.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên — thời gian trễ lớn nhất tối thiểu</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>TREHAN.INP</h4>
+                        <pre>3
+4 4
+2 6
+3 8</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>TREHAN.OUT</h4>
+                        <pre>1</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E14. Earliest Deadline First</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 14: TREHAN — Sắp xếp theo hạn chót (EDF)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">bool</span> <span class="function">cmp</span>(pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; a, pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; b) {
+    <span class="keyword">return</span> a.second &lt; b.second;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"TREHAN.INP"</span>);
+    ofstream fout(<span class="string">"TREHAN.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; jobs(n); <span class="comment">// (duration, deadline)</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> jobs[i].first >> jobs[i].second;
+    <span class="function">sort</span>(jobs.begin(), jobs.end(), cmp);
+    <span class="keyword">long long</span> time = <span class="number">0</span>, maxLate = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        time += jobs[i].first;
+        <span class="keyword">long long</span> late = time - jobs[i].second;
+        <span class="keyword">if</span> (late > maxLate) maxLate = late;
+    }
+    fout &lt;&lt; maxLate;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Sắp xếp công việc theo hạn chót tăng dần (<em>Earliest Deadline First</em>). Thực hiện tuần tự, tính thời gian trễ tích lũy. Đây là chiến lược tối ưu cho bài toán tối thiểu hóa độ trễ lớn nhất. Độ phức tạp: O(N log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 15: LICHLAMVIEC ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 15: LỊCH LÀM VIỆC</div>
+                <div class="problem-file">LICHLAMVIEC.INP / LICHLAMVIEC.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Có N công việc, mỗi công việc cần đúng 1 đơn vị thời gian, có hạn chót d<sub>i</sub> và lợi nhuận p<sub>i</sub>. Mỗi đơn vị thời gian chỉ thực hiện được 1 công việc. Hãy chọn và lập lịch các công việc sao cho tổng lợi nhuận lớn nhất.</p>
+
+                <div class="section-title">Dữ liệu vào (LICHLAMVIEC.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>N dòng tiếp theo: Mỗi dòng hai số d<sub>i</sub>, p<sub>i</sub> (1 ≤ d<sub>i</sub> ≤ N; 1 ≤ p<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (LICHLAMVIEC.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất — tổng lợi nhuận lớn nhất</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>LICHLAMVIEC.INP</h4>
+                        <pre>5
+2 100
+1 19
+2 27
+1 25
+3 15</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>LICHLAMVIEC.OUT</h4>
+                        <pre>142</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — E15. DSU Scheduling</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 15: LICHLAMVIEC — Sort by profit + DSU tìm slot trống</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> par[<span class="number">100001</span>];
+
+<span class="keyword">int</span> <span class="function">find</span>(<span class="keyword">int</span> x) {
+    <span class="keyword">while</span> (par[x] != x) {
+        par[x] = par[par[x]]; <span class="comment">// path halving</span>
+        x = par[x];
+    }
+    <span class="keyword">return</span> x;
+}
+
+<span class="keyword">bool</span> <span class="function">cmp</span>(pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; a, pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; b) {
+    <span class="keyword">return</span> a.second > b.second;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"LICHLAMVIEC.INP"</span>);
+    ofstream fout(<span class="string">"LICHLAMVIEC.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; jobs(n); <span class="comment">// (deadline, profit)</span>
+    <span class="keyword">int</span> maxD = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        fin >> jobs[i].first >> jobs[i].second;
+        maxD = max(maxD, jobs[i].first);
+    }
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= maxD; i++) par[i] = i;
+    <span class="function">sort</span>(jobs.begin(), jobs.end(), cmp);
+    <span class="keyword">long long</span> ans = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">int</span> slot = <span class="function">find</span>(jobs[i].first);
+        <span class="keyword">if</span> (slot > <span class="number">0</span>) {
+            ans += jobs[i].second;
+            par[slot] = slot - <span class="number">1</span>;
+        }
+    }
+    fout &lt;&lt; ans;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Sắp xếp công việc theo lợi nhuận giảm dần. Với mỗi việc, dùng DSU (<em>Disjoint Set Union</em>) tìm slot lớn nhất ≤ deadline còn trống. Nếu tìm được (slot > 0), gán việc và hợp slot với slot − 1. Kỹ thuật DSU giúp tìm slot trống trong O(α(N)). Tổng: O(N log N + N · α(N)).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    function toggleSolution(btn) {
+        const content = btn.nextElementSibling;
+        btn.classList.toggle('active');
+        content.classList.toggle('show');
+        const icon = btn.querySelector('.icon');
+        if (content.classList.contains('show')) {
+            icon.textContent = '▼';
+            btn.innerHTML = '<span class="icon">▼</span> Ẩn lời giải';
+        } else {
+            icon.textContent = '▶';
+            btn.innerHTML = '<span class="icon">▶</span> Xem lời giải';
+        }
+    }
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const code = codeBlock.textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            btn.textContent = '✓ Đã copy';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = '📋 Copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

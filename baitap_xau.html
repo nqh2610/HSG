@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Luyện HSG - Nhóm F: Xâu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        .problem {
+            border: 1px solid #333;
+            padding: 25px;
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        .problem-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        .problem-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .problem-file {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 12px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .format-box {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95em;
+            border-left: 3px solid #333;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style-type: disc;
+        }
+        .format-box li {
+            margin-bottom: 5px;
+        }
+        .example {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+        }
+        .example-box {
+            flex: 1;
+            border: 1px solid #333;
+        }
+        .example-box h4 {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9em;
+        }
+        .example-box pre {
+            padding: 10px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95em;
+            white-space: pre;
+            margin: 0;
+        }
+        .constraints {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f0f0;
+        }
+        .constraints strong {
+            color: #333;
+        }
+        /* ========== SOLUTION TOGGLE STYLES ========== */
+        .solution-toggle {
+            margin-top: 20px;
+            border-top: 1px dashed #ccc;
+            padding-top: 15px;
+        }
+        .solution-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95em;
+            border: none;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .solution-btn:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        .solution-btn:active {
+            transform: translateY(0);
+        }
+        .solution-btn .icon {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+        .solution-btn.active .icon {
+            transform: rotate(90deg);
+        }
+        .solution-content {
+            display: none;
+            margin-top: 15px;
+            animation: fadeIn 0.4s ease;
+        }
+        .solution-content.show {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .solution-box {
+            background: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .solution-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .solution-header .tech-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+        .solution-code {
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #d4d4d4;
+            white-space: pre;
+            border-left: 4px solid #007acc;
+        }
+        .solution-code .comment { color: #6a9955; }
+        .solution-code .keyword { color: #569cd6; }
+        .solution-code .type { color: #4ec9b0; }
+        .solution-code .string { color: #ce9178; }
+        .solution-code .number { color: #b5cea8; }
+        .solution-code .include { color: #c586c0; }
+        .solution-code .function { color: #dcdcaa; }
+        .solution-note {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 12px 15px;
+            margin-top: 10px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9em;
+            color: #0c5460;
+        }
+        .solution-note strong {
+            color: #0c5460;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        .copy-btn.copied {
+            background: #27ae60;
+            border-color: #27ae60;
+        }
+        @media (max-width: 768px) {
+            .solution-btn {
+                padding: 8px 16px;
+                font-size: 0.85em;
+            }
+            .solution-code {
+                font-size: 0.75em;
+                padding: 10px;
+            }
+            .solution-header {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        @media print {
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+            .problem {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bài Tập Xử Lý Xâu</h1>
+        <p class="subtitle">Bộ đề rèn luyện kỹ năng Xử lý Xâu &amp; Xâu Số dành cho HSG Tin học</p>
+
+        <!-- ========== BÀI 1: DEMTU ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 1: ĐẾM TỪ</div>
+                <div class="problem-file">DEMTU.INP / DEMTU.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho xâu S gồm các chữ cái (hoa và thường) và dấu cách. Hãy đếm số từ trong xâu. Từ là nhóm ký tự liên tiếp không phải dấu cách.</p>
+
+                <div class="section-title">Dữ liệu vào (DEMTU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng chứa xâu S (1 ≤ |S| ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (DEMTU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất — số từ trong xâu</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>DEMTU.INP</h4>
+                        <pre>  Hello   World  </pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>DEMTU.OUT</h4>
+                        <pre>2</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F1. Đếm từ</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 1: DEMTU — Đếm từ trong xâu</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DEMTU.INP"</span>);
+    ofstream out(<span class="string">"DEMTU.OUT"</span>);
+    string s;
+    <span class="function">getline</span>(in, s);
+    <span class="keyword">int</span> cnt = <span class="number">0</span>;
+    <span class="keyword">bool</span> inWord = <span class="keyword">false</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size(); i++) {
+        <span class="keyword">if</span> (s[i] != <span class="string">' '</span>) {
+            <span class="keyword">if</span> (!inWord) { cnt++; inWord = <span class="keyword">true</span>; }
+        } <span class="keyword">else</span> {
+            inWord = <span class="keyword">false</span>;
+        }
+    }
+    out &lt;&lt; cnt;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Duyệt xâu, dùng biến <code>inWord</code> theo dõi trạng thái. Khi gặp ký tự không phải dấu cách mà chưa trong từ → tăng đếm. Độ phức tạp: O(|S|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 2: CHUANHOA ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 2: CHUẨN HÓA XÂU</div>
+                <div class="problem-file">CHUANHOA.INP / CHUANHOA.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho xâu S gồm chữ cái (hoa và thường) và dấu cách (có thể thừa ở đầu, cuối, giữa các từ). Hãy chuẩn hóa xâu: bỏ dấu cách thừa (đầu, cuối và giữa các từ chỉ giữ 1 dấu cách), viết hoa chữ cái đầu mỗi từ, các chữ còn lại viết thường.</p>
+
+                <div class="section-title">Dữ liệu vào (CHUANHOA.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng chứa xâu S (1 ≤ |S| ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (CHUANHOA.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — xâu đã chuẩn hóa</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CHUANHOA.INP</h4>
+                        <pre>  hello   world  </pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CHUANHOA.OUT</h4>
+                        <pre>Hello World</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F2. Chuẩn hóa xâu</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 2: CHUANHOA — Chuẩn hóa xâu</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHUANHOA.INP"</span>);
+    ofstream out(<span class="string">"CHUANHOA.OUT"</span>);
+    string s;
+    <span class="function">getline</span>(in, s);
+    vector&lt;string&gt; words;
+    string w;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size(); i++) {
+        <span class="keyword">if</span> (s[i] != <span class="string">' '</span>) {
+            w += s[i];
+        } <span class="keyword">else</span> {
+            <span class="keyword">if</span> (!w.empty()) { words.push_back(w); w = <span class="string">""</span>; }
+        }
+    }
+    <span class="keyword">if</span> (!w.empty()) words.push_back(w);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)words.size(); i++) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (<span class="keyword">int</span>)words[i].size(); j++)
+            words[i][j] = <span class="function">tolower</span>(words[i][j]);
+        words[i][<span class="number">0</span>] = <span class="function">toupper</span>(words[i][<span class="number">0</span>]);
+        <span class="keyword">if</span> (i &gt; <span class="number">0</span>) out &lt;&lt; <span class="string">" "</span>;
+        out &lt;&lt; words[i];
+    }
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Tách từ, chuyển tất cả thành chữ thường, viết hoa chữ cái đầu mỗi từ, nối lại bằng 1 dấu cách. Độ phức tạp: O(|S|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 3: DAOTU ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 3: ĐẢO TỪ</div>
+                <div class="problem-file">DAOTU.INP / DAOTU.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho xâu S gồm các từ cách nhau bởi dấu cách. In ra xâu mới với thứ tự các từ bị đảo ngược (từ cuối lên đầu).</p>
+
+                <div class="section-title">Dữ liệu vào (DAOTU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng chứa xâu S (1 ≤ |S| ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (DAOTU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — xâu với thứ tự từ đảo ngược</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>DAOTU.INP</h4>
+                        <pre>hello world test</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>DAOTU.OUT</h4>
+                        <pre>test world hello</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F3. Đảo từ</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 3: DAOTU — Đảo ngược thứ tự từ</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DAOTU.INP"</span>);
+    ofstream out(<span class="string">"DAOTU.OUT"</span>);
+    string s;
+    <span class="function">getline</span>(in, s);
+    vector&lt;string&gt; words;
+    string w;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size(); i++) {
+        <span class="keyword">if</span> (s[i] != <span class="string">' '</span>) {
+            w += s[i];
+        } <span class="keyword">else</span> {
+            <span class="keyword">if</span> (!w.empty()) { words.push_back(w); w = <span class="string">""</span>; }
+        }
+    }
+    <span class="keyword">if</span> (!w.empty()) words.push_back(w);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = (<span class="keyword">int</span>)words.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
+        <span class="keyword">if</span> (i &lt; (<span class="keyword">int</span>)words.size() - <span class="number">1</span>) out &lt;&lt; <span class="string">" "</span>;
+        out &lt;&lt; words[i];
+    }
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Tách từ vào mảng, in ngược từ cuối lên đầu, cách nhau bởi 1 dấu cách. Độ phức tạp: O(|S|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 4: DOIXUNG ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 4: ĐỐI XỨNG</div>
+                <div class="problem-file">DOIXUNG.INP / DOIXUNG.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T xâu, mỗi xâu chỉ gồm chữ cái thường. Với mỗi xâu, kiểm tra xâu đó có phải xâu đối xứng (palindrome) không. In "YES" hoặc "NO".</p>
+
+                <div class="section-title">Dữ liệu vào (DOIXUNG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên T (1 ≤ T ≤ 100)</li>
+                        <li>T dòng tiếp theo: Mỗi dòng một xâu S (1 ≤ |S| ≤ 10<sup>5</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (DOIXUNG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng "YES" hoặc "NO"</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>DOIXUNG.INP</h4>
+                        <pre>3
+abcba
+hello
+racecar</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>DOIXUNG.OUT</h4>
+                        <pre>YES
+NO
+YES</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F4. Palindrome</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 4: DOIXUNG — Kiểm tra xâu đối xứng</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DOIXUNG.INP"</span>);
+    ofstream out(<span class="string">"DOIXUNG.OUT"</span>);
+    <span class="keyword">int</span> t;
+    in &gt;&gt; t;
+    <span class="keyword">while</span> (t--) {
+        string s;
+        in &gt;&gt; s;
+        <span class="keyword">bool</span> ok = <span class="keyword">true</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size() / <span class="number">2</span>; i++)
+            <span class="keyword">if</span> (s[i] != s[s.size() - <span class="number">1</span> - i]) { ok = <span class="keyword">false</span>; <span class="keyword">break</span>; }
+        out &lt;&lt; (ok ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
+    }
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> So sánh ký tự đầu–cuối tiến vào giữa. Nếu tất cả bằng nhau → đối xứng. Độ phức tạp: O(|S|) mỗi xâu.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 5: CAESAR ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 5: MÃ HÓA CAESAR</div>
+                <div class="problem-file">CAESAR.INP / CAESAR.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho số nguyên K và xâu S. Mã hóa xâu bằng phép dịch Caesar: mỗi chữ cái được dịch K vị trí trong bảng chữ cái (xoay vòng). Các ký tự không phải chữ cái giữ nguyên.</p>
+
+                <div class="section-title">Dữ liệu vào (CAESAR.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên K (0 ≤ K ≤ 25)</li>
+                        <li>Dòng 2: Xâu S (1 ≤ |S| ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (CAESAR.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — xâu đã mã hóa</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CAESAR.INP</h4>
+                        <pre>3
+Hello World!</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CAESAR.OUT</h4>
+                        <pre>Khoor Zruog!</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F5. Caesar Cipher</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 5: CAESAR — Mã hóa Caesar</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CAESAR.INP"</span>);
+    ofstream out(<span class="string">"CAESAR.OUT"</span>);
+    <span class="keyword">int</span> k;
+    in &gt;&gt; k;
+    in.ignore();
+    string s;
+    <span class="function">getline</span>(in, s);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size(); i++) {
+        <span class="keyword">if</span> (s[i] &gt;= <span class="string">'A'</span> <span class="keyword">&amp;&amp;</span> s[i] &lt;= <span class="string">'Z'</span>)
+            s[i] = <span class="string">'A'</span> + (s[i] - <span class="string">'A'</span> + k) % <span class="number">26</span>;
+        <span class="keyword">else if</span> (s[i] &gt;= <span class="string">'a'</span> <span class="keyword">&amp;&amp;</span> s[i] &lt;= <span class="string">'z'</span>)
+            s[i] = <span class="string">'a'</span> + (s[i] - <span class="string">'a'</span> + k) % <span class="number">26</span>;
+    }
+    out &lt;&lt; s;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dịch mỗi chữ cái K vị trí trong bảng chữ cái (mod 26), giữ nguyên hoa/thường. Ký tự không phải chữ cái giữ nguyên. Độ phức tạp: O(|S|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 6: NENXAU ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 6: NÉN XÂU</div>
+                <div class="problem-file">NENXAU.INP / NENXAU.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho xâu S gồm chữ cái thường. Nén xâu theo phương pháp RLE (Run-Length Encoding): thay mỗi nhóm ký tự liên tiếp giống nhau bằng ký tự đó kèm số lần lặp.</p>
+
+                <div class="section-title">Dữ liệu vào (NENXAU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng chứa xâu S (1 ≤ |S| ≤ 10<sup>6</sup>, chỉ chữ cái thường)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (NENXAU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — xâu đã nén (ví dụ: "aaabb" → "a3b2")</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>NENXAU.INP</h4>
+                        <pre>aaabbcdddd</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>NENXAU.OUT</h4>
+                        <pre>a3b2c1d4</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F6. Run-Length Encoding</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 6: NENXAU — Nén xâu RLE</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"NENXAU.INP"</span>);
+    ofstream out(<span class="string">"NENXAU.OUT"</span>);
+    string s;
+    in &gt;&gt; s;
+    <span class="keyword">int</span> i = <span class="number">0</span>;
+    <span class="keyword">while</span> (i &lt; (<span class="keyword">int</span>)s.size()) {
+        <span class="keyword">char</span> c = s[i];
+        <span class="keyword">int</span> cnt = <span class="number">0</span>;
+        <span class="keyword">while</span> (i &lt; (<span class="keyword">int</span>)s.size() <span class="keyword">&amp;&amp;</span> s[i] == c) { cnt++; i++; }
+        out &lt;&lt; c &lt;&lt; cnt;
+    }
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Duyệt xâu, đếm số lần liên tiếp của mỗi ký tự, ghi ra ký tự kèm số lần. Độ phức tạp: O(|S|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 7: KITUMAX ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 7: KÝ TỰ XUẤT HIỆN NHIỀU NHẤT</div>
+                <div class="problem-file">KITUMAX.INP / KITUMAX.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho xâu S gồm chữ cái thường. Tìm ký tự xuất hiện nhiều nhất và số lần xuất hiện của nó. Nếu có nhiều ký tự cùng tần suất, lấy ký tự xuất hiện đầu tiên trong xâu.</p>
+
+                <div class="section-title">Dữ liệu vào (KITUMAX.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng chứa xâu S (1 ≤ |S| ≤ 10<sup>6</sup>, chỉ chữ cái thường)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (KITUMAX.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng gồm ký tự và số lần xuất hiện, cách nhau bởi dấu cách</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>KITUMAX.INP</h4>
+                        <pre>abracadabra</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>KITUMAX.OUT</h4>
+                        <pre>a 5</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F7. Tần suất ký tự</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 7: KITUMAX — Ký tự xuất hiện nhiều nhất</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"KITUMAX.INP"</span>);
+    ofstream out(<span class="string">"KITUMAX.OUT"</span>);
+    string s;
+    in &gt;&gt; s;
+    <span class="keyword">int</span> cnt[<span class="number">26</span>] = {};
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size(); i++) cnt[s[i] - <span class="string">'a'</span>]++;
+    <span class="keyword">char</span> best = s[<span class="number">0</span>];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size(); i++)
+        <span class="keyword">if</span> (cnt[s[i] - <span class="string">'a'</span>] &gt; cnt[best - <span class="string">'a'</span>]) best = s[i];
+    out &lt;&lt; best &lt;&lt; <span class="string">" "</span> &lt;&lt; cnt[best - <span class="string">'a'</span>];
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Đếm tần suất 26 chữ cái. Duyệt lại xâu tìm ký tự đầu tiên có tần suất lớn nhất. Độ phức tạp: O(|S|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 8: CONGSO ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 8: CỘNG SỐ LỚN</div>
+                <div class="problem-file">CONGSO.INP / CONGSO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho hai số nguyên không âm A, B rất lớn (có thể tới hàng triệu chữ số). Tính A + B.</p>
+
+                <div class="section-title">Dữ liệu vào (CONGSO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Xâu chữ số biểu diễn A (1 ≤ |A| ≤ 10<sup>6</sup>, không có số 0 thừa ở đầu)</li>
+                        <li>Dòng 2: Xâu chữ số biểu diễn B (1 ≤ |B| ≤ 10<sup>6</sup>, không có số 0 thừa ở đầu)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (CONGSO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — kết quả A + B</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CONGSO.INP</h4>
+                        <pre>999
+1</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CONGSO.OUT</h4>
+                        <pre>1000</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F8. Cộng xâu số</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 8: CONGSO — Cộng hai số lớn dạng xâu</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CONGSO.INP"</span>);
+    ofstream out(<span class="string">"CONGSO.OUT"</span>);
+    string a, b;
+    in &gt;&gt; a &gt;&gt; b;
+    <span class="function">reverse</span>(a.begin(), a.end());
+    <span class="function">reverse</span>(b.begin(), b.end());
+    string result;
+    <span class="keyword">int</span> carry = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)a.size() || i &lt; (<span class="keyword">int</span>)b.size(); i++) {
+        <span class="keyword">int</span> x = (i &lt; (<span class="keyword">int</span>)a.size()) ? a[i] - <span class="string">'0'</span> : <span class="number">0</span>;
+        <span class="keyword">int</span> y = (i &lt; (<span class="keyword">int</span>)b.size()) ? b[i] - <span class="string">'0'</span> : <span class="number">0</span>;
+        <span class="keyword">int</span> sum = x + y + carry;
+        result += (<span class="keyword">char</span>)(<span class="string">'0'</span> + sum % <span class="number">10</span>);
+        carry = sum / <span class="number">10</span>;
+    }
+    <span class="keyword">if</span> (carry) result += <span class="string">'1'</span>;
+    <span class="function">reverse</span>(result.begin(), result.end());
+    out &lt;&lt; result;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Đảo ngược hai xâu, cộng từng chữ số từ hàng đơn vị kèm nhớ, rồi đảo kết quả. Độ phức tạp: O(max(|A|, |B|)).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 9: TRUSO ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 9: TRỪ SỐ LỚN</div>
+                <div class="problem-file">TRUSO.INP / TRUSO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho hai số nguyên không âm A, B rất lớn (A ≥ B). Tính A − B.</p>
+
+                <div class="section-title">Dữ liệu vào (TRUSO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Xâu chữ số biểu diễn A (1 ≤ |A| ≤ 10<sup>6</sup>)</li>
+                        <li>Dòng 2: Xâu chữ số biểu diễn B (1 ≤ |B| ≤ 10<sup>6</sup>, A ≥ B, không có số 0 thừa ở đầu)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (TRUSO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — kết quả A − B (không có số 0 thừa ở đầu)</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>TRUSO.INP</h4>
+                        <pre>1000
+1</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>TRUSO.OUT</h4>
+                        <pre>999</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F9. Trừ xâu số</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 9: TRUSO — Trừ hai số lớn (A ≥ B)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"TRUSO.INP"</span>);
+    ofstream out(<span class="string">"TRUSO.OUT"</span>);
+    string a, b;
+    in &gt;&gt; a &gt;&gt; b;
+    <span class="function">reverse</span>(a.begin(), a.end());
+    <span class="function">reverse</span>(b.begin(), b.end());
+    string result;
+    <span class="keyword">int</span> borrow = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)a.size(); i++) {
+        <span class="keyword">int</span> x = a[i] - <span class="string">'0'</span>;
+        <span class="keyword">int</span> y = (i &lt; (<span class="keyword">int</span>)b.size()) ? b[i] - <span class="string">'0'</span> : <span class="number">0</span>;
+        <span class="keyword">int</span> diff = x - y - borrow;
+        <span class="keyword">if</span> (diff &lt; <span class="number">0</span>) { diff += <span class="number">10</span>; borrow = <span class="number">1</span>; }
+        <span class="keyword">else</span> borrow = <span class="number">0</span>;
+        result += (<span class="keyword">char</span>)(<span class="string">'0'</span> + diff);
+    }
+    <span class="keyword">while</span> (result.size() &gt; <span class="number">1</span> <span class="keyword">&amp;&amp;</span> result.back() == <span class="string">'0'</span>) result.pop_back();
+    <span class="function">reverse</span>(result.begin(), result.end());
+    out &lt;&lt; result;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Đảo ngược hai xâu, trừ từng chữ số kèm mượn. Cuối cùng xóa số 0 thừa ở đầu kết quả. Độ phức tạp: O(|A|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 10: NHANSO ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 10: NHÂN SỐ LỚN</div>
+                <div class="problem-file">NHANSO.INP / NHANSO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho số nguyên dương A rất lớn (dạng xâu chữ số) và số nguyên B (0 ≤ B ≤ 10<sup>9</sup>). Tính A × B.</p>
+
+                <div class="section-title">Dữ liệu vào (NHANSO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Xâu chữ số A (1 ≤ |A| ≤ 10<sup>6</sup>, không có số 0 thừa ở đầu)</li>
+                        <li>Dòng 2: Số nguyên B (0 ≤ B ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (NHANSO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — kết quả A × B</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>NHANSO.INP</h4>
+                        <pre>999
+9</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>NHANSO.OUT</h4>
+                        <pre>8991</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F10. Nhân xâu số</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 10: NHANSO — Nhân số lớn với số bé</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"NHANSO.INP"</span>);
+    ofstream out(<span class="string">"NHANSO.OUT"</span>);
+    string a;
+    <span class="keyword">int</span> b;
+    in &gt;&gt; a &gt;&gt; b;
+    <span class="keyword">if</span> (b == <span class="number">0</span>) { out &lt;&lt; <span class="string">"0"</span>; <span class="keyword">return</span> <span class="number">0</span>; }
+    <span class="function">reverse</span>(a.begin(), a.end());
+    string result;
+    <span class="keyword">long long</span> carry = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)a.size(); i++) {
+        <span class="keyword">long long</span> prod = (<span class="keyword">long long</span>)(a[i] - <span class="string">'0'</span>) * b + carry;
+        result += (<span class="keyword">char</span>)(<span class="string">'0'</span> + prod % <span class="number">10</span>);
+        carry = prod / <span class="number">10</span>;
+    }
+    <span class="keyword">while</span> (carry &gt; <span class="number">0</span>) {
+        result += (<span class="keyword">char</span>)(<span class="string">'0'</span> + carry % <span class="number">10</span>);
+        carry /= <span class="number">10</span>;
+    }
+    <span class="function">reverse</span>(result.begin(), result.end());
+    out &lt;&lt; result;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Đảo xâu A, nhân từng chữ số với B kèm nhớ (dùng <code>long long</code> tránh tràn), rồi đảo kết quả. Độ phức tạp: O(|A|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 11: CHIASO ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 11: CHIA SỐ LỚN</div>
+                <div class="problem-file">CHIASO.INP / CHIASO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho số nguyên dương A rất lớn (dạng xâu chữ số) và số nguyên dương B (1 ≤ B ≤ 10<sup>9</sup>). Tìm thương và dư khi chia A cho B.</p>
+
+                <div class="section-title">Dữ liệu vào (CHIASO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Xâu chữ số A (1 ≤ |A| ≤ 10<sup>6</sup>, không có số 0 thừa ở đầu)</li>
+                        <li>Dòng 2: Số nguyên B (1 ≤ B ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (CHIASO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Thương A div B (không có số 0 thừa ở đầu)</li>
+                        <li>Dòng 2: Dư A mod B</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CHIASO.INP</h4>
+                        <pre>100
+3</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CHIASO.OUT</h4>
+                        <pre>33
+1</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F11. Chia xâu số</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 11: CHIASO — Chia số lớn cho số bé</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHIASO.INP"</span>);
+    ofstream out(<span class="string">"CHIASO.OUT"</span>);
+    string a;
+    <span class="keyword">int</span> b;
+    in &gt;&gt; a &gt;&gt; b;
+    string quotient;
+    <span class="keyword">long long</span> remainder = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)a.size(); i++) {
+        remainder = remainder * <span class="number">10</span> + (a[i] - <span class="string">'0'</span>);
+        quotient += (<span class="keyword">char</span>)(<span class="string">'0'</span> + (<span class="keyword">int</span>)(remainder / b));
+        remainder %= b;
+    }
+    <span class="comment">// Xóa số 0 thừa ở đầu</span>
+    <span class="keyword">int</span> start = <span class="number">0</span>;
+    <span class="keyword">while</span> (start &lt; (<span class="keyword">int</span>)quotient.size() - <span class="number">1</span> <span class="keyword">&amp;&amp;</span> quotient[start] == <span class="string">'0'</span>) start++;
+    quotient = quotient.substr(start);
+    out &lt;&lt; quotient &lt;&lt; <span class="string">"\n"</span> &lt;&lt; remainder;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Chia dần từ trái sang phải: <code>dư = dư × 10 + chữ_số</code>; <code>thương += dư/B</code>; <code>dư = dư%B</code>. Dùng <code>long long</code> cho dư (vì dư × 10 có thể vượt int). Độ phức tạp: O(|A|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 12: SOSANHSO ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 12: SO SÁNH SỐ LỚN</div>
+                <div class="problem-file">SOSANHSO.INP / SOSANHSO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T cặp số nguyên không âm rất lớn (dạng xâu chữ số). Với mỗi cặp (A, B), so sánh A và B, in ra "&lt;", "&gt;" hoặc "=".</p>
+
+                <div class="section-title">Dữ liệu vào (SOSANHSO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên T (1 ≤ T ≤ 100)</li>
+                        <li>T dòng tiếp theo: Mỗi dòng hai xâu A, B cách nhau dấu cách (1 ≤ |A|, |B| ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (SOSANHSO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng "&lt;", "&gt;" hoặc "="</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>SOSANHSO.INP</h4>
+                        <pre>3
+123 456
+999 1000
+50 50</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>SOSANHSO.OUT</h4>
+                        <pre>&lt;
+&lt;
+=</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F12. So sánh xâu số</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 12: SOSANHSO — So sánh hai số lớn</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"SOSANHSO.INP"</span>);
+    ofstream out(<span class="string">"SOSANHSO.OUT"</span>);
+    <span class="keyword">int</span> t;
+    in &gt;&gt; t;
+    <span class="keyword">while</span> (t--) {
+        string a, b;
+        in &gt;&gt; a &gt;&gt; b;
+        <span class="comment">// Xóa số 0 thừa ở đầu</span>
+        <span class="keyword">while</span> (a.size() &gt; <span class="number">1</span> <span class="keyword">&amp;&amp;</span> a[<span class="number">0</span>] == <span class="string">'0'</span>) a = a.substr(<span class="number">1</span>);
+        <span class="keyword">while</span> (b.size() &gt; <span class="number">1</span> <span class="keyword">&amp;&amp;</span> b[<span class="number">0</span>] == <span class="string">'0'</span>) b = b.substr(<span class="number">1</span>);
+        <span class="keyword">if</span> (a.size() != b.size())
+            out &lt;&lt; (a.size() &lt; b.size() ? <span class="string">"&lt;"</span> : <span class="string">"&gt;"</span>) &lt;&lt; <span class="string">"\n"</span>;
+        <span class="keyword">else</span> {
+            <span class="keyword">if</span> (a &lt; b) out &lt;&lt; <span class="string">"&lt;\n"</span>;
+            <span class="keyword">else if</span> (a &gt; b) out &lt;&lt; <span class="string">"&gt;\n"</span>;
+            <span class="keyword">else</span> out &lt;&lt; <span class="string">"=\n"</span>;
+        }
+    }
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Xóa số 0 thừa ở đầu. So sánh theo độ dài trước: dài hơn thì lớn hơn. Nếu bằng nhau thì so chuỗi từ trái sang phải (so sánh từ điển trùng với so sánh số khi cùng độ dài). Độ phức tạp: O(|A| + |B|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 13: GTSO ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 13: GIAI THỪA LỚN</div>
+                <div class="problem-file">GTSO.INP / GTSO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho số nguyên N. Tính N! (giai thừa của N). Kết quả có thể rất lớn (tới hàng nghìn chữ số).</p>
+
+                <div class="section-title">Dữ liệu vào (GTSO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên N (0 ≤ N ≤ 1000)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (GTSO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — giá trị N!</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>GTSO.INP</h4>
+                        <pre>20</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>GTSO.OUT</h4>
+                        <pre>2432902008176640000</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F13. Giai thừa xâu số</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 13: GTSO — Giai thừa số lớn (dùng xâu)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+string <span class="function">multiply</span>(string a, <span class="keyword">int</span> b) {
+    <span class="function">reverse</span>(a.begin(), a.end());
+    string result;
+    <span class="keyword">long long</span> carry = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)a.size(); i++) {
+        <span class="keyword">long long</span> prod = (<span class="keyword">long long</span>)(a[i] - <span class="string">'0'</span>) * b + carry;
+        result += (<span class="keyword">char</span>)(<span class="string">'0'</span> + prod % <span class="number">10</span>);
+        carry = prod / <span class="number">10</span>;
+    }
+    <span class="keyword">while</span> (carry &gt; <span class="number">0</span>) {
+        result += (<span class="keyword">char</span>)(<span class="string">'0'</span> + carry % <span class="number">10</span>);
+        carry /= <span class="number">10</span>;
+    }
+    <span class="function">reverse</span>(result.begin(), result.end());
+    <span class="keyword">return</span> result;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"GTSO.INP"</span>);
+    ofstream out(<span class="string">"GTSO.OUT"</span>);
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+    string result = <span class="string">"1"</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++)
+        result = <span class="function">multiply</span>(result, i);
+    out &lt;&lt; result;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Tính n! bằng cách nhân dồn: result = 1 × 2 × 3 × ... × n. Hàm <code>multiply</code> nhân xâu số lớn với một số nguyên. Độ phức tạp: O(N × số_chữ_số).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 14: FIBONACCI ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 14: FIBONACCI LỚN</div>
+                <div class="problem-file">FIBONACCI.INP / FIBONACCI.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho số nguyên N. Tính số Fibonacci thứ N. Biết F(0) = 0, F(1) = 1, F(n) = F(n−1) + F(n−2). Kết quả có thể rất lớn.</p>
+
+                <div class="section-title">Dữ liệu vào (FIBONACCI.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên N (0 ≤ N ≤ 10000)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (FIBONACCI.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — số Fibonacci thứ N</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>FIBONACCI.INP</h4>
+                        <pre>100</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>FIBONACCI.OUT</h4>
+                        <pre>354224848179261915075</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F14. Fibonacci xâu số</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 14: FIBONACCI — Fibonacci số lớn (dùng xâu)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+string <span class="function">add</span>(string a, string b) {
+    <span class="function">reverse</span>(a.begin(), a.end());
+    <span class="function">reverse</span>(b.begin(), b.end());
+    string result;
+    <span class="keyword">int</span> carry = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)a.size() || i &lt; (<span class="keyword">int</span>)b.size(); i++) {
+        <span class="keyword">int</span> x = (i &lt; (<span class="keyword">int</span>)a.size()) ? a[i] - <span class="string">'0'</span> : <span class="number">0</span>;
+        <span class="keyword">int</span> y = (i &lt; (<span class="keyword">int</span>)b.size()) ? b[i] - <span class="string">'0'</span> : <span class="number">0</span>;
+        <span class="keyword">int</span> sum = x + y + carry;
+        result += (<span class="keyword">char</span>)(<span class="string">'0'</span> + sum % <span class="number">10</span>);
+        carry = sum / <span class="number">10</span>;
+    }
+    <span class="keyword">if</span> (carry) result += <span class="string">'1'</span>;
+    <span class="function">reverse</span>(result.begin(), result.end());
+    <span class="keyword">return</span> result;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"FIBONACCI.INP"</span>);
+    ofstream out(<span class="string">"FIBONACCI.OUT"</span>);
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+    <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) { out &lt;&lt; n; <span class="keyword">return</span> <span class="number">0</span>; }
+    string a = <span class="string">"0"</span>, b = <span class="string">"1"</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
+        string c = <span class="function">add</span>(a, b);
+        a = b;
+        b = c;
+    }
+    out &lt;&lt; b;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Cộng dồn hai xâu số lớn: F(i) = F(i−1) + F(i−2). Hàm <code>add</code> cộng hai xâu chữ số. Độ phức tạp: O(N × số_chữ_số).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 15: LUYTHUA ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 15: LŨY THỪA LỚN</div>
+                <div class="problem-file">LUYTHUA.INP / LUYTHUA.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho hai số nguyên A và B. Tính A<sup>B</sup> (A lũy thừa B). Kết quả có thể rất lớn (tới hàng nghìn chữ số).</p>
+
+                <div class="section-title">Dữ liệu vào (LUYTHUA.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng gồm hai số nguyên A, B (2 ≤ A ≤ 9; 0 ≤ B ≤ 1000)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (LUYTHUA.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — giá trị A<sup>B</sup></li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>LUYTHUA.INP</h4>
+                        <pre>2 100</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>LUYTHUA.OUT</h4>
+                        <pre>1267650600228229401496703205376</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F15. Lũy thừa xâu số</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 15: LUYTHUA — Lũy thừa số lớn (dùng xâu)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+string <span class="function">multiply</span>(string a, <span class="keyword">int</span> b) {
+    <span class="function">reverse</span>(a.begin(), a.end());
+    string result;
+    <span class="keyword">long long</span> carry = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)a.size(); i++) {
+        <span class="keyword">long long</span> prod = (<span class="keyword">long long</span>)(a[i] - <span class="string">'0'</span>) * b + carry;
+        result += (<span class="keyword">char</span>)(<span class="string">'0'</span> + prod % <span class="number">10</span>);
+        carry = prod / <span class="number">10</span>;
+    }
+    <span class="keyword">while</span> (carry &gt; <span class="number">0</span>) {
+        result += (<span class="keyword">char</span>)(<span class="string">'0'</span> + carry % <span class="number">10</span>);
+        carry /= <span class="number">10</span>;
+    }
+    <span class="function">reverse</span>(result.begin(), result.end());
+    <span class="keyword">return</span> result;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"LUYTHUA.INP"</span>);
+    ofstream out(<span class="string">"LUYTHUA.OUT"</span>);
+    <span class="keyword">int</span> a, b;
+    in &gt;&gt; a &gt;&gt; b;
+    string result = <span class="string">"1"</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; b; i++)
+        result = <span class="function">multiply</span>(result, a);
+    out &lt;&lt; result;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Tính A<sup>B</sup> bằng cách nhân dồn xâu với A, lặp B lần. Hàm <code>multiply</code> nhân xâu số lớn với số nguyên. Độ phức tạp: O(B × số_chữ_số).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 16: DEMXAUCON ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 16: ĐẾM XÂU CON</div>
+                <div class="problem-file">DEMXAUCON.INP / DEMXAUCON.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho xâu S và xâu mẫu P (chỉ gồm chữ cái thường). Đếm số lần xâu P xuất hiện trong S (các lần xuất hiện có thể chồng nhau).</p>
+
+                <div class="section-title">Dữ liệu vào (DEMXAUCON.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Xâu S (1 ≤ |S| ≤ 10<sup>6</sup>)</li>
+                        <li>Dòng 2: Xâu P (1 ≤ |P| ≤ |S|)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (DEMXAUCON.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên — số lần xuất hiện</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>DEMXAUCON.INP</h4>
+                        <pre>abababa
+aba</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>DEMXAUCON.OUT</h4>
+                        <pre>3</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F16. Tìm xâu con</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 16: DEMXAUCON — Đếm số lần xuất hiện xâu con (cho phép chồng)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DEMXAUCON.INP"</span>);
+    ofstream out(<span class="string">"DEMXAUCON.OUT"</span>);
+    string s, p;
+    in >> s >> p;
+    <span class="keyword">int</span> cnt = <span class="number">0</span>, n = s.size(), m = p.size();
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n - m; i++) {
+        <span class="keyword">bool</span> ok = <span class="keyword">true</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++)
+            <span class="keyword">if</span> (s[i + j] != p[j]) { ok = <span class="keyword">false</span>; <span class="keyword">break</span>; }
+        <span class="keyword">if</span> (ok) cnt++;
+    }
+    out &lt;&lt; cnt;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Duyệt mọi vị trí i trong S, kiểm tra xâu con bắt đầu tại i có khớp P không. Cho phép chồng nhau. Độ phức tạp: O(|S| × |P|). Với dữ liệu lớn hơn có thể dùng KMP.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 17: ANAGRAM ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 17: HOÁN VỊ KÝ TỰ</div>
+                <div class="problem-file">ANAGRAM.INP / ANAGRAM.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T cặp xâu, mỗi xâu chỉ gồm chữ cái thường. Với mỗi cặp (A, B), kiểm tra xem B có phải là hoán vị ký tự (anagram) của A không, tức là B có thể tạo từ A bằng cách sắp xếp lại các ký tự.</p>
+
+                <div class="section-title">Dữ liệu vào (ANAGRAM.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên T (1 ≤ T ≤ 100)</li>
+                        <li>T dòng tiếp theo: Mỗi dòng hai xâu A, B cách nhau dấu cách (1 ≤ |A|, |B| ≤ 10<sup>5</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (ANAGRAM.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng "YES" hoặc "NO"</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>ANAGRAM.INP</h4>
+                        <pre>3
+listen silent
+hello world
+abc cba</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>ANAGRAM.OUT</h4>
+                        <pre>YES
+NO
+YES</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F17. Anagram</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 17: ANAGRAM — Kiểm tra hoán vị ký tự</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"ANAGRAM.INP"</span>);
+    ofstream out(<span class="string">"ANAGRAM.OUT"</span>);
+    <span class="keyword">int</span> t;
+    in >> t;
+    <span class="keyword">while</span> (t--) {
+        string a, b;
+        in >> a >> b;
+        <span class="keyword">if</span> (a.size() != b.size()) { out &lt;&lt; <span class="string">"NO\n"</span>; <span class="keyword">continue</span>; }
+        <span class="keyword">int</span> cnt[<span class="number">26</span>] = {};
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)a.size(); i++) {
+            cnt[a[i] - <span class="string">'a'</span>]++;
+            cnt[b[i] - <span class="string">'a'</span>]--;
+        }
+        <span class="keyword">bool</span> ok = <span class="keyword">true</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++)
+            <span class="keyword">if</span> (cnt[i] != <span class="number">0</span>) { ok = <span class="keyword">false</span>; <span class="keyword">break</span>; }
+        out &lt;&lt; (ok ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
+    }
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Đếm tần suất 26 chữ cái trong A (tăng) và B (giảm). Nếu tất cả bằng 0 → anagram. Độ phức tạp: O(|S|) mỗi cặp.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 18: NGOACHOPLE ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 18: NGOẶC HỢP LỆ</div>
+                <div class="problem-file">NGOACHOPLE.INP / NGOACHOPLE.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T xâu, mỗi xâu chỉ gồm các ký tự ngoặc: ( ) [ ] { }. Kiểm tra xem xâu ngoặc đó có hợp lệ không. Xâu ngoặc hợp lệ nếu mỗi ngoặc mở đều có ngoặc đóng tương ứng đúng loại và đúng thứ tự.</p>
+
+                <div class="section-title">Dữ liệu vào (NGOACHOPLE.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên T (1 ≤ T ≤ 100)</li>
+                        <li>T dòng tiếp theo: Mỗi dòng một xâu ngoặc (1 ≤ |S| ≤ 10<sup>5</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (NGOACHOPLE.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng "YES" hoặc "NO"</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>NGOACHOPLE.INP</h4>
+                        <pre>4
+()[]{}
+({[]})
+([)]
+((</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>NGOACHOPLE.OUT</h4>
+                        <pre>YES
+YES
+NO
+NO</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F18. Stack ngoặc</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 18: NGOACHOPLE — Kiểm tra ngoặc hợp lệ bằng stack</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">char</span> <span class="function">matchOf</span>(<span class="keyword">char</span> c) {
+    <span class="keyword">if</span> (c == <span class="string">')'</span>) <span class="keyword">return</span> <span class="string">'('</span>;
+    <span class="keyword">if</span> (c == <span class="string">']'</span>) <span class="keyword">return</span> <span class="string">'['</span>;
+    <span class="keyword">return</span> <span class="string">'{'</span>;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"NGOACHOPLE.INP"</span>);
+    ofstream out(<span class="string">"NGOACHOPLE.OUT"</span>);
+    <span class="keyword">int</span> t;
+    in >> t;
+    <span class="keyword">while</span> (t--) {
+        string s;
+        in >> s;
+        stack&lt;<span class="keyword">char</span>&gt; st;
+        <span class="keyword">bool</span> ok = <span class="keyword">true</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size() <span class="keyword">&amp;&amp;</span> ok; i++) {
+            <span class="keyword">if</span> (s[i] == <span class="string">'('</span> || s[i] == <span class="string">'['</span> || s[i] == <span class="string">'{'</span>) {
+                st.push(s[i]);
+            } <span class="keyword">else</span> {
+                <span class="keyword">if</span> (st.empty() || st.top() != <span class="function">matchOf</span>(s[i])) ok = <span class="keyword">false</span>;
+                <span class="keyword">else</span> st.pop();
+            }
+        }
+        <span class="keyword">if</span> (!st.empty()) ok = <span class="keyword">false</span>;
+        out &lt;&lt; (ok ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
+    }
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng stack: gặp ngoặc mở → đẩy vào; gặp ngoặc đóng → kiểm tra đỉnh stack có khớp loại không. Cuối cùng stack phải rỗng. Độ phức tạp: O(|S|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 19: SAPXEPTU ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 19: SẮP XẾP TỪ</div>
+                <div class="problem-file">SAPXEPTU.INP / SAPXEPTU.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho xâu S gồm các từ cách nhau bởi dấu cách (chỉ chữ cái thường). Sắp xếp các từ theo thứ tự từ điển (nếu bằng nhau theo từ điển thì giữ thứ tự ban đầu). In ra xâu đã sắp xếp.</p>
+
+                <div class="section-title">Dữ liệu vào (SAPXEPTU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng chứa xâu S (1 ≤ |S| ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (SAPXEPTU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — các từ đã sắp xếp, cách nhau 1 dấu cách</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>SAPXEPTU.INP</h4>
+                        <pre>banana apple cherry apple</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>SAPXEPTU.OUT</h4>
+                        <pre>apple apple banana cherry</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F19. Sắp xếp từ</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 19: SAPXEPTU — Sắp xếp từ theo thứ tự từ điển</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"SAPXEPTU.INP"</span>);
+    ofstream out(<span class="string">"SAPXEPTU.OUT"</span>);
+    string s;
+    <span class="function">getline</span>(in, s);
+    vector&lt;string&gt; words;
+    string w;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size(); i++) {
+        <span class="keyword">if</span> (s[i] != <span class="string">' '</span>) {
+            w += s[i];
+        } <span class="keyword">else</span> {
+            <span class="keyword">if</span> (!w.empty()) { words.push_back(w); w = <span class="string">""</span>; }
+        }
+    }
+    <span class="keyword">if</span> (!w.empty()) words.push_back(w);
+    <span class="function">stable_sort</span>(words.begin(), words.end());
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)words.size(); i++) {
+        <span class="keyword">if</span> (i > <span class="number">0</span>) out &lt;&lt; <span class="string">" "</span>;
+        out &lt;&lt; words[i];
+    }
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Tách từ vào mảng, dùng <code>stable_sort</code> sắp xếp theo thứ tự từ điển (giữ thứ tự gốc khi bằng nhau). Nối lại cách 1 dấu cách. Độ phức tạp: O(N log N × |từ|).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 20: CHUYENCS ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 20: CHUYỂN HỆ CƠ SỐ</div>
+                <div class="problem-file">CHUYENCS.INP / CHUYENCS.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho một số nguyên không âm N rất lớn (dạng xâu chữ số ở hệ cơ số 10) và hệ cơ số đích B (2 ≤ B ≤ 16). Chuyển N sang hệ cơ số B. Các chữ số từ 10 trở lên biểu diễn bằng A, B, C, D, E, F.</p>
+
+                <div class="section-title">Dữ liệu vào (CHUYENCS.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Xâu chữ số N (0 ≤ N, 1 ≤ |N| ≤ 1000)</li>
+                        <li>Dòng 2: Số nguyên B (2 ≤ B ≤ 16)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (CHUYENCS.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng — biểu diễn N ở hệ cơ số B</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CHUYENCS.INP</h4>
+                        <pre>255
+16</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CHUYENCS.OUT</h4>
+                        <pre>FF</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — F20. Chuyển cơ số (xâu số)</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="comment">// Bài 20: CHUYENCS — Chuyển hệ cơ số (số lớn dạng xâu)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="comment">// Chia xâu số (hệ 10) cho b, trả về thương (xâu) và dư</span>
+pair&lt;string, <span class="keyword">int</span>&gt; <span class="function">divmod</span>(string a, <span class="keyword">int</span> b) {
+    string quotient;
+    <span class="keyword">int</span> remainder = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)a.size(); i++) {
+        remainder = remainder * <span class="number">10</span> + (a[i] - <span class="string">'0'</span>);
+        quotient += (<span class="keyword">char</span>)(<span class="string">'0'</span> + remainder / b);
+        remainder %= b;
+    }
+    <span class="keyword">int</span> start = <span class="number">0</span>;
+    <span class="keyword">while</span> (start &lt; (<span class="keyword">int</span>)quotient.size() - <span class="number">1</span> <span class="keyword">&amp;&amp;</span> quotient[start] == <span class="string">'0'</span>) start++;
+    quotient = quotient.substr(start);
+    <span class="keyword">return</span> make_pair(quotient, remainder);
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHUYENCS.INP"</span>);
+    ofstream out(<span class="string">"CHUYENCS.OUT"</span>);
+    string n;
+    <span class="keyword">int</span> b;
+    in >> n >> b;
+    <span class="keyword">if</span> (n == <span class="string">"0"</span>) { out &lt;&lt; <span class="string">"0"</span>; <span class="keyword">return</span> <span class="number">0</span>; }
+    string digits = <span class="string">"0123456789ABCDEF"</span>;
+    string result;
+    <span class="keyword">while</span> (n != <span class="string">"0"</span>) {
+        pair&lt;string, <span class="keyword">int</span>&gt; dm = <span class="function">divmod</span>(n, b);
+        result += digits[dm.second];
+        n = dm.first;
+    }
+    <span class="function">reverse</span>(result.begin(), result.end());
+    out &lt;&lt; result;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Chia liên tục N cho B, lấy dư (chữ số hệ B), cho đến khi N = 0. Hàm <code>divmod</code> chia xâu số hệ 10 cho B (xử lý số lớn). Đảo kết quả để có thứ tự đúng. Độ phức tạp: O(|N|² / log B).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    function toggleSolution(btn) {
+        const content = btn.nextElementSibling;
+        btn.classList.toggle('active');
+        content.classList.toggle('show');
+        const icon = btn.querySelector('.icon');
+        if (content.classList.contains('show')) {
+            icon.textContent = '▼';
+            btn.innerHTML = '<span class="icon">▼</span> Ẩn lời giải';
+        } else {
+            icon.textContent = '▶';
+            btn.innerHTML = '<span class="icon">▶</span> Xem lời giải';
+        }
+    }
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const code = codeBlock.textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            btn.textContent = '✓ Đã copy';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = '📋 Copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>
