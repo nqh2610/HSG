@@ -460,7 +460,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Kết hợp <a href="Bi-kip-vo-cong.html#A1"><strong>Prefix Sum (A1)</strong></a> + <a href="Bi-kip-vo-cong.html#A10"><strong>Mảng đếm (A10)</strong></a>. Tổng đoạn [j+1, i] = prefix[i] − prefix[j]. Khi nào hiệu này chia hết K? Khi prefix[i] và prefix[j] chia K cùng dư. VD: prefix[i]=11, prefix[j]=5, K=3 → dư lần lượt 2 và 2 → hiệu = 6 chia hết 3. Hình dung: xếp các prefix vào "nhóm" theo số dư khi chia K: nhóm 0, nhóm 1, ..., nhóm K−1. Chọn 2 phần tử bất kì trong cùng nhóm = 1 đoạn hợp lệ. Nhóm có c phần tử → c×(c−1)/2 cặp. Cộng hết là đáp án. O(N).
+                            <strong>💡 Ý tưởng:</strong> Kết hợp <a href="Bi-kip-vo-cong.html#A1"><strong>Prefix Sum (A1)</strong></a> + <a href="Bi-kip-vo-cong.html#A10"><strong>Mảng đếm (A10)</strong></a>. Tổng đoạn [j+1, i] = prefix[i] − prefix[j]. Khi nào hiệu này chia hết K? Khi 2 prefix cùng dư khi chia K. VD: prefix[i]=11 = 3×3 + <b>2</b>, prefix[j]=5 = 3×1 + <b>2</b>. Trừ nhau: 11−5 = 3×(3−1) + (2−2) = 6 → phần dư triệt tiêu, hiệu luôn chia hết K! Hình dung: xếp các prefix vào "nhóm" theo số dư khi chia K: nhóm 0, nhóm 1, ..., nhóm K−1. Chọn 2 phần tử bất kì trong cùng nhóm = 1 đoạn hợp lệ. Nhóm có c phần tử → c×(c−1)/2 cặp. Cộng hết là đáp án. O(N).
                         </div>
                     </div>
                 </div>
