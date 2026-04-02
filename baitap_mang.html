@@ -373,7 +373,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sử dụng <em>mảng tiền tố (prefix sum)</em>. Với prefix[i] = a[1] + a[2] + ... + a[i], ta có tổng đoạn [l, r] = prefix[r] - prefix[l-1]. Độ phức tạp: O(N + Q).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A1"><strong>Prefix Sum (A1)</strong></a>. Hình dung: prefix[i] như "tổng tiền từ đầu dãy đến vị trí i". Muốn tính tổng đoạn [l, r]? Lấy tổng đến r trừ tổng đến l−1: prefix[r] − prefix[l−1]. Giống như muốn biết số tiền từ ngày 3 đến ngày 7, lấy "tổng 7 ngày" trừ "tổng 2 ngày đầu". Tính prefix 1 lần O(N), sau đó mỗi truy vấn chỉ O(1).
                         </div>
                     </div>
                 </div>
@@ -460,7 +460,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>prefix sum modulo K</em>. Đếm số cặp (i, j) sao cho prefix[i] ≡ prefix[j] (mod K), nghĩa là tổng đoạn [j+1, i] chia hết cho K. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Kết hợp <a href="Bi-kip-vo-cong.html#A1"><strong>Prefix Sum (A1)</strong></a> + <a href="Bi-kip-vo-cong.html#A10"><strong>Mảng đếm (A10)</strong></a>. Tổng đoạn [j+1, i] = prefix[i] − prefix[j]. Đoạn chia hết K khi prefix[i] và prefix[j] cùng số dư (vì hiệu chia hết K ⟺ cùng dư). Hình dung: xếp các prefix vào "nhóm" theo số dư: nhóm 0, nhóm 1, ..., nhóm K−1. Trong mỗi nhóm có c phần tử, chọn 2 = c×(c−1)/2 cặp. Cộng hết là đáp án. O(N).
                         </div>
                     </div>
                 </div>
@@ -553,7 +553,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Đặt B[i] = A[i] - K. Tìm đoạn TB = K tương đương tìm đoạn có tổng B = 0. Dùng map lưu vị trí đầu tiên của mỗi prefix sum. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> <a href="Bi-kip-vo-cong.html#s41"><strong>Biến đổi bài toán (4.1)</strong></a> + <a href="Bi-kip-vo-cong.html#A1"><strong>Prefix Sum (A1)</strong></a>. TB = K nghĩa là tổng = K×(độ dài). Đặt B[i] = A[i] − K → bài toán đưa về dạng quen: tìm đoạn dài nhất có tổng = 0 trên mảng B. Dùng prefix sum: nếu prefix[i] = prefix[j] thì tổng [j+1..i] = 0. Hình dung prefix như đồ thị: tìm 2 điểm cùng độ cao xa nhất. Dùng <a href="Bi-kip-vo-cong.html#C1">map (C1)</a> lưu vị trí đầu tiên mỗi giá trị prefix. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -653,7 +653,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sử dụng <em>prefix sum 2D</em>. Tính prefix[i][j] = tổng vùng (1,1) đến (i,j). Với mỗi truy vấn, áp dụng công thức bao hàm loại trừ. Độ phức tạp: O(M×N + Q).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A1"><strong>Prefix Sum 2D (A1)</strong></a>. Mở rộng prefix sum lên 2 chiều: prefix[i][j] = tổng mọi ô từ góc (1,1) đến (i,j). Muốn tổng vùng HCN? Hình dung vẽ 4 hình chữ nhật lồng nhau: lấy ô lớn nhất, trừ 2 phần thừa (trên và trái), cộng lại góc bị trừ 2 lần: prefix[r2][c2] − prefix[r1−1][c2] − prefix[r2][c1−1] + prefix[r1−1][c1−1]. O(1) mỗi truy vấn, O(M×N) tiền xử lý.
                         </div>
                     </div>
                 </div>
@@ -746,7 +746,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sử dụng <em>mảng hiệu (difference array)</em>. Thay vì cộng V cho cả đoạn [L,R], ta chỉ cần diff[L] += V và diff[R+1] -= V. Cuối cùng tính prefix sum. Độ phức tạp: O(N + Q).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A3"><strong>Mảng hiệu (A3)</strong></a>. Hình dung: cộng V cho cả đoạn [L,R] giống như "bật vòi nước" tại L (+V) và "tắt vòi" tại R+1 (−V). Tất cả các vị trí từ L đến R đều được tưới đều V lít. Sau Q lần tưới, tính prefix sum trên mảng diff để biết mỗi cây nhận bao nhiêu nước. O(1) mỗi truy vấn, O(N) cuối cùng.
                         </div>
                     </div>
                 </div>
@@ -839,7 +839,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>mảng hiệu</em> để đếm số lần mỗi vị trí bị kiểm tra. diff[L]++ và diff[R+1]-- cho mỗi đợt. Sau đó tính prefix sum và tìm max. Độ phức tạp: O(N + Q).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A3"><strong>Mảng hiệu (A3)</strong></a>. Mỗi đợt kiểm tra đoạn [L,R] = "cộng 1" cho cả đoạn. Hình dung: mỗi đợt kiểm tra như tô màu 1 thanh ngang trên biểu đồ. diff[L]++ = bắt đầu tô, diff[R+1]−− = dừng tô. Sau Q đợt, prefix sum cho biết mỗi HS bị chồng bao nhiêu lới. Lấy max. O(N + Q).
                         </div>
                     </div>
                 </div>
@@ -933,7 +933,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>mảng hiệu cấp 2</em> để xử lý cộng cấp số cộng. d1 cho hệ số bậc 0, d2 cho hệ số bậc 1. Độ phức tạp: O(N + Q).
+                            <strong>💡 Ý tưởng:</strong> Nâng cấp <a href="Bi-kip-vo-cong.html#A3"><strong>Mảng hiệu (A3)</strong></a> lên cấp 2. Bài 5–6 cộng đều (+V cho cả đoạn), ở đây cộng cấp số cộng V, V+d, V+2d,... Hình dung: lương tăng dần từ L đến R. Dùng 2 mảng: d1 đánh dấu phần hằng số (giống mảng hiệu thường), d2 đánh dấu phần "mỗi bước tăng thêm d". Khi tính: d2 tích lũy thành lượng tăng thêm, cộng vào d1, rồi prefix sum cho kết quả. O(N + Q).
                         </div>
                     </div>
                 </div>
@@ -1031,7 +1031,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>mảng hiệu 2D</em>. Đánh dấu 4 góc của hình chữ nhật, sau đó tính prefix sum 2D để ra kết quả. Độ phức tạp: O(M×N + Q).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A4"><strong>Mảng hiệu 2D (A4)</strong></a>. Mở rộng <a href="Bi-kip-vo-cong.html#A3">mảng hiệu 1D (A3)</a> lên lưới 2 chiều. Hình dung: sơn HCN = đánh dấu 4 góc. Góc trên-trái +1 ("bắt đầu sơn"), 2 góc liền kề −1 ("dừng sơn" theo hàng và cột), góc đối diện +1 ("cộng lại vì bị trừ 2 lần"). Sau Q lần sơn, tính prefix sum 2D trên diff để ra ma trận kết quả. O(M×N + Q).
                         </div>
                     </div>
                 </div>
@@ -1125,7 +1125,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>kỹ thuật hai con trỏ</em>. Với mảng đã sắp xếp, dùng left=0 và right=n-1. Nếu tổng < K thì tăng left, > K thì giảm right, = K thì đếm và di chuyển cả hai. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers ngược chiều (A5)</strong></a>. Mảng đã sắp xếp tăng. Hình dung: left chỉ số nhỏ nhất, right chỉ lớn nhất. Tổng < K → cần lớn hơn → tăng left. Tổng > K → cần nhỏ hơn → giảm right. Tổng = K → tìm thấy! Mỗi bước loại 1 phần tử → O(N) thay vì O(N²).
                         </div>
                     </div>
                 </div>
@@ -1215,7 +1215,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>hai con trỏ</em>. Mở rộng right để tăng tổng, thu hẹp left khi tổng > S. Cập nhật độ dài dài nhất. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers cùng chiều (A5)</strong></a>. Hình dung cửa sổ co giãn: right mở rộng đến khi tổng > S, left thu hẹp đến khi tổng ≤ S. Vì chi phí ≥ 0 nên thêm phần tử = tăng tổng, bỏ = giảm tổng (tính đơn điệu). Mỗi con trỏ chỉ tiến, không lùi → O(N).
                         </div>
                     </div>
                 </div>
@@ -1305,7 +1305,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>merge hai mảng</em> (khẩu merge sort). So sánh phần tử đầu tiên của mỗi mảng, lấy phần tử nhỏ hơn ra kết quả. Độ phức tạp: O(N + M).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers (A5)</strong></a> — biến thể merge. Cả 2 mảng đã sắp xếp, nên phần tử nhỏ nhất luôn ở đầu một mảng. So sánh đầu 2 mảng, lấy nhỏ hơn ra, tiến con trỏ. Lặp đến hết. Đây chính là bước merge trong <a href="Bi-kip-vo-cong.html#A9">Merge Sort (A9)</a>. O(N + M).
                         </div>
                     </div>
                 </div>
@@ -1400,7 +1400,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp mảng. Với mỗi i, dùng <em>two pointers</em> tìm cặp (left, right) sao cho a[i] + a[left] + a[right] = 0. Độ phức tạp: O(N²).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A9"><strong>Sắp xếp (A9)</strong></a> + <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers (A5)</strong></a>. 3 vòng for O(N³) quá chậm. Mẹo: cố định a[i], bài toán còn lại là "tìm cặp có tổng = −a[i]" trên mảng đã sắp xếp → Two Pointers ngược chiều (giống bài 9). Lặp i → O(N²). Bỏ qua trùng liên tiếp để không đếm lặp.
                         </div>
                     </div>
                 </div>
@@ -1491,7 +1491,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>sliding window</em> + đếm số ký tự phân biệt. Mở rộng right, thu hẹp left khi số ký tự phân biệt > K. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A6"><strong>Sliding Window (A6)</strong></a> + <a href="Bi-kip-vo-cong.html#A10">Mảng đếm (A10)</a>. Hình dung cửa sổ co giãn: mở rộng right để "nếm thử" ký tự mới. Nếu số loại ký tự > K → cửa sổ chứa quá nhiều vị → thu left cho đến khi ≤ K. Tại sao đúng? Vì left chỉ tiến (loại ký tự, số loại không tăng). Mỗi con trỏ chỉ tiến → O(N).
                         </div>
                     </div>
                 </div>
@@ -1584,7 +1584,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>deque đơn điệu giảm</em>. Deque luôn giữ các chỉ số có giá trị giảm dần trong cửa sổ. Phần tử đầu là max. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A7"><strong>Monotonic Stack (A7)</strong></a> kết hợp <a href="Bi-kip-vo-cong.html#C2">Deque (C2)</a>. Hình dung deque như "dãy lính gác": chỉ giữ những người cao dần từ trước ra sau. Khi lính mới vào (a[i]), đuổi hết lính lùn hơn ở cuối (vì họ không bao giờ là max nữa). Lính đầu hàng luôn là người cao nhất = max cửa sổ. Loại lính ngoài cửa sổ K ở đầu. Mỗi phần tử vào/ra deque 1 lần → O(N).
                         </div>
                     </div>
                 </div>
@@ -1672,7 +1672,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>sliding window cố định K</em>. Khi trượt: cộng phần tử mới, trừ phần tử cũ. Cập nhật max sau mỗi lần trượt. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A6"><strong>Sliding Window cố định (A6)</strong></a>. Cửa sổ cố định K phần tử trượt từ trái sang. Thay vì tính lại tổng K phần tử mỗi lần O(K), nhận xét: khi trượt sang phải 1 ô, <em>chỉ cần cộng a[right] mới và trừ a[left] cũ</em>. Cửa sổ mới chỉ khác cửa sổ cũ đúng 2 phần tử. Cập nhật max sau mỗi lần trượt. O(N).
                         </div>
                     </div>
                 </div>
@@ -1757,7 +1757,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>sliding window</em> kết hợp lưu vị trí cuối cùng của mỗi ký tự. Khi gặp ký tự lặp, dịch left đến sau vị trí cuối của ký tự đó. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A6"><strong>Sliding Window (A6)</strong></a> + <a href="Bi-kip-vo-cong.html#C1">map (C1)</a>. Hình dung cửa sổ trượt giữ "vùng không lặp". Lưu vị trí cuối của mỗi ký tự. Gặp ký tự đã có trong cửa sổ tại vị trí p? Đoạn [left..p] chứa trùng → nhảy left = p+1 để loại. Cập nhật max(right − left + 1). O(N).
                         </div>
                     </div>
                 </div>
@@ -1851,7 +1851,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>2 deque đơn điệu</em>: một cho max (giảm dần), một cho min (tăng dần). Chênh lệch = max - min của cửa sổ. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A6"><strong>Sliding Window (A6)</strong></a> + <a href="Bi-kip-vo-cong.html#C2"><strong>2 Deque đơn điệu (C2)</strong></a>. Chênh lệch = max − min của cửa sổ. Hình dung: 1 deque giảm giữ max (giống bài 14), 1 deque tăng giữ min. Mở rộng right, khi max−min > giới hạn thì thu left. Cần 2 deque vì loại phần tử bên trái có thể làm max giảm hoặc min tăng (cập nhật độc lập). O(N).
                         </div>
                     </div>
                 </div>
@@ -1940,7 +1940,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>stack đơn điệu</em> giảm dần. Khi gặp phần tử lớn hơn đỉnh stack, đó là "next greater" của các phần tử bị pop. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A7"><strong>Monotonic Stack (A7)</strong></a> — bài "Next Greater Element" kinh điển. Hình dung stack như hàng người xem phim: người mới vào (a[i]) che những người lùn hơn phía trước. Người bị che = tìm được "next greater" là a[i]. Pop và ghi đáp án, người chưa bị che ở lại stack. Mỗi phần tử push/pop 1 lần → O(N).
                         </div>
                     </div>
                 </div>
@@ -2030,7 +2030,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>stack đơn điệu tăng</em>. Khi gặp cột thấp hơn, tính diện tích HCN với các cột bị pop làm chiều cao. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A7"><strong>Monotonic Stack (A7)</strong></a> — biến thể "Largest Rectangle in Histogram". Hình dung: với mỗi cột, HCN rộng nhất có chiều cao = cột đó, kéo dài sang 2 bên cho đến khi gặp cột THẤP hơn. Stack tăng giữ các cột chưa tìm biên phải. Khi gặp cột thấp hơn → pop: biên phải = vị trí hiện tại, biên trái = đỉnh stack mới. Diện tích = cao × rộng. O(N).
                         </div>
                     </div>
                 </div>
@@ -2135,7 +2135,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>contribution technique</em>. Tính số đoạn mà a[i] là max và số đoạn là min. Tổng dao động = Σ(max) - Σ(min). Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B5"><strong>Contribution Technique (B5)</strong></a> + <a href="Bi-kip-vo-cong.html#A7">Monotonic Stack (A7)</a>. Đảo góc nhìn: thay vì duyệt từng đoạn tìm max/min (O(N³)), hỏi ngược: a[i] là max của BAO NHIÊU đoạn? Số đoạn = L×R (L = khoảng cách đến phần tử lớn hơn bên trái, R = bên phải, tìm bằng stack). Tổng dao động = Σ(a[i]×số đoạn là max) − Σ(a[i]×số đoạn là min). O(N).
                         </div>
                     </div>
                 </div>
@@ -2227,7 +2227,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>hai con trỏ</em>. Nước tại vị trí i = min(maxLeft, maxRight) - h[i]. Di chuyển con trỏ có chiều cao nhỏ hơn. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers ngược chiều (A5)</strong></a>. Hình dung: nước tại vị trí i = min(tường cao nhất bên trái, bên phải) − h[i]. 2 con trỏ từ 2 đầu: bên nào THẤP hơn thì nước chắc chắn bị giới hạn bởi bên đó (vì bên kia ≥). Dịch con trỏ thấp vào, cộng nước. O(N), không cần mảng phụ.
                         </div>
                     </div>
                 </div>
@@ -2314,7 +2314,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>stack đơn điệu giảm</em>. Tìm ngày gần nhất có giá cao hơn. Nếu không có, span = i + 1. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A7"><strong>Monotonic Stack (A7)</strong></a> — biến thể "Previous Greater". Hình dung: stack giữ các ngày có giá giảm dần ("những ngày đáng nhớ"). Ngày mới vào: đuổi hết ngày có giá ≤ nó (bị "che"). Ngày gần nhất còn lại trong stack = ngày có giá cao hơn gần nhất. Span = i − đỉnh stack. O(N).
                         </div>
                     </div>
                 </div>
@@ -2410,7 +2410,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>binary search</em>: lower_bound tìm vị trí đầu, upper_bound tìm vị trí sau cuối. Độ phức tạp: O((N + Q) log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A8"><strong>Binary Search (A8)</strong></a>. Mảng đã sắp xếp → các giá trị bằng nhau nằm liên tục. lower_bound(X) = vị trí đầu tiên ≥ X, upper_bound(X) = vị trí đầu tiên > X. Số lần xuất hiện = upper_bound − lower_bound. Hình dung: binary search như "bóp rúm", mỗi bước loại nửa mảng → O(log N) mỗi truy vấn.
                         </div>
                     </div>
                 </div>
@@ -2510,7 +2510,7 @@ vector&lt;<span class="keyword">long long</span>&gt; h;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>chặt nhị phân trên kết quả</em>. Với mỗi m, tính tổng gỗ cắt được. Tìm m lớn nhất sao cho tổng >= K. Độ phức tạp: O(N log(maxH)).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A8"><strong>Chặt nhị phân trên kết quả (A8)</strong></a>. Không biết M, nhưng có tính đơn điệu: M càng cao → gỗ càng ít. Hình dung: như đoán số — thử M giữa, tính gỗ cắt được. Nhiều quá → tăng M (nửa phải). Ít quá → giảm M (nửa trái). Mỗi lần loại nửa đoạn → O(N × log(maxH)).
                         </div>
                     </div>
                 </div>
@@ -2612,7 +2612,7 @@ vector&lt;<span class="keyword">long long</span>&gt; x;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <em>Chặt nhị phân trên kết quả</em>. Với mỗi khoảng cách d, kiểm tra có đặt được C bò không (tham lam). Độ phức tạp: O(N log(X)).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A8"><strong>Chặt nhị phân trên kết quả (A8)</strong></a> + <a href="Bi-kip-vo-cong.html#B2">Tham lam (B2)</a>. Tính đơn điệu: đặt được với khoảng cách d thì mọi d' < d cũng được. Chặt nhị phân d, kiểm tra bằng tham lam: sắp xếp chuồng, đặt bò vào chuồng gần nhất cách ≥ d. Đặt sớm = để dành nhiều chỗ nhất cho bò sau → tham lam đúng. O(N × log(X)).
                         </div>
                     </div>
                 </div>
@@ -2704,7 +2704,7 @@ vector&lt;<span class="keyword">long long</span>&gt; x;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp cả 2 mảng, dùng <em>hai con trỏ</em>. Phần tử nhỏ hơn thì tiến con trỏ của nó. Ghi nhận |a[i]-b[j]| nhỏ nhất. Độ phức tạp: O(N log N + M log M).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A9"><strong>Sắp xếp (A9)</strong></a> + <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers (A5)</strong></a>. Sắp xếp cả 2 mảng. Hình dung 2 dãy số tăng dần song song: nếu a[i] < b[j] thì tăng i (để a tiến gần b), ngược lại tăng j. Ghi nhận |a[i]−b[j]| nhỏ nhất. Không bỏ lỡ vì tăng con trỏ phía nhỏ hơn = thử giá trị gần hơn. O(N log N + M log M).
                         </div>
                     </div>
                 </div>
@@ -2800,7 +2800,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>custom comparator</em>: ưu tiên điểm giảm dần, cùng điểm thì tên tăng dần. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A9"><strong>Sắp xếp (A9)</strong></a> với comparator tùy chỉnh. Viết hàm so sánh: điểm khác → ai cao hơn xếp trước (giảm); cùng điểm → tên nhỏ hơn trước (tăng). Truyền vào sort(). Xem cách viết comparator ở <a href="Bi-kip-vo-cong.html#A9">phần A9</a>. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -2896,7 +2896,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp các đoạn theo điểm bắt đầu. Duyệt và <em>merge các đoạn giao nhau</em>. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A9"><strong>Sắp xếp (A9)</strong></a> + Merge Intervals. Sắp xếp đoạn theo điểm bắt đầu. Hình dung: xếp các thanh ngang theo thứ tự. Duyệt: nếu thanh mới giao thanh cũ (bắt đầu ≤ kết thúc cũ) → nối dài thanh cũ. Không giao → lưu thanh cũ, bắt đầu thanh mới. Đã sắp xếp nên chỉ cần so với thanh liền kề. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -2987,7 +2987,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <em>Tham lam</em>: sắp xếp theo thời gian kết thúc, chọn sự kiện kết thúc sớm nhất không giao với sự kiện trước. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B2"><strong>Tham lam (B2)</strong></a> + <a href="Bi-kip-vo-cong.html#A9">Sắp xếp (A9)</a>. Sắp xếp sự kiện theo giờ KẾT THÚC. Luôn chọn sự kiện kết thúc sớm nhất không giao. Hình dung: kết thúc sớm = giải phóng sân khấu sớm = nhiều chỗ trống cho show sau. Chọn muộn hơn chỉ có thể ít hơn hoặc bằng. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -3070,7 +3070,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Tổng 1 đến N+1 = (N+1)(N+2)/2. Số thiếu = tổng kỳ vọng - tổng thực tế. Có thể dùng XOR nếu muốn tránh tràn. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng công thức tổng hoặc XOR (xem <a href="Bi-kip-vo-cong.html#s12"><strong>Tràn số (1.2)</strong></a> để chọn cách an toàn). Dãy 1..N+1 thiếu 1 số. Cách 1: tổng kỳ vọng − tổng thực tế. Cách 2: XOR tất cả với 1..N+1 — a XOR a = 0, chỉ số thiếu còn lại. XOR tránh tràn khi N lớn. O(N).
                         </div>
                     </div>
                 </div>
@@ -3158,7 +3158,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Đếm tần suất mỗi giá trị bằng <em>map</em>. Với mỗi giá trị xuất hiện c lần, số cặp = c(c-1)/2. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A10"><strong>Mảng đếm (A10)</strong></a> hoặc <a href="Bi-kip-vo-cong.html#C1">map (C1)</a>. 2 vòng for O(N²) chậm. Nhận xét: giá trị X xuất hiện c lần → số cặp = chọn 2 trong c = c×(c−1)/2. Dùng map đếm tần suất, rồi cộng công thức. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -3246,7 +3246,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>Counting Sort</em>. Đếm tần suất mỗi giá trị, sau đó xuất ra theo thứ tự. Độ phức tạp: O(N + K).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A10"><strong>Counting Sort / Mảng đếm (A10)</strong></a>. Sort so sánh cần O(N log N). Với giá trị nhỏ [0, K]: tạo cnt[0..K], đếm số lần mỗi giá trị xuất hiện. Duyệt cnt từ 0 đến K, xuất mỗi giá trị đúng số lần. Không so sánh → O(N + K).
                         </div>
                     </div>
                 </div>
@@ -3329,7 +3329,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <em>Kadane's Algorithm</em>. Duyệt mảng, tại mỗi vị trí quyết định: bắt đầu mới hay tiếp tục từ trước. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A11"><strong>Kadane (A11)</strong></a>. Giữ 2 biến: sum = tổng đoạn kết thúc tại i, best = lớn nhất đã gặp. Tại mỗi vị trí: sum = max(a[i], sum+a[i]) — "nối tiếp hay bắt đầu lại?" Nếu tổng cũ âm thì kéo xuống, bỏ đi rồi bắt đầu mới. O(N).
                         </div>
                     </div>
                 </div>
@@ -3425,7 +3425,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Với vòng tròn: max = max(maxSum thường, tổng - minSum). Vì nếu đoạn wrap qua 2 đầu thì bỏ đoạn min ở giữa. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A11"><strong>Kadane (A11)</strong></a> + <a href="Bi-kip-vo-cong.html#s41">Biến đổi bài toán (4.1)</a>. Vòng tròn = không biết bắt đầu ở đâu. Nhận xét: đoạn vòng tròn = bỉ phần của đoạn thẳng. Kết quả = max(Kadane tìm max, Tổng − Kadane tìm min). Giải thích: nếu đoạn tối ưu bắc qua mối nối, phần không chọn là đoạn sum nhỏ nhất ở giữa. Đặc biệt: nếu toàn âm, trả về Kadane max. O(N).
                         </div>
                     </div>
                 </div>
@@ -3524,7 +3524,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Tính trước L[i] = max subarray từ trái đến i, R[i] = max từ i đến phải. Kết quả = max(L[i] + R[i+1]). Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A11"><strong>Kadane (A11)</strong></a> + <a href="Bi-kip-vo-cong.html#A1">Prefix Sum (A1)</a>. Hình dung: 2 dự án không giao = chia mảng tại vị trí i: dự án trái [1..i], dự án phải [i+1..N]. Tính trước: L[i] = max subarray kết thúc ở hoặc trước i (Kadane trái→phải), R[i] = max subarray bắt đầu ở hoặc sau i (Kadane phải→trái). Kết quả = max(L[i] + R[i+1]). O(N).
                         </div>
                     </div>
                 </div>
@@ -3623,7 +3623,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Nén 2D về 1D. Với mỗi cặp hàng (top, bot), tính tổng cột colSum rồi áp dụng Kadane. Độ phức tạp: O(M² × N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A11"><strong>Kadane 2D (A11)</strong></a> + <a href="Bi-kip-vo-cong.html#s41">Biến đổi (4.1)</a>. Brute force 4 vòng O(N⁴) chậm. Biến đổi: cố định 2 hàng (r1, r2), nén cột thành mảng 1D (tổng mỗi cột từ r1→r2). Kadane trên mảng 1D = vùng con lớn nhất với 2 hàng đó. Duyệt tất cả cặp hàng O(N²), Kadane O(M) → O(N² × M).
                         </div>
                     </div>
                 </div>
@@ -3710,7 +3710,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <em>Coordinate Compression</em>: Sắp xếp mảng, loại bỏ trùng, rồi map mỗi giá trị về thứ hạng. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A12"><strong>Nén tọa độ (A12)</strong></a> + <a href="Bi-kip-vo-cong.html#A10">Mảng đếm (A10)</a>. Vấn đề: điểm số quá lớn, không dùng mảng đếm trực tiếp. Nén tọa độ: sắp xếp, thay giá trị bằng thứ hạng (vị trí trong mảng sort). Sau nén, giá trị ∈ [0, N−1] → dùng mảng đếm. Hạng = số người điểm thấp hơn + 1. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -3809,7 +3809,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <em>Merge Intervals</em>: Sắp xếp các đoạn theo điểm bắt đầu, sau đó gộp các đoạn giao nhau. Tổng đường được phủ = tổng độ dài các đoạn đã gộp. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A9"><strong>Sắp xếp (A9)</strong></a> + Merge Intervals (giống bài 28). Sắp xếp đoạn phủ theo vị trí. Gộp các đoạn chồng lấn → diện tích phủ sóng = tổng độ dài các đoạn đã gộp. Cách gộp: giữ đầu-cuối đoạn hiện tại, nếu đoạn mới bắt đầu ≤ cuối thì mở rộng, không thì lưu và bắt đầu mới. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -3913,7 +3913,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <em>Sweep Line</em>: Tạo sự kiện +1 khi đoạn bắt đầu, -1 khi kết thúc. Sắp xếp và quét để tìm điểm có nhiều đoạn chồng chéo nhất. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A3"><strong>Mảng hiệu / Sweep Line (A3)</strong></a>. Mỗi xe sống từ lúc vào đến lúc ra. Tại mỗi điểm thời gian: xe vào → +1, xe ra → −1. Dùng mảng hiệu (difference array): d[vào]++, d[ra]−−. Tính prefix sum → số xe có mặt tại mỗi thời điểm. Max của prefix sum = số xe nhiều nhất cùng lúc. O(N + T).
                         </div>
                     </div>
                 </div>
@@ -4017,7 +4017,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Đếm cặp nghịch thế (i < j và a[i] > a[j]) bằng <em>Merge Sort</em>. Khi merge, nếu lấy từ nửa phải thì tất cả phần tử còn lại bên trái đều lớn hơn. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B4"><strong>Chia để trị / Merge Sort (B4)</strong></a>. Đếm số cặp (i,j) với i < j mà a[i] > a[j] (số nghịch thế). Brute force O(N²). Dùng Merge Sort: khi merge 2 nửa đã sắp xếp, nếu a[i] > b[j] thì a[i..mid] đều > b[j] → cộng số phần tử còn lại. Mỗi lần merge đếm được nghịch thế liên nửa, không sót vì đã đếm nội bộ 2 nửa ở bước trước. O(N log N).
                         </div>
                     </div>
                 </div>
