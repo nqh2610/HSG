@@ -360,7 +360,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> dp[i] = điểm lớn nhất đến bậc i. dp[i] = max(dp[i-1], dp[i-2]) + a[i]. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. dp[i] = điểm lớn nhất từ bậc 1 đến bậc i. Tại bậc i có 2 lựa chọn: (1) bước 1 bậc từ i−1 → dp[i−1] + a[i]; (2) nhảy 2 bậc từ i−2 (bỏ qua bậc i−1) → dp[i−2] + a[i]. Lấy max 2 cách. Hình dung: đứng ở bậc i, nhìn lại: đến từ bậc nào thuận lợi hơn thì chọn bậc đó. O(N).
                         </div>
                     </div>
                 </div>
@@ -447,7 +447,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> dp[j] = số xu ít nhất để đổi j đồng. Duyệt mỗi mệnh giá, cập nhật dp[j] = min(dp[j], dp[j-c[i]] + 1). Dạng <em>Unbounded Knapsack</em>. Độ phức tạp: O(N × S).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — Unbounded Knapsack (B3)</strong></a>. dp[j] = số xu ít nhất để đổi j đồng. Với mỗi mệnh giá c[i]: nếu dùng 1 xu c[i], số tiền còn lại = j−c[i], cần dp[j−c[i]] xu nữa, tổng = dp[j−c[i]]+1. Lấy min qua mọi mệnh giá. Dùng được nhiều xu cùng loại (unbounded) nên duyệt j xuôi. Ban đầu dp[0]=0, dp[khác]=∞. O(N × S).
                         </div>
                     </div>
                 </div>
@@ -533,7 +533,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng thuật toán <em>LIS (Longest Increasing Subsequence)</em> với chặt nhị phân. Duy trì mảng tail chứa phần tử nhỏ nhất kết thúc LIS mỗi độ dài. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>LIS với chặt nhị phân (B3)</strong></a>. LIS O(N²) chậm. Cách tối ưu: giữ mảng tail[], với tail[k] = phần tử nhỏ nhất có thể kết thúc dãy tăng độ dài k. Gặp a[i]: tìm vị trí đầu tiên trong tail ≥ a[i] bằng lower_bound, thay vào đó (vì a[i] nhỏ hơn = tốt hơn cho tương lai). Không tìm thấy → a[i] lớn hơn tất cả → nối dài LIS. Độ dài tail = độ dài LIS. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -621,7 +621,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Bài toán <em>ba lô 0/1 (0/1 Knapsack)</em> kinh điển. Duyệt ngược j để đảm bảo mỗi vật chỉ dùng 1 lần. Độ phức tạp: O(N × W).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — Ba lô 0/1 (B3)</strong></a>. dp[j] = giá trị lớn nhất với trọng lượng ≤ j. Với mỗi vật i (trọng lượng w, giá trị v): nếu bỏ qua → dp[j] giữ nguyên; nếu lấy → dp[j−w]+v. Lấy max. Vì sao duyệt j NGƯỢC (từ W xuống w)? Vì mỗi vật chỉ dùng 1 lần: nếu duyệt xuôi, dp[j−w] có thể đã được cập nhật với vật i → dùng lại vật i 2 lần. Duyệt ngược = dp[j−w] vẫn là giá trị CHƯ có vật i. O(N × W).
                         </div>
                     </div>
                 </div>
@@ -707,7 +707,7 @@ bdcaba</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Bài toán kinh điển <em>LCS</em>. Nếu s[i] == t[j] thì dp[i][j] = dp[i-1][j-1] + 1, ngược lại dp[i][j] = max(dp[i-1][j], dp[i][j-1]). Độ phức tạp: O(M × N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — LCS (B3)</strong></a>. dp[i][j] = độ dài xâu con chung dài nhất của s[1..i] và t[1..j]. Tại mỗi cặp (i,j) có 2 trường hợp: (1) s[i]==t[j] → ký tự này nằm trong LCS, lấy dp[i−1][j−1]+1; (2) s[i]≠t[j] → hoặc bỏ s[i] hoặc bỏ t[j], lấy max(dp[i−1][j], dp[i][j−1]). Hình dung: điền bảng từ trái sang, trên xuống. Ô góc dưới phải = đáp án. O(M × N).
                         </div>
                     </div>
                 </div>
@@ -801,7 +801,7 @@ bdcaba</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> dp[i][j] = tổng lớn nhất đi từ (1,1) đến (i,j). dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + a[i][j]. Độ phức tạp: O(M × N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ trên lưới (B3)</strong></a>. dp[i][j] = tổng lớn nhất đi từ (1,1) đến (i,j). Chỉ được đi xuống hoặc sang phải, nên đến (i,j) chỉ có thể từ (i−1,j) hoặc (i,j−1). Lấy max + a[i][j]. Hình dung: điền bảng từ trái sang, trên xuống. Mỗi ô chọn đường tốt nhất đến nó (từ trên hoặc trái). Ô góc dưới phải = đáp án. O(M × N).
                         </div>
                     </div>
                 </div>
@@ -897,7 +897,7 @@ bdcaba</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Quy về bài toán <em>Subset Sum</em>: kiểm tra có tập con nào có tổng = sum/2 không. Dùng DP boolean. Độ phức tạp: O(N × sum).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — Subset Sum (B3)</strong></a>. Chia đều 2 nhóm = mỗi nhóm tổng = sum/2. Nếu sum lẻ → không thể. Quy về: có tập con nào tổng đúng sum/2 không? dp[j] = true/false (có thể tạo tổng j). Với mỗi số a[i], duyệt j ngược: dp[j] |= dp[j−a[i]]. Duyệt ngược vì mỗi số chỉ dùng 1 lần (giống ba lô 0/1). Kết quả = dp[sum/2]. O(N × sum).
                         </div>
                     </div>
                 </div>
@@ -986,7 +986,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Bài toán <em>Edit Distance (Levenshtein)</em>. dp[i][j] = chi phí nhỏ nhất biến s[1..i] thành t[1..j]. Nếu s[i]==t[j]: dp[i][j]=dp[i-1][j-1], ngược lại lấy min 3 thao tác. Độ phức tạp: O(M × N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — Edit Distance (B3)</strong></a>. dp[i][j] = số thao tác ít nhất biến s[1..i] thành t[1..j]. Nếu s[i]==t[j]: ký tự cuối giống nhau, không cần làm gì → dp[i−1][j−1]. Nếu khác: 3 cách: thêm (dp[i][j−1]+1), xóa (dp[i−1][j]+1), sửa (dp[i−1][j−1]+1). Lấy min. Hình dung: thêm = t[j] đã có nhưng s chưa có; xóa = s[i] thừa; sửa = đổi s[i] thành t[j]. O(M × N).
                         </div>
                     </div>
                 </div>
@@ -1073,7 +1073,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Xâu con đối xứng dài nhất (LPS) = LCS của S và reverse(S). Áp dụng LCS kinh điển. Độ phức tạp: O(N²).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — LCS (B3)</strong></a>. Nhận xét: xâu con đối xứng dài nhất (LPS) của S chính là LCS của S và reverse(S). Vì sao? Xâu đối xứng đọc xuôi = đọc ngược, nên nó xuất hiện trong cả S lẫn reverse(S) như xâu con chung. LCS của 2 xâu dài N → bảng N×N. O(N²).
                         </div>
                     </div>
                 </div>
@@ -1170,7 +1170,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Thuật toán <em>Kadane</em>: curSum = max(a[i], curSum + a[i]). Lưu thêm vị trí bắt đầu/kết thúc để truy vết. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A11"><strong>Kadane (A11)</strong></a>. curSum = max(a[i], curSum + a[i]) — "nối tiếp hay bắt đầu lại?" Nếu curSum cũ âm thì giữ lại chỉ kéo xuống, bỏ đi bắt đầu mới tại a[i] tốt hơn. Ghi nhận best = max(best, curSum). Lưu thêm chỉ số bắt đầu/kết thúc: khi bắt đầu lại → cập nhật start = i; khi best cải thiện → cập nhật end = i. O(N).
                         </div>
                     </div>
                 </div>
@@ -1260,7 +1260,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <em>DP đoạn (Interval DP)</em>. dp[i][j] = chi phí tối ưu nhân từ ma trận i đến j. Thử mọi vị trí chia k. Độ phức tạp: O(N³).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ đoạn (B3)</strong></a>. dp[i][j] = số phép nhân ít nhất để nhân các ma trận từ i đến j. Để nhân M_i...M_j, phải chia tại điểm k nào đó: (M_i...M_k) × (M_{k+1}...M_j). Chi phí = dp[i][k] + dp[k+1][j] + r_i×c_k×c_j. Thử mọi k từ i đến j−1, lấy min. Hình dung: thử mọi cách đặt ngoặc. Duyệt theo độ dài đoạn tăng dần. O(N³).
                         </div>
                     </div>
                 </div>
@@ -1345,7 +1345,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Bài toán <em>Rod Cutting</em>. dp[j] = max(p[i] + dp[j-i]) với mọi i từ 1 đến j. Dạng Unbounded Knapsack. Độ phức tạp: O(L²).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — Unbounded Knapsack (B3)</strong></a>. dp[j] = doanh thu lớn nhất khi có thanh dài j. Với mỗi cách cắt độ dài i (1 ≤ i ≤ j): cắt ra 1 mảnh dài i bán được p[i], phần còn lại dài j−i tối ưu = dp[j−i]. dp[j] = max(p[i] + dp[j−i]) với mọi i. Cắt không giới hạn số lần → dạng Unbounded Knapsack. O(L²).
                         </div>
                     </div>
                 </div>
@@ -1430,7 +1430,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> f(n) = f(n-1) + f(n-2), chính là dãy <em>Fibonacci</em>. Cột cuối đặt dọc (1 cách) hoặc 2 viên ngang (1 cách). Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. f(n) = số cách lát bảng 2×n. Cột cuối có 2 cách lát: (1) 1 viên dọc → còn lại bảng 2×(n−1) = f(n−1) cách; (2) 2 viên ngang chồng lên nhau → còn lại 2×(n−2) = f(n−2) cách. Vậy f(n) = f(n−1) + f(n−2) — chính là dãy Fibonacci! Cơ sở: f(1)=1, f(2)=2. O(N).
                         </div>
                     </div>
                 </div>
@@ -1516,7 +1516,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <em>DP trên chữ số</em>. dp[i][j] = số cách chọn i chữ số có tổng j. Chữ số đầu tiên từ 1→9, các chữ số sau từ 0→9. Độ phức tạp: O(D × S × 10).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B6"><strong>Digit DP (B6)</strong></a>. dp[i][j] = số cách chọn i chữ số có tổng j. Xây số từ trái sang phải. Chữ số đầu tiên chọn từ 1→9 (không có số 0 ở đầu). Các chữ số sau chọn 0→9. Chuyển tiếp: với mỗi chữ số d (0→9), dp[i][j] += dp[i−1][j−d]. Đáp án = dp[D][S]. O(D × S × 10).
                         </div>
                     </div>
                 </div>
@@ -1604,7 +1604,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <em>DP bottom-up trên tam giác</em>. Từ tầng dưới cùng lên, a[i][j] += max(a[i+1][j], a[i+1][j+1]). Kết quả ở a[1][1]. Độ phức tạp: O(N²).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ bottom-up (B3)</strong></a>. Tính từ tầng dưới lên. Tại mỗi ô (i,j), chọn đi xuống trái (i+1,j) hoặc xuống phải (i+1,j+1), lấy max rồi cộng giá trị ô hiện tại: a[i][j] += max(a[i+1][j], a[i+1][j+1]). Tầng dưới = cơ sở (giữ nguyên). Sau khi tính xong, a[1][1] = tổng lớn nhất từ đỉnh xuống. Vì sao bottom-up? Vì từ trên xuống có nhiều nhánh (tốn kém), từ dưới lên mỗi ô chỉ cộng 1 lần. O(N²).
                         </div>
                     </div>
                 </div>
@@ -1701,7 +1701,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <em>DP trạng thái</em> với dp[k][0/1] = lợi nhuận max sau tối đa k giao dịch, trạng thái 0=không giữ, 1=đang giữ cổ phiếu. Độ phức tạp: O(N × K).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ trạng thái (B3)</strong></a>. Theo dõi trạng thái: đang giữ cổ phiếu (1) hay không (0), và đã dùng bao nhiêu giao dịch (k). dp[k][0] = lợi nhuận max khi không giữ; dp[k][1] = khi đang giữ. Mỗi ngày: giữ → tiếp tục giữ hoặc bán (dp[k][0] = max(giữ, dp[k][1]+price)); không giữ → tiếp tục không hoặc mua (dp[k][1] = max(giữ, dp[k−1][0]−price)). Mua = dùng 1 giao dịch mới. O(N × K).
                         </div>
                     </div>
                 </div>
@@ -1799,7 +1799,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Tính trước cost[i][j] = chi phí 1 trạm phục vụ nhà i..j (đặt ở vị trí trung vị). dp[g][i] = chi phí tối ưu dùng g trạm cho nhà 1..i. Độ phức tạp: O(K × N²).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ chia đoạn (B3)</strong></a>. Tính trước cost[i][j] = chi phí nếu 1 trạm phục vụ nhà i..j. Đặt trạm ở đâu tốt nhất? Ở trung vị (vị trí giữa) vì tổng khoảng cách nhỏ nhất. dp[g][i] = chi phí tối ưu dùng g trạm cho nhà 1..i. Chuyển tiếp: thử mọi điểm cắt j: g−1 trạm cho nhà 1..j, trạm thứ g cho nhà j+1..i. dp[g][i] = min(dp[g−1][j] + cost[j+1][i]). O(K × N²).
                         </div>
                     </div>
                 </div>
@@ -1908,7 +1908,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <em>DP 2 robot</em>: dp[i][j1][j2] = tổng vàng max khi ở hàng i, robot A cột j1, B cột j2. Vì j1 ≤ j2, giảm số trạng thái. Độ phức tạp: O(M × N² × 9).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ 2 robot (B3)</strong></a>. 2 robot đi từ hàng 1 xuống hàng M. dp[i][j1][j2] = tổng vàng lớn nhất khi ở hàng i, robot A cột j1, B cột j2. Mỗi robot có 3 hướng (trái, thẳng, phải) → 2 robot = 3×3 = 9 tổ hợp. Vì sao j1 ≤ j2? Vì 2 robot đối xứng, A bên trái B bên phải không mất tổng quát (giảm nửa số trạng thái). Nếu cùng ô chỉ lấy 1 lần. O(M × N² × 9).
                         </div>
                     </div>
                 </div>
@@ -2020,7 +2020,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp theo thời gian kết thúc. dp[i] = max(dp[i-1], dp[last] + v[i]) với last = công việc gần nhất không chồng chéo (tìm bằng chặt nhị phân). Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ (B3)</strong></a> + <a href="Bi-kip-vo-cong.html#A8">Chặt nhị phân (A8)</a>. Sắp xếp theo thời gian kết thúc. dp[i] = lợi nhuận lớn nhất xét i công việc đầu. 2 lựa chọn: (1) bỏ công việc i → dp[i−1]; (2) làm công việc i → cần tìm công việc gần nhất kết thúc trước khi i bắt đầu (gọi là last) bằng chặt nhị phân, được dp[last] + v[i]. Lấy max 2 cách. Vì sao cần sắp xếp? Để chặt nhị phân tìm last nhanh O(log N). O(N log N).
                         </div>
                     </div>
                 </div>
@@ -2108,7 +2108,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Nhà xếp vòng tròn → chia thành 2 trường hợp: lấy nhà 1 (không lấy nhà N) hoặc không lấy nhà 1 (có thể lấy nhà N). Mỗi trường hợp giải bằng <em>House Robber</em> trên dãy. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ (B3)</strong></a> + biến đổi vòng tròn. Nhà xếp vòng tròn: nhà 1 và nhà N liền kề, không lấy được cả 2. Chia 2 trường hợp: (1) lấy nhà 1 → không lấy nhà N → giải bài House Robber trên [1..N−1]; (2) không lấy nhà 1 → giải trên [2..N]. Đáp án = max 2 TH. House Robber: dp[i] = max(dp[i−1], dp[i−2]+a[i]) — giống bài 1 (leo thang). O(N).
                         </div>
                     </div>
                 </div>
@@ -2207,7 +2207,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Tính trước cost[i][j]. dp[g][i] = min(dp[g-1][j] + cost[j+1][i]) cho mọi j. Dạng <em>DP chia đoạn</em> kinh điển. Độ phức tạp: O(K × N²).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ chia đoạn (B3)</strong></a>. Tính trước cost[i][j] = chi phí nếu các phần tử i..j thuộc 1 nhóm (dùng độ lệch chuẩn, phương sai,...). dp[g][i] = chi phí nhỏ nhất chia i phần tử đầu thành g nhóm. Chuyển tiếp: thử mọi điểm cắt j: g−1 nhóm cho 1..j, nhóm thứ g là j+1..i. dp[g][i] = min(dp[g−1][j] + cost[j+1][i]). Giống bài 18. O(K × N²).
                         </div>
                     </div>
                 </div>
@@ -2294,7 +2294,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> dp[i][c] = chi phí min sơn nhà 1..i, nhà i sơn màu c. Chuyển tiếp: dp[i][c] = min(dp[i-1][c']) + cost[i][c] với c' ≠ c. Tối ưu không gian bằng 3 biến. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. dp[i][c] = chi phí nhỏ nhất sơn nhà 1..i với nhà i màu c. 2 nhà liền kề không cùng màu, nên nhà i màu c thì nhà i−1 phải màu khác: dp[i][c] = min(dp[i−1][c']) + cost[i][c] với c'≠c. Chỉ có 3 màu nên lấy min của 2 màu còn lại. Tối ưu: chỉ cần 3 biến (không cần mảng 2D). O(N).
                         </div>
                     </div>
                 </div>
@@ -2384,7 +2384,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> dp[d] = số số kết thúc bằng chữ số d. Chữ số tiếp chỉ nằm trong [d-2, d+2]. Duyệt N-1 bước chuyển tiếp. Độ phức tạp: O(N × 10).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. dp[d] = số số hợp lệ kết thúc bằng chữ số d. Chữ số tiếp theo chỉ được nằm trong [d−2, d+2] (chênh lệch ≤ 2). VD: đang ở 5 → chữ số sau có thể 3,4,5,6,7. Bước chuyển: dp_mới[d'] += dp_cũ[d] với mọi d' ∈ [d−2, d+2]. Lặp N−1 bước. Đáp án = tổng dp[0..9]. O(N × 10).
                         </div>
                     </div>
                 </div>
@@ -2470,7 +2470,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> dp[i] = chi phí nhỏ nhất đến đá i. dp[i] = min(dp[i-j] + |h[i]-h[i-j]|) với j = 1..K. Mở rộng bài leo cầu thang cơ bản. Độ phức tạp: O(N × K).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. dp[i] = chi phí nhỏ nhất nhảy đến đá i. Từ đá i có thể nhảy từ đá i−1, i−2, ..., i−K (tối đa K bước nhảy). Chi phí mỗi bước = |h[i]−h[từ]|. dp[i] = min(dp[i−j] + |h[i]−h[i−j]|) với j = 1..K. Giống bài 1 (leo thang) nhưng mở rộng từ 2 bước lên K bước, và có chi phí nhảy. O(N × K).
                         </div>
                     </div>
                 </div>
@@ -2556,7 +2556,7 @@ sitting</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> dp[i] = thời gian min cho i người đầu. dp[i] = min(dp[i-1] + t[i], dp[i-2] + max(t[i-1], t[i])). Giống leo cầu thang nhưng có chi phí ghép cặp. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. dp[i] = thời gian nhỏ nhất cho i người đầu qua cầu. Mỗi lượt qua cầu tối đa 2 người. 2 lựa chọn: (1) người i đi 1 mình → dp[i−1] + t[i]; (2) người i đi cùng người i−1 → dp[i−2] + max(t[i−1], t[i]) (hai người đi cùng, thời gian = người chậm). Lấy min 2 cách. Giống bài leo thang nhưng chi phí khác. O(N).
                         </div>
                     </div>
                 </div>
