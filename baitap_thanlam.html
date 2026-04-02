@@ -359,7 +359,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp cả hai mảng tăng dần. Duyệt hai con trỏ: nếu sữa rẻ nhất hiện tại ≤ giá chấp nhận của bò, ghép cặp; ngược lại chuyển sang bò có yêu cầu cao hơn. Độ phức tạp: O(N log N + M log M).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A9"><strong>Sắp xếp (A9)</strong></a> + <a href="Bi-kip-vo-cong.html#A5">Two Pointers (A5)</a>. Sắp xếp giá sữa tăng, giá chấp nhận của bò cũng tăng. Hai con trỏ: sữa rẻ nhất hiện tại và bò kén nhất hiện tại. Nếu sữa ≤ giá chấp nhận → ghép cặp, cả 2 tiến. Không → bò này yêu cầu quá rẻ không ai đáp ứng, tiến bò (vì sữa đã rẻ nhất rồi). Vì sao đúng? Cho bò rẻ sữa rẻ = không lãng phí sữa đắt cho bò dễ tính. O(N log N + M log M).
                         </div>
                     </div>
                 </div>
@@ -444,7 +444,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp hoạt động theo thời điểm kết thúc tăng dần. Chọn hoạt động kết thúc sớm nhất không chồng chéo với hoạt động đã chọn trước đó. Tham lam dạng <em>Activity Selection</em> kinh điển. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B2"><strong>Tham lam — Activity Selection (B2)</strong></a>. Sắp xếp hoạt động theo giờ KẾT THÚC tăng. Luôn chọn hoạt động kết thúc sớm nhất không giao với cái đã chọn. Vì sao đúng? Kết thúc sớm = giải phóng sân sớm = nhiều chỗ nhất cho hoạt động sau. Chọn hoạt động kết thúc muộn hơn chỉ có thể ít hơn hoặc bằng số hoạt động. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -517,7 +517,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp dãy tăng dần. Ghép phần tử nhỏ nhất với lớn nhất, nhỏ nhì với lớn nhì, ... Cách ghép này cân bằng tổng các cặp, tối thiểu hóa giá trị lớn nhất. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A9"><strong>Sắp xếp (A9)</strong></a> + <a href="Bi-kip-vo-cong.html#B2">Tham lam (B2)</a>. Sắp xếp tăng. Ghép số nhỏ nhất với lớn nhất, nhỏ nhì với lớn nhì, ... VD: [1,2,3,4] → cặp (1,4)=5, (2,3)=5 → max cặp = 5. Nếu ghép khác: (1,2)=3, (3,4)=7 → max = 7, tệ hơn. Vì sao? Số lớn ghép số nhỏ = "bù trừ" lẫn nhau, giảm chênh lệch giữa các cặp → max nhỏ nhất. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -597,7 +597,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp trọng lượng tăng dần. Thử ghép người nhẹ nhất (left) với nặng nhất (right). Nếu vừa thuyền thì ghép cặp (left++, right--), nếu không thì người nặng đi riêng (right--). Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers ngược chiều (A5)</strong></a> + <a href="Bi-kip-vo-cong.html#B2">Tham lam (B2)</a>. Sắp xếp trọng lượng tăng. left = nhẹ nhất, right = nặng nhất. Nếu left + right ≤ giới hạn → ghép cặp, cả 2 tiến (left++, right−−). Không vừa → người nặng đi riêng (right−−). Vì sao ghép nhẹ+nặng? Người nhẹ không ghép với ai khác tốt hơn được (ai cũng nặng hơn rồi), và người nặng cũng cần bạn nhẹ nhất để còn vừa thuyền. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -684,7 +684,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Tạo sự kiện đến (+1) và đi (−1). Sắp xếp theo thời gian (cùng thời điểm thì xử lý sự kiện đi trước, do pair sắp xếp −1 trước +1). Quét qua và đếm tối đa đồng thời — đó là số cổng cần. Kỹ thuật <em>Sweep Line</em>. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A3"><strong>Sweep Line / Mảng hiệu (A3)</strong></a>. Mỗi chuyến bay sinh 2 sự kiện: +1 khi đến (cần cổng), −1 khi đi (trả cổng). Sắp xếp sự kiện theo thời gian. Cùng thời điểm: xử lý đi trước (−1 < +1 nên pair tự sắp đúng). Quét từ trái sang, cộng dồn → số máy bay đang ở sân bay tại mỗi thời điểm. Max = số cổng cần. Vì sao xử lý đi trước? Vì máy bay đi giải phóng cổng trước khi máy bay đến dùng cổng. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -773,7 +773,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp vật theo tỉ lệ giá trị/khối lượng giảm dần (dùng nhân chéo tránh sai số thực). Lấy trọn vật nếu còn đủ chỗ, lấy phần phân số nếu không. Đây là bài <em>Fractional Knapsack</em> kinh điển. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B2"><strong>Tham lam — Fractional Knapsack (B2)</strong></a>. Được lấy PHẦN (không bắt buộc lấy nguyên vật). Tính đơn giá = giá trị / khối lượng. Sắp xếp theo đơn giá giảm dần (để tránh sai số thực, so sánh bằng nhân chéo: v1×w2 với v2×w1). Lấy trọn vật đắt nhất trước, vật cuối lấy phần nếu không đủ chỗ. Vì sao tham lam đúng? Vì được cắt lẻ, 1 kg vật đắt luôn tốt hơn 1 kg vật rẻ. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -853,7 +853,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng hàng đợi ưu tiên (min-heap). Luôn lấy 2 tệp nhỏ nhất ra nối, rồi đẩy kết quả lại heap. Chiến lược tương tự mã Huffman. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B2"><strong>Tham lam (B2)</strong></a> + <a href="Bi-kip-vo-cong.html#C3">Priority Queue / Heap (C3)</a>. Dùng min-heap. Luôn lấy 2 tệp NHỎ NHẤT ra nối, kết quả đẩy lại heap. VD: [1,2,3,4] → nối 1+2=3 (chi phí 3), nối 3+3=6 (chi phí 6), nối 6+4=10 (chi phí 10), tổng = 19. Nếu nối lớn trước: 3+4=7, 7+2=9, 9+1=10, tổng = 26 — tệ hơn. Vì sao nhỏ trước? Tệp nhỏ ghép sớm sẽ bị cộng lại nhiều lần nhưng kích thước nhỏ nên ít tốn. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -940,7 +940,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Thêm điểm đầu (0) và đích (L) vào danh sách trạm. Đi qua từng trạm, trừ xăng. Tại mỗi trạm xăng, chỉ đổ khi không đủ nhiên liệu đến trạm kế tiếp. Nếu khoảng cách giữa 2 trạm liên tiếp vượt quá C thì không thể. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B2"><strong>Tham lam (B2)</strong></a>. Thêm điểm xuất phát (0) và đích (L). Duyệt từ trạm này sang trạm kế: trừ xăng. Tại mỗi trạm: chỉ đổ xăng khi không đủ đến trạm tiếp theo (đổ vừa đủ = đổ ít nhất). Nếu khoảng cách 2 trạm liên tiếp > C (dung tích bình) → không thể đến được. Vì sao đổ ít là tối ưu? Vì giá xăng các trạm như nhau, đổ ít lần = ít dừng. O(N).
                         </div>
                     </div>
                 </div>
@@ -1024,7 +1024,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Kỹ thuật giống BFS theo tầng: <code>curEnd</code> là biên phải vùng đang xét, <code>farthest</code> là vị trí xa nhất có thể nhảy tới. Khi duyệt đến <code>curEnd</code>, tăng bước nhảy và cập nhật biên mới. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B2"><strong>Tham lam (B2)</strong></a>. Hình dung BFS theo tầng: mỗi bước nhảy = 1 tầng. Giữ 2 biến: curEnd = biên phải tầng hiện tại, farthest = xa nhất có thể đến từ tầng này. Duyệt i: cập nhật farthest = max(farthest, i + a[i]). Khi i đến curEnd: hết tầng, tăng bước nhảy, curEnd = farthest. Vì sao đúng? Trong cùng 1 bước nhảy, chọn điểm kế tiếp xa nhất = ít bước nhất. O(N).
                         </div>
                     </div>
                 </div>
@@ -1119,7 +1119,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp đoạn theo đầu trái tăng dần. Tham lam: tại mỗi bước, trong tất cả đoạn bắt đầu trước hoặc đúng vùng đã phủ, chọn đoạn kéo dài xa nhất sang phải. Nếu không tiến thêm được → không phủ kín. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B2"><strong>Tham lam (B2)</strong></a> + <a href="Bi-kip-vo-cong.html#A9">Sắp xếp (A9)</a>. Sắp xếp đoạn theo đầu trái tăng. Giữ biến covered = điểm đã phủ đến. Tại mỗi bước: trong tất cả đoạn BẮt ĐẦU ≤ covered, chọn đoạn kéo dài xa nhất sang phải. Cập nhật covered = max_right. Vì sao chọn xa nhất? Vì đoạn phủ nhiều nhất = ít đoạn nhất. Nếu không tiến thêm được (covered không tăng) → không phủ kín. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -1197,7 +1197,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Duyệt trái→phải: nếu điểm cao hơn bạn bên trái thì tăng kẹo. Duyệt phải→trái: nếu điểm cao hơn bạn bên phải thì cập nhật max. Kết hợp hai lượt đảm bảo cả hai hướng. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B2"><strong>Tham lam 2 lượt (B2)</strong></a>. Mỗi bạn vì cả 2 hướng (trái-phải). Lượt 1 (trái→phải): điểm[i] > điểm[i−1] thì kẹo[i] = kẹo[i−1]+1, đảm bảo ai giỏi hơn bên trái được nhiều hơn. Lượt 2 (phải→trái): tương tự cho hướng phải, lấy max với kết quả lượt 1 để đảm bảo cả 2 hướng. VD: [1,3,2] → lượt 1: [1,2,1], lượt 2: [1,2,1] → tổng = 4. O(N).
                         </div>
                     </div>
                 </div>
@@ -1282,7 +1282,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Chuyển các số thành chuỗi. Sắp xếp bằng bộ so sánh: a đứng trước b nếu ghép <code>ab > ba</code> (so sánh chuỗi). Trường hợp đặc biệt: nếu số lớn nhất sau sắp xếp là "0" thì tất cả đều 0, in "0". Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A9"><strong>Sắp xếp tùy chỉnh (A9)</strong></a>. Chuyển số thành chuỗi. Sắp xếp: a đứng trước b nếu ghép ab > ba (so sánh chuỗi). VD: 9 và 34: "934" > "349" → 9 đứng trước. Vì sao đúng? Với mỗi cặp liền kề, đặt thứ tự tốt hơn → toàn cục tối ưu (chứng minh bằng hoán vị: đổi 2 số liền kề sai thứ tự luôn làm kết quả nhỏ đi). Lưu ý: nếu số lớn nhất là "0" thì tất cả = 0, in "0". O(N log N).
                         </div>
                     </div>
                 </div>
@@ -1361,7 +1361,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng ngăn xếp (string) đơn điệu tăng. Duyệt từng ký tự: nếu đỉnh stack lớn hơn ký tự hiện tại và còn quota xóa, bỏ đỉnh stack. Cuối cùng nếu K còn dư thì xóa từ cuối. Độ phức tạp: O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A7"><strong>Monotonic Stack (A7)</strong></a> + <a href="Bi-kip-vo-cong.html#B2">Tham lam (B2)</a>. Muốn số nhỏ nhất = các chữ số tăng dần từ trái sang (càng nhỏ càng tốt ở đầu). Dùng stack tăng: duyệt từng chữ số, nếu đỉnh stack LỚN hơn ký tự hiện tại và còn quota xóa → pop (xóa chữ số lớn ở vị trí cao để thay bằng số nhỏ hơn). Cuối cùng nếu K còn dư thì xóa từ cuối. VD: "1432" xóa 1 → xóa 4 (4>3) → "132". O(N).
                         </div>
                     </div>
                 </div>
@@ -1443,7 +1443,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp công việc theo hạn chót tăng dần (<em>Earliest Deadline First</em>). Thực hiện tuần tự, tính thời gian trễ tích lũy. Đây là chiến lược tối ưu cho bài toán tối thiểu hóa độ trễ lớn nhất. Độ phức tạp: O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B2"><strong>Tham lam — Earliest Deadline First (B2)</strong></a>. Sắp xếp theo hạn chót tăng dần. Làm việc tuần tự. Vì sao làm việc hạn sớm trước? Giả sử đổi 2 việc A (hạn sớm) và B (hạn muộn): A làm muộn hơn nhưng hạn sớm hơn → trễ A tăng. B làm sớm hơn nhưng hạn muộn hơn → trễ B giảm hoặc giữ. Độ trễ max tăng → đổi là tệ hơn → giữ nguyên là tối ưu. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -1544,7 +1544,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Sắp xếp công việc theo lợi nhuận giảm dần. Với mỗi việc, dùng DSU (<em>Disjoint Set Union</em>) tìm slot lớn nhất ≤ deadline còn trống. Nếu tìm được (slot > 0), gán việc và hợp slot với slot − 1. Kỹ thuật DSU giúp tìm slot trống trong O(α(N)). Tổng: O(N log N + N · α(N)).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B2"><strong>Tham lam (B2)</strong></a> + <a href="Bi-kip-vo-cong.html#D3">DSU (D3)</a>. Sắp xếp việc theo lợi nhuận GIẢM. Ưu tiên làm việc lời nhiều trước. Với mỗi việc (lời p, hạn d): tìm slot lớn nhất ≤ d còn trống để làm càng muộn càng tốt (dành slot sớm cho việc khác). Dùng DSU: find(d) trả về slot trống gần nhất ≤ d. Khi dùng slot s, hợp s với s−1 (lần sau find(s) sẽ trả về s−1). Vì sao DSU? Tìm slot trống thường O(d), DSU giảm xuống O(α(N)) gần như O(1). O(N log N).
                         </div>
                     </div>
                 </div>
