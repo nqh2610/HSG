@@ -460,7 +460,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Kết hợp <a href="Bi-kip-vo-cong.html#A1"><strong>Prefix Sum (A1)</strong></a> + <a href="Bi-kip-vo-cong.html#A10"><strong>Mảng đếm (A10)</strong></a>. Tổng đoạn [j+1, i] = prefix[i] − prefix[j]. Đoạn chia hết K khi prefix[i] và prefix[j] cùng số dư (vì hiệu chia hết K ⟺ cùng dư). Hình dung: xếp các prefix vào "nhóm" theo số dư: nhóm 0, nhóm 1, ..., nhóm K−1. Trong mỗi nhóm có c phần tử, chọn 2 = c×(c−1)/2 cặp. Cộng hết là đáp án. O(N).
+                            <strong>💡 Ý tưởng:</strong> Kết hợp <a href="Bi-kip-vo-cong.html#A1"><strong>Prefix Sum (A1)</strong></a> + <a href="Bi-kip-vo-cong.html#A10"><strong>Mảng đếm (A10)</strong></a>. Tổng đoạn [j+1, i] = prefix[i] − prefix[j]. Khi nào hiệu này chia hết K? Khi prefix[i] và prefix[j] chia K cùng dư. VD: prefix[i]=11, prefix[j]=5, K=3 → dư lần lượt 2 và 2 → hiệu = 6 chia hết 3. Hình dung: xếp các prefix vào "nhóm" theo số dư khi chia K: nhóm 0, nhóm 1, ..., nhóm K−1. Chọn 2 phần tử bất kì trong cùng nhóm = 1 đoạn hợp lệ. Nhóm có c phần tử → c×(c−1)/2 cặp. Cộng hết là đáp án. O(N).
                         </div>
                     </div>
                 </div>
@@ -553,7 +553,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> <a href="Bi-kip-vo-cong.html#s41"><strong>Biến đổi bài toán (4.1)</strong></a> + <a href="Bi-kip-vo-cong.html#A1"><strong>Prefix Sum (A1)</strong></a>. TB = K nghĩa là tổng = K×(độ dài). Đặt B[i] = A[i] − K → bài toán đưa về dạng quen: tìm đoạn dài nhất có tổng = 0 trên mảng B. Dùng prefix sum: nếu prefix[i] = prefix[j] thì tổng [j+1..i] = 0. Hình dung prefix như đồ thị: tìm 2 điểm cùng độ cao xa nhất. Dùng <a href="Bi-kip-vo-cong.html#C1">map (C1)</a> lưu vị trí đầu tiên mỗi giá trị prefix. O(N log N).
+                            <strong>💡 Ý tưởng:</strong> <a href="Bi-kip-vo-cong.html#s41"><strong>Biến đổi bài toán (4.1)</strong></a> + <a href="Bi-kip-vo-cong.html#A1"><strong>Prefix Sum (A1)</strong></a>. Trung bình đoạn = K nghĩa là tổng đoạn = K × độ dài. VD: TB 5 phần tử = 3 thì tổng = 15 = 3×5. Nếu trừ mỗi phần tử đi K: B[i] = A[i] − K, thì tổng đoạn B = tổng đoạn A − K×(độ dài) = 0. Vậy bài toán thành: tìm đoạn dài nhất có tổng = 0 trên mảng B. Dùng prefix sum: nếu prefix[i] = prefix[j] thì tổng [j+1..i] = 0. Hình dung prefix như đồ thị: tìm 2 điểm cùng độ cao xa nhất. Dùng <a href="Bi-kip-vo-cong.html#C1">map (C1)</a> lưu vị trí đầu tiên mỗi giá trị prefix. O(N log N).
                         </div>
                     </div>
                 </div>
@@ -839,7 +839,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A3"><strong>Mảng hiệu (A3)</strong></a>. Mỗi đợt kiểm tra đoạn [L,R] = "cộng 1" cho cả đoạn. Hình dung: mỗi đợt kiểm tra như tô màu 1 thanh ngang trên biểu đồ. diff[L]++ = bắt đầu tô, diff[R+1]−− = dừng tô. Sau Q đợt, prefix sum cho biết mỗi HS bị chồng bao nhiêu lới. Lấy max. O(N + Q).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A3"><strong>Mảng hiệu (A3)</strong></a>. Mỗi đợt kiểm tra đoạn [L,R] = "cộng 1" cho cả đoạn. Hình dung: mỗi đợt kiểm tra như tô màu 1 thanh ngang trên biểu đồ. diff[L]++ = bắt đầu tô, diff[R+1]−− = dừng tô. Sau Q đợt, prefix sum cho biết mỗi HS bị chồng bao nhiêu lớp. Lấy max. O(N + Q).
                         </div>
                     </div>
                 </div>
@@ -1031,7 +1031,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A4"><strong>Mảng hiệu 2D (A4)</strong></a>. Mở rộng <a href="Bi-kip-vo-cong.html#A3">mảng hiệu 1D (A3)</a> lên lưới 2 chiều. Hình dung: sơn HCN = đánh dấu 4 góc. Góc trên-trái +1 ("bắt đầu sơn"), 2 góc liền kề −1 ("dừng sơn" theo hàng và cột), góc đối diện +1 ("cộng lại vì bị trừ 2 lần"). Sau Q lần sơn, tính prefix sum 2D trên diff để ra ma trận kết quả. O(M×N + Q).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A4"><strong>Mảng hiệu 2D (A4)</strong></a>. Mở rộng <a href="Bi-kip-vo-cong.html#A3">mảng hiệu 1D (A3)</a> lên lưới 2 chiều. Hình dung: sơn HCN (r1,c1)→(r2,c2) = đánh dấu 4 góc: diff[r1][c1] +1 (bắt đầu sơn), diff[r1][c2+1] −1 (dừng theo cột), diff[r2+1][c1] −1 (dừng theo hàng), diff[r2+1][c2+1] +1 (góc đối diện bị trừ 2 lần → cộng lại). Sau Q lần sơn, tính prefix sum 2D trên diff để ra ma trận kết quả. O(M×N + Q).
                         </div>
                     </div>
                 </div>
@@ -1491,7 +1491,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A6"><strong>Sliding Window (A6)</strong></a> + <a href="Bi-kip-vo-cong.html#A10">Mảng đếm (A10)</a>. Hình dung cửa sổ co giãn: mở rộng right để "nếm thử" ký tự mới. Nếu số loại ký tự > K → cửa sổ chứa quá nhiều vị → thu left cho đến khi ≤ K. Tại sao đúng? Vì left chỉ tiến (loại ký tự, số loại không tăng). Mỗi con trỏ chỉ tiến → O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A6"><strong>Sliding Window (A6)</strong></a> + <a href="Bi-kip-vo-cong.html#A10">Mảng đếm (A10)</a>. Hình dung cửa sổ co giãn: mở rộng right thêm ký tự mới, dùng mảng đếm theo dõi số loại ký tự trong cửa sổ. Nếu số loại > K → cửa sổ chứa quá nhiều loại → thu left (giảm đếm, nếu về 0 thì bớt 1 loại) cho đến khi ≤ K. Ghi nhận max(right−left+1). Mỗi con trỏ chỉ tiến → O(N).
                         </div>
                     </div>
                 </div>
@@ -2135,7 +2135,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B5"><strong>Contribution Technique (B5)</strong></a> + <a href="Bi-kip-vo-cong.html#A7">Monotonic Stack (A7)</a>. Đảo góc nhìn: thay vì duyệt từng đoạn tìm max/min (O(N³)), hỏi ngược: a[i] là max của BAO NHIÊU đoạn? Số đoạn = L×R (L = khoảng cách đến phần tử lớn hơn bên trái, R = bên phải, tìm bằng stack). Tổng dao động = Σ(a[i]×số đoạn là max) − Σ(a[i]×số đoạn là min). O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B5"><strong>Contribution Technique (B5)</strong></a> + <a href="Bi-kip-vo-cong.html#A7">Monotonic Stack (A7)</a>. Đảo góc nhìn: thay vì duyệt từng đoạn tìm max/min (O(N³)), hỏi ngược: a[i] là max của BAO NHIÊU đoạn? Dùng stack tìm L = số ô liên tục bên trái ≤ a[i], R = bên phải. Mọi đoạn chọn 1 ô trong L ô trái và 1 ô trong R ô phải đều có max = a[i] → số đoạn = L×R. Đóng góp của a[i] vào tổng max = a[i]×L×R. Tương tự cho min. Tổng dao động = Σ đóng góp max − Σ đóng góp min. O(N).
                         </div>
                     </div>
                 </div>
@@ -3425,7 +3425,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A11"><strong>Kadane (A11)</strong></a> + <a href="Bi-kip-vo-cong.html#s41">Biến đổi bài toán (4.1)</a>. Vòng tròn = không biết bắt đầu ở đâu. Nhận xét: đoạn vòng tròn = bỉ phần của đoạn thẳng. Kết quả = max(Kadane tìm max, Tổng − Kadane tìm min). Giải thích: nếu đoạn tối ưu bắc qua mối nối, phần không chọn là đoạn sum nhỏ nhất ở giữa. Đặc biệt: nếu toàn âm, trả về Kadane max. O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A11"><strong>Kadane (A11)</strong></a> + <a href="Bi-kip-vo-cong.html#s41">Biến đổi bài toán (4.1)</a>. Vòng tròn nên đoạn có thể quấn qua 2 đầu (lấy đuôi + đầu). Có 2 trường hợp: (1) đoạn nằm gọn giữa mảng → Kadane thường cho maxSum; (2) đoạn quấn qua 2 đầu → phần KHÔNG chọn là 1 đoạn liên tục ở giữa = đoạn tổng nhỏ nhất → tổng chọn = Tổng − minSum. Kết quả = max(maxSum, Tổng − minSum). Lưu ý: nếu toàn âm thì Tổng − minSum = 0 (chọn rỗng), lúc đó lấy maxSum. O(N).
                         </div>
                     </div>
                 </div>
