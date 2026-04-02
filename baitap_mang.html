@@ -1400,7 +1400,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A9"><strong>Sắp xếp (A9)</strong></a> + <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers (A5)</strong></a>. 3 vòng for O(N³) quá chậm. Mẹo: cố định a[i], bài toán còn lại là "tìm cặp có tổng = −a[i]" trên mảng đã sắp xếp → Two Pointers ngược chiều (giống bài 9). Lặp i → O(N²). Bỏ qua trùng liên tiếp để không đếm lặp.
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A9"><strong>Sắp xếp (A9)</strong></a> + <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers (A5)</strong></a>. 3 vòng for O(N³) quá chậm. Mẹo: cố định a[i], cần tìm a[j]+a[k] sao cho a[i]+a[j]+a[k] = 0, tức a[j]+a[k] = −a[i]. Vậy bài toán còn lại là "tìm cặp có tổng = −a[i]" trên mảng đã sắp xếp → Two Pointers ngược chiều (giống bài 9). Lặp i → O(N²). Bỏ qua trùng liên tiếp để không đếm lặp.
                         </div>
                     </div>
                 </div>
@@ -1584,7 +1584,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A7"><strong>Monotonic Stack (A7)</strong></a> kết hợp <a href="Bi-kip-vo-cong.html#C2">Deque (C2)</a>. Hình dung deque như "dãy lính gác": chỉ giữ những người cao dần từ trước ra sau. Khi lính mới vào (a[i]), đuổi hết lính lùn hơn ở cuối (vì họ không bao giờ là max nữa). Lính đầu hàng luôn là người cao nhất = max cửa sổ. Loại lính ngoài cửa sổ K ở đầu. Mỗi phần tử vào/ra deque 1 lần → O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A7"><strong>Monotonic Stack (A7)</strong></a> kết hợp <a href="Bi-kip-vo-cong.html#C2">Deque (C2)</a>. Deque giữ các giá trị GIẢM DẦN từ đầu đến cuối (phần tử đầu lớn nhất = max cửa sổ). Hình dung như "dãy lính gác xếp theo chiều cao giảm": khi lính mới vào (a[i]), đuổi hết lính LÙN hơn hoặc bằng ở cuối (vì họ cũ hơn và không cao hơn → không bao giờ là max nữa). Lính đầu hàng luôn là người cao nhất = max cửa sổ. Loại lính ngoài cửa sổ K ở đầu. Mỗi phần tử vào/ra deque 1 lần → O(N).
                         </div>
                     </div>
                 </div>
@@ -2227,7 +2227,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers ngược chiều (A5)</strong></a>. Hình dung: nước tại vị trí i = min(tường cao nhất bên trái, bên phải) − h[i]. 2 con trỏ từ 2 đầu: bên nào THẤP hơn thì nước chắc chắn bị giới hạn bởi bên đó (vì bên kia ≥). Dịch con trỏ thấp vào, cộng nước. O(N), không cần mảng phụ.
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A5"><strong>Two Pointers ngược chiều (A5)</strong></a>. Nước tại vị trí i = min(tường cao nhất bên trái, bên phải) − h[i]. Dùng 2 con trỏ từ 2 đầu, giữ maxL và maxR. Bên nào THẤP hơn thì xử bên đó trước. VD: maxL=3 < maxR=5 → nước tại left = min(3,5)−1 = 3−1 = 2 — ta chắc chắn min là maxL vì maxR ≥ maxL, dù phía phải còn thay đổi thì cũng ≥ maxL. Dịch con trỏ thấp vào, cộng nước. O(N), không cần mảng phụ.
                         </div>
                     </div>
                 </div>
@@ -3070,7 +3070,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng công thức tổng hoặc XOR (xem <a href="Bi-kip-vo-cong.html#s12"><strong>Tràn số (1.2)</strong></a> để chọn cách an toàn). Dãy 1..N+1 thiếu 1 số. Cách 1: tổng kỳ vọng − tổng thực tế. Cách 2: XOR tất cả với 1..N+1 — a XOR a = 0, chỉ số thiếu còn lại. XOR tránh tràn khi N lớn. O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng công thức tổng hoặc XOR (xem <a href="Bi-kip-vo-cong.html#s12"><strong>Tràn số (1.2)</strong></a> để chọn cách an toàn). Dãy 1..N+1 thiếu 1 số. Cách 1: tổng kỳ vọng − tổng thực tế. Cách 2: XOR tất cả số trong mảng đầu vào với 1, 2, ..., N+1. Vì a XOR a = 0, mỗi số xuất hiện đúng 2 lần (1 trong input + 1 trong dãy chuẩn) sẽ triệt tiêu, chỉ số thiếu xuất hiện 1 lần nên còn lại. XOR tránh tràn khi N lớn. O(N).
                         </div>
                     </div>
                 </div>
@@ -3623,7 +3623,7 @@ Chi 85</pre>
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A11"><strong>Kadane 2D (A11)</strong></a> + <a href="Bi-kip-vo-cong.html#s41">Biến đổi (4.1)</a>. Brute force 4 vòng O(N⁴) chậm. Biến đổi: cố định 2 hàng (r1, r2), nén cột thành mảng 1D (tổng mỗi cột từ r1→r2). Kadane trên mảng 1D = vùng con lớn nhất với 2 hàng đó. Duyệt tất cả cặp hàng O(N²), Kadane O(M) → O(N² × M).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A11"><strong>Kadane 2D (A11)</strong></a> + <a href="Bi-kip-vo-cong.html#s41">Biến đổi (4.1)</a>. Brute force 4 vòng O(N⁴) chậm. Biến đổi: cố định 2 hàng (r1, r2), tính colSum[j] = tổng cột j từ hàng r1 đến r2. Lúc này chọn cột c1..c2 liên tiếp = chọn HCN (r1,c1)→(r2,c2), tổng HCN = tổng đoạn colSum[c1..c2]. Vậy tìm HCN lớn nhất với 2 hàng đó = Kadane trên mảng colSum 1D. Duyệt tất cả cặp hàng O(N²), Kadane O(M) → O(N² × M).
                         </div>
                     </div>
                 </div>
