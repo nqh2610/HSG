@@ -902,12 +902,12 @@ ofstream fout(<span class="string">"CHIASO.OUT"</span>);
                     </div>
                     <div class="example-box">
                         <h4>NHCANH.OUT</h4>
-                        <pre>19</pre>
+                        <pre>20</pre>
                     </div>
                 </div>
 
                 <div class="constraints">
-                    <strong>Giải thích:</strong> Chọn món 2 (w=4, v=8) và món 4 (w=3, v=7) + môn 1 (w=5, v=10)? 5+4+3=12 > 10. Chọn 1,4: w=8 ≤ 10, v=17. Chọn 2,3: w=10, v=20? Không, 4+6=10 ≤ 10, v=8+12=20. Vậy đáp án = 20.
+                    <strong>Giải thích:</strong> Chọn món 2 (w=4, v=8) và món 3 (w=6, v=12): w=4+6=10 ≤ 10, v=8+12=20. Đây là phương án tối ưu → đáp án = 20.
                 </div>
 
                 <div class="solution-toggle">
@@ -961,7 +961,7 @@ vector&lt;pair&lt;<span class="keyword">long long</span>,<span class="keyword">l
     items.resize(n);
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> items[i].first >> items[i].second;
     <span class="comment">// Sắp theo đơn giá giảm</span>
-    <span class="function">sort</span>(items.begin(), items.end(), [](auto&amp; a, auto&amp; b) {
+    <span class="function">sort</span>(items.begin(), items.end(), [](<span class="keyword">const</span> pair&lt;<span class="keyword">long long</span>,<span class="keyword">long long</span>&gt;&amp; a, <span class="keyword">const</span> pair&lt;<span class="keyword">long long</span>,<span class="keyword">long long</span>&gt;&amp; b) {
         <span class="keyword">return</span> (<span class="keyword">double</span>)a.second / a.first > (<span class="keyword">double</span>)b.second / b.first;
     });
     <span class="function">solve</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);

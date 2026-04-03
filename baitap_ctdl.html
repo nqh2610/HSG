@@ -787,7 +787,9 @@ NO</pre>
     <span class="function">sort</span>(edges.begin(), edges.end());
     <span class="keyword">long long</span> total = <span class="number">0</span>;
     <span class="keyword">int</span> cnt = <span class="number">0</span>;
-    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; [w, u, v] : edges) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)edges.size(); i++) {
+        <span class="keyword">long long</span> w = get&lt;<span class="number">0</span>&gt;(edges[i]);
+        <span class="keyword">int</span> u = get&lt;<span class="number">1</span>&gt;(edges[i]), v = get&lt;<span class="number">2</span>&gt;(edges[i]);
         <span class="keyword">if</span> (<span class="function">unite</span>(u, v)) {
             total += w;
             <span class="keyword">if</span> (++cnt == n - <span class="number">1</span>) <span class="keyword">break</span>;

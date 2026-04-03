@@ -198,7 +198,7 @@
                     <div class="example-box">
                         <h4>LUYTHUA.OUT</h4>
                         <pre>24
-981147432</pre>
+886041711</pre>
                     </div>
                 </div>
 
@@ -219,8 +219,8 @@
     a %= m;
     <span class="keyword">long long</span> res = <span class="number">1</span>;
     <span class="keyword">while</span> (b > <span class="number">0</span>) {
-        <span class="keyword">if</span> (b &amp; <span class="number">1</span>) res = (__int128)res * a % m;
-        a = (__int128)a * a % m;
+        <span class="keyword">if</span> (b &amp; <span class="number">1</span>) res = res * a % m;
+        a = a * a % m;
         b >>= <span class="number">1</span>;
     }
     <span class="keyword">return</span> res;
@@ -240,7 +240,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E3"><strong>Lũy thừa nhanh (E3)</strong></a>. Nhân a lên b lần bình thường → O(b) = 10<sup>18</sup> → TLE. Lũy thừa nhanh: chia b theo bit nhị phân. Mỗi bước: nếu bit cuối = 1 → nhân res với a; rồi a = a×a, b /= 2. Chỉ O(log b) phép nhân. Dùng __int128 tránh tràn khi nhân 2 số long long rồi mod. O(T × log b).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E3"><strong>Lũy thừa nhanh (E3)</strong></a>. Nhân a lên b lần bình thường → O(b) = 10<sup>18</sup> → TLE. Lũy thừa nhanh: chia b theo bit nhị phân. Mỗi bước: nếu bit cuối = 1 → nhân res với a; rồi a = a×a, b /= 2. Chỉ O(log b) phép nhân. Vì m ≤ 10<sup>9</sup>, sau mod res và a đều &lt; 10<sup>9</sup>, tích &lt; 10<sup>18</sup> nằm trong long long. O(T × log b).
                         </div>
                     </div>
                 </div>
@@ -669,8 +669,8 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
     <span class="keyword">int</span> n;
     fin >> n;
     vector&lt;<span class="keyword">int</span>&gt; a(n);
-    <span class="keyword">int</span> cnt[MAXV] = {};
-    <span class="keyword">int</span> divCnt[MAXV] = {};
+    <span class="keyword">static int</span> cnt[MAXV] = {};
+    <span class="keyword">static int</span> divCnt[MAXV] = {};
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
         fin >> a[i];
         cnt[a[i]]++;
@@ -752,8 +752,8 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
     a %= m;
     <span class="keyword">long long</span> res = <span class="number">1</span>;
     <span class="keyword">while</span> (b > <span class="number">0</span>) {
-        <span class="keyword">if</span> (b &amp; <span class="number">1</span>) res = (__int128)res * a % m;
-        a = (__int128)a * a % m;
+        <span class="keyword">if</span> (b &amp; <span class="number">1</span>) res = res * a % m;
+        a = a * a % m;
         b >>= <span class="number">1</span>;
     }
     <span class="keyword">return</span> res;
@@ -817,7 +817,7 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
                         <h4>TOHOP.OUT</h4>
                         <pre>10
 120
-149033233</pre>
+996692777</pre>
                     </div>
                 </div>
 
@@ -1179,7 +1179,7 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
                     <div class="example-box">
                         <h4>FIBONACCI.OUT</h4>
                         <pre>55
-12586269025
+586268941
 209783453</pre>
                     </div>
                 </div>
@@ -1541,12 +1541,12 @@ Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long 
                     <div class="example-box">
                         <h4>PALINDROME.OUT</h4>
                         <pre>6
-11 33 66 99 141 171</pre>
+33 66 99 111 141 171</pre>
                     </div>
                 </div>
 
                 <div class="constraints">
-                    <strong>Giải thích:</strong> Các số đối xứng trong [10,200]: 11, 22, 33, 44, 55, 66, 77, 88, 99, 101, 111, 121, 131, 141, 151, 161, 171, 181, 191. Lọc tổng chữ số chia hết cho 3: 11(2)✗, 33(6)✓, 66(12)✓, 99(18)✓, 141(6)✓, 171(9)✓ → 6 số.
+                    <strong>Giải thích:</strong> Các số đối xứng trong [10,200]: 11, 22, 33, 44, 55, 66, 77, 88, 99, 101, 111, 121, 131, 141, 151, 161, 171, 181, 191. Lọc tổng chữ số chia hết cho 3: 33(6)✓, 66(12)✓, 99(18)✓, 111(3)✓, 141(6)✓, 171(9)✓ → 6 số.
                 </div>
 
                 <div class="solution-toggle">
@@ -1630,13 +1630,13 @@ Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long 
                     </div>
                     <div class="example-box">
                         <h4>ARMSTRONG.OUT</h4>
-                        <pre>12
-1 2 3 4 5 6 7 8 9 153 370 371</pre>
+                        <pre>13
+1 2 3 4 5 6 7 8 9 153 370 371 407</pre>
                     </div>
                 </div>
 
                 <div class="constraints">
-                    <strong>Giải thích:</strong> 153 = 1³+5³+3³. 370 = 3³+7³+0³. 371 = 3³+7³+1³.
+                    <strong>Giải thích:</strong> 153 = 1³+5³+3³. 370 = 3³+7³+0³. 371 = 3³+7³+1³. 407 = 4³+0³+7³.
                 </div>
 
                 <div class="solution-toggle">
