@@ -338,13 +338,13 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"XEPSUA.INP"</span>);
-    ofstream fout(<span class="string">"XEPSUA.OUT"</span>);
+    ifstream in(<span class="string">"XEPSUA.INP"</span>);
+    ofstream out(<span class="string">"XEPSUA.OUT"</span>);
     <span class="keyword">int</span> n, m;
-    fin >> n >> m;
+    in >> n >> m;
     vector&lt;<span class="keyword">int</span>&gt; p(n), c(m);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> p[i];
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) fin >> c[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> p[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) in >> c[i];
     <span class="function">sort</span>(p.begin(), p.end());
     <span class="function">sort</span>(c.begin(), c.end());
     <span class="keyword">int</span> ans = <span class="number">0</span>, j = <span class="number">0</span>;
@@ -354,7 +354,9 @@
             j++;
         }
     }
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -425,12 +427,12 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"CHONDOAN.INP"</span>);
-    ofstream fout(<span class="string">"CHONDOAN.OUT"</span>);
+    ifstream in(<span class="string">"CHONDOAN.INP"</span>);
+    ofstream out(<span class="string">"CHONDOAN.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; a(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i].first >> a[i].second;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i].first >> a[i].second;
     <span class="function">sort</span>(a.begin(), a.end(), cmp);
     <span class="keyword">int</span> ans = <span class="number">0</span>, last = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
@@ -439,7 +441,9 @@
             last = a[i].second;
         }
     }
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -502,17 +506,19 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"GHEPSO.INP"</span>);
-    ofstream fout(<span class="string">"GHEPSO.OUT"</span>);
+    ifstream in(<span class="string">"GHEPSO.INP"</span>);
+    ofstream out(<span class="string">"GHEPSO.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     vector&lt;<span class="keyword">int</span>&gt; a(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
     <span class="function">sort</span>(a.begin(), a.end());
     <span class="keyword">int</span> ans = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n / <span class="number">2</span>; i++)
         ans = max(ans, a[i] + a[n - <span class="number">1</span> - i]);
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -575,12 +581,12 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"THUYENBUOM.INP"</span>);
-    ofstream fout(<span class="string">"THUYENBUOM.OUT"</span>);
+    ifstream in(<span class="string">"THUYENBUOM.INP"</span>);
+    ofstream out(<span class="string">"THUYENBUOM.OUT"</span>);
     <span class="keyword">int</span> n, C;
-    fin >> n >> C;
+    in >> n >> C;
     vector&lt;<span class="keyword">int</span>&gt; w(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> w[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> w[i];
     <span class="function">sort</span>(w.begin(), w.end());
     <span class="keyword">int</span> left = <span class="number">0</span>, right = n - <span class="number">1</span>, boats = <span class="number">0</span>;
     <span class="keyword">while</span> (left &lt;= right) {
@@ -592,7 +598,9 @@
         right--;
         boats++;
     }
-    fout &lt;&lt; boats;
+    out &lt;&lt; boats;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -660,15 +668,15 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"SANBAY.INP"</span>);
-    ofstream fout(<span class="string">"SANBAY.OUT"</span>);
+    ifstream in(<span class="string">"SANBAY.INP"</span>);
+    ofstream out(<span class="string">"SANBAY.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     <span class="comment">// Sự kiện: (thời gian, loại). Đến = +1, Đi = -1</span>
     vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; ev;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
         <span class="keyword">int</span> a, d;
-        fin >> a >> d;
+        in >> a >> d;
         ev.push_back(make_pair(a, <span class="number">1</span>));
         ev.push_back(make_pair(d, -<span class="number">1</span>));
     }
@@ -679,7 +687,9 @@
         cur += ev[i].second;
         ans = max(ans, cur);
     }
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -750,12 +760,12 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"BALOPL.INP"</span>);
-    ofstream fout(<span class="string">"BALOPL.OUT"</span>);
+    ifstream in(<span class="string">"BALOPL.INP"</span>);
+    ofstream out(<span class="string">"BALOPL.OUT"</span>);
     <span class="keyword">int</span> n, W;
-    fin >> n >> W;
+    in >> n >> W;
     vector&lt;<span class="type">Item</span>&gt; items(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> items[i].w >> items[i].v;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> items[i].w >> items[i].v;
     <span class="function">sort</span>(items.begin(), items.end(), cmp);
     <span class="keyword">double</span> ans = <span class="number">0</span>;
     <span class="keyword">int</span> rem = W;
@@ -768,7 +778,9 @@
             rem = <span class="number">0</span>;
         }
     }
-    fout &lt;&lt; fixed &lt;&lt; setprecision(<span class="number">2</span>) &lt;&lt; ans;
+    out &lt;&lt; fixed &lt;&lt; setprecision(<span class="number">2</span>) &lt;&lt; ans;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -831,14 +843,14 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"NOITEP.INP"</span>);
-    ofstream fout(<span class="string">"NOITEP.OUT"</span>);
+    ifstream in(<span class="string">"NOITEP.INP"</span>);
+    ofstream out(<span class="string">"NOITEP.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     priority_queue&lt;<span class="keyword">long long</span>, vector&lt;<span class="keyword">long long</span>&gt;, greater&lt;<span class="keyword">long long</span>&gt;&gt; pq;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
         <span class="keyword">long long</span> x;
-        fin >> x;
+        in >> x;
         pq.push(x);
     }
     <span class="keyword">long long</span> ans = <span class="number">0</span>;
@@ -848,7 +860,9 @@
         ans += a + b;
         pq.push(a + b);
     }
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -911,18 +925,20 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"NHIENLIEU.INP"</span>);
-    ofstream fout(<span class="string">"NHIENLIEU.OUT"</span>);
+    ifstream in(<span class="string">"NHIENLIEU.INP"</span>);
+    ofstream out(<span class="string">"NHIENLIEU.OUT"</span>);
     <span class="keyword">int</span> L, C, n;
-    fin >> L >> C >> n;
+    in >> L >> C >> n;
     vector&lt;<span class="keyword">int</span>&gt; d(n + <span class="number">2</span>);
     d[<span class="number">0</span>] = <span class="number">0</span>;
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fin >> d[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in >> d[i];
     d[n + <span class="number">1</span>] = L;
     <span class="comment">// Kiểm tra khả thi: mọi khoảng cách liên tiếp ≤ C</span>
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n + <span class="number">1</span>; i++) {
         <span class="keyword">if</span> (d[i] - d[i - <span class="number">1</span>] > C) {
-            fout &lt;&lt; -<span class="number">1</span>;
+            out &lt;&lt; -<span class="number">1</span>;
+            in.close();
+            out.close();
             <span class="keyword">return</span> <span class="number">0</span>;
         }
     }
@@ -935,7 +951,9 @@
             stops++;
         }
     }
-    fout &lt;&lt; stops;
+    out &lt;&lt; stops;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -998,20 +1016,22 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"NHAYBAC.INP"</span>);
-    ofstream fout(<span class="string">"NHAYBAC.OUT"</span>);
+    ifstream in(<span class="string">"NHAYBAC.INP"</span>);
+    ofstream out(<span class="string">"NHAYBAC.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     vector&lt;<span class="keyword">int</span>&gt; a(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i];
-    <span class="keyword">if</span> (n == <span class="number">1</span>) { fout &lt;&lt; <span class="number">0</span>; <span class="keyword">return</span> <span class="number">0</span>; }
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
+    <span class="keyword">if</span> (n == <span class="number">1</span>) { out &lt;&lt; <span class="number">0</span>; in.close(); out.close(); <span class="keyword">return</span> <span class="number">0</span>; }
     <span class="comment">// curEnd: biên phải vùng đang xét, farthest: xa nhất có thể tới</span>
     <span class="keyword">int</span> jumps = <span class="number">0</span>, curEnd = <span class="number">0</span>, farthest = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) {
         farthest = max(farthest, i + a[i]);
         <span class="keyword">if</span> (i == curEnd) {
             <span class="keyword">if</span> (farthest == curEnd) {
-                fout &lt;&lt; -<span class="number">1</span>;
+                out &lt;&lt; -<span class="number">1</span>;
+                in.close();
+                out.close();
                 <span class="keyword">return</span> <span class="number">0</span>;
             }
             jumps++;
@@ -1019,7 +1039,9 @@
             <span class="keyword">if</span> (curEnd >= n - <span class="number">1</span>) <span class="keyword">break</span>;
         }
     }
-    fout &lt;&lt; jumps;
+    out &lt;&lt; jumps;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1093,12 +1115,12 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"PHUDOAN.INP"</span>);
-    ofstream fout(<span class="string">"PHUDOAN.OUT"</span>);
+    ifstream in(<span class="string">"PHUDOAN.INP"</span>);
+    ofstream out(<span class="string">"PHUDOAN.OUT"</span>);
     <span class="keyword">int</span> A, B, n;
-    fin >> A >> B >> n;
+    in >> A >> B >> n;
     vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; seg(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> seg[i].first >> seg[i].second;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> seg[i].first >> seg[i].second;
     <span class="function">sort</span>(seg.begin(), seg.end(), cmp);
     <span class="keyword">int</span> ans = <span class="number">0</span>, cur = A, idx = <span class="number">0</span>;
     <span class="keyword">while</span> (cur &lt; B) {
@@ -1108,13 +1130,17 @@
             idx++;
         }
         <span class="keyword">if</span> (best == cur) {
-            fout &lt;&lt; -<span class="number">1</span>;
+            out &lt;&lt; -<span class="number">1</span>;
+            in.close();
+            out.close();
             <span class="keyword">return</span> <span class="number">0</span>;
         }
         cur = best;
         ans++;
     }
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1177,12 +1203,12 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"PHATKEO.INP"</span>);
-    ofstream fout(<span class="string">"PHATKEO.OUT"</span>);
+    ifstream in(<span class="string">"PHATKEO.INP"</span>);
+    ofstream out(<span class="string">"PHATKEO.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     vector&lt;<span class="keyword">int</span>&gt; r(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> r[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> r[i];
     vector&lt;<span class="keyword">int</span>&gt; candy(n, <span class="number">1</span>);
     <span class="comment">// Lượt 1: trái → phải</span>
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++)
@@ -1192,7 +1218,9 @@
         <span class="keyword">if</span> (r[i] > r[i + <span class="number">1</span>]) candy[i] = max(candy[i], candy[i + <span class="number">1</span>] + <span class="number">1</span>);
     <span class="keyword">long long</span> ans = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) ans += candy[i];
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1259,25 +1287,29 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"SOTOTHAT.INP"</span>);
-    ofstream fout(<span class="string">"SOTOTHAT.OUT"</span>);
+    ifstream in(<span class="string">"SOTOTHAT.INP"</span>);
+    ofstream out(<span class="string">"SOTOTHAT.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     vector&lt;string&gt; a(n);
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
         <span class="keyword">int</span> x;
-        fin >> x;
+        in >> x;
         a[i] = to_string(x);
     }
     <span class="function">sort</span>(a.begin(), a.end(), cmp);
     <span class="comment">// Trường hợp toàn số 0</span>
     <span class="keyword">if</span> (a[<span class="number">0</span>] == <span class="string">"0"</span>) {
-        fout &lt;&lt; <span class="string">"0"</span>;
+        out &lt;&lt; <span class="string">"0"</span>;
+        in.close();
+        out.close();
         <span class="keyword">return</span> <span class="number">0</span>;
     }
     string result;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) result += a[i];
-    fout &lt;&lt; result;
+    out &lt;&lt; result;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1340,11 +1372,11 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"XAUMIN.INP"</span>);
-    ofstream fout(<span class="string">"XAUMIN.OUT"</span>);
+    ifstream in(<span class="string">"XAUMIN.INP"</span>);
+    ofstream out(<span class="string">"XAUMIN.OUT"</span>);
     string s;
     <span class="keyword">int</span> k;
-    fin >> s >> k;
+    in >> s >> k;
     string result;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)s.size(); i++) {
         <span class="comment">// Bỏ đỉnh stack nếu nó lớn hơn ký tự hiện tại và còn được xóa</span>
@@ -1356,7 +1388,9 @@
     }
     <span class="comment">// Nếu K còn dư, xóa từ cuối</span>
     <span class="keyword">while</span> (k > <span class="number">0</span>) { result.pop_back(); k--; }
-    fout &lt;&lt; result;
+    out &lt;&lt; result;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1425,12 +1459,12 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"TREHAN.INP"</span>);
-    ofstream fout(<span class="string">"TREHAN.OUT"</span>);
+    ifstream in(<span class="string">"TREHAN.INP"</span>);
+    ofstream out(<span class="string">"TREHAN.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; jobs(n); <span class="comment">// (duration, deadline)</span>
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> jobs[i].first >> jobs[i].second;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> jobs[i].first >> jobs[i].second;
     <span class="function">sort</span>(jobs.begin(), jobs.end(), cmp);
     <span class="keyword">long long</span> time = <span class="number">0</span>, maxLate = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
@@ -1438,7 +1472,9 @@
         <span class="keyword">long long</span> late = time - jobs[i].second;
         <span class="keyword">if</span> (late > maxLate) maxLate = late;
     }
-    fout &lt;&lt; maxLate;
+    out &lt;&lt; maxLate;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1519,14 +1555,14 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"LICHLAMVIEC.INP"</span>);
-    ofstream fout(<span class="string">"LICHLAMVIEC.OUT"</span>);
+    ifstream in(<span class="string">"LICHLAMVIEC.INP"</span>);
+    ofstream out(<span class="string">"LICHLAMVIEC.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; jobs(n); <span class="comment">// (deadline, profit)</span>
     <span class="keyword">int</span> maxD = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
-        fin >> jobs[i].first >> jobs[i].second;
+        in >> jobs[i].first >> jobs[i].second;
         maxD = max(maxD, jobs[i].first);
     }
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= maxD; i++) par[i] = i;
@@ -1539,7 +1575,9 @@
             par[slot] = slot - <span class="number">1</span>;
         }
     }
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>

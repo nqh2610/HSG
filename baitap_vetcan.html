@@ -128,12 +128,12 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"TAPCON.INP"</span>);
-    ofstream fout(<span class="string">"TAPCON.OUT"</span>);
+    ifstream in(<span class="string">"TAPCON.INP"</span>);
+    ofstream out(<span class="string">"TAPCON.OUT"</span>);
     <span class="keyword">int</span> n; <span class="keyword">long long</span> k;
-    fin >> n >> k;
+    in >> n >> k;
     vector&lt;<span class="keyword">long long</span>&gt; a(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
     <span class="keyword">int</span> ans = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> mask = <span class="number">0</span>; mask &lt; (<span class="number">1</span> &lt;&lt; n); mask++) {
         <span class="keyword">long long</span> sum = <span class="number">0</span>;
@@ -141,7 +141,10 @@
             <span class="keyword">if</span> (mask >> i &amp; <span class="number">1</span>) sum += a[i];
         <span class="keyword">if</span> (sum == k) ans++;
     }
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -218,11 +221,14 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"HOANVI.INP"</span>);
-    ofstream fout(<span class="string">"HOANVI.OUT"</span>);
-    fin >> n;
+    ifstream in(<span class="string">"HOANVI.INP"</span>);
+    ofstream out(<span class="string">"HOANVI.OUT"</span>);
+    in >> n;
     <span class="function">solve</span>(<span class="number">1</span>);
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -288,13 +294,13 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"CHIAKEO.INP"</span>);
-    ofstream fout(<span class="string">"CHIAKEO.OUT"</span>);
+    ifstream in(<span class="string">"CHIAKEO.INP"</span>);
+    ofstream out(<span class="string">"CHIAKEO.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     vector&lt;<span class="keyword">long long</span>&gt; a(n);
     <span class="keyword">long long</span> total = <span class="number">0</span>;
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) { fin >> a[i]; total += a[i]; }
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) { in >> a[i]; total += a[i]; }
     <span class="keyword">long long</span> ans = total;
     <span class="keyword">for</span> (<span class="keyword">int</span> mask = <span class="number">0</span>; mask &lt; (<span class="number">1</span> &lt;&lt; n); mask++) {
         <span class="keyword">long long</span> s = <span class="number">0</span>;
@@ -302,7 +308,10 @@
             <span class="keyword">if</span> (mask >> i &amp; <span class="number">1</span>) s += a[i];
         ans = min(ans, abs(total - <span class="number">2</span> * s));
     }
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -375,11 +384,14 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"XEPHAU.INP"</span>);
-    ofstream fout(<span class="string">"XEPHAU.OUT"</span>);
-    fin >> n;
+    ifstream in(<span class="string">"XEPHAU.INP"</span>);
+    ofstream out(<span class="string">"XEPHAU.OUT"</span>);
+    in >> n;
     <span class="function">solve</span>(<span class="number">0</span>);
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -441,12 +453,12 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"GAPMID.INP"</span>);
-    ofstream fout(<span class="string">"GAPMID.OUT"</span>);
+    ifstream in(<span class="string">"GAPMID.INP"</span>);
+    ofstream out(<span class="string">"GAPMID.OUT"</span>);
     <span class="keyword">int</span> n; <span class="keyword">long long</span> k;
-    fin >> n >> k;
+    in >> n >> k;
     vector&lt;<span class="keyword">long long</span>&gt; a(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
     <span class="keyword">int</span> h1 = n / <span class="number">2</span>, h2 = n - h1;
     <span class="comment">// Sinh tổng nửa trái</span>
     vector&lt;<span class="keyword">long long</span>&gt; left;
@@ -467,7 +479,10 @@
         ans += upper_bound(left.begin(), left.end(), need)
              - lower_bound(left.begin(), left.end(), need);
     }
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -561,11 +576,11 @@ vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</sp
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"SUDOKU.INP"</span>);
-    ofstream fout(<span class="string">"SUDOKU.OUT"</span>);
+    ifstream in(<span class="string">"SUDOKU.INP"</span>);
+    ofstream out(<span class="string">"SUDOKU.OUT"</span>);
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++)
         <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">9</span>; j++) {
-            fin >> board[i][j];
+            in >> board[i][j];
             <span class="keyword">if</span> (board[i][j] == <span class="number">0</span>) blanks.push_back({i, j});
             <span class="keyword">else</span> {
                 <span class="keyword">int</span> v = board[i][j], b = (i/<span class="number">3</span>)*<span class="number">3</span>+j/<span class="number">3</span>;
@@ -575,8 +590,11 @@ vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</sp
     <span class="function">solve</span>(<span class="number">0</span>);
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++) {
         <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">9</span>; j++)
-            fout &lt;&lt; board[i][j] &lt;&lt; <span class="string">" \n"</span>[j == <span class="number">8</span>];
+            out &lt;&lt; board[i][j] &lt;&lt; <span class="string">" \n"</span>[j == <span class="number">8</span>];
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -649,12 +667,15 @@ vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</sp
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"XAUNGOAC.INP"</span>);
-    ofstream fout(<span class="string">"XAUNGOAC.OUT"</span>);
-    fin &gt;&gt; n;
+    ifstream in(<span class="string">"XAUNGOAC.INP"</span>);
+    ofstream out(<span class="string">"XAUNGOAC.OUT"</span>);
+    in &gt;&gt; n;
     ans = <span class="number">0</span>;
     <span class="function">solve</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -743,18 +764,24 @@ vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</sp
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"TOMAU.INP"</span>);
-    ofstream fout(<span class="string">"TOMAU.OUT"</span>);
-    fin &gt;&gt; n &gt;&gt; m;
+    ifstream in(<span class="string">"TOMAU.INP"</span>);
+    ofstream out(<span class="string">"TOMAU.OUT"</span>);
+    in &gt;&gt; n &gt;&gt; m;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
-        <span class="keyword">int</span> u, v; fin &gt;&gt; u &gt;&gt; v;
+        <span class="keyword">int</span> u, v; in &gt;&gt; u &gt;&gt; v;
         adj[u][v] = adj[v][u] = <span class="keyword">true</span>;
     }
     <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= n; k++)
         <span class="keyword">if</span> (<span class="function">solve</span>(<span class="number">1</span>, k)) {
-            fout &lt;&lt; k;
+            out &lt;&lt; k;
+            in.close();
+            out.close();
+
             <span class="keyword">return</span> <span class="number">0</span>;
         }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -825,16 +852,16 @@ vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</sp
 <span class="keyword">using namespace</span> std;
 <span class="keyword">int</span> n, cnt;
 vector&lt;<span class="keyword">int</span>&gt; cur;
-ofstream fout(<span class="string">"CHIASO.OUT"</span>);
+ofstream out(<span class="string">"CHIASO.OUT"</span>);
 
 <span class="keyword">void</span> <span class="function">solve</span>(<span class="keyword">int</span> remain, <span class="keyword">int</span> minVal) {
     <span class="keyword">if</span> (remain == <span class="number">0</span> &amp;&amp; cur.size() &gt; <span class="number">1</span>) {
         cnt++;
         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)cur.size(); i++) {
-            <span class="keyword">if</span> (i) fout &lt;&lt; <span class="string">"+"</span>;
-            fout &lt;&lt; cur[i];
+            <span class="keyword">if</span> (i) out &lt;&lt; <span class="string">"+"</span>;
+            out &lt;&lt; cur[i];
         }
-        fout &lt;&lt; <span class="string">"\n"</span>;
+        out &lt;&lt; <span class="string">"\n"</span>;
         <span class="keyword">return</span>;
     }
     <span class="keyword">for</span> (<span class="keyword">int</span> v = minVal; v &lt;= remain; v++) {
@@ -845,17 +872,20 @@ ofstream fout(<span class="string">"CHIASO.OUT"</span>);
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"CHIASO.INP"</span>);
-    fin &gt;&gt; n;
+    ifstream in(<span class="string">"CHIASO.INP"</span>);
+    in &gt;&gt; n;
     cnt = <span class="number">0</span>;
     <span class="function">solve</span>(n, <span class="number">1</span>);
     <span class="comment">// Ghi số cách lên đầu file: đọc lại và chèn</span>
-    fout.close();
+    out.close();
     ifstream tmp(<span class="string">"CHIASO.OUT"</span>);
     string all((<span class="function">istreambuf_iterator</span>&lt;<span class="keyword">char</span>&gt;(tmp)), <span class="function">istreambuf_iterator</span>&lt;<span class="keyword">char</span>&gt;());
     tmp.close();
     ofstream out(<span class="string">"CHIASO.OUT"</span>);
     out &lt;&lt; cnt &lt;&lt; <span class="string">"\n"</span> &lt;&lt; all;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -955,17 +985,20 @@ vector&lt;pair&lt;<span class="keyword">long long</span>,<span class="keyword">l
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"NHCANH.INP"</span>);
-    ofstream fout(<span class="string">"NHCANH.OUT"</span>);
-    fin >> n >> W;
+    ifstream in(<span class="string">"NHCANH.INP"</span>);
+    ofstream out(<span class="string">"NHCANH.OUT"</span>);
+    in >> n >> W;
     items.resize(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> items[i].first >> items[i].second;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> items[i].first >> items[i].second;
     <span class="comment">// Sắp theo đơn giá giảm</span>
     <span class="function">sort</span>(items.begin(), items.end(), [](<span class="keyword">const</span> pair&lt;<span class="keyword">long long</span>,<span class="keyword">long long</span>&gt;&amp; a, <span class="keyword">const</span> pair&lt;<span class="keyword">long long</span>,<span class="keyword">long long</span>&gt;&amp; b) {
         <span class="keyword">return</span> (<span class="keyword">double</span>)a.second / a.first > (<span class="keyword">double</span>)b.second / b.first;
     });
     <span class="function">solve</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
-    fout &lt;&lt; best;
+    out &lt;&lt; best;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>

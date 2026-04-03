@@ -135,8 +135,8 @@
 <span class="keyword">int</span> prefix[MAXN + <span class="number">1</span>];
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"DEMSNT.INP"</span>);
-    ofstream fout(<span class="string">"DEMSNT.OUT"</span>);
+    ifstream in(<span class="string">"DEMSNT.INP"</span>);
+    ofstream out(<span class="string">"DEMSNT.OUT"</span>);
     <span class="comment">// Sàng Eratosthenes</span>
     notPrime[<span class="number">0</span>] = notPrime[<span class="number">1</span>] = <span class="keyword">true</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; (<span class="keyword">long long</span>)i * i &lt;= MAXN; i++)
@@ -147,12 +147,15 @@
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= MAXN; i++)
         prefix[i] = prefix[i - <span class="number">1</span>] + (!notPrime[i] ? <span class="number">1</span> : <span class="number">0</span>);
     <span class="keyword">int</span> T;
-    fin >> T;
+    in >> T;
     <span class="keyword">while</span> (T--) {
         <span class="keyword">int</span> L, R;
-        fin >> L >> R;
-        fout &lt;&lt; prefix[R] - prefix[L - <span class="number">1</span>] &lt;&lt; <span class="string">"\n"</span>;
+        in >> L >> R;
+        out &lt;&lt; prefix[R] - prefix[L - <span class="number">1</span>] &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -227,15 +230,18 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"LUYTHUA.INP"</span>);
-    ofstream fout(<span class="string">"LUYTHUA.OUT"</span>);
+    ifstream in(<span class="string">"LUYTHUA.INP"</span>);
+    ofstream out(<span class="string">"LUYTHUA.OUT"</span>);
     <span class="keyword">int</span> T;
-    fin >> T;
+    in >> T;
     <span class="keyword">while</span> (T--) {
         <span class="keyword">long long</span> a, b, m;
-        fin >> a >> b >> m;
-        fout &lt;&lt; <span class="function">power</span>(a, b, m) &lt;&lt; <span class="string">"\n"</span>;
+        in >> a >> b >> m;
+        out &lt;&lt; <span class="function">power</span>(a, b, m) &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -311,24 +317,27 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"PHANTICH.INP"</span>);
-    ofstream fout(<span class="string">"PHANTICH.OUT"</span>);
+    ifstream in(<span class="string">"PHANTICH.INP"</span>);
+    ofstream out(<span class="string">"PHANTICH.OUT"</span>);
     <span class="function">sieve</span>();
     <span class="keyword">int</span> T;
-    fin >> T;
+    in >> T;
     <span class="keyword">while</span> (T--) {
         <span class="keyword">int</span> n;
-        fin >> n;
+        in >> n;
         <span class="keyword">bool</span> first = <span class="keyword">true</span>;
         <span class="keyword">while</span> (n > <span class="number">1</span>) {
             <span class="keyword">int</span> p = spf[n], cnt = <span class="number">0</span>;
             <span class="keyword">while</span> (n % p == <span class="number">0</span>) { n /= p; cnt++; }
-            <span class="keyword">if</span> (!first) fout &lt;&lt; <span class="string">" * "</span>;
-            fout &lt;&lt; p &lt;&lt; <span class="string">"^"</span> &lt;&lt; cnt;
+            <span class="keyword">if</span> (!first) out &lt;&lt; <span class="string">" * "</span>;
+            out &lt;&lt; p &lt;&lt; <span class="string">"^"</span> &lt;&lt; cnt;
             first = <span class="keyword">false</span>;
         }
-        fout &lt;&lt; <span class="string">"\n"</span>;
+        out &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -399,11 +408,11 @@
 <span class="keyword">int</span> sp[LOG][MAXN], _log[MAXN];
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"GCDQUERY.INP"</span>);
-    ofstream fout(<span class="string">"GCDQUERY.OUT"</span>);
+    ifstream in(<span class="string">"GCDQUERY.INP"</span>);
+    ofstream out(<span class="string">"GCDQUERY.OUT"</span>);
     <span class="keyword">int</span> n, q;
-    fin >> n >> q;
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fin >> sp[<span class="number">0</span>][i];
+    in >> n >> q;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in >> sp[<span class="number">0</span>][i];
     <span class="comment">// Tiền xử lý log</span>
     _log[<span class="number">1</span>] = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) _log[i] = _log[i / <span class="number">2</span>] + <span class="number">1</span>;
@@ -413,10 +422,13 @@
             sp[j][i] = __gcd(sp[j - <span class="number">1</span>][i], sp[j - <span class="number">1</span>][i + (<span class="number">1</span> &lt;&lt; (j - <span class="number">1</span>))]);
     <span class="keyword">while</span> (q--) {
         <span class="keyword">int</span> l, r;
-        fin >> l >> r;
+        in >> l >> r;
         <span class="keyword">int</span> k = _log[r - l + <span class="number">1</span>];
-        fout &lt;&lt; __gcd(sp[k][l], sp[k][r - (<span class="number">1</span> &lt;&lt; k) + <span class="number">1</span>]) &lt;&lt; <span class="string">"\n"</span>;
+        out &lt;&lt; __gcd(sp[k][l], sp[k][r - (<span class="number">1</span> &lt;&lt; k) + <span class="number">1</span>]) &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -496,16 +508,19 @@
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"EULER.INP"</span>);
-    ofstream fout(<span class="string">"EULER.OUT"</span>);
+    ifstream in(<span class="string">"EULER.INP"</span>);
+    ofstream out(<span class="string">"EULER.OUT"</span>);
     <span class="function">sievePhi</span>();
     <span class="keyword">int</span> T;
-    fin >> T;
+    in >> T;
     <span class="keyword">while</span> (T--) {
         <span class="keyword">int</span> n;
-        fin >> n;
-        fout &lt;&lt; phi_[n] &lt;&lt; <span class="string">"\n"</span>;
+        in >> n;
+        out &lt;&lt; phi_[n] &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -590,14 +605,17 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"MATRIX.INP"</span>);
-    ofstream fout(<span class="string">"MATRIX.OUT"</span>);
+    ifstream in(<span class="string">"MATRIX.INP"</span>);
+    ofstream out(<span class="string">"MATRIX.OUT"</span>);
     <span class="keyword">long long</span> n;
-    fin >> n;
-    <span class="keyword">if</span> (n == <span class="number">0</span>) { fout &lt;&lt; <span class="number">0</span>; <span class="keyword">return</span> <span class="number">0</span>; }
+    in >> n;
+    <span class="keyword">if</span> (n == <span class="number">0</span>) { out &lt;&lt; <span class="number">0</span>; in.close(); out.close(); <span class="keyword">return</span> <span class="number">0</span>; }
     Matrix A = {{<span class="number">1</span>, <span class="number">1</span>}, {<span class="number">1</span>, <span class="number">0</span>}};
     Matrix R = <span class="function">matpow</span>(A, n - <span class="number">1</span>);
-    fout &lt;&lt; R[<span class="number">0</span>][<span class="number">0</span>];
+    out &lt;&lt; R[<span class="number">0</span>][<span class="number">0</span>];
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -664,15 +682,15 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
 <span class="keyword">const int</span> MAXV = <span class="number">1e6</span> + <span class="number">5</span>;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"DEMUOC.INP"</span>);
-    ofstream fout(<span class="string">"DEMUOC.OUT"</span>);
+    ifstream in(<span class="string">"DEMUOC.INP"</span>);
+    ofstream out(<span class="string">"DEMUOC.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     vector&lt;<span class="keyword">int</span>&gt; a(n);
     <span class="keyword">static int</span> cnt[MAXV] = {};
     <span class="keyword">static int</span> divCnt[MAXV] = {};
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
-        fin >> a[i];
+        in >> a[i];
         cnt[a[i]]++;
     }
     <span class="comment">// Với mỗi giá trị d có mặt, cộng 1 cho tất cả bội j của d</span>
@@ -681,7 +699,10 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
             <span class="keyword">for</span> (<span class="keyword">int</span> j = d; j &lt; MAXV; j += d)
                 divCnt[j] += cnt[d];
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)
-        fout &lt;&lt; divCnt[a[i]] - <span class="number">1</span> &lt;&lt; <span class="string">" \n"</span>[i == n - <span class="number">1</span>];
+        out &lt;&lt; divCnt[a[i]] - <span class="number">1</span> &lt;&lt; <span class="string">" \n"</span>[i == n - <span class="number">1</span>];
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -760,16 +781,19 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"MODULAR.INP"</span>);
-    ofstream fout(<span class="string">"MODULAR.OUT"</span>);
+    ifstream in(<span class="string">"MODULAR.INP"</span>);
+    ofstream out(<span class="string">"MODULAR.OUT"</span>);
     <span class="keyword">int</span> T;
-    fin >> T;
+    in >> T;
     <span class="keyword">while</span> (T--) {
         <span class="keyword">long long</span> a, m;
-        fin >> a >> m;
+        in >> a >> m;
         <span class="comment">// a^(-1) ≡ a^(m-2) (mod m), vì m nguyên tố (Fermat nhỏ)</span>
-        fout &lt;&lt; <span class="function">power</span>(a, m - <span class="number">2</span>, m) &lt;&lt; <span class="string">"\n"</span>;
+        out &lt;&lt; <span class="function">power</span>(a, m - <span class="number">2</span>, m) &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -861,16 +885,19 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"TOHOP.INP"</span>);
-    ofstream fout(<span class="string">"TOHOP.OUT"</span>);
+    ifstream in(<span class="string">"TOHOP.INP"</span>);
+    ofstream out(<span class="string">"TOHOP.OUT"</span>);
     <span class="function">precompute</span>();
     <span class="keyword">int</span> T;
-    fin >> T;
+    in >> T;
     <span class="keyword">while</span> (T--) {
         <span class="keyword">int</span> n, k;
-        fin >> n >> k;
-        fout &lt;&lt; <span class="function">C</span>(n, k) &lt;&lt; <span class="string">"\n"</span>;
+        in >> n >> k;
+        out &lt;&lt; <span class="function">C</span>(n, k) &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -937,15 +964,15 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
 <span class="keyword">const long long</span> LIMIT = <span class="number">1e18</span>;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"BOICHUNG.INP"</span>);
-    ofstream fout(<span class="string">"BOICHUNG.OUT"</span>);
+    ifstream in(<span class="string">"BOICHUNG.INP"</span>);
+    ofstream out(<span class="string">"BOICHUNG.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin &gt;&gt; n;
+    in &gt;&gt; n;
     <span class="keyword">long long</span> lcm = <span class="number">1</span>;
     <span class="keyword">bool</span> overflow = <span class="keyword">false</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
         <span class="keyword">long long</span> a;
-        fin &gt;&gt; a;
+        in &gt;&gt; a;
         <span class="keyword">long long</span> g = __gcd(lcm, a);
         <span class="keyword">long long</span> d = a / g;
         <span class="comment">// Kiểm tra lcm * d có tràn không</span>
@@ -955,8 +982,11 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
         }
         lcm = lcm * d;
     }
-    <span class="keyword">if</span> (overflow) fout &lt;&lt; <span class="string">"OVERFLOW"</span>;
-    <span class="keyword">else</span> fout &lt;&lt; lcm;
+    <span class="keyword">if</span> (overflow) out &lt;&lt; <span class="string">"OVERFLOW"</span>;
+    <span class="keyword">else</span> out &lt;&lt; lcm;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1036,15 +1066,18 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"CHINPHUONG.INP"</span>);
-    ofstream fout(<span class="string">"CHINPHUONG.OUT"</span>);
+    ifstream in(<span class="string">"CHINPHUONG.INP"</span>);
+    ofstream out(<span class="string">"CHINPHUONG.OUT"</span>);
     <span class="keyword">int</span> t;
-    fin &gt;&gt; t;
+    in &gt;&gt; t;
     <span class="keyword">while</span> (t--) {
         <span class="keyword">long long</span> l, r;
-        fin &gt;&gt; l &gt;&gt; r;
-        fout &lt;&lt; <span class="function">cntSq</span>(r) - <span class="function">cntSq</span>(l - <span class="number">1</span>) &lt;&lt; <span class="string">"\n"</span>;
+        in &gt;&gt; l &gt;&gt; r;
+        out &lt;&lt; <span class="function">cntSq</span>(r) - <span class="function">cntSq</span>(l - <span class="number">1</span>) &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1110,10 +1143,10 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"HOANHAO.INP"</span>);
-    ofstream fout(<span class="string">"HOANHAO.OUT"</span>);
+    ifstream in(<span class="string">"HOANHAO.INP"</span>);
+    ofstream out(<span class="string">"HOANHAO.OUT"</span>);
     <span class="keyword">long long</span> n;
-    fin &gt;&gt; n;
+    in &gt;&gt; n;
     vector&lt;<span class="keyword">long long</span>&gt; divs;
     <span class="keyword">long long</span> sum = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">long long</span> i = <span class="number">1</span>; i * i &lt;= n; i++) {
@@ -1127,12 +1160,15 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
     }
     <span class="function">sort</span>(divs.begin(), divs.end());
     <span class="keyword">if</span> (sum == n) {
-        fout &lt;&lt; <span class="string">"YES"</span> &lt;&lt; <span class="string">"\n"</span>;
+        out &lt;&lt; <span class="string">"YES"</span> &lt;&lt; <span class="string">"\n"</span>;
         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)divs.size(); i++)
-            fout &lt;&lt; divs[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)divs.size()];
+            out &lt;&lt; divs[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)divs.size()];
     } <span class="keyword">else</span> {
-        fout &lt;&lt; <span class="string">"NO"</span> &lt;&lt; <span class="string">"\n"</span> &lt;&lt; sum;
+        out &lt;&lt; <span class="string">"NO"</span> &lt;&lt; <span class="string">"\n"</span> &lt;&lt; sum;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1222,18 +1258,21 @@ Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long 
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"FIBONACCI.INP"</span>);
-    ofstream fout(<span class="string">"FIBONACCI.OUT"</span>);
+    ifstream in(<span class="string">"FIBONACCI.INP"</span>);
+    ofstream out(<span class="string">"FIBONACCI.OUT"</span>);
     <span class="keyword">int</span> t;
-    fin &gt;&gt; t;
+    in &gt;&gt; t;
     <span class="keyword">while</span> (t--) {
         <span class="keyword">long long</span> n;
-        fin &gt;&gt; n;
-        <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) { fout &lt;&lt; n &lt;&lt; <span class="string">"\n"</span>; <span class="keyword">continue</span>; }
+        in &gt;&gt; n;
+        <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) { out &lt;&lt; n &lt;&lt; <span class="string">"\n"</span>; <span class="keyword">continue</span>; }
         Matrix A = {{<span class="number">1</span>, <span class="number">1</span>}, {<span class="number">1</span>, <span class="number">0</span>}};
         Matrix R = <span class="function">power</span>(A, n - <span class="number">1</span>);
-        fout &lt;&lt; R[<span class="number">0</span>][<span class="number">0</span>] &lt;&lt; <span class="string">"\n"</span>;
+        out &lt;&lt; R[<span class="number">0</span>][<span class="number">0</span>] &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1312,23 +1351,26 @@ Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long 
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"SOCHAN.INP"</span>);
-    ofstream fout(<span class="string">"SOCHAN.OUT"</span>);
+    ifstream in(<span class="string">"SOCHAN.INP"</span>);
+    ofstream out(<span class="string">"SOCHAN.OUT"</span>);
     <span class="function">sieve</span>();
     <span class="keyword">int</span> n;
-    fin &gt;&gt; n;
+    in &gt;&gt; n;
     <span class="keyword">int</span> even = <span class="number">0</span>, odd = <span class="number">0</span>;
     vector&lt;<span class="keyword">int</span>&gt; primes;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
         <span class="keyword">int</span> a;
-        fin &gt;&gt; a;
+        in &gt;&gt; a;
         <span class="keyword">if</span> (a % <span class="number">2</span> == <span class="number">0</span>) even++;
         <span class="keyword">else</span> odd++;
         <span class="keyword">if</span> (is_prime[a]) primes.push_back(a);
     }
-    fout &lt;&lt; even &lt;&lt; <span class="string">"\n"</span> &lt;&lt; odd &lt;&lt; <span class="string">"\n"</span> &lt;&lt; primes.size() &lt;&lt; <span class="string">"\n"</span>;
+    out &lt;&lt; even &lt;&lt; <span class="string">"\n"</span> &lt;&lt; odd &lt;&lt; <span class="string">"\n"</span> &lt;&lt; primes.size() &lt;&lt; <span class="string">"\n"</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)primes.size(); i++)
-        fout &lt;&lt; primes[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)primes.size()];
+        out &lt;&lt; primes[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)primes.size()];
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1394,18 +1436,21 @@ Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long 
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"USCLN.INP"</span>);
-    ofstream fout(<span class="string">"USCLN.OUT"</span>);
+    ifstream in(<span class="string">"USCLN.INP"</span>);
+    ofstream out(<span class="string">"USCLN.OUT"</span>);
     <span class="keyword">int</span> t;
-    fin &gt;&gt; t;
+    in &gt;&gt; t;
     <span class="keyword">while</span> (t--) {
         <span class="keyword">long long</span> a, b;
-        fin &gt;&gt; a &gt;&gt; b;
+        in &gt;&gt; a &gt;&gt; b;
         <span class="keyword">long long</span> g = __gcd(a, b);
         <span class="keyword">long long</span> lcm = a / g * b; <span class="comment">// chia trước tránh tràn</span>
-        fout &lt;&lt; g &lt;&lt; <span class="string">" "</span> &lt;&lt; lcm &lt;&lt; <span class="string">" "</span>
+        out &lt;&lt; g &lt;&lt; <span class="string">" "</span> &lt;&lt; lcm &lt;&lt; <span class="string">" "</span>
              &lt;&lt; (g == <span class="number">1</span> ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1480,24 +1525,27 @@ Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long 
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"HEDEM.INP"</span>);
-    ofstream fout(<span class="string">"HEDEM.OUT"</span>);
+    ifstream in(<span class="string">"HEDEM.INP"</span>);
+    ofstream out(<span class="string">"HEDEM.OUT"</span>);
     <span class="keyword">int</span> a, b;
     string s;
-    fin &gt;&gt; a &gt;&gt; b &gt;&gt; s;
+    in &gt;&gt; a &gt;&gt; b &gt;&gt; s;
     <span class="comment">// Bước 1: Cơ số A → số thập phân (long long)</span>
     <span class="keyword">long long</span> val = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">char</span> c : s)
         val = val * a + <span class="function">charToVal</span>(c);
     <span class="comment">// Bước 2: Số thập phân → cơ số B</span>
-    <span class="keyword">if</span> (val == <span class="number">0</span>) { fout &lt;&lt; <span class="number">0</span>; <span class="keyword">return</span> <span class="number">0</span>; }
+    <span class="keyword">if</span> (val == <span class="number">0</span>) { out &lt;&lt; <span class="number">0</span>; in.close(); out.close(); <span class="keyword">return</span> <span class="number">0</span>; }
     string res;
     <span class="keyword">while</span> (val &gt; <span class="number">0</span>) {
         res += <span class="function">valToChar</span>(val % b);
         val /= b;
     }
     <span class="function">reverse</span>(res.begin(), res.end());
-    fout &lt;&lt; res;
+    out &lt;&lt; res;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1577,17 +1625,20 @@ Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long 
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"PALINDROME.INP"</span>);
-    ofstream fout(<span class="string">"PALINDROME.OUT"</span>);
+    ifstream in(<span class="string">"PALINDROME.INP"</span>);
+    ofstream out(<span class="string">"PALINDROME.OUT"</span>);
     <span class="keyword">int</span> l, r, k;
-    fin &gt;&gt; l &gt;&gt; r &gt;&gt; k;
+    in &gt;&gt; l &gt;&gt; r &gt;&gt; k;
     vector&lt;<span class="keyword">int</span>&gt; res;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = l; i &lt;= r; i++)
         <span class="keyword">if</span> (<span class="function">isPalin</span>(i) &amp;&amp; <span class="function">digitSum</span>(i) % k == <span class="number">0</span>)
             res.push_back(i);
-    fout &lt;&lt; res.size() &lt;&lt; <span class="string">"\n"</span>;
+    out &lt;&lt; res.size() &lt;&lt; <span class="string">"\n"</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)res.size(); i++)
-        fout &lt;&lt; res[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)res.size()];
+        out &lt;&lt; res[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)res.size()];
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1674,8 +1725,8 @@ Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long 
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"ARMSTRONG.INP"</span>);
-    ofstream fout(<span class="string">"ARMSTRONG.OUT"</span>);
+    ifstream in(<span class="string">"ARMSTRONG.INP"</span>);
+    ofstream out(<span class="string">"ARMSTRONG.OUT"</span>);
     <span class="comment">// Tiền xử lý lũy thừa</span>
     <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">0</span>; d &lt;= <span class="number">9</span>; d++) {
         pw[d][<span class="number">0</span>] = <span class="number">1</span>;
@@ -1700,13 +1751,16 @@ Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long 
         <span class="number">24678050</span>,<span class="number">24678051</span>,<span class="number">88593477</span>,
         <span class="number">146511208</span>,<span class="number">472335975</span>,<span class="number">534494836</span>,<span class="number">912985153</span>};
     <span class="keyword">long long</span> l, r;
-    fin &gt;&gt; l &gt;&gt; r;
+    in &gt;&gt; l &gt;&gt; r;
     vector&lt;<span class="keyword">long long</span>&gt; res;
     <span class="keyword">for</span> (<span class="keyword">long long</span> x : known)
         <span class="keyword">if</span> (x >= l &amp;&amp; x &lt;= r) res.push_back(x);
-    fout &lt;&lt; res.size() &lt;&lt; <span class="string">"\n"</span>;
+    out &lt;&lt; res.size() &lt;&lt; <span class="string">"\n"</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)res.size(); i++)
-        fout &lt;&lt; res[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)res.size()];
+        out &lt;&lt; res[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)res.size()];
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1787,20 +1841,23 @@ Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long 
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"GOLDBACH.INP"</span>);
-    ofstream fout(<span class="string">"GOLDBACH.OUT"</span>);
+    ifstream in(<span class="string">"GOLDBACH.INP"</span>);
+    ofstream out(<span class="string">"GOLDBACH.OUT"</span>);
     <span class="function">sieve</span>();
     <span class="keyword">int</span> t;
-    fin &gt;&gt; t;
+    in &gt;&gt; t;
     <span class="keyword">while</span> (t--) {
         <span class="keyword">int</span> n;
-        fin &gt;&gt; n;
+        in &gt;&gt; n;
         <span class="keyword">for</span> (<span class="keyword">int</span> p = <span class="number">2</span>; p &lt;= n / <span class="number">2</span>; p++)
             <span class="keyword">if</span> (is_prime[p] &amp;&amp; is_prime[n - p]) {
-                fout &lt;&lt; p &lt;&lt; <span class="string">" "</span> &lt;&lt; n - p &lt;&lt; <span class="string">"\n"</span>;
+                out &lt;&lt; p &lt;&lt; <span class="string">" "</span> &lt;&lt; n - p &lt;&lt; <span class="string">"\n"</span>;
                 <span class="keyword">break</span>;
             }
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>

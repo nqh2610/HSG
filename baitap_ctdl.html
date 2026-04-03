@@ -145,17 +145,20 @@ NO</pre>
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"NHOMBAN.INP"</span>);
-    ofstream fout(<span class="string">"NHOMBAN.OUT"</span>);
+    ifstream in(<span class="string">"NHOMBAN.INP"</span>);
+    ofstream out(<span class="string">"NHOMBAN.OUT"</span>);
     <span class="keyword">int</span> n, q;
-    fin >> n >> q;
+    in >> n >> q;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) { par[i] = i; rnk[i] = <span class="number">0</span>; }
     <span class="keyword">while</span> (q--) {
         <span class="keyword">int</span> t, u, v;
-        fin >> t >> u >> v;
+        in >> t >> u >> v;
         <span class="keyword">if</span> (t == <span class="number">1</span>) <span class="function">unite</span>(u, v);
-        <span class="keyword">else</span> fout &lt;&lt; (<span class="function">find</span>(u) == <span class="function">find</span>(v) ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
+        <span class="keyword">else</span> out &lt;&lt; (<span class="function">find</span>(u) == <span class="function">find</span>(v) ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -233,11 +236,11 @@ NO</pre>
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"DEMLON.INP"</span>);
-    ofstream fout(<span class="string">"DEMLON.OUT"</span>);
-    fin >> n;
+    ifstream in(<span class="string">"DEMLON.INP"</span>);
+    ofstream out(<span class="string">"DEMLON.OUT"</span>);
+    in >> n;
     vector&lt;<span class="keyword">int</span>&gt; a(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
     <span class="comment">// Nén tọa độ</span>
     vector&lt;<span class="keyword">int</span>&gt; sorted_a = a;
     <span class="function">sort</span>(sorted_a.begin(), sorted_a.end());
@@ -246,9 +249,12 @@ NO</pre>
         a[i] = lower_bound(sorted_a.begin(), sorted_a.end(), a[i]) - sorted_a.begin() + <span class="number">1</span>;
     <span class="comment">// Duyệt từ trái sang phải</span>
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
-        fout &lt;&lt; <span class="function">query</span>(a[i] - <span class="number">1</span>) &lt;&lt; <span class="string">" \n"</span>[i == n - <span class="number">1</span>];
+        out &lt;&lt; <span class="function">query</span>(a[i] - <span class="number">1</span>) &lt;&lt; <span class="string">" \n"</span>[i == n - <span class="number">1</span>];
         <span class="function">update</span>(a[i]);
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -332,24 +338,27 @@ NO</pre>
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"CAPNHAT.INP"</span>);
-    ofstream fout(<span class="string">"CAPNHAT.OUT"</span>);
+    ifstream in(<span class="string">"CAPNHAT.INP"</span>);
+    ofstream out(<span class="string">"CAPNHAT.OUT"</span>);
     <span class="keyword">int</span> q;
-    fin >> n >> q;
+    in >> n >> q;
     <span class="keyword">while</span> (q--) {
         <span class="keyword">int</span> t;
-        fin >> t;
+        in >> t;
         <span class="keyword">if</span> (t == <span class="number">1</span>) {
             <span class="keyword">int</span> l, r; <span class="keyword">long long</span> v;
-            fin >> l >> r >> v;
+            in >> l >> r >> v;
             <span class="function">update</span>(l, v);
             <span class="function">update</span>(r + <span class="number">1</span>, -v);
         } <span class="keyword">else</span> {
             <span class="keyword">int</span> x;
-            fin >> x;
-            fout &lt;&lt; <span class="function">query</span>(x) &lt;&lt; <span class="string">"\n"</span>;
+            in >> x;
+            out &lt;&lt; <span class="function">query</span>(x) &lt;&lt; <span class="string">"\n"</span>;
         }
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -444,24 +453,27 @@ NO</pre>
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"MAXDOAN.INP"</span>);
-    ofstream fout(<span class="string">"MAXDOAN.OUT"</span>);
-    fin >> n >> q;
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fin >> a[i];
+    ifstream in(<span class="string">"MAXDOAN.INP"</span>);
+    ofstream out(<span class="string">"MAXDOAN.OUT"</span>);
+    in >> n >> q;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in >> a[i];
     <span class="function">build</span>(<span class="number">1</span>, <span class="number">1</span>, n);
     <span class="keyword">while</span> (q--) {
         <span class="keyword">int</span> t;
-        fin >> t;
+        in >> t;
         <span class="keyword">if</span> (t == <span class="number">1</span>) {
             <span class="keyword">int</span> p, v;
-            fin >> p >> v;
+            in >> p >> v;
             <span class="function">update</span>(<span class="number">1</span>, <span class="number">1</span>, n, p, v);
         } <span class="keyword">else</span> {
             <span class="keyword">int</span> l, r;
-            fin >> l >> r;
-            fout &lt;&lt; <span class="function">query</span>(<span class="number">1</span>, <span class="number">1</span>, n, l, r) &lt;&lt; <span class="string">"\n"</span>;
+            in >> l >> r;
+            out &lt;&lt; <span class="function">query</span>(<span class="number">1</span>, <span class="number">1</span>, n, l, r) &lt;&lt; <span class="string">"\n"</span>;
         }
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -578,24 +590,27 @@ NO</pre>
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"CONGDOAN.INP"</span>);
-    ofstream fout(<span class="string">"CONGDOAN.OUT"</span>);
-    fin >> n >> q;
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fin >> a[i];
+    ifstream in(<span class="string">"CONGDOAN.INP"</span>);
+    ofstream out(<span class="string">"CONGDOAN.OUT"</span>);
+    in >> n >> q;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in >> a[i];
     <span class="function">build</span>(<span class="number">1</span>, <span class="number">1</span>, n);
     <span class="keyword">while</span> (q--) {
         <span class="keyword">int</span> t;
-        fin >> t;
+        in >> t;
         <span class="keyword">if</span> (t == <span class="number">1</span>) {
             <span class="keyword">int</span> l, r; <span class="keyword">long long</span> v;
-            fin >> l >> r >> v;
+            in >> l >> r >> v;
             <span class="function">update</span>(<span class="number">1</span>, <span class="number">1</span>, n, l, r, v);
         } <span class="keyword">else</span> {
             <span class="keyword">int</span> l, r;
-            fin >> l >> r;
-            fout &lt;&lt; <span class="function">query</span>(<span class="number">1</span>, <span class="number">1</span>, n, l, r) &lt;&lt; <span class="string">"\n"</span>;
+            in >> l >> r;
+            out &lt;&lt; <span class="function">query</span>(<span class="number">1</span>, <span class="number">1</span>, n, l, r) &lt;&lt; <span class="string">"\n"</span>;
         }
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -681,14 +696,17 @@ NO</pre>
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"NGHICHDAO.INP"</span>);
-    ofstream fout(<span class="string">"NGHICHDAO.OUT"</span>);
+    ifstream in(<span class="string">"NGHICHDAO.INP"</span>);
+    ofstream out(<span class="string">"NGHICHDAO.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin >> n;
+    in >> n;
     vector&lt;<span class="keyword">int</span>&gt; a(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
     <span class="function">mergeSort</span>(a, <span class="number">0</span>, n - <span class="number">1</span>);
-    fout &lt;&lt; ans;
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -773,15 +791,15 @@ NO</pre>
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"SPANTREE.INP"</span>);
-    ofstream fout(<span class="string">"SPANTREE.OUT"</span>);
+    ifstream in(<span class="string">"SPANTREE.INP"</span>);
+    ofstream out(<span class="string">"SPANTREE.OUT"</span>);
     <span class="keyword">int</span> n, m;
-    fin >> n >> m;
+    in >> n >> m;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) { par[i] = i; rnk[i] = <span class="number">0</span>; }
     vector&lt;tuple&lt;<span class="keyword">long long</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; edges(m);
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
         <span class="keyword">int</span> u, v; <span class="keyword">long long</span> w;
-        fin >> u >> v >> w;
+        in >> u >> v >> w;
         edges[i] = {w, u, v};
     }
     <span class="function">sort</span>(edges.begin(), edges.end());
@@ -795,7 +813,10 @@ NO</pre>
             <span class="keyword">if</span> (++cnt == n - <span class="number">1</span>) <span class="keyword">break</span>;
         }
     }
-    fout &lt;&lt; total;
+    out &lt;&lt; total;
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -883,25 +904,28 @@ YES</pre>
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"LIENTHONG.INP"</span>);
-    ofstream fout(<span class="string">"LIENTHONG.OUT"</span>);
+    ifstream in(<span class="string">"LIENTHONG.INP"</span>);
+    ofstream out(<span class="string">"LIENTHONG.OUT"</span>);
     <span class="keyword">int</span> n, q;
-    fin >> n >> q;
+    in >> n >> q;
     comp = n;
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) { par[i] = i; rnk[i] = <span class="number">0</span>; }
     <span class="keyword">while</span> (q--) {
         <span class="keyword">int</span> t;
-        fin >> t;
+        in >> t;
         <span class="keyword">if</span> (t == <span class="number">1</span>) {
-            <span class="keyword">int</span> u, v; fin >> u >> v;
+            <span class="keyword">int</span> u, v; in >> u >> v;
             <span class="function">unite</span>(u, v);
         } <span class="keyword">else if</span> (t == <span class="number">2</span>) {
-            <span class="keyword">int</span> u, v; fin >> u >> v;
-            fout &lt;&lt; (<span class="function">find</span>(u) == <span class="function">find</span>(v) ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
+            <span class="keyword">int</span> u, v; in >> u >> v;
+            out &lt;&lt; (<span class="function">find</span>(u) == <span class="function">find</span>(v) ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
         } <span class="keyword">else</span> {
-            fout &lt;&lt; comp &lt;&lt; <span class="string">"\n"</span>;
+            out &lt;&lt; comp &lt;&lt; <span class="string">"\n"</span>;
         }
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -967,12 +991,12 @@ YES</pre>
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"SLIDING.INP"</span>);
-    ofstream fout(<span class="string">"SLIDING.OUT"</span>);
+    ifstream in(<span class="string">"SLIDING.INP"</span>);
+    ofstream out(<span class="string">"SLIDING.OUT"</span>);
     <span class="keyword">int</span> n, k;
-    fin &gt;&gt; n &gt;&gt; k;
+    in &gt;&gt; n &gt;&gt; k;
     vector&lt;<span class="keyword">int</span>&gt; a(n);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin &gt;&gt; a[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in &gt;&gt; a[i];
     deque&lt;<span class="keyword">int</span>&gt; dq; <span class="comment">// lưu chỉ số, a[dq] giảm dần</span>
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
         <span class="comment">// Loại phần tử ngoài cửa sổ</span>
@@ -983,8 +1007,11 @@ YES</pre>
             dq.pop_back();
         dq.push_back(i);
         <span class="keyword">if</span> (i &gt;= k - <span class="number">1</span>)
-            fout &lt;&lt; a[dq.front()] &lt;&lt; <span class="string">" "</span>;
+            out &lt;&lt; a[dq.front()] &lt;&lt; <span class="string">" "</span>;
     }
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
@@ -1050,12 +1077,12 @@ YES</pre>
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
-    ifstream fin(<span class="string">"PHANLON.INP"</span>);
-    ofstream fout(<span class="string">"PHANLON.OUT"</span>);
+    ifstream in(<span class="string">"PHANLON.INP"</span>);
+    ofstream out(<span class="string">"PHANLON.OUT"</span>);
     <span class="keyword">int</span> n;
-    fin &gt;&gt; n;
+    in &gt;&gt; n;
     vector&lt;<span class="keyword">int</span>&gt; a(n + <span class="number">1</span>), ans(n + <span class="number">1</span>, -<span class="number">1</span>);
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fin &gt;&gt; a[i];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in &gt;&gt; a[i];
     stack&lt;<span class="keyword">int</span>&gt; st; <span class="comment">// lưu chỉ số, a[st] giảm dần từ đáy lên đỉnh</span>
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
         <span class="comment">// a[i] lớn hơn phần tử trên đỉnh → đó là câu trả lời cho đỉnh</span>
@@ -1066,7 +1093,10 @@ YES</pre>
         st.push(i);
     }
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)
-        fout &lt;&lt; ans[i] &lt;&lt; <span class="string">" \n"</span>[i == n];
+        out &lt;&lt; ans[i] &lt;&lt; <span class="string">" \n"</span>[i == n];
+    in.close();
+    out.close();
+
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
