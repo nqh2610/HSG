@@ -968,6 +968,850 @@ Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long
             </div>
         </div>
 
+        <!-- ========== BÀI 11: CHINPHUONG ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 11: ĐẾM SỐ CHÍNH PHƯƠNG</div>
+                <div class="problem-file">CHINPHUONG.INP / CHINPHUONG.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T truy vấn, mỗi truy vấn gồm hai số L, R. Đếm số lượng số chính phương trong đoạn [L, R].</p>
+
+                <div class="section-title">Dữ liệu vào (CHINPHUONG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: T (1 ≤ T ≤ 10<sup>5</sup>)</li>
+                        <li>T dòng tiếp: L, R (1 ≤ L ≤ R ≤ 10<sup>18</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (CHINPHUONG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng số lượng số chính phương trong [L, R]</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CHINPHUONG.INP</h4>
+                        <pre>3
+1 10
+4 16
+1 1000000000000000000</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CHINPHUONG.OUT</h4>
+                        <pre>3
+3
+1000000000</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> [1,10]: 1, 4, 9 → 3 số. [4,16]: 4, 9, 16 → 3 số.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Công thức toán + sqrtl</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="comment">// Đếm số chính phương trong [1, n]</span>
+<span class="keyword">long long</span> <span class="function">cntSq</span>(<span class="keyword">long long</span> n) {
+    <span class="keyword">if</span> (n &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;
+    <span class="keyword">long long</span> s = (<span class="keyword">long long</span>)<span class="function">sqrtl</span>((<span class="keyword">long double</span>)n);
+    <span class="comment">// Hiệu chỉnh sai số làm tròn</span>
+    <span class="keyword">while</span> (s * s &gt; n) s--;
+    <span class="keyword">while</span> ((s + <span class="number">1</span>) * (s + <span class="number">1</span>) &lt;= n) s++;
+    <span class="keyword">return</span> s;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"CHINPHUONG.INP"</span>);
+    ofstream fout(<span class="string">"CHINPHUONG.OUT"</span>);
+    <span class="keyword">int</span> t;
+    fin &gt;&gt; t;
+    <span class="keyword">while</span> (t--) {
+        <span class="keyword">long long</span> l, r;
+        fin &gt;&gt; l &gt;&gt; r;
+        fout &lt;&lt; <span class="function">cntSq</span>(r) - <span class="function">cntSq</span>(l - <span class="number">1</span>) &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Số chính phương trong [1, N] = ⌊√N⌋. Đếm trong [L, R] = cntSq(R) − cntSq(L−1). Duyệt brute từ L→R → TLE với R ≤ 10<sup>18</sup>. Dùng sqrtl + hiệu chỉnh: sau khi tính s = ⌊√N⌋, kiểm tra s×s ≤ N và (s+1)² &gt; N để tránh sai số floating-point. Mỗi truy vấn O(1). Kỹ thuật hiệu chỉnh sqrt rất quan trọng khi làm việc với số lớn.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 12: HOANHAO ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 12: SỐ HOÀN HẢO</div>
+                <div class="problem-file">HOANHAO.INP / HOANHAO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho số nguyên N. Kiểm tra N có phải số hoàn hảo không (tổng các ước thực sự bằng chính nó). Nếu là số hoàn hảo, in "YES" và liệt kê các ước, ngược lại in "NO" và in tổng các ước thực sự.</p>
+
+                <div class="section-title">Dữ liệu vào (HOANHAO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên N (2 ≤ N ≤ 10<sup>12</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (HOANHAO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: "YES" hoặc "NO"</li>
+                        <li>Dòng 2: nếu YES → các ước thực sự tăng dần (cách nhau dấu cách); nếu NO → tổng các ước thực sự</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>HOANHAO.INP</h4>
+                        <pre>28</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>HOANHAO.OUT</h4>
+                        <pre>YES
+1 2 4 7 14</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> Ước thực sự của 28: 1, 2, 4, 7, 14. Tổng = 1+2+4+7+14 = 28 = N → hoàn hảo.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Liệt kê ước O(√N)</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"HOANHAO.INP"</span>);
+    ofstream fout(<span class="string">"HOANHAO.OUT"</span>);
+    <span class="keyword">long long</span> n;
+    fin &gt;&gt; n;
+    vector&lt;<span class="keyword">long long</span>&gt; divs;
+    <span class="keyword">long long</span> sum = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">long long</span> i = <span class="number">1</span>; i * i &lt;= n; i++) {
+        <span class="keyword">if</span> (n % i == <span class="number">0</span>) {
+            <span class="keyword">if</span> (i &lt; n) { divs.push_back(i); sum += i; }
+            <span class="keyword">if</span> (i != n / i &amp;&amp; n / i &lt; n) {
+                divs.push_back(n / i);
+                sum += n / i;
+            }
+        }
+    }
+    <span class="function">sort</span>(divs.begin(), divs.end());
+    <span class="keyword">if</span> (sum == n) {
+        fout &lt;&lt; <span class="string">"YES"</span> &lt;&lt; <span class="string">"\n"</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)divs.size(); i++)
+            fout &lt;&lt; divs[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)divs.size()];
+    } <span class="keyword">else</span> {
+        fout &lt;&lt; <span class="string">"NO"</span> &lt;&lt; <span class="string">"\n"</span> &lt;&lt; sum;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Duyệt i từ 1 đến √N. Nếu N chia hết cho i → thêm cả i và N/i vào danh sách ước (loại N). Duyệt đến N → O(N) ≈ 10<sup>12</sup> → TLE. Duyệt đến √N → O(√N) ≈ 10<sup>6</sup> → nhanh. So tổng ước với N. Kỹ thuật liệt kê ước O(√N) là nền tảng cho mọi bài số học.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 13: FIBONACCI ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 13: FIBONACCI MODULO</div>
+                <div class="problem-file">FIBONACCI.INP / FIBONACCI.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T truy vấn, mỗi truy vấn cho N. Tính F(N) mod 10<sup>9</sup>+7, trong đó F(0)=0, F(1)=1, F(i)=F(i−1)+F(i−2).</p>
+
+                <div class="section-title">Dữ liệu vào (FIBONACCI.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: T (1 ≤ T ≤ 10<sup>5</sup>)</li>
+                        <li>T dòng tiếp: N (0 ≤ N ≤ 10<sup>18</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (FIBONACCI.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng F(N) mod 10<sup>9</sup>+7</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>FIBONACCI.INP</h4>
+                        <pre>3
+10
+50
+1000000000000000000</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>FIBONACCI.OUT</h4>
+                        <pre>55
+12586269025
+209783453</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Nhân ma trận nhanh</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const long long</span> MOD = <span class="number">1e9</span> + <span class="number">7</span>;
+<span class="keyword">typedef</span> vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; Matrix;
+
+Matrix <span class="function">mul</span>(<span class="keyword">const</span> Matrix &amp;A, <span class="keyword">const</span> Matrix &amp;B) {
+    <span class="keyword">int</span> n = A.size();
+    Matrix C(n, vector&lt;<span class="keyword">long long</span>&gt;(n, <span class="number">0</span>));
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)
+        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; k++)
+            <span class="keyword">if</span> (A[i][k])
+                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++)
+                    C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % MOD;
+    <span class="keyword">return</span> C;
+}
+
+Matrix <span class="function">power</span>(Matrix A, <span class="keyword">long long</span> p) {
+    <span class="keyword">int</span> n = A.size();
+    Matrix R(n, vector&lt;<span class="keyword">long long</span>&gt;(n, <span class="number">0</span>));
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) R[i][i] = <span class="number">1</span>;
+    <span class="keyword">for</span> (; p; p &gt;&gt;= <span class="number">1</span>) {
+        <span class="keyword">if</span> (p &amp; <span class="number">1</span>) R = <span class="function">mul</span>(R, A);
+        A = <span class="function">mul</span>(A, A);
+    }
+    <span class="keyword">return</span> R;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"FIBONACCI.INP"</span>);
+    ofstream fout(<span class="string">"FIBONACCI.OUT"</span>);
+    <span class="keyword">int</span> t;
+    fin &gt;&gt; t;
+    <span class="keyword">while</span> (t--) {
+        <span class="keyword">long long</span> n;
+        fin &gt;&gt; n;
+        <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) { fout &lt;&lt; n &lt;&lt; <span class="string">"\n"</span>; <span class="keyword">continue</span>; }
+        Matrix A = {{<span class="number">1</span>, <span class="number">1</span>}, {<span class="number">1</span>, <span class="number">0</span>}};
+        Matrix R = <span class="function">power</span>(A, n - <span class="number">1</span>);
+        fout &lt;&lt; R[<span class="number">0</span>][<span class="number">0</span>] &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E2"><strong>Nhân ma trận nhanh (E2)</strong></a>. Tính F(N) bằng vòng lặp → O(N) ≈ 10<sup>18</sup> → TLE. Ma trận: [F(n+1), F(n)] = [[1,1],[1,0]]<sup>n</sup> × [F(1), F(0)]. Lũy thừa nhanh ma trận 2×2 → O(8 × log N) ≈ 500 phép nhân. Mỗi truy vấn O(log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 14: SOCHAN ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 14: SỐ CHẴN, SỐ LẺ, SỐ NGUYÊN TỐ</div>
+                <div class="problem-file">SOCHAN.INP / SOCHAN.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho dãy N số nguyên dương. Phân loại và đếm: bao nhiêu số chẵn, bao nhiêu số lẻ, bao nhiêu số nguyên tố. In kết quả và liệt kê các số nguyên tố trong dãy.</p>
+
+                <div class="section-title">Dữ liệu vào (SOCHAN.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N (1 ≤ N ≤ 10<sup>6</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>i</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>7</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (SOCHAN.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số lượng số chẵn</li>
+                        <li>Dòng 2: Số lượng số lẻ</li>
+                        <li>Dòng 3: Số lượng số nguyên tố</li>
+                        <li>Dòng 4: Các số nguyên tố trong dãy (theo thứ tự xuất hiện)</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>SOCHAN.INP</h4>
+                        <pre>7
+2 3 4 5 6 7 8</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>SOCHAN.OUT</h4>
+                        <pre>4
+3
+4
+2 3 5 7</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Sàng + Phân loại</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXV = <span class="number">1e7</span> + <span class="number">1</span>;
+<span class="keyword">bool</span> is_prime[MAXV];
+
+<span class="keyword">void</span> <span class="function">sieve</span>() {
+    <span class="function">fill</span>(is_prime, is_prime + MAXV, <span class="keyword">true</span>);
+    is_prime[<span class="number">0</span>] = is_prime[<span class="number">1</span>] = <span class="keyword">false</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; (<span class="keyword">long long</span>)i * i &lt; MAXV; i++)
+        <span class="keyword">if</span> (is_prime[i])
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = i * i; j &lt; MAXV; j += i)
+                is_prime[j] = <span class="keyword">false</span>;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"SOCHAN.INP"</span>);
+    ofstream fout(<span class="string">"SOCHAN.OUT"</span>);
+    <span class="function">sieve</span>();
+    <span class="keyword">int</span> n;
+    fin &gt;&gt; n;
+    <span class="keyword">int</span> even = <span class="number">0</span>, odd = <span class="number">0</span>;
+    vector&lt;<span class="keyword">int</span>&gt; primes;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">int</span> a;
+        fin &gt;&gt; a;
+        <span class="keyword">if</span> (a % <span class="number">2</span> == <span class="number">0</span>) even++;
+        <span class="keyword">else</span> odd++;
+        <span class="keyword">if</span> (is_prime[a]) primes.push_back(a);
+    }
+    fout &lt;&lt; even &lt;&lt; <span class="string">"\n"</span> &lt;&lt; odd &lt;&lt; <span class="string">"\n"</span> &lt;&lt; primes.size() &lt;&lt; <span class="string">"\n"</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)primes.size(); i++)
+        fout &lt;&lt; primes[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)primes.size()];
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E1"><strong>Sàng Eratosthenes (E1)</strong></a>. Kiểm tra SNT cho từng a[i] bằng trial division → O(√a) mỗi số → chậm nếu N lớn. Sàng 1 lần đến 10<sup>7</sup> → tra bảng O(1) mỗi số. Chẵn/lẻ kiểm tra bit cuối (a % 2). Tổng O(maxV log log maxV + N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 15: USCLN ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 15: ƯỚC SỐ CHUNG LỚN NHẤT VÀ BỘI SỐ CHUNG NHỎ NHẤT</div>
+                <div class="problem-file">USCLN.INP / USCLN.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T cặp số (a, b). Với mỗi cặp, tính ƯCLN và BCNN. Đồng thời kiểm tra a và b có nguyên tố cùng nhau không (ƯCLN = 1).</p>
+
+                <div class="section-title">Dữ liệu vào (USCLN.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: T (1 ≤ T ≤ 10<sup>5</sup>)</li>
+                        <li>T dòng tiếp: a, b (1 ≤ a, b ≤ 10<sup>18</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (USCLN.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng gồm 3 thông tin: ƯCLN, BCNN, và "YES"/"NO" (nguyên tố cùng nhau hay không)</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>USCLN.INP</h4>
+                        <pre>3
+12 18
+7 13
+100 25</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>USCLN.OUT</h4>
+                        <pre>6 36 NO
+1 91 YES
+25 100 NO</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Euclid + LCM tránh tràn</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"USCLN.INP"</span>);
+    ofstream fout(<span class="string">"USCLN.OUT"</span>);
+    <span class="keyword">int</span> t;
+    fin &gt;&gt; t;
+    <span class="keyword">while</span> (t--) {
+        <span class="keyword">long long</span> a, b;
+        fin &gt;&gt; a &gt;&gt; b;
+        <span class="keyword">long long</span> g = __gcd(a, b);
+        <span class="keyword">long long</span> lcm = a / g * b; <span class="comment">// chia trước tránh tràn</span>
+        fout &lt;&lt; g &lt;&lt; <span class="string">" "</span> &lt;&lt; lcm &lt;&lt; <span class="string">" "</span>
+             &lt;&lt; (g == <span class="number">1</span> ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E4"><strong>GCD Euclid (E4)</strong></a>. Thuật toán Euclid: gcd(a, b) = gcd(b, a%b), dừng khi b = 0. LCM = a / gcd × b (chia trước nhân sau tránh tràn). Nguyên tố cùng nhau ⟺ gcd = 1. __gcd có sẵn trong C++ thực hiện trong O(log min(a,b)).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 16: HEDEM ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 16: ĐỔI CƠ SỐ</div>
+                <div class="problem-file">HEDEM.INP / HEDEM.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho số nguyên N ở hệ cơ số A. Chuyển N sang hệ cơ số B. Các chữ số lớn hơn 9 dùng ký tự A, B, C, … (ví dụ 10→A, 15→F).</p>
+
+                <div class="section-title">Dữ liệu vào (HEDEM.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số A, B (2 ≤ A, B ≤ 16)</li>
+                        <li>Dòng 2: Xâu biểu diễn N ở cơ số A (độ dài ≤ 60)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (HEDEM.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Xâu biểu diễn N ở cơ số B</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>HEDEM.INP</h4>
+                        <pre>10 2
+255</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>HEDEM.OUT</h4>
+                        <pre>11111111</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> 255 (cơ số 10) = 11111111 (cơ số 2).
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Đổi cơ số qua trung gian</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">charToVal</span>(<span class="keyword">char</span> c) {
+    <span class="keyword">if</span> (c >= <span class="string">'0'</span> &amp;&amp; c &lt;= <span class="string">'9'</span>) <span class="keyword">return</span> c - <span class="string">'0'</span>;
+    <span class="keyword">return</span> c - <span class="string">'A'</span> + <span class="number">10</span>;
+}
+<span class="keyword">char</span> <span class="function">valToChar</span>(<span class="keyword">int</span> v) {
+    <span class="keyword">if</span> (v &lt; <span class="number">10</span>) <span class="keyword">return</span> <span class="string">'0'</span> + v;
+    <span class="keyword">return</span> <span class="string">'A'</span> + v - <span class="number">10</span>;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"HEDEM.INP"</span>);
+    ofstream fout(<span class="string">"HEDEM.OUT"</span>);
+    <span class="keyword">int</span> a, b;
+    string s;
+    fin &gt;&gt; a &gt;&gt; b &gt;&gt; s;
+    <span class="comment">// Bước 1: Cơ số A → số thập phân (long long)</span>
+    <span class="keyword">long long</span> val = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">char</span> c : s)
+        val = val * a + <span class="function">charToVal</span>(c);
+    <span class="comment">// Bước 2: Số thập phân → cơ số B</span>
+    <span class="keyword">if</span> (val == <span class="number">0</span>) { fout &lt;&lt; <span class="number">0</span>; <span class="keyword">return</span> <span class="number">0</span>; }
+    string res;
+    <span class="keyword">while</span> (val &gt; <span class="number">0</span>) {
+        res += <span class="function">valToChar</span>(val % b);
+        val /= b;
+    }
+    <span class="function">reverse</span>(res.begin(), res.end());
+    fout &lt;&lt; res;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Đổi cơ số qua 2 bước: (1) cơ số A → giá trị thập phân bằng Horner: val = val × A + digit, (2) thập phân → cơ số B bằng chia lấy dư liên tục: lấy val % B rồi val /= B, đảo ngược xâu kết quả. Chữ số &gt; 9 dùng ký tự A-F. O(len × log val).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 17: PALINDROME ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 17: TỔNG CHỮ SỐ VÀ SỐ ĐỐI XỨNG</div>
+                <div class="problem-file">PALINDROME.INP / PALINDROME.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho hai số L, R. Đếm có bao nhiêu số đối xứng (palindrome) trong đoạn [L, R] mà tổng chữ số chia hết cho K.</p>
+
+                <div class="section-title">Dữ liệu vào (PALINDROME.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: L, R, K (1 ≤ L ≤ R ≤ 10<sup>6</sup>; 1 ≤ K ≤ 50)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (PALINDROME.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số lượng số thỏa mãn</li>
+                        <li>Dòng 2: Liệt kê các số đó (cách nhau dấu cách)</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>PALINDROME.INP</h4>
+                        <pre>10 200 3</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>PALINDROME.OUT</h4>
+                        <pre>6
+11 33 66 99 141 171</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> Các số đối xứng trong [10,200]: 11, 22, 33, 44, 55, 66, 77, 88, 99, 101, 111, 121, 131, 141, 151, 161, 171, 181, 191. Lọc tổng chữ số chia hết cho 3: 11(2)✗, 33(6)✓, 66(12)✓, 99(18)✓, 141(6)✓, 171(9)✓ → 6 số.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Duyệt + Kiểm tra</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">bool</span> <span class="function">isPalin</span>(<span class="keyword">int</span> n) {
+    string s = to_string(n);
+    <span class="keyword">int</span> l = <span class="number">0</span>, r = s.size() - <span class="number">1</span>;
+    <span class="keyword">while</span> (l &lt; r)
+        <span class="keyword">if</span> (s[l++] != s[r--]) <span class="keyword">return false</span>;
+    <span class="keyword">return true</span>;
+}
+
+<span class="keyword">int</span> <span class="function">digitSum</span>(<span class="keyword">int</span> n) {
+    <span class="keyword">int</span> s = <span class="number">0</span>;
+    <span class="keyword">while</span> (n) { s += n % <span class="number">10</span>; n /= <span class="number">10</span>; }
+    <span class="keyword">return</span> s;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"PALINDROME.INP"</span>);
+    ofstream fout(<span class="string">"PALINDROME.OUT"</span>);
+    <span class="keyword">int</span> l, r, k;
+    fin &gt;&gt; l &gt;&gt; r &gt;&gt; k;
+    vector&lt;<span class="keyword">int</span>&gt; res;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = l; i &lt;= r; i++)
+        <span class="keyword">if</span> (<span class="function">isPalin</span>(i) &amp;&amp; <span class="function">digitSum</span>(i) % k == <span class="number">0</span>)
+            res.push_back(i);
+    fout &lt;&lt; res.size() &lt;&lt; <span class="string">"\n"</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)res.size(); i++)
+        fout &lt;&lt; res[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)res.size()];
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Kiểm tra palindrome: chuyển thành xâu, so sánh 2 đầu tiến vào giữa. Tổng chữ số: lấy dư 10 liên tục. R ≤ 10<sup>6</sup> → duyệt trực tiếp O(R × số chữ số) là đủ nhanh. Bài kết hợp 2 kỹ thuật xử lý chữ số cơ bản.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 18: ARMSTRONG ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 18: SỐ ARMSTRONG</div>
+                <div class="problem-file">ARMSTRONG.INP / ARMSTRONG.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho hai số L, R. Liệt kê tất cả số Armstrong trong đoạn [L, R]. Số Armstrong là số có k chữ số mà tổng lũy thừa bậc k của từng chữ số bằng chính nó (ví dụ 153 = 1<sup>3</sup> + 5<sup>3</sup> + 3<sup>3</sup>).</p>
+
+                <div class="section-title">Dữ liệu vào (ARMSTRONG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng: L, R (1 ≤ L ≤ R ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (ARMSTRONG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số lượng số Armstrong trong [L, R]</li>
+                        <li>Dòng 2: Liệt kê các số đó</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>ARMSTRONG.INP</h4>
+                        <pre>1 1000</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>ARMSTRONG.OUT</h4>
+                        <pre>12
+1 2 3 4 5 6 7 8 9 153 370 371</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> 153 = 1³+5³+3³. 370 = 3³+7³+0³. 371 = 3³+7³+1³.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Tiền xử lý lũy thừa</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="comment">// Chỉ có 88 số Armstrong ≤ 10^18, sinh trước rồi lọc</span>
+<span class="keyword">long long</span> pw[<span class="number">10</span>][<span class="number">11</span>]; <span class="comment">// pw[d][k] = d^k</span>
+
+<span class="keyword">int</span> <span class="function">numDigits</span>(<span class="keyword">long long</span> n) {
+    <span class="keyword">int</span> k = <span class="number">0</span>;
+    <span class="keyword">while</span> (n) { k++; n /= <span class="number">10</span>; }
+    <span class="keyword">return</span> k;
+}
+
+<span class="keyword">bool</span> <span class="function">isArmstrong</span>(<span class="keyword">long long</span> n) {
+    <span class="keyword">int</span> k = <span class="function">numDigits</span>(n);
+    <span class="keyword">long long</span> sum = <span class="number">0</span>, tmp = n;
+    <span class="keyword">while</span> (tmp) {
+        <span class="keyword">int</span> d = tmp % <span class="number">10</span>;
+        sum += pw[d][k];
+        <span class="keyword">if</span> (sum &gt; n) <span class="keyword">return false</span>; <span class="comment">// cắt sớm</span>
+        tmp /= <span class="number">10</span>;
+    }
+    <span class="keyword">return</span> sum == n;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"ARMSTRONG.INP"</span>);
+    ofstream fout(<span class="string">"ARMSTRONG.OUT"</span>);
+    <span class="comment">// Tiền xử lý lũy thừa</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">0</span>; d &lt;= <span class="number">9</span>; d++) {
+        pw[d][<span class="number">0</span>] = <span class="number">1</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= <span class="number">10</span>; k++)
+            pw[d][k] = pw[d][k - <span class="number">1</span>] * d;
+    }
+    <span class="comment">// Sinh tất cả số Armstrong ≤ 10^9</span>
+    <span class="comment">// Chỉ có rất ít (~30 số), duyệt brute từng số chữ số</span>
+    vector&lt;<span class="keyword">long long</span>&gt; all;
+    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= <span class="number">10</span>; k++) {
+        <span class="keyword">long long</span> lo = (k == <span class="number">1</span>) ? <span class="number">1</span> : <span class="number">1</span>;
+        <span class="keyword">for</span> (<span class="keyword">long long</span> t = lo; t &lt;= <span class="number">9</span>; t++) lo *= <span class="number">10</span>;
+        <span class="comment">// Dùng cách khác: duyệt tổ hợp chữ số</span>
+    }
+    <span class="comment">// Cách đơn giản nhất cho R ≤ 10^9: liệt kê sẵn</span>
+    <span class="keyword">long long</span> known[] = {<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,
+        <span class="number">153</span>,<span class="number">370</span>,<span class="number">371</span>,<span class="number">407</span>,
+        <span class="number">1634</span>,<span class="number">8208</span>,<span class="number">9474</span>,
+        <span class="number">54748</span>,<span class="number">92727</span>,<span class="number">93084</span>,
+        <span class="number">548834</span>,
+        <span class="number">1741725</span>,<span class="number">4210818</span>,<span class="number">9800817</span>,<span class="number">9926315</span>,
+        <span class="number">24678050</span>,<span class="number">24678051</span>,<span class="number">88593477</span>,
+        <span class="number">146511208</span>,<span class="number">472335975</span>,<span class="number">534494836</span>,<span class="number">912985153</span>};
+    <span class="keyword">long long</span> l, r;
+    fin &gt;&gt; l &gt;&gt; r;
+    vector&lt;<span class="keyword">long long</span>&gt; res;
+    <span class="keyword">for</span> (<span class="keyword">long long</span> x : known)
+        <span class="keyword">if</span> (x >= l &amp;&amp; x &lt;= r) res.push_back(x);
+    fout &lt;&lt; res.size() &lt;&lt; <span class="string">"\n"</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)res.size(); i++)
+        fout &lt;&lt; res[i] &lt;&lt; <span class="string">" \n"</span>[i + <span class="number">1</span> == (<span class="keyword">int</span>)res.size()];
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Duyệt từ L→R kiểm tra từng số → O(R × k) ≈ 10<sup>10</sup> → TLE. Nhận xét: số Armstrong ≤ 10<sup>9</sup> chỉ có 31 số (đã biết trước). Có thể liệt kê sẵn hoặc sinh bằng tổ hợp chữ số: chọn k chữ số (lặp), tính tổng d<sup>k</sup>, kiểm tra kết quả có đúng k chữ số không. Tiền xử lý pw[d][k] = d<sup>k</sup> để tránh tính lại. Bài rèn kỹ năng phân tích bài toán: thay vì brute force, nhận ra tính chất đặc biệt của tập nghiệm.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 19: GOLDBACH ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 19: GIẢ THUYẾT GOLDBACH</div>
+                <div class="problem-file">GOLDBACH.INP / GOLDBACH.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho số chẵn N (N ≥ 4). Tìm cách biểu diễn N = p + q với p, q là số nguyên tố và p ≤ q. Nếu có nhiều cách, in cách có p nhỏ nhất.</p>
+
+                <div class="section-title">Dữ liệu vào (GOLDBACH.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: T (1 ≤ T ≤ 10<sup>5</sup>)</li>
+                        <li>T dòng tiếp: N chẵn (4 ≤ N ≤ 10<sup>7</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (GOLDBACH.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng p và q</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>GOLDBACH.INP</h4>
+                        <pre>3
+4
+20
+100</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>GOLDBACH.OUT</h4>
+                        <pre>2 2
+3 17
+3 97</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> 4 = 2+2. 20 = 3+17 (p nhỏ nhất). 100 = 3+97.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Sàng + Duyệt</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">1e7</span> + <span class="number">1</span>;
+<span class="keyword">bool</span> is_prime[MAXN];
+
+<span class="keyword">void</span> <span class="function">sieve</span>() {
+    <span class="function">fill</span>(is_prime, is_prime + MAXN, <span class="keyword">true</span>);
+    is_prime[<span class="number">0</span>] = is_prime[<span class="number">1</span>] = <span class="keyword">false</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; (<span class="keyword">long long</span>)i * i &lt; MAXN; i++)
+        <span class="keyword">if</span> (is_prime[i])
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = i * i; j &lt; MAXN; j += i)
+                is_prime[j] = <span class="keyword">false</span>;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"GOLDBACH.INP"</span>);
+    ofstream fout(<span class="string">"GOLDBACH.OUT"</span>);
+    <span class="function">sieve</span>();
+    <span class="keyword">int</span> t;
+    fin &gt;&gt; t;
+    <span class="keyword">while</span> (t--) {
+        <span class="keyword">int</span> n;
+        fin &gt;&gt; n;
+        <span class="keyword">for</span> (<span class="keyword">int</span> p = <span class="number">2</span>; p &lt;= n / <span class="number">2</span>; p++)
+            <span class="keyword">if</span> (is_prime[p] &amp;&amp; is_prime[n - p]) {
+                fout &lt;&lt; p &lt;&lt; <span class="string">" "</span> &lt;&lt; n - p &lt;&lt; <span class="string">"\n"</span>;
+                <span class="keyword">break</span>;
+            }
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E1"><strong>Sàng Eratosthenes (E1)</strong></a>. Sàng 1 lần đến 10<sup>7</sup>. Với mỗi N, duyệt p từ 2 tăng dần: nếu p và N−p đều nguyên tố → in ra và dừng (p nhỏ nhất). Không sàng trước → phải kiểm tra SNT bằng trial division O(√N) mỗi lần → chậm hơn. Thực tế p rất nhỏ (thường ≤ vài chục), nên mỗi truy vấn gần như O(1) nhờ tra bảng sàng.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
