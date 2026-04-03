@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Luyện HSG - Cấu Trúc Dữ Liệu Nâng Cao</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Times New Roman', serif; background: #f5f5f5; min-height: 100vh; padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; margin-bottom: 10px; font-size: 1.8em; text-transform: uppercase; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 40px; font-style: italic; }
+        .problem { border: 1px solid #333; padding: 25px; margin-bottom: 30px; page-break-inside: avoid; }
+        .problem-header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .problem-title { font-size: 1.3em; font-weight: bold; text-transform: uppercase; }
+        .problem-file { font-size: 0.9em; color: #666; margin-top: 5px; }
+        .problem-content { text-align: justify; }
+        .problem-content p { margin-bottom: 12px; text-indent: 2em; }
+        .problem-content p:first-child { text-indent: 0; }
+        .section-title { font-weight: bold; margin-top: 20px; margin-bottom: 10px; text-decoration: underline; }
+        .format-box { background: #f9f9f9; padding: 15px; margin: 10px 0; font-family: 'Consolas', monospace; font-size: 0.95em; border-left: 3px solid #333; }
+        .format-box ul { margin-left: 20px; list-style-type: disc; }
+        .format-box li { margin-bottom: 5px; }
+        .example { display: flex; gap: 30px; margin-top: 15px; }
+        .example-box { flex: 1; border: 1px solid #333; }
+        .example-box h4 { background: #333; color: white; padding: 5px 10px; font-size: 0.9em; }
+        .example-box pre { padding: 10px; font-family: 'Consolas', monospace; font-size: 0.95em; white-space: pre; margin: 0; }
+        .constraints { margin-top: 15px; padding: 10px; background: #f0f0f0; }
+        .constraints strong { color: #333; }
+        .solution-toggle { margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 15px; }
+        .solution-btn { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 0.95em; border: none; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: all 0.3s ease; user-select: none; }
+        .solution-btn:hover { background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5); }
+        .solution-btn:active { transform: translateY(0); }
+        .solution-btn .icon { margin-right: 8px; transition: transform 0.3s ease; }
+        .solution-btn.active .icon { transform: rotate(90deg); }
+        .solution-content { display: none; margin-top: 15px; animation: fadeIn 0.4s ease; }
+        .solution-content.show { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .solution-box { background: #1e1e1e; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        .solution-header { background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); color: #fff; padding: 10px 15px; font-weight: bold; font-size: 0.9em; display: flex; justify-content: space-between; align-items: center; }
+        .solution-header .tech-tag { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 12px; font-size: 0.85em; }
+        .solution-code { padding: 15px; overflow-x: auto; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.9em; line-height: 1.5; color: #d4d4d4; white-space: pre; border-left: 4px solid #007acc; }
+        .solution-code .comment { color: #6a9955; }
+        .solution-code .keyword { color: #569cd6; }
+        .solution-code .type { color: #4ec9b0; }
+        .solution-code .string { color: #ce9178; }
+        .solution-code .number { color: #b5cea8; }
+        .solution-code .include { color: #c586c0; }
+        .solution-code .function { color: #dcdcaa; }
+        .solution-note { background: #d1ecf1; border-left: 4px solid #17a2b8; padding: 12px 15px; margin-top: 10px; border-radius: 0 8px 8px 0; font-size: 0.9em; color: #0c5460; }
+        .solution-note strong { color: #0c5460; }
+        .copy-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 4px 12px; border-radius: 5px; cursor: pointer; font-size: 0.8em; transition: all 0.2s; }
+        .copy-btn:hover { background: rgba(255,255,255,0.25); }
+        .copy-btn.copied { background: #27ae60; border-color: #27ae60; }
+        @media screen and (max-width: 768px) {
+            body { padding: 8px; } .container { padding: 12px; } h1 { font-size: 1.3em; } .subtitle { font-size: 0.9em; margin-bottom: 20px; }
+            .problem { padding: 12px; margin-bottom: 15px; } .problem-title { font-size: 1.05em; } .problem-file { font-size: 0.8em; }
+            .problem-content p { text-indent: 0; font-size: 0.95em; } .section-title { font-size: 0.95em; } .format-box { padding: 10px; font-size: 0.85em; }
+            .format-box ul { margin-left: 15px; } .example { flex-direction: column; gap: 10px; } .example-box pre { font-size: 0.85em; }
+            .solution-btn { padding: 8px 16px; font-size: 0.85em; } .solution-code { font-size: 0.72em; padding: 10px; -webkit-overflow-scrolling: touch; }
+            .solution-header { flex-direction: column; gap: 8px; text-align: center; font-size: 0.85em; } .solution-note { font-size: 0.85em; padding: 10px; }
+            .copy-btn { font-size: 0.75em; padding: 3px 8px; }
+        }
+        @media screen and (max-width: 480px) {
+            body { padding: 4px; } .container { padding: 8px; } h1 { font-size: 1.1em; } .problem { padding: 8px; }
+            .problem-title { font-size: 0.95em; } .format-box { padding: 8px; font-size: 0.8em; } .solution-code { font-size: 0.65em; padding: 8px; } .solution-note { font-size: 0.8em; }
+        }
+        .page-break { page-break-after: always; }
+        @media print { .container { box-shadow: none; padding: 0; } .problem { page-break-inside: avoid; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bài Tập Cấu Trúc Dữ Liệu Nâng Cao</h1>
+        <p class="subtitle">Bộ đề rèn luyện DSU, BIT/Fenwick Tree, Segment Tree dành cho HSG Tin học — tối ưu truy vấn tránh TLE</p>
+
+        <!-- ========== BÀI 1: NHOMBAN ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 1: NHÓM BẠN</div>
+                <div class="problem-file">NHOMBAN.INP / NHOMBAN.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Có N học sinh đánh số 1 đến N. Ban đầu mỗi em là 1 nhóm riêng. Có Q thao tác:</p>
+                <p>• <strong>1 u v</strong>: Hợp nhất nhóm chứa u và nhóm chứa v.<br>• <strong>2 u v</strong>: Hỏi u và v có cùng nhóm không?</p>
+
+                <div class="section-title">Dữ liệu vào (NHOMBAN.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N, Q (1 ≤ N, Q ≤ 10<sup>6</sup>)</li>
+                        <li>Q dòng tiếp: mỗi dòng 1 thao tác</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (NHOMBAN.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Với mỗi thao tác loại 2, in "YES" hoặc "NO"</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>NHOMBAN.INP</h4>
+                        <pre>5 5
+1 1 2
+1 3 4
+2 1 2
+2 1 3
+1 2 3</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>NHOMBAN.OUT</h4>
+                        <pre>YES
+NO</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — DSU (Disjoint Set Union)</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">1e6</span> + <span class="number">5</span>;
+<span class="keyword">int</span> par[MAXN], rnk[MAXN];
+
+<span class="keyword">int</span> <span class="function">find</span>(<span class="keyword">int</span> x) {
+    <span class="keyword">while</span> (par[x] != x) x = par[x] = par[par[x]]; <span class="comment">// path compression</span>
+    <span class="keyword">return</span> x;
+}
+
+<span class="keyword">void</span> <span class="function">unite</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+    a = <span class="function">find</span>(a); b = <span class="function">find</span>(b);
+    <span class="keyword">if</span> (a == b) <span class="keyword">return</span>;
+    <span class="keyword">if</span> (rnk[a] &lt; rnk[b]) swap(a, b);
+    par[b] = a;
+    <span class="keyword">if</span> (rnk[a] == rnk[b]) rnk[a]++;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"NHOMBAN.INP"</span>);
+    ofstream fout(<span class="string">"NHOMBAN.OUT"</span>);
+    <span class="keyword">int</span> n, q;
+    fin >> n >> q;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) { par[i] = i; rnk[i] = <span class="number">0</span>; }
+    <span class="keyword">while</span> (q--) {
+        <span class="keyword">int</span> t, u, v;
+        fin >> t >> u >> v;
+        <span class="keyword">if</span> (t == <span class="number">1</span>) <span class="function">unite</span>(u, v);
+        <span class="keyword">else</span> fout &lt;&lt; (<span class="function">find</span>(u) == <span class="function">find</span>(v) ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#C4"><strong>DSU — Disjoint Set Union (C4)</strong></a>. Mỗi nhóm là 1 cây, đại diện = gốc. find(x): tìm gốc của x (path compression = nén đường đi: trỏ thẳng ông nội). unite(a,b): nối 2 cây theo rank (cây thấp nối vào cây cao). Cả find và unite gần O(1) mỗi thao tác (chính xác O(α(N)) ≈ hằng số). Nếu dùng mảng nhóm + duyệt đổi nhóm → O(N) mỗi thao tác → TLE.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 2: DEMLON ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 2: ĐẾM SỐ NHỎ HƠN</div>
+                <div class="problem-file">DEMLON.INP / DEMLON.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho mảng N phần tử. Với mỗi phần tử a<sub>i</sub>, đếm số phần tử đứng trước nó (j &lt; i) mà a<sub>j</sub> &lt; a<sub>i</sub>.</p>
+
+                <div class="section-title">Dữ liệu vào (DEMLON.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N (1 ≤ N ≤ 2×10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>i</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (DEMLON.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng N số nguyên, số thứ i là số phần tử đứng trước a<sub>i</sub> nhỏ hơn a<sub>i</sub></li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>DEMLON.INP</h4>
+                        <pre>5
+3 1 4 1 5</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>DEMLON.OUT</h4>
+                        <pre>0 0 2 0 4</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> Trước 5 có {3,1,4,1}, tất cả &lt; 5 → 4.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — BIT (Fenwick Tree) + nén tọa độ</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">2e5</span> + <span class="number">5</span>;
+<span class="keyword">int</span> bit[MAXN], n;
+
+<span class="keyword">void</span> <span class="function">update</span>(<span class="keyword">int</span> i) {
+    <span class="keyword">for</span> (; i &lt;= n; i += i &amp; (-i)) bit[i]++;
+}
+
+<span class="keyword">int</span> <span class="function">query</span>(<span class="keyword">int</span> i) {
+    <span class="keyword">int</span> s = <span class="number">0</span>;
+    <span class="keyword">for</span> (; i > <span class="number">0</span>; i -= i &amp; (-i)) s += bit[i];
+    <span class="keyword">return</span> s;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"DEMLON.INP"</span>);
+    ofstream fout(<span class="string">"DEMLON.OUT"</span>);
+    fin >> n;
+    vector&lt;<span class="keyword">int</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i];
+    <span class="comment">// Nén tọa độ</span>
+    vector&lt;<span class="keyword">int</span>&gt; sorted_a = a;
+    <span class="function">sort</span>(sorted_a.begin(), sorted_a.end());
+    sorted_a.erase(unique(sorted_a.begin(), sorted_a.end()), sorted_a.end());
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)
+        a[i] = lower_bound(sorted_a.begin(), sorted_a.end(), a[i]) - sorted_a.begin() + <span class="number">1</span>;
+    <span class="comment">// Duyệt từ trái sang phải</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        fout &lt;&lt; <span class="function">query</span>(a[i] - <span class="number">1</span>) &lt;&lt; <span class="string">" \n"</span>[i == n - <span class="number">1</span>];
+        <span class="function">update</span>(a[i]);
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#C5"><strong>BIT — Fenwick Tree (C5)</strong></a> + nén tọa độ. Duyệt brute → O(N<sup>2</sup>) TLE. Nén tọa độ: ánh xạ giá trị về 1..N. BIT lưu tần suất xuất hiện. Khi xử lý a[i]: query(a[i]−1) = đếm số phần tử đã thêm có giá trị &lt; a[i]. Rồi update(a[i]) = thêm a[i] vào BIT. Mỗi phép toán O(log N). Tổng O(N log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 3: CAPNHAT ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 3: CẬP NHẬT ĐOẠN + TRUY VẤN ĐIỂM</div>
+                <div class="problem-file">CAPNHAT.INP / CAPNHAT.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho mảng N phần tử, ban đầu toàn 0. Có Q thao tác:</p>
+                <p>• <strong>1 L R V</strong>: Cộng V vào mọi phần tử a<sub>L</sub>, a<sub>L+1</sub>, ..., a<sub>R</sub>.<br>• <strong>2 X</strong>: In giá trị a<sub>X</sub> hiện tại.</p>
+
+                <div class="section-title">Dữ liệu vào (CAPNHAT.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N, Q (1 ≤ N, Q ≤ 5×10<sup>5</sup>)</li>
+                        <li>Q dòng tiếp: mỗi dòng 1 thao tác</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (CAPNHAT.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Với mỗi thao tác loại 2, in giá trị a<sub>X</sub></li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CAPNHAT.INP</h4>
+                        <pre>5 4
+1 1 3 2
+1 2 5 3
+2 3
+2 4</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CAPNHAT.OUT</h4>
+                        <pre>5
+3</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> Sau thao tác 1: [2,2,2,0,0]. Sau thao tác 2: [2,5,5,3,3]. a[3]=5, a[4]=3.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — BIT cập nhật đoạn</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">5e5</span> + <span class="number">5</span>;
+<span class="keyword">long long</span> bit[MAXN];
+<span class="keyword">int</span> n;
+
+<span class="keyword">void</span> <span class="function">update</span>(<span class="keyword">int</span> i, <span class="keyword">long long</span> v) {
+    <span class="keyword">for</span> (; i &lt;= n; i += i &amp; (-i)) bit[i] += v;
+}
+
+<span class="keyword">long long</span> <span class="function">query</span>(<span class="keyword">int</span> i) {
+    <span class="keyword">long long</span> s = <span class="number">0</span>;
+    <span class="keyword">for</span> (; i > <span class="number">0</span>; i -= i &amp; (-i)) s += bit[i];
+    <span class="keyword">return</span> s;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"CAPNHAT.INP"</span>);
+    ofstream fout(<span class="string">"CAPNHAT.OUT"</span>);
+    <span class="keyword">int</span> q;
+    fin >> n >> q;
+    <span class="keyword">while</span> (q--) {
+        <span class="keyword">int</span> t;
+        fin >> t;
+        <span class="keyword">if</span> (t == <span class="number">1</span>) {
+            <span class="keyword">int</span> l, r; <span class="keyword">long long</span> v;
+            fin >> l >> r >> v;
+            <span class="function">update</span>(l, v);
+            <span class="function">update</span>(r + <span class="number">1</span>, -v);
+        } <span class="keyword">else</span> {
+            <span class="keyword">int</span> x;
+            fin >> x;
+            fout &lt;&lt; <span class="function">query</span>(x) &lt;&lt; <span class="string">"\n"</span>;
+        }
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#C5"><strong>BIT (C5)</strong></a> trên mảng hiệu (difference array). Cập nhật đoạn [L, R] cộng V = cập nhật 2 điểm trên mảng hiệu: update(L, +V), update(R+1, −V). Truy vấn giá trị tại X = tổng tiền tố mảng hiệu = query(X). Cập nhật O(log N), truy vấn O(log N). Nếu cập nhật duyệt thô → O(N) mỗi thao tác → O(NQ) TLE.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 4: MAXDOAN ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 4: TRUY VẤN MAX ĐOẠN</div>
+                <div class="problem-file">MAXDOAN.INP / MAXDOAN.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho mảng N phần tử. Có Q thao tác:</p>
+                <p>• <strong>1 P V</strong>: Gán a<sub>P</sub> = V.<br>• <strong>2 L R</strong>: In max(a<sub>L</sub>, a<sub>L+1</sub>, ..., a<sub>R</sub>).</p>
+
+                <div class="section-title">Dữ liệu vào (MAXDOAN.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N, Q (1 ≤ N, Q ≤ 2×10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>i</sub> (|a<sub>i</sub>| ≤ 10<sup>9</sup>)</li>
+                        <li>Q dòng tiếp: mỗi dòng 1 thao tác</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (MAXDOAN.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Với mỗi thao tác loại 2, in giá trị max đoạn [L, R]</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>MAXDOAN.INP</h4>
+                        <pre>5 3
+1 5 3 4 2
+2 2 4
+1 3 6
+2 1 5</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>MAXDOAN.OUT</h4>
+                        <pre>5
+6</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Segment Tree</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">2e5</span> + <span class="number">5</span>;
+<span class="keyword">int</span> n, q, a[MAXN];
+<span class="keyword">int</span> tree[<span class="number">4</span> * MAXN];
+
+<span class="keyword">void</span> <span class="function">build</span>(<span class="keyword">int</span> id, <span class="keyword">int</span> l, <span class="keyword">int</span> r) {
+    <span class="keyword">if</span> (l == r) { tree[id] = a[l]; <span class="keyword">return</span>; }
+    <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;
+    <span class="function">build</span>(id * <span class="number">2</span>, l, mid);
+    <span class="function">build</span>(id * <span class="number">2</span> + <span class="number">1</span>, mid + <span class="number">1</span>, r);
+    tree[id] = max(tree[id * <span class="number">2</span>], tree[id * <span class="number">2</span> + <span class="number">1</span>]);
+}
+
+<span class="keyword">void</span> <span class="function">update</span>(<span class="keyword">int</span> id, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> pos, <span class="keyword">int</span> val) {
+    <span class="keyword">if</span> (l == r) { tree[id] = val; <span class="keyword">return</span>; }
+    <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;
+    <span class="keyword">if</span> (pos &lt;= mid) <span class="function">update</span>(id * <span class="number">2</span>, l, mid, pos, val);
+    <span class="keyword">else</span> <span class="function">update</span>(id * <span class="number">2</span> + <span class="number">1</span>, mid + <span class="number">1</span>, r, pos, val);
+    tree[id] = max(tree[id * <span class="number">2</span>], tree[id * <span class="number">2</span> + <span class="number">1</span>]);
+}
+
+<span class="keyword">int</span> <span class="function">query</span>(<span class="keyword">int</span> id, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> ql, <span class="keyword">int</span> qr) {
+    <span class="keyword">if</span> (ql > r || qr &lt; l) <span class="keyword">return</span> INT_MIN;
+    <span class="keyword">if</span> (ql &lt;= l &amp;&amp; r &lt;= qr) <span class="keyword">return</span> tree[id];
+    <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;
+    <span class="keyword">return</span> max(<span class="function">query</span>(id * <span class="number">2</span>, l, mid, ql, qr),
+               <span class="function">query</span>(id * <span class="number">2</span> + <span class="number">1</span>, mid + <span class="number">1</span>, r, ql, qr));
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"MAXDOAN.INP"</span>);
+    ofstream fout(<span class="string">"MAXDOAN.OUT"</span>);
+    fin >> n >> q;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fin >> a[i];
+    <span class="function">build</span>(<span class="number">1</span>, <span class="number">1</span>, n);
+    <span class="keyword">while</span> (q--) {
+        <span class="keyword">int</span> t;
+        fin >> t;
+        <span class="keyword">if</span> (t == <span class="number">1</span>) {
+            <span class="keyword">int</span> p, v;
+            fin >> p >> v;
+            <span class="function">update</span>(<span class="number">1</span>, <span class="number">1</span>, n, p, v);
+        } <span class="keyword">else</span> {
+            <span class="keyword">int</span> l, r;
+            fin >> l >> r;
+            fout &lt;&lt; <span class="function">query</span>(<span class="number">1</span>, <span class="number">1</span>, n, l, r) &lt;&lt; <span class="string">"\n"</span>;
+        }
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#C7"><strong>Segment Tree (C7)</strong></a>. Cây phân đoạn: mỗi nút quản lý 1 đoạn [l, r], lưu max. build O(N), update O(log N), query O(log N). Sparse Table chỉ hỗ trợ truy vấn tĩnh (không cập nhật). Segment Tree hỗ trợ cả cập nhật lẫn truy vấn. Duyệt thô: mỗi truy vấn O(N) → O(NQ) ≈ 4×10<sup>10</sup> → TLE. Segment Tree: O((N+Q) log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 5: CONGDOAN ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 5: CỘNG ĐOẠN + TỔNG ĐOẠN</div>
+                <div class="problem-file">CONGDOAN.INP / CONGDOAN.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho mảng N phần tử. Có Q thao tác:</p>
+                <p>• <strong>1 L R V</strong>: Cộng V vào mọi phần tử a<sub>L</sub>..a<sub>R</sub>.<br>• <strong>2 L R</strong>: In tổng a<sub>L</sub> + a<sub>L+1</sub> + ... + a<sub>R</sub>.</p>
+
+                <div class="section-title">Dữ liệu vào (CONGDOAN.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N, Q (1 ≤ N, Q ≤ 2×10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>i</sub> (|a<sub>i</sub>| ≤ 10<sup>9</sup>)</li>
+                        <li>Q dòng tiếp: mỗi dòng 1 thao tác</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (CONGDOAN.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Với mỗi thao tác loại 2, in tổng đoạn</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>CONGDOAN.INP</h4>
+                        <pre>5 3
+1 2 3 4 5
+1 2 4 10
+2 1 5
+2 3 4</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>CONGDOAN.OUT</h4>
+                        <pre>45
+27</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> Sau cộng: [1, 12, 13, 14, 5]. Tổng [1,5] = 45. Tổng [3,4] = 13+14 = 27.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Lazy Segment Tree</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">2e5</span> + <span class="number">5</span>;
+<span class="keyword">long long</span> tree[<span class="number">4</span> * MAXN], lazy[<span class="number">4</span> * MAXN];
+<span class="keyword">int</span> a[MAXN], n, q;
+
+<span class="keyword">void</span> <span class="function">build</span>(<span class="keyword">int</span> id, <span class="keyword">int</span> l, <span class="keyword">int</span> r) {
+    lazy[id] = <span class="number">0</span>;
+    <span class="keyword">if</span> (l == r) { tree[id] = a[l]; <span class="keyword">return</span>; }
+    <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;
+    <span class="function">build</span>(id * <span class="number">2</span>, l, mid);
+    <span class="function">build</span>(id * <span class="number">2</span> + <span class="number">1</span>, mid + <span class="number">1</span>, r);
+    tree[id] = tree[id * <span class="number">2</span>] + tree[id * <span class="number">2</span> + <span class="number">1</span>];
+}
+
+<span class="keyword">void</span> <span class="function">push</span>(<span class="keyword">int</span> id, <span class="keyword">int</span> l, <span class="keyword">int</span> r) {
+    <span class="keyword">if</span> (lazy[id] != <span class="number">0</span>) {
+        <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;
+        tree[id * <span class="number">2</span>] += lazy[id] * (mid - l + <span class="number">1</span>);
+        tree[id * <span class="number">2</span> + <span class="number">1</span>] += lazy[id] * (r - mid);
+        lazy[id * <span class="number">2</span>] += lazy[id];
+        lazy[id * <span class="number">2</span> + <span class="number">1</span>] += lazy[id];
+        lazy[id] = <span class="number">0</span>;
+    }
+}
+
+<span class="keyword">void</span> <span class="function">update</span>(<span class="keyword">int</span> id, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> ql, <span class="keyword">int</span> qr, <span class="keyword">long long</span> v) {
+    <span class="keyword">if</span> (ql > r || qr &lt; l) <span class="keyword">return</span>;
+    <span class="keyword">if</span> (ql &lt;= l &amp;&amp; r &lt;= qr) {
+        tree[id] += v * (r - l + <span class="number">1</span>);
+        lazy[id] += v;
+        <span class="keyword">return</span>;
+    }
+    <span class="function">push</span>(id, l, r);
+    <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;
+    <span class="function">update</span>(id * <span class="number">2</span>, l, mid, ql, qr, v);
+    <span class="function">update</span>(id * <span class="number">2</span> + <span class="number">1</span>, mid + <span class="number">1</span>, r, ql, qr, v);
+    tree[id] = tree[id * <span class="number">2</span>] + tree[id * <span class="number">2</span> + <span class="number">1</span>];
+}
+
+<span class="keyword">long long</span> <span class="function">query</span>(<span class="keyword">int</span> id, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> ql, <span class="keyword">int</span> qr) {
+    <span class="keyword">if</span> (ql > r || qr &lt; l) <span class="keyword">return</span> <span class="number">0</span>;
+    <span class="keyword">if</span> (ql &lt;= l &amp;&amp; r &lt;= qr) <span class="keyword">return</span> tree[id];
+    <span class="function">push</span>(id, l, r);
+    <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;
+    <span class="keyword">return</span> <span class="function">query</span>(id * <span class="number">2</span>, l, mid, ql, qr) + <span class="function">query</span>(id * <span class="number">2</span> + <span class="number">1</span>, mid + <span class="number">1</span>, r, ql, qr);
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"CONGDOAN.INP"</span>);
+    ofstream fout(<span class="string">"CONGDOAN.OUT"</span>);
+    fin >> n >> q;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fin >> a[i];
+    <span class="function">build</span>(<span class="number">1</span>, <span class="number">1</span>, n);
+    <span class="keyword">while</span> (q--) {
+        <span class="keyword">int</span> t;
+        fin >> t;
+        <span class="keyword">if</span> (t == <span class="number">1</span>) {
+            <span class="keyword">int</span> l, r; <span class="keyword">long long</span> v;
+            fin >> l >> r >> v;
+            <span class="function">update</span>(<span class="number">1</span>, <span class="number">1</span>, n, l, r, v);
+        } <span class="keyword">else</span> {
+            <span class="keyword">int</span> l, r;
+            fin >> l >> r;
+            fout &lt;&lt; <span class="function">query</span>(<span class="number">1</span>, <span class="number">1</span>, n, l, r) &lt;&lt; <span class="string">"\n"</span>;
+        }
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#C8"><strong>Lazy Segment Tree (C8)</strong></a>. Segment Tree thường: cập nhật 1 điểm O(log N). Cập nhật đoạn [L,R] cộng V: nếu cập nhật từng điểm → O(N log N) mỗi thao tác → TLE. Lazy Propagation: "lười" cập nhật — chỉ đánh dấu lazy[id] += V cho nút bao trùm. Khi cần đi sâu (truy vấn hoặc cập nhật con) → push lazy xuống con. Cả update và query đều O(log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 6: NGHICHDAO ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 6: ĐẾM NGHỊCH THẾ</div>
+                <div class="problem-file">NGHICHDAO.INP / NGHICHDAO.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho hoán vị P gồm N phần tử. Đếm số cặp nghịch thế (i, j) với i &lt; j và P<sub>i</sub> &gt; P<sub>j</sub>.</p>
+
+                <div class="section-title">Dữ liệu vào (NGHICHDAO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N (1 ≤ N ≤ 5×10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số — hoán vị P</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (NGHICHDAO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên — số cặp nghịch thế</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>NGHICHDAO.INP</h4>
+                        <pre>5
+2 3 1 5 4</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>NGHICHDAO.OUT</h4>
+                        <pre>3</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> Các cặp nghịch thế: (2,1), (3,1), (5,4).
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Merge Sort đếm nghịch thế</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">long long</span> ans = <span class="number">0</span>;
+
+<span class="keyword">void</span> <span class="function">mergeSort</span>(vector&lt;<span class="keyword">int</span>&gt;&amp; a, <span class="keyword">int</span> l, <span class="keyword">int</span> r) {
+    <span class="keyword">if</span> (l >= r) <span class="keyword">return</span>;
+    <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;
+    <span class="function">mergeSort</span>(a, l, mid);
+    <span class="function">mergeSort</span>(a, mid + <span class="number">1</span>, r);
+    vector&lt;<span class="keyword">int</span>&gt; tmp;
+    <span class="keyword">int</span> i = l, j = mid + <span class="number">1</span>;
+    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r) {
+        <span class="keyword">if</span> (a[i] &lt;= a[j]) tmp.push_back(a[i++]);
+        <span class="keyword">else</span> {
+            ans += mid - i + <span class="number">1</span>; <span class="comment">// tất cả a[i..mid] > a[j]</span>
+            tmp.push_back(a[j++]);
+        }
+    }
+    <span class="keyword">while</span> (i &lt;= mid) tmp.push_back(a[i++]);
+    <span class="keyword">while</span> (j &lt;= r) tmp.push_back(a[j++]);
+    <span class="keyword">for</span> (<span class="keyword">int</span> k = l; k &lt;= r; k++) a[k] = tmp[k - l];
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"NGHICHDAO.INP"</span>);
+    ofstream fout(<span class="string">"NGHICHDAO.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    vector&lt;<span class="keyword">int</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin >> a[i];
+    <span class="function">mergeSort</span>(a, <span class="number">0</span>, n - <span class="number">1</span>);
+    fout &lt;&lt; ans;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng Merge Sort cải tiến hoặc <a href="Bi-kip-vo-cong.html#C5"><strong>BIT (C5)</strong></a>. Cách Merge Sort: khi merge 2 nửa đã sort, nếu lấy phần tử a[j] từ nửa phải trước a[i] từ nửa trái, thì a[i..mid] đều &gt; a[j] → cộng (mid − i + 1) nghịch thế. O(N log N). Duyệt 2 vòng for → O(N<sup>2</sup>) ≈ 2.5×10<sup>11</sup> → TLE. Cách BIT: duyệt từ phải sang trái, dùng BIT đếm phần tử nhỏ hơn đã gặp (tương tự Bài 2).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 7: SPANTREE ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 7: CÂY KHUNG NHỎ NHẤT</div>
+                <div class="problem-file">SPANTREE.INP / SPANTREE.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho đồ thị vô hướng liên thông N đỉnh, M cạnh có trọng số. Tìm tổng trọng số cây khung nhỏ nhất.</p>
+
+                <div class="section-title">Dữ liệu vào (SPANTREE.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N, M (2 ≤ N ≤ 10<sup>5</sup>; N−1 ≤ M ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp: u, v, w (1 ≤ u, v ≤ N; 1 ≤ w ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (SPANTREE.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên — tổng trọng số cây khung nhỏ nhất</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>SPANTREE.INP</h4>
+                        <pre>4 5
+1 2 1
+2 3 2
+3 4 3
+1 3 4
+2 4 5</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>SPANTREE.OUT</h4>
+                        <pre>6</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> Chọn cạnh 1-2(1), 2-3(2), 3-4(3). Tổng = 6.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Kruskal + DSU</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">int</span> par[<span class="number">100005</span>], rnk[<span class="number">100005</span>];
+
+<span class="keyword">int</span> <span class="function">find</span>(<span class="keyword">int</span> x) {
+    <span class="keyword">while</span> (par[x] != x) x = par[x] = par[par[x]];
+    <span class="keyword">return</span> x;
+}
+
+<span class="keyword">bool</span> <span class="function">unite</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+    a = <span class="function">find</span>(a); b = <span class="function">find</span>(b);
+    <span class="keyword">if</span> (a == b) <span class="keyword">return false</span>;
+    <span class="keyword">if</span> (rnk[a] &lt; rnk[b]) swap(a, b);
+    par[b] = a;
+    <span class="keyword">if</span> (rnk[a] == rnk[b]) rnk[a]++;
+    <span class="keyword">return true</span>;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"SPANTREE.INP"</span>);
+    ofstream fout(<span class="string">"SPANTREE.OUT"</span>);
+    <span class="keyword">int</span> n, m;
+    fin >> n >> m;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) { par[i] = i; rnk[i] = <span class="number">0</span>; }
+    vector&lt;tuple&lt;<span class="keyword">long long</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; edges(m);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v; <span class="keyword">long long</span> w;
+        fin >> u >> v >> w;
+        edges[i] = {w, u, v};
+    }
+    <span class="function">sort</span>(edges.begin(), edges.end());
+    <span class="keyword">long long</span> total = <span class="number">0</span>;
+    <span class="keyword">int</span> cnt = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; [w, u, v] : edges) {
+        <span class="keyword">if</span> (<span class="function">unite</span>(u, v)) {
+            total += w;
+            <span class="keyword">if</span> (++cnt == n - <span class="number">1</span>) <span class="keyword">break</span>;
+        }
+    }
+    fout &lt;&lt; total;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#C4"><strong>DSU (C4)</strong></a> + Kruskal. Sort cạnh theo trọng số tăng. Duyệt từng cạnh: nếu 2 đầu khác thành phần liên thông (find khác nhau) → chọn cạnh + unite. Dừng khi đủ N−1 cạnh. DSU giúp kiểm tra/hợp nhất thành phần liên thông gần O(1). Tổng: O(M log M) cho sort + O(M × α(N)) cho DSU ≈ O(M log M).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 8: LIENTHONG ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 8: LIÊN THÔNG ONLINE</div>
+                <div class="problem-file">LIENTHONG.INP / LIENTHONG.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho N đỉnh, ban đầu không có cạnh nào. Có Q thao tác:</p>
+                <p>• <strong>1 u v</strong>: Thêm cạnh (u, v).<br>• <strong>2 u v</strong>: Hỏi u, v có liên thông không.<br>• <strong>3</strong>: In số thành phần liên thông hiện tại.</p>
+
+                <div class="section-title">Dữ liệu vào (LIENTHONG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N, Q (1 ≤ N, Q ≤ 5×10<sup>5</sup>)</li>
+                        <li>Q dòng tiếp: mỗi dòng 1 thao tác</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (LIENTHONG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Với thao tác 2: in "YES" hoặc "NO"</li>
+                        <li>Với thao tác 3: in số thành phần liên thông</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>LIENTHONG.INP</h4>
+                        <pre>5 6
+3
+1 1 2
+1 3 4
+3
+2 1 3
+2 1 2</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>LIENTHONG.OUT</h4>
+                        <pre>5
+3
+NO
+YES</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — DSU + đếm thành phần</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">5e5</span> + <span class="number">5</span>;
+<span class="keyword">int</span> par[MAXN], rnk[MAXN], comp;
+
+<span class="keyword">int</span> <span class="function">find</span>(<span class="keyword">int</span> x) {
+    <span class="keyword">while</span> (par[x] != x) x = par[x] = par[par[x]];
+    <span class="keyword">return</span> x;
+}
+
+<span class="keyword">void</span> <span class="function">unite</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+    a = <span class="function">find</span>(a); b = <span class="function">find</span>(b);
+    <span class="keyword">if</span> (a == b) <span class="keyword">return</span>;
+    comp--;
+    <span class="keyword">if</span> (rnk[a] &lt; rnk[b]) swap(a, b);
+    par[b] = a;
+    <span class="keyword">if</span> (rnk[a] == rnk[b]) rnk[a]++;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"LIENTHONG.INP"</span>);
+    ofstream fout(<span class="string">"LIENTHONG.OUT"</span>);
+    <span class="keyword">int</span> n, q;
+    fin >> n >> q;
+    comp = n;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) { par[i] = i; rnk[i] = <span class="number">0</span>; }
+    <span class="keyword">while</span> (q--) {
+        <span class="keyword">int</span> t;
+        fin >> t;
+        <span class="keyword">if</span> (t == <span class="number">1</span>) {
+            <span class="keyword">int</span> u, v; fin >> u >> v;
+            <span class="function">unite</span>(u, v);
+        } <span class="keyword">else if</span> (t == <span class="number">2</span>) {
+            <span class="keyword">int</span> u, v; fin >> u >> v;
+            fout &lt;&lt; (<span class="function">find</span>(u) == <span class="function">find</span>(v) ? <span class="string">"YES"</span> : <span class="string">"NO"</span>) &lt;&lt; <span class="string">"\n"</span>;
+        } <span class="keyword">else</span> {
+            fout &lt;&lt; comp &lt;&lt; <span class="string">"\n"</span>;
+        }
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#C4"><strong>DSU (C4)</strong></a>. Biến comp = số thành phần liên thông, ban đầu = N. Mỗi lần unite thành công (2 đỉnh khác nhóm): comp--. Thao tác 3 trả comp. Nếu dùng BFS/DFS mỗi truy vấn → O(N+M) mỗi lần → TLE. DSU: mỗi thao tác O(α(N)) ≈ O(1).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 9: SLIDING ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 9: MAX CỬA SỔ TRƯỢT</div>
+                <div class="problem-file">SLIDING.INP / SLIDING.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho dãy N số nguyên và số K. Với mỗi cửa sổ gồm K phần tử liên tiếp (từ vị trí i đến i+K−1), tìm giá trị lớn nhất trong cửa sổ đó.</p>
+
+                <div class="section-title">Dữ liệu vào (SLIDING.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N, K (1 ≤ K ≤ N ≤ 10<sup>6</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>i</sub> (|a<sub>i</sub>| ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (SLIDING.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>N−K+1 số trên một dòng, mỗi số là max của cửa sổ tương ứng</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>SLIDING.INP</h4>
+                        <pre>8 3
+1 3 -1 -3 5 3 6 7</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>SLIDING.OUT</h4>
+                        <pre>3 3 5 5 6 7</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> Cửa sổ [1,3,−1]→3, [3,−1,−3]→3, [−1,−3,5]→5, [−3,5,3]→5, [5,3,6]→6, [3,6,7]→7.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Deque (hàng đợi hai đầu)</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"SLIDING.INP"</span>);
+    ofstream fout(<span class="string">"SLIDING.OUT"</span>);
+    <span class="keyword">int</span> n, k;
+    fin &gt;&gt; n &gt;&gt; k;
+    vector&lt;<span class="keyword">int</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) fin &gt;&gt; a[i];
+    deque&lt;<span class="keyword">int</span>&gt; dq; <span class="comment">// lưu chỉ số, a[dq] giảm dần</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="comment">// Loại phần tử ngoài cửa sổ</span>
+        <span class="keyword">while</span> (!dq.empty() &amp;&amp; dq.front() &lt;= i - k)
+            dq.pop_front();
+        <span class="comment">// Loại phần tử nhỏ hơn a[i] ở cuối (không bao giờ là max)</span>
+        <span class="keyword">while</span> (!dq.empty() &amp;&amp; a[dq.back()] &lt;= a[i])
+            dq.pop_back();
+        dq.push_back(i);
+        <span class="keyword">if</span> (i &gt;= k - <span class="number">1</span>)
+            fout &lt;&lt; a[dq.front()] &lt;&lt; <span class="string">" "</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#C4"><strong>Deque (C4)</strong></a>. Cách thô: mỗi cửa sổ duyệt K phần tử tìm max → O(NK) ≈ 10<sup>12</sup> → TLE. Tối ưu bằng deque: duy trì deque chứa chỉ số với giá trị giảm dần từ đầu đến cuối. Khi thêm a[i]: loại cuối deque nếu ≤ a[i] (chúng sẽ không bao giờ là max trong tương lai). Loại đầu deque nếu ngoài cửa sổ (chỉ số ≤ i − K). Max luôn ở đầu deque. Mỗi phần tử vào/ra deque đúng 1 lần → O(N). Mỗi phần tử vào/ra deque đúng 1 lần nên tổng O(N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 10: PHANLON ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 10: PHẦN TỬ LỚN HƠN GẦN NHẤT</div>
+                <div class="problem-file">PHANLON.INP / PHANLON.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho dãy N số nguyên a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub>. Với mỗi phần tử a<sub>i</sub>, tìm chỉ số j nhỏ nhất sao cho j &gt; i và a<sub>j</sub> &gt; a<sub>i</sub> (phần tử lớn hơn gần nhất bên phải). Nếu không tồn tại, in −1.</p>
+
+                <div class="section-title">Dữ liệu vào (PHANLON.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N (1 ≤ N ≤ 10<sup>6</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>i</sub> (|a<sub>i</sub>| ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (PHANLON.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng gồm N số — mỗi số là chỉ số j hoặc −1</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>PHANLON.INP</h4>
+                        <pre>5
+4 2 1 5 3</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>PHANLON.OUT</h4>
+                        <pre>4 4 4 -1 -1</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> a[1]=4 → a[4]=5 &gt; 4, nên ans[1]=4. a[2]=2 → a[4]=5 &gt; 2, ans[2]=4. a[3]=1 → a[4]=5 &gt; 1, ans[3]=4. a[4]=5 → không có phần tử lớn hơn bên phải, ans[4]=−1. a[5]=3 → tương tự, ans[5]=−1.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Stack</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"PHANLON.INP"</span>);
+    ofstream fout(<span class="string">"PHANLON.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin &gt;&gt; n;
+    vector&lt;<span class="keyword">int</span>&gt; a(n + <span class="number">1</span>), ans(n + <span class="number">1</span>, -<span class="number">1</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fin &gt;&gt; a[i];
+    stack&lt;<span class="keyword">int</span>&gt; st; <span class="comment">// lưu chỉ số, a[st] giảm dần từ đáy lên đỉnh</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        <span class="comment">// a[i] lớn hơn phần tử trên đỉnh → đó là câu trả lời cho đỉnh</span>
+        <span class="keyword">while</span> (!st.empty() &amp;&amp; a[st.top()] &lt; a[i]) {
+            ans[st.top()] = i;
+            st.pop();
+        }
+        st.push(i);
+    }
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)
+        fout &lt;&lt; ans[i] &lt;&lt; <span class="string">" \n"</span>[i == n];
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#C4"><strong>Stack (C4)</strong></a>. Cách thô: với mỗi i duyệt j = i+1..N tìm a[j] &gt; a[i] → O(N<sup>2</sup>) ≈ 10<sup>12</sup> → TLE. Tối ưu bằng stack: duyệt i từ trái sang phải, duy trì stack chứa chỉ số có a[] giảm dần. Khi gặp a[i] &gt; a[đỉnh stack] → pop, ghi ans = i cho phần tử vừa pop (vì i là chỉ số đầu tiên bên phải lớn hơn nó). Mỗi phần tử vào/ra stack đúng 1 lần → O(N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    function toggleSolution(btn) {
+        const content = btn.nextElementSibling;
+        btn.classList.toggle('active');
+        content.classList.toggle('show');
+        const icon = btn.querySelector('.icon');
+        if (content.classList.contains('show')) {
+            icon.textContent = '▼';
+            btn.innerHTML = '<span class="icon">▼</span> Ẩn lời giải';
+        } else {
+            icon.textContent = '▶';
+            btn.innerHTML = '<span class="icon">▶</span> Xem lời giải';
+        }
+    }
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const code = codeBlock.textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            btn.textContent = '✓ Đã copy';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = '📋 Copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

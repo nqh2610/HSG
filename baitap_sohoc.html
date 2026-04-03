@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Luyện HSG - Số Học</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Times New Roman', serif; background: #f5f5f5; min-height: 100vh; padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; margin-bottom: 10px; font-size: 1.8em; text-transform: uppercase; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 40px; font-style: italic; }
+        .problem { border: 1px solid #333; padding: 25px; margin-bottom: 30px; page-break-inside: avoid; }
+        .problem-header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .problem-title { font-size: 1.3em; font-weight: bold; text-transform: uppercase; }
+        .problem-file { font-size: 0.9em; color: #666; margin-top: 5px; }
+        .problem-content { text-align: justify; }
+        .problem-content p { margin-bottom: 12px; text-indent: 2em; }
+        .problem-content p:first-child { text-indent: 0; }
+        .section-title { font-weight: bold; margin-top: 20px; margin-bottom: 10px; text-decoration: underline; }
+        .format-box { background: #f9f9f9; padding: 15px; margin: 10px 0; font-family: 'Consolas', monospace; font-size: 0.95em; border-left: 3px solid #333; }
+        .format-box ul { margin-left: 20px; list-style-type: disc; }
+        .format-box li { margin-bottom: 5px; }
+        .example { display: flex; gap: 30px; margin-top: 15px; }
+        .example-box { flex: 1; border: 1px solid #333; }
+        .example-box h4 { background: #333; color: white; padding: 5px 10px; font-size: 0.9em; }
+        .example-box pre { padding: 10px; font-family: 'Consolas', monospace; font-size: 0.95em; white-space: pre; margin: 0; }
+        .constraints { margin-top: 15px; padding: 10px; background: #f0f0f0; }
+        .constraints strong { color: #333; }
+        .solution-toggle { margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 15px; }
+        .solution-btn { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 0.95em; border: none; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: all 0.3s ease; user-select: none; }
+        .solution-btn:hover { background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5); }
+        .solution-btn:active { transform: translateY(0); }
+        .solution-btn .icon { margin-right: 8px; transition: transform 0.3s ease; }
+        .solution-btn.active .icon { transform: rotate(90deg); }
+        .solution-content { display: none; margin-top: 15px; animation: fadeIn 0.4s ease; }
+        .solution-content.show { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .solution-box { background: #1e1e1e; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        .solution-header { background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); color: #fff; padding: 10px 15px; font-weight: bold; font-size: 0.9em; display: flex; justify-content: space-between; align-items: center; }
+        .solution-header .tech-tag { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 12px; font-size: 0.85em; }
+        .solution-code { padding: 15px; overflow-x: auto; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.9em; line-height: 1.5; color: #d4d4d4; white-space: pre; border-left: 4px solid #007acc; }
+        .solution-code .comment { color: #6a9955; }
+        .solution-code .keyword { color: #569cd6; }
+        .solution-code .type { color: #4ec9b0; }
+        .solution-code .string { color: #ce9178; }
+        .solution-code .number { color: #b5cea8; }
+        .solution-code .include { color: #c586c0; }
+        .solution-code .function { color: #dcdcaa; }
+        .solution-note { background: #d1ecf1; border-left: 4px solid #17a2b8; padding: 12px 15px; margin-top: 10px; border-radius: 0 8px 8px 0; font-size: 0.9em; color: #0c5460; }
+        .solution-note strong { color: #0c5460; }
+        .copy-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 4px 12px; border-radius: 5px; cursor: pointer; font-size: 0.8em; transition: all 0.2s; }
+        .copy-btn:hover { background: rgba(255,255,255,0.25); }
+        .copy-btn.copied { background: #27ae60; border-color: #27ae60; }
+        @media screen and (max-width: 768px) {
+            body { padding: 8px; } .container { padding: 12px; } h1 { font-size: 1.3em; } .subtitle { font-size: 0.9em; margin-bottom: 20px; }
+            .problem { padding: 12px; margin-bottom: 15px; } .problem-title { font-size: 1.05em; } .problem-file { font-size: 0.8em; }
+            .problem-content p { text-indent: 0; font-size: 0.95em; } .section-title { font-size: 0.95em; } .format-box { padding: 10px; font-size: 0.85em; }
+            .format-box ul { margin-left: 15px; } .example { flex-direction: column; gap: 10px; } .example-box pre { font-size: 0.85em; }
+            .solution-btn { padding: 8px 16px; font-size: 0.85em; } .solution-code { font-size: 0.72em; padding: 10px; -webkit-overflow-scrolling: touch; }
+            .solution-header { flex-direction: column; gap: 8px; text-align: center; font-size: 0.85em; } .solution-note { font-size: 0.85em; padding: 10px; }
+            .copy-btn { font-size: 0.75em; padding: 3px 8px; }
+        }
+        @media screen and (max-width: 480px) {
+            body { padding: 4px; } .container { padding: 8px; } h1 { font-size: 1.1em; } .problem { padding: 8px; }
+            .problem-title { font-size: 0.95em; } .format-box { padding: 8px; font-size: 0.8em; } .solution-code { font-size: 0.65em; padding: 8px; } .solution-note { font-size: 0.8em; }
+        }
+        .page-break { page-break-after: always; }
+        @media print { .container { box-shadow: none; padding: 0; } .problem { page-break-inside: avoid; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bài Tập Số Học</h1>
+        <p class="subtitle">Bộ đề rèn luyện kỹ năng Số học, SNT, Sàng, Lũy thừa nhanh, GCD/LCM dành cho HSG Tin học</p>
+
+        <!-- ========== BÀI 1: DEMSNT ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 1: ĐẾM SỐ NGUYÊN TỐ</div>
+                <div class="problem-file">DEMSNT.INP / DEMSNT.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T truy vấn, mỗi truy vấn gồm hai số nguyên L, R. Với mỗi truy vấn, đếm số lượng số nguyên tố trong đoạn [L, R].</p>
+
+                <div class="section-title">Dữ liệu vào (DEMSNT.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: T (1 ≤ T ≤ 10<sup>5</sup>)</li>
+                        <li>T dòng tiếp: L, R (1 ≤ L ≤ R ≤ 10<sup>7</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (DEMSNT.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng một số nguyên — số SNT trong [L, R]</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>DEMSNT.INP</h4>
+                        <pre>3
+1 10
+5 20
+100 200</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>DEMSNT.OUT</h4>
+                        <pre>4
+6
+21</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> [1,10] có 4 SNT: 2, 3, 5, 7.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Sàng Eratosthenes + Prefix Sum</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">1e7</span>;
+<span class="keyword">bool</span> notPrime[MAXN + <span class="number">1</span>];
+<span class="keyword">int</span> prefix[MAXN + <span class="number">1</span>];
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"DEMSNT.INP"</span>);
+    ofstream fout(<span class="string">"DEMSNT.OUT"</span>);
+    <span class="comment">// Sàng Eratosthenes</span>
+    notPrime[<span class="number">0</span>] = notPrime[<span class="number">1</span>] = <span class="keyword">true</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; (<span class="keyword">long long</span>)i * i &lt;= MAXN; i++)
+        <span class="keyword">if</span> (!notPrime[i])
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = i * i; j &lt;= MAXN; j += i)
+                notPrime[j] = <span class="keyword">true</span>;
+    <span class="comment">// Prefix sum: prefix[i] = số SNT trong [1, i]</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= MAXN; i++)
+        prefix[i] = prefix[i - <span class="number">1</span>] + (!notPrime[i] ? <span class="number">1</span> : <span class="number">0</span>);
+    <span class="keyword">int</span> T;
+    fin >> T;
+    <span class="keyword">while</span> (T--) {
+        <span class="keyword">int</span> L, R;
+        fin >> L >> R;
+        fout &lt;&lt; prefix[R] - prefix[L - <span class="number">1</span>] &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E2"><strong>Sàng Eratosthenes (E2)</strong></a> + <a href="Bi-kip-vo-cong.html#A3"><strong>Prefix Sum (A3)</strong></a>. Sàng 1 lần đến 10<sup>7</sup> trong O(N log log N). Dựng mảng prefix[i] = số SNT ≤ i. Mỗi truy vấn trả lời O(1): prefix[R] − prefix[L−1]. Nếu kiểm tra từng số thì mỗi truy vấn O(R−L) × O(√R) sẽ TLE. Sàng + prefix đưa về O(1) mỗi truy vấn.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 2: LUYTHUA ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 2: LŨY THỪA MODULO</div>
+                <div class="problem-file">LUYTHUA.INP / LUYTHUA.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T truy vấn, mỗi truy vấn gồm 3 số a, b, m. Tính a<sup>b</sup> mod m.</p>
+
+                <div class="section-title">Dữ liệu vào (LUYTHUA.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: T (1 ≤ T ≤ 10<sup>5</sup>)</li>
+                        <li>T dòng tiếp: a, b, m (1 ≤ a, m ≤ 10<sup>9</sup>; 0 ≤ b ≤ 10<sup>18</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (LUYTHUA.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng kết quả a<sup>b</sup> mod m</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>LUYTHUA.INP</h4>
+                        <pre>2
+2 10 1000
+3 100 1000000007</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>LUYTHUA.OUT</h4>
+                        <pre>24
+981147432</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Lũy thừa nhanh</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">long long</span> <span class="function">power</span>(<span class="keyword">long long</span> a, <span class="keyword">long long</span> b, <span class="keyword">long long</span> m) {
+    a %= m;
+    <span class="keyword">long long</span> res = <span class="number">1</span>;
+    <span class="keyword">while</span> (b > <span class="number">0</span>) {
+        <span class="keyword">if</span> (b &amp; <span class="number">1</span>) res = (__int128)res * a % m;
+        a = (__int128)a * a % m;
+        b >>= <span class="number">1</span>;
+    }
+    <span class="keyword">return</span> res;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"LUYTHUA.INP"</span>);
+    ofstream fout(<span class="string">"LUYTHUA.OUT"</span>);
+    <span class="keyword">int</span> T;
+    fin >> T;
+    <span class="keyword">while</span> (T--) {
+        <span class="keyword">long long</span> a, b, m;
+        fin >> a >> b >> m;
+        fout &lt;&lt; <span class="function">power</span>(a, b, m) &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E3"><strong>Lũy thừa nhanh (E3)</strong></a>. Nhân a lên b lần bình thường → O(b) = 10<sup>18</sup> → TLE. Lũy thừa nhanh: chia b theo bit nhị phân. Mỗi bước: nếu bit cuối = 1 → nhân res với a; rồi a = a×a, b /= 2. Chỉ O(log b) phép nhân. Dùng __int128 tránh tràn khi nhân 2 số long long rồi mod. O(T × log b).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 3: PHANTICH ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 3: PHÂN TÍCH THỪA SỐ NGUYÊN TỐ</div>
+                <div class="problem-file">PHANTICH.INP / PHANTICH.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T số nguyên dương N. Với mỗi N, phân tích N thành tích các thừa số nguyên tố.</p>
+
+                <div class="section-title">Dữ liệu vào (PHANTICH.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: T (1 ≤ T ≤ 10<sup>5</sup>)</li>
+                        <li>T dòng tiếp: mỗi dòng 1 số N (2 ≤ N ≤ 10<sup>7</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (PHANTICH.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng là phân tích dạng: p1^e1 * p2^e2 * ...</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>PHANTICH.INP</h4>
+                        <pre>3
+12
+7
+360</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>PHANTICH.OUT</h4>
+                        <pre>2^2 * 3^1
+7^1
+2^3 * 3^2 * 5^1</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Sàng + Smallest Prime Factor</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">1e7</span>;
+<span class="keyword">int</span> spf[MAXN + <span class="number">1</span>]; <span class="comment">// smallest prime factor</span>
+
+<span class="keyword">void</span> <span class="function">sieve</span>() {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= MAXN; i++) spf[i] = i;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; (<span class="keyword">long long</span>)i * i &lt;= MAXN; i++)
+        <span class="keyword">if</span> (spf[i] == i) <span class="comment">// i là SNT</span>
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = i * i; j &lt;= MAXN; j += i)
+                <span class="keyword">if</span> (spf[j] == j) spf[j] = i;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"PHANTICH.INP"</span>);
+    ofstream fout(<span class="string">"PHANTICH.OUT"</span>);
+    <span class="function">sieve</span>();
+    <span class="keyword">int</span> T;
+    fin >> T;
+    <span class="keyword">while</span> (T--) {
+        <span class="keyword">int</span> n;
+        fin >> n;
+        <span class="keyword">bool</span> first = <span class="keyword">true</span>;
+        <span class="keyword">while</span> (n > <span class="number">1</span>) {
+            <span class="keyword">int</span> p = spf[n], cnt = <span class="number">0</span>;
+            <span class="keyword">while</span> (n % p == <span class="number">0</span>) { n /= p; cnt++; }
+            <span class="keyword">if</span> (!first) fout &lt;&lt; <span class="string">" * "</span>;
+            fout &lt;&lt; p &lt;&lt; <span class="string">"^"</span> &lt;&lt; cnt;
+            first = <span class="keyword">false</span>;
+        }
+        fout &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E2"><strong>Sàng biến thể (E2)</strong></a>. Sàng thường chỉ trả lời "có/không phải SNT". Ở đây sàng thêm: spf[i] = ước nguyên tố nhỏ nhất của i. Khi phân tích: chia liên tục cho spf[n] cho đến khi n = 1. Mỗi lần chia: p = spf[n], đếm số lần chia hết. Nếu không sàng, phân tích mỗi số O(√N). T = 10<sup>5</sup> × √(10<sup>7</sup>) ≈ 3×10<sup>8</sup> → sát TLE. Dùng spf: mỗi số phân tích O(log N) → tổng O(T log N).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 4: GCDQUERY ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 4: TRUY VẤN GCD</div>
+                <div class="problem-file">GCDQUERY.INP / GCDQUERY.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho mảng N số nguyên dương. Trả lời Q truy vấn, mỗi truy vấn L R: tính GCD(a<sub>L</sub>, a<sub>L+1</sub>, ..., a<sub>R</sub>).</p>
+
+                <div class="section-title">Dữ liệu vào (GCDQUERY.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N, Q (1 ≤ N, Q ≤ 2×10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>i</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                        <li>Q dòng tiếp: L, R (1 ≤ L ≤ R ≤ N)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (GCDQUERY.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Q dòng, mỗi dòng một số nguyên — GCD đoạn [L, R]</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>GCDQUERY.INP</h4>
+                        <pre>5 3
+12 6 18 3 9
+1 3
+2 4
+1 5</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>GCDQUERY.OUT</h4>
+                        <pre>6
+3
+3</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Sparse Table</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">2e5</span> + <span class="number">5</span>;
+<span class="keyword">const int</span> LOG = <span class="number">18</span>;
+<span class="keyword">int</span> sp[LOG][MAXN], _log[MAXN];
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"GCDQUERY.INP"</span>);
+    ofstream fout(<span class="string">"GCDQUERY.OUT"</span>);
+    <span class="keyword">int</span> n, q;
+    fin >> n >> q;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fin >> sp[<span class="number">0</span>][i];
+    <span class="comment">// Tiền xử lý log</span>
+    _log[<span class="number">1</span>] = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) _log[i] = _log[i / <span class="number">2</span>] + <span class="number">1</span>;
+    <span class="comment">// Xây Sparse Table</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; LOG; j++)
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i + (<span class="number">1</span> &lt;&lt; j) - <span class="number">1</span> &lt;= n; i++)
+            sp[j][i] = __gcd(sp[j - <span class="number">1</span>][i], sp[j - <span class="number">1</span>][i + (<span class="number">1</span> &lt;&lt; (j - <span class="number">1</span>))]);
+    <span class="keyword">while</span> (q--) {
+        <span class="keyword">int</span> l, r;
+        fin >> l >> r;
+        <span class="keyword">int</span> k = _log[r - l + <span class="number">1</span>];
+        fout &lt;&lt; __gcd(sp[k][l], sp[k][r - (<span class="number">1</span> &lt;&lt; k) + <span class="number">1</span>]) &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#C10"><strong>Sparse Table (C10)</strong></a> + <a href="Bi-kip-vo-cong.html#E4"><strong>GCD (E4)</strong></a>. Truy vấn GCD đoạn [L, R] cần CTDL hỗ trợ. GCD có tính chất overlap-friendly: gcd(a, a) = a → dùng Sparse Table trả lời O(1) mỗi truy vấn. sp[j][i] = GCD đoạn bắt đầu i, dài 2<sup>j</sup>. Truy vấn: gcd(sp[k][L], sp[k][R−2<sup>k</sup>+1]) với k = log2(R−L+1). Dựng O(N log N), mỗi truy vấn O(1). Nếu duyệt thô → O(Q × N) ≈ 4×10<sup>10</sup> → TLE.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 5: EULER ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 5: HÀM EULER PHI</div>
+                <div class="problem-file">EULER.INP / EULER.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T số N. Với mỗi N, tính φ(N) — số lượng số nguyên trong [1, N] nguyên tố cùng nhau với N.</p>
+
+                <div class="section-title">Dữ liệu vào (EULER.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: T (1 ≤ T ≤ 10<sup>5</sup>)</li>
+                        <li>T dòng tiếp: mỗi dòng 1 số N (1 ≤ N ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (EULER.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng φ(N)</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>EULER.INP</h4>
+                        <pre>3
+1
+6
+12</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>EULER.OUT</h4>
+                        <pre>1
+2
+4</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> φ(6) = 2 vì chỉ có 1 và 5 nguyên tố cùng nhau với 6.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Sàng Euler Phi</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">1e6</span>;
+<span class="keyword">int</span> phi_[MAXN + <span class="number">1</span>];
+
+<span class="keyword">void</span> <span class="function">sievePhi</span>() {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= MAXN; i++) phi_[i] = i;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= MAXN; i++)
+        <span class="keyword">if</span> (phi_[i] == i) <span class="comment">// i là SNT</span>
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt;= MAXN; j += i)
+                phi_[j] -= phi_[j] / i;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"EULER.INP"</span>);
+    ofstream fout(<span class="string">"EULER.OUT"</span>);
+    <span class="function">sievePhi</span>();
+    <span class="keyword">int</span> T;
+    fin >> T;
+    <span class="keyword">while</span> (T--) {
+        <span class="keyword">int</span> n;
+        fin >> n;
+        fout &lt;&lt; phi_[n] &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E2"><strong>Sàng biến thể (E2)</strong></a>. Công thức: φ(N) = N × ∏(1 − 1/p) với p là thừa số nguyên tố của N. Sàng giống Eratosthenes: khi tìm được SNT i, duyệt tất cả bội j của i, cập nhật phi[j] -= phi[j] / i. Sau sàng, tra bảng O(1). Nếu tính trực tiếp mỗi truy vấn: phân tích thừa số O(√N) × T = 10<sup>5</sup> × 10<sup>3</sup> = 10<sup>8</sup> → sát giới hạn. Sàng sẵn an toàn hơn.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 6: MATRIX ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 6: NHÂN MA TRẬN</div>
+                <div class="problem-file">MATRIX.INP / MATRIX.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho dãy Fibonacci: F(0) = 0, F(1) = 1, F(n) = F(n-1) + F(n-2). Tính F(N) mod 10<sup>9</sup>+7.</p>
+
+                <div class="section-title">Dữ liệu vào (MATRIX.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên N (0 ≤ N ≤ 10<sup>18</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (MATRIX.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên — F(N) mod 10<sup>9</sup>+7</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>MATRIX.INP</h4>
+                        <pre>10</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>MATRIX.OUT</h4>
+                        <pre>55</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Nhân ma trận + Lũy thừa nhanh</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const long long</span> MOD = <span class="number">1e9</span> + <span class="number">7</span>;
+<span class="keyword">typedef</span> vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; Matrix;
+
+Matrix <span class="function">mul</span>(Matrix&amp; A, Matrix&amp; B) {
+    <span class="keyword">int</span> n = A.size();
+    Matrix C(n, vector&lt;<span class="keyword">long long</span>&gt;(n, <span class="number">0</span>));
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)
+        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; k++)
+            <span class="keyword">if</span> (A[i][k])
+                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++)
+                    C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % MOD;
+    <span class="keyword">return</span> C;
+}
+
+Matrix <span class="function">matpow</span>(Matrix A, <span class="keyword">long long</span> p) {
+    <span class="keyword">int</span> n = A.size();
+    Matrix R(n, vector&lt;<span class="keyword">long long</span>&gt;(n, <span class="number">0</span>));
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) R[i][i] = <span class="number">1</span>;
+    <span class="keyword">while</span> (p > <span class="number">0</span>) {
+        <span class="keyword">if</span> (p &amp; <span class="number">1</span>) R = <span class="function">mul</span>(R, A);
+        A = <span class="function">mul</span>(A, A);
+        p >>= <span class="number">1</span>;
+    }
+    <span class="keyword">return</span> R;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"MATRIX.INP"</span>);
+    ofstream fout(<span class="string">"MATRIX.OUT"</span>);
+    <span class="keyword">long long</span> n;
+    fin >> n;
+    <span class="keyword">if</span> (n == <span class="number">0</span>) { fout &lt;&lt; <span class="number">0</span>; <span class="keyword">return</span> <span class="number">0</span>; }
+    Matrix A = {{<span class="number">1</span>, <span class="number">1</span>}, {<span class="number">1</span>, <span class="number">0</span>}};
+    Matrix R = <span class="function">matpow</span>(A, n - <span class="number">1</span>);
+    fout &lt;&lt; R[<span class="number">0</span>][<span class="number">0</span>];
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E3"><strong>Lũy thừa nhanh ma trận (E3)</strong></a>. Vòng lặp tính F(N) thường: O(N) = 10<sup>18</sup> → TLE. Nhận xét: [F(n+1), F(n)] = [[1,1],[1,0]] × [F(n), F(n-1)]. Suy ra [F(n+1), F(n)] = A<sup>n</sup> × [F(1), F(0)]. Tính A<sup>n</sup> bằng lũy thừa nhanh: O(log N) lần nhân ma trận 2×2 → O(8 × log N) ≈ 500 phép nhân. Kỹ thuật này áp dụng cho mọi hệ thức truy hồi tuyến tính.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 7: DEMUOC ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 7: ĐẾM ƯỚC SỐ</div>
+                <div class="problem-file">DEMUOC.INP / DEMUOC.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho mảng N số nguyên dương. Với mỗi phần tử a<sub>i</sub>, đếm số phần tử khác trong mảng là ước của a<sub>i</sub>.</p>
+
+                <div class="section-title">Dữ liệu vào (DEMUOC.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>i</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (DEMUOC.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng N số nguyên, số thứ i là số ước của a<sub>i</sub> có trong mảng</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>DEMUOC.INP</h4>
+                        <pre>5
+1 2 3 6 12</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>DEMUOC.OUT</h4>
+                        <pre>0 1 1 3 4</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> Ước của 12 có trong mảng: {1, 2, 3, 6} → 4 ước (không đếm chính nó).
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Đánh dấu bội</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXV = <span class="number">1e6</span> + <span class="number">5</span>;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"DEMUOC.INP"</span>);
+    ofstream fout(<span class="string">"DEMUOC.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin >> n;
+    vector&lt;<span class="keyword">int</span>&gt; a(n);
+    <span class="keyword">int</span> cnt[MAXV] = {};
+    <span class="keyword">int</span> divCnt[MAXV] = {};
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        fin >> a[i];
+        cnt[a[i]]++;
+    }
+    <span class="comment">// Với mỗi giá trị d có mặt, cộng 1 cho tất cả bội j của d</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">1</span>; d &lt; MAXV; d++)
+        <span class="keyword">if</span> (cnt[d])
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = d; j &lt; MAXV; j += d)
+                divCnt[j] += cnt[d];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)
+        fout &lt;&lt; divCnt[a[i]] - <span class="number">1</span> &lt;&lt; <span class="string">" \n"</span>[i == n - <span class="number">1</span>];
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Kỹ thuật giống <a href="Bi-kip-vo-cong.html#E2"><strong>Sàng (E2)</strong></a>. Duyệt mỗi cặp (i,j) kiểm tra a[i] | a[j] → O(N<sup>2</sup>) TLE. Phương pháp: với mỗi giá trị d có trong mảng (cnt[d] > 0), duyệt tất cả bội j = d, 2d, 3d,...: divCnt[j] += cnt[d]. Tổng phép lặp ≈ maxV/1 + maxV/2 + ... ≈ maxV × ln(maxV) ≈ 10<sup>7</sup>. Cuối cùng divCnt[a[i]] − 1 (trừ chính nó) là đáp án.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 8: MODULAR ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 8: NGHỊCH ĐẢO MODULAR</div>
+                <div class="problem-file">MODULAR.INP / MODULAR.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T truy vấn, mỗi truy vấn gồm 2 số a, m (m là SNT, gcd(a,m)=1). Tìm x sao cho a×x ≡ 1 (mod m), 0 ≤ x &lt; m.</p>
+
+                <div class="section-title">Dữ liệu vào (MODULAR.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: T (1 ≤ T ≤ 10<sup>5</sup>)</li>
+                        <li>T dòng tiếp: a, m (1 ≤ a &lt; m ≤ 10<sup>9</sup>; m là SNT)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (MODULAR.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng giá trị x</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>MODULAR.INP</h4>
+                        <pre>2
+3 7
+2 1000000007</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>MODULAR.OUT</h4>
+                        <pre>5
+500000004</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> 3×5 = 15 ≡ 1 (mod 7).
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Fermat nhỏ + Lũy thừa nhanh</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">long long</span> <span class="function">power</span>(<span class="keyword">long long</span> a, <span class="keyword">long long</span> b, <span class="keyword">long long</span> m) {
+    a %= m;
+    <span class="keyword">long long</span> res = <span class="number">1</span>;
+    <span class="keyword">while</span> (b > <span class="number">0</span>) {
+        <span class="keyword">if</span> (b &amp; <span class="number">1</span>) res = (__int128)res * a % m;
+        a = (__int128)a * a % m;
+        b >>= <span class="number">1</span>;
+    }
+    <span class="keyword">return</span> res;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"MODULAR.INP"</span>);
+    ofstream fout(<span class="string">"MODULAR.OUT"</span>);
+    <span class="keyword">int</span> T;
+    fin >> T;
+    <span class="keyword">while</span> (T--) {
+        <span class="keyword">long long</span> a, m;
+        fin >> a >> m;
+        <span class="comment">// a^(-1) ≡ a^(m-2) (mod m), vì m nguyên tố (Fermat nhỏ)</span>
+        fout &lt;&lt; <span class="function">power</span>(a, m - <span class="number">2</span>, m) &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E3"><strong>Lũy thừa nhanh (E3)</strong></a> + Định lý Fermat nhỏ. Khi m là SNT: a<sup>m−1</sup> ≡ 1 (mod m) → a<sup>−1</sup> ≡ a<sup>m−2</sup> (mod m). Chỉ cần tính a<sup>m−2</sup> mod m bằng lũy thừa nhanh → O(log m). Nghịch đảo modular là kỹ thuật nền tảng cho bài tổ hợp: C(n,k) mod p = n! × (k!)^{-1} × ((n-k)!)^{-1}.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 9: TOHOP ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 9: TỔ HỢP CHẬP K CỦA N</div>
+                <div class="problem-file">TOHOP.INP / TOHOP.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho T truy vấn, mỗi truy vấn gồm 2 số N, K. Tính C(N, K) mod 10<sup>9</sup>+7.</p>
+
+                <div class="section-title">Dữ liệu vào (TOHOP.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: T (1 ≤ T ≤ 10<sup>5</sup>)</li>
+                        <li>T dòng tiếp: N, K (0 ≤ K ≤ N ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (TOHOP.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>T dòng, mỗi dòng C(N, K) mod 10<sup>9</sup>+7</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>TOHOP.INP</h4>
+                        <pre>3
+5 2
+10 3
+1000000 500000</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>TOHOP.OUT</h4>
+                        <pre>10
+120
+149033233</pre>
+                    </div>
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — Tiền xử lý giai thừa + nghịch đảo</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const int</span> MAXN = <span class="number">1e6</span> + <span class="number">5</span>;
+<span class="keyword">const long long</span> MOD = <span class="number">1e9</span> + <span class="number">7</span>;
+<span class="keyword">long long</span> fac[MAXN], inv_fac[MAXN];
+
+<span class="keyword">long long</span> <span class="function">power</span>(<span class="keyword">long long</span> a, <span class="keyword">long long</span> b, <span class="keyword">long long</span> m) {
+    <span class="keyword">long long</span> res = <span class="number">1</span>; a %= m;
+    <span class="keyword">while</span> (b > <span class="number">0</span>) {
+        <span class="keyword">if</span> (b &amp; <span class="number">1</span>) res = res * a % m;
+        a = a * a % m;
+        b >>= <span class="number">1</span>;
+    }
+    <span class="keyword">return</span> res;
+}
+
+<span class="keyword">void</span> <span class="function">precompute</span>() {
+    fac[<span class="number">0</span>] = <span class="number">1</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; MAXN; i++) fac[i] = fac[i - <span class="number">1</span>] * i % MOD;
+    inv_fac[MAXN - <span class="number">1</span>] = <span class="function">power</span>(fac[MAXN - <span class="number">1</span>], MOD - <span class="number">2</span>, MOD);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = MAXN - <span class="number">2</span>; i >= <span class="number">0</span>; i--)
+        inv_fac[i] = inv_fac[i + <span class="number">1</span>] * (i + <span class="number">1</span>) % MOD;
+}
+
+<span class="keyword">long long</span> <span class="function">C</span>(<span class="keyword">int</span> n, <span class="keyword">int</span> k) {
+    <span class="keyword">if</span> (k &lt; <span class="number">0</span> || k > n) <span class="keyword">return</span> <span class="number">0</span>;
+    <span class="keyword">return</span> fac[n] % MOD * inv_fac[k] % MOD * inv_fac[n - k] % MOD;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"TOHOP.INP"</span>);
+    ofstream fout(<span class="string">"TOHOP.OUT"</span>);
+    <span class="function">precompute</span>();
+    <span class="keyword">int</span> T;
+    fin >> T;
+    <span class="keyword">while</span> (T--) {
+        <span class="keyword">int</span> n, k;
+        fin >> n >> k;
+        fout &lt;&lt; <span class="function">C</span>(n, k) &lt;&lt; <span class="string">"\n"</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E3"><strong>Lũy thừa nhanh (E3)</strong></a> + nghịch đảo modular. C(n,k) = n! / (k! × (n−k)!). Mod nguyên tố → dùng nghịch đảo: C(n,k) = fac[n] × inv_fac[k] × inv_fac[n−k]. Tiền xử lý: fac[i] = i! mod p tính tuyến tính. inv_fac[MAXN−1] = power(fac[MAXN−1], p−2, p), rồi tính ngược: inv_fac[i] = inv_fac[i+1] × (i+1). Xây O(N), mỗi truy vấn O(1). Nếu tính tam giác Pascal → O(N<sup>2</sup>) bộ nhớ và thời gian → TLE với N = 10<sup>6</sup>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BÀI 10: BOICHUNG ========== -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">Bài 10: BỘI CHUNG NHỎ NHẤT CỦA DÃY</div>
+                <div class="problem-file">BOICHUNG.INP / BOICHUNG.OUT</div>
+            </div>
+            <div class="problem-content">
+                <p>Cho dãy N số nguyên dương. Tính bội chung nhỏ nhất (LCM) của cả dãy. Nếu kết quả vượt 10<sup>18</sup> thì in "OVERFLOW".</p>
+
+                <div class="section-title">Dữ liệu vào (BOICHUNG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>i</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title">Kết quả ra (BOICHUNG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số — LCM của dãy, hoặc "OVERFLOW" nếu vượt 10<sup>18</sup></li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <div class="example-box">
+                        <h4>BOICHUNG.INP</h4>
+                        <pre>3
+4 6 10</pre>
+                    </div>
+                    <div class="example-box">
+                        <h4>BOICHUNG.OUT</h4>
+                        <pre>60</pre>
+                    </div>
+                </div>
+
+                <div class="constraints">
+                    <strong>Giải thích:</strong> LCM(4, 6) = 12. LCM(12, 10) = 60.
+                </div>
+
+                <div class="solution-toggle">
+                    <button class="solution-btn" onclick="toggleSolution(this)">
+                        <span class="icon">▶</span> Xem lời giải
+                    </button>
+                    <div class="solution-content">
+                        <div class="solution-box">
+                            <div class="solution-header">
+                                <span>📝 Code C++ — GCD + LCM + Kiểm tra tràn</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+                            </div>
+                            <pre class="solution-code"><span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+<span class="keyword">const long long</span> LIMIT = <span class="number">1e18</span>;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream fin(<span class="string">"BOICHUNG.INP"</span>);
+    ofstream fout(<span class="string">"BOICHUNG.OUT"</span>);
+    <span class="keyword">int</span> n;
+    fin &gt;&gt; n;
+    <span class="keyword">long long</span> lcm = <span class="number">1</span>;
+    <span class="keyword">bool</span> overflow = <span class="keyword">false</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">long long</span> a;
+        fin &gt;&gt; a;
+        <span class="keyword">long long</span> g = __gcd(lcm, a);
+        <span class="keyword">long long</span> d = a / g;
+        <span class="comment">// Kiểm tra lcm * d có tràn không</span>
+        <span class="keyword">if</span> (d != <span class="number">0</span> &amp;&amp; lcm &gt; LIMIT / d) {
+            overflow = <span class="keyword">true</span>;
+            <span class="keyword">break</span>;
+        }
+        lcm = lcm * d;
+    }
+    <span class="keyword">if</span> (overflow) fout &lt;&lt; <span class="string">"OVERFLOW"</span>;
+    <span class="keyword">else</span> fout &lt;&lt; lcm;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                        <div class="solution-note">
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#E4"><strong>GCD (E4)</strong></a>. LCM(a, b) = a / gcd(a, b) × b. Tính LCM lần lượt: lcm = LCM(lcm, a[i]). Mẹo chia trước nhân sau: tính d = a / gcd(lcm, a) rồi lcm = lcm × d → tránh tràn trung gian. Kiểm tra tràn: trước khi nhân, so lcm &gt; 10<sup>18</sup> / d. Chia trước nhân sau để tránh tràn trung gian, kiểm tra tràn trước khi nhân.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    function toggleSolution(btn) {
+        const content = btn.nextElementSibling;
+        btn.classList.toggle('active');
+        content.classList.toggle('show');
+        const icon = btn.querySelector('.icon');
+        if (content.classList.contains('show')) {
+            icon.textContent = '▼';
+            btn.innerHTML = '<span class="icon">▼</span> Ẩn lời giải';
+        } else {
+            icon.textContent = '▶';
+            btn.innerHTML = '<span class="icon">▶</span> Xem lời giải';
+        }
+    }
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const code = codeBlock.textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            btn.textContent = '✓ Đã copy';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = '📋 Copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>
