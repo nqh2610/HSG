@@ -424,27 +424,18 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">const int</span> MOD = <span class="number">1e9</span> + <span class="number">7</span>;
+<span class="keyword">long long</span> dp[<span class="number">1000001</span>];
 
 <span class="keyword">int</span> <span class="function">main</span>() {
     ifstream in(<span class="string">"TUONGGACH.INP"</span>);
     ofstream out(<span class="string">"TUONGGACH.OUT"</span>);
-    
     <span class="keyword">int</span> n;
     in >> n;
-    
-    <span class="keyword">if</span>(n <= <span class="number">2</span>) {
-        out << n;
-    } <span class="keyword">else</span> {
-        <span class="comment">// dp[i] = số cách lát i cột; dp[i] = dp[i-1] + dp[i-2]</span>
-        <span class="keyword">long long</span> a = <span class="number">1</span>, b = <span class="number">2</span>, c;
-        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i <= n; i++) {
-            c = (a + b) % MOD;
-            a = b;
-            b = c;
-        }
-        out << b;
-    }
-    
+    dp[<span class="number">1</span>] = <span class="number">1</span>;
+    dp[<span class="number">2</span>] = <span class="number">2</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++)
+        dp[i] = (dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>]) % MOD;
+    out &lt;&lt; dp[n];
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
@@ -2368,35 +2359,21 @@ vector&lt;<span class="keyword">int</span>&gt; children[MAXN];
 <span class="keyword">int</span> <span class="function">main</span>() {
     ifstream in(<span class="string">"COPHIEU.INP"</span>);
     ofstream out(<span class="string">"COPHIEU.OUT"</span>);
-    
     <span class="keyword">int</span> n, K;
     in >> n >> K;
-    
     vector&lt;<span class="keyword">int</span>&gt; p(n);
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) in >> p[i];
-    
-    <span class="keyword">if</span>(<span class="number">2</span> * K >= n) {
-        <span class="comment">// Không giới hạn giao dịch</span>
-        <span class="keyword">long long</span> ans = <span class="number">0</span>;
-        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i < n; i++)
-            <span class="keyword">if</span>(p[i] > p[i-<span class="number">1</span>]) ans += p[i] - p[i-<span class="number">1</span>];
-        out << ans;
-    } <span class="keyword">else</span> {
-        <span class="comment">// dp[k][0] = lợi nhuận max sau k giao dịch, không giữ CP</span>
-        <span class="comment">// dp[k][1] = lợi nhuận max sau k giao dịch, đang giữ CP</span>
-        vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; dp(K + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(<span class="number">2</span>, <span class="number">0</span>));
-        <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k <= K; k++) dp[k][<span class="number">1</span>] = -1e18;
-        
-        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
-            <span class="keyword">for</span>(<span class="keyword">int</span> k = K; k >= <span class="number">1</span>; k--) {
-                dp[k][<span class="number">0</span>] = max(dp[k][<span class="number">0</span>], dp[k][<span class="number">1</span>] + p[i]);
-                dp[k][<span class="number">1</span>] = max(dp[k][<span class="number">1</span>], dp[k-<span class="number">1</span>][<span class="number">0</span>] - p[i]);
-            }
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> p[i];
+    <span class="comment">// dp[k][0] = lợi nhuận max sau k giao dịch, không giữ CP</span>
+    <span class="comment">// dp[k][1] = lợi nhuận max sau k giao dịch, đang giữ CP</span>
+    vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; dp(K + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(<span class="number">2</span>, <span class="number">0</span>));
+    <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt;= K; k++) dp[k][<span class="number">1</span>] = -<span class="number">1e18</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> k = K; k >= <span class="number">1</span>; k--) {
+            dp[k][<span class="number">0</span>] = max(dp[k][<span class="number">0</span>], dp[k][<span class="number">1</span>] + p[i]);
+            dp[k][<span class="number">1</span>] = max(dp[k][<span class="number">1</span>], dp[k-<span class="number">1</span>][<span class="number">0</span>] - p[i]);
         }
-        
-        out << dp[K][<span class="number">0</span>];
     }
-    
+    out &lt;&lt; dp[K][<span class="number">0</span>];
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
