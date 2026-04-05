@@ -507,30 +507,26 @@
 <span class="keyword">int</span> <span class="function">main</span>() {
     ifstream in(<span class="string">"XUONGNUI.INP"</span>);
     ofstream out(<span class="string">"XUONGNUI.OUT"</span>);
-    
     <span class="keyword">int</span> n;
     in >> n;
-    
     vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; a(n + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(n + <span class="number">1</span>, <span class="number">0</span>));
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= n; i++)
-        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j <= i; j++)
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i; j++)
             in >> a[i][j];
-    
-    <span class="comment">// a[i][j] = tổng đường đi lớn nhất từ (i,j) xuống đáy (DP từ dưới lên)</span>
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = n - <span class="number">1</span>; i >= <span class="number">1</span>; i--) {
-        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j <= i; j++) {
-            a[i][j] += max(a[i+<span class="number">1</span>][j], a[i+<span class="number">1</span>][j+<span class="number">1</span>]);
-        }
-    }
-    
-    out << a[<span class="number">1</span>][<span class="number">1</span>];
+    <span class="comment">// dp[i][j] = tổng đường đi lớn nhất từ (i,j) xuống đáy</span>
+    vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; dp(n + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(n + <span class="number">1</span>, <span class="number">0</span>));
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) dp[n][j] = a[n][j];
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = n - <span class="number">1</span>; i >= <span class="number">1</span>; i--)
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i; j++)
+            dp[i][j] = a[i][j] + max(dp[i + <span class="number">1</span>][j], dp[i + <span class="number">1</span>][j + <span class="number">1</span>]);
+    out &lt;&lt; dp[<span class="number">1</span>][<span class="number">1</span>];
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ bottom-up (B3)</strong></a>. Tính từ tầng dưới lên. Tại mỗi ô (i,j), chọn đi xuống trái (i+1,j) hoặc xuống phải (i+1,j+1), lấy max rồi cộng giá trị ô hiện tại: a[i][j] += max(a[i+1][j], a[i+1][j+1]). Tầng dưới = cơ sở (giữ nguyên). Sau khi tính xong, a[1][1] = tổng lớn nhất từ đỉnh xuống. Vì sao bottom-up? Vì từ trên xuống có nhiều nhánh (tốn kém), từ dưới lên mỗi ô chỉ cộng 1 lần. O(N²).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ bottom-up (B3)</strong></a>. dp[i][j] = tổng đường đi lớn nhất từ ô (i,j) xuống đáy. Cơ sở: dp[n][j] = a[n][j] (tầng cuối). Chuyển trạng thái: dp[i][j] = a[i][j] + max(dp[i+1][j], dp[i+1][j+1]) — chọn đi xuống trái hoặc phải, lấy max. Tính từ tầng n-1 lên tầng 1. Kết quả = dp[1][1]. Vì sao bottom-up? Vì từ trên xuống có nhiều nhánh (tốn kém), từ dưới lên mỗi ô chỉ cộng 1 lần. O(N²).
                         </div>
                     </div>
                 </div>
@@ -761,29 +757,26 @@
 <span class="include">#include &lt;bits/stdc++.h&gt;</span>
 <span class="keyword">using namespace</span> std;
 
-<span class="comment">// dp[i] = giá trị lớn nhất lấy được từ nhà l..i (tối ưu bộ nhớ bằng prev1, prev2)</span>
-<span class="keyword">long long</span> <span class="function">robLine</span>(vector&lt;<span class="keyword">long long</span>&gt; &amp;a, <span class="keyword">int</span> l, <span class="keyword">int</span> r) {
-    <span class="keyword">long long</span> prev2 = <span class="number">0</span>, prev1 = <span class="number">0</span>;
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = l; i <= r; i++) {
-        <span class="keyword">long long</span> cur = max(prev1, prev2 + a[i]);
-        prev2 = prev1;
-        prev1 = cur;
-    }
-    <span class="keyword">return</span> prev1;
-}
-
 <span class="keyword">int</span> <span class="function">main</span>() {
     ifstream in(<span class="string">"TROMNHA.INP"</span>);
     ofstream out(<span class="string">"TROMNHA.OUT"</span>);
-    
     <span class="keyword">int</span> n;
     in >> n;
-    
     vector&lt;<span class="keyword">long long</span>&gt; a(n);
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) in >> a[i];
-    
-    <span class="comment">// Vòng tròn: max(rob nhà 0..n-2, rob nhà 1..n-1)</span>
-    out << max(robLine(a, <span class="number">0</span>, n - <span class="number">2</span>), robLine(a, <span class="number">1</span>, n - <span class="number">1</span>));
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
+    <span class="comment">// TH1: Lấy nhà 0, không lấy nhà n-1 → dp trên [0..n-2]</span>
+    vector&lt;<span class="keyword">long long</span>&gt; dp1(n);
+    dp1[<span class="number">0</span>] = a[<span class="number">0</span>];
+    dp1[<span class="number">1</span>] = max(a[<span class="number">0</span>], a[<span class="number">1</span>]);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n - <span class="number">2</span>; i++)
+        dp1[i] = max(dp1[i - <span class="number">1</span>], dp1[i - <span class="number">2</span>] + a[i]);
+    <span class="comment">// TH2: Không lấy nhà 0 → dp trên [1..n-1]</span>
+    vector&lt;<span class="keyword">long long</span>&gt; dp2(n);
+    dp2[<span class="number">1</span>] = a[<span class="number">1</span>];
+    dp2[<span class="number">2</span>] = max(a[<span class="number">1</span>], a[<span class="number">2</span>]);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n - <span class="number">1</span>; i++)
+        dp2[i] = max(dp2[i - <span class="number">1</span>], dp2[i - <span class="number">2</span>] + a[i]);
+    out &lt;&lt; max(dp1[n - <span class="number">2</span>], dp2[n - <span class="number">1</span>]);
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
@@ -847,47 +840,47 @@
                                 <span>📝 Code C++</span>
                                 <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
                             </div>
-                            <pre class="solution-code"><span class="comment">// Bài 7: MAXSUM - Kadane + truy vết</span>
+                            <pre class="solution-code"><span class="comment">// Bài 7: MAXSUM - QHĐ đoạn con tổng lớn nhất</span>
 <span class="include">#include &lt;bits/stdc++.h&gt;</span>
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
     ifstream in(<span class="string">"MAXSUM.INP"</span>);
     ofstream out(<span class="string">"MAXSUM.OUT"</span>);
-    
     <span class="keyword">int</span> n;
     in >> n;
-    
-    vector&lt;<span class="keyword">long long</span>&gt; a(n + <span class="number">1</span>);
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= n; i++) in >> a[i];
-    
-    <span class="comment">// curSum = tổng lớn nhất dãy con kết thúc tại vị trí hiện tại (Kadane)</span>
-    <span class="keyword">long long</span> curSum = a[<span class="number">1</span>], bestSum = a[<span class="number">1</span>];
-    <span class="keyword">int</span> curL = <span class="number">1</span>, bestL = <span class="number">1</span>, bestR = <span class="number">1</span>;
-    
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i <= n; i++) {
-        <span class="keyword">if</span>(curSum + a[i] >= a[i]) {
-            curSum += a[i];
+    vector&lt;<span class="keyword">long long</span>&gt; a(n + <span class="number">1</span>), dp(n + <span class="number">1</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in >> a[i];
+    <span class="comment">// dp[i] = tổng lớn nhất đoạn con kết thúc tại i</span>
+    <span class="comment">// dp[i] = max(a[i], dp[i-1] + a[i])</span>
+    dp[<span class="number">1</span>] = a[<span class="number">1</span>];
+    vector&lt;<span class="keyword">int</span>&gt; start(n + <span class="number">1</span>);
+    start[<span class="number">1</span>] = <span class="number">1</span>;
+    <span class="keyword">int</span> bestL = <span class="number">1</span>, bestR = <span class="number">1</span>;
+    <span class="keyword">long long</span> bestSum = dp[<span class="number">1</span>];
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
+        <span class="keyword">if</span>(dp[i - <span class="number">1</span>] + a[i] >= a[i]) {
+            dp[i] = dp[i - <span class="number">1</span>] + a[i];
+            start[i] = start[i - <span class="number">1</span>];
         } <span class="keyword">else</span> {
-            curSum = a[i];
-            curL = i;
+            dp[i] = a[i];
+            start[i] = i;
         }
-        <span class="keyword">if</span>(curSum > bestSum) {
-            bestSum = curSum;
-            bestL = curL;
+        <span class="keyword">if</span>(dp[i] > bestSum) {
+            bestSum = dp[i];
+            bestL = start[i];
             bestR = i;
         }
     }
-    
-    out << bestSum << <span class="string">"\n"</span>;
-    out << bestL << <span class="string">" "</span> << bestR;
+    out &lt;&lt; bestSum &lt;&lt; <span class="string">"\n"</span>;
+    out &lt;&lt; bestL &lt;&lt; <span class="string">" "</span> &lt;&lt; bestR;
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#A11"><strong>Kadane (A11)</strong></a>. curSum = max(a[i], curSum + a[i]) — "nối tiếp hay bắt đầu lại?" Nếu curSum cũ âm thì giữ lại chỉ kéo xuống, bỏ đi bắt đầu mới tại a[i] tốt hơn. Ghi nhận best = max(best, curSum). Lưu thêm chỉ số bắt đầu/kết thúc: khi bắt đầu lại → cập nhật start = i; khi best cải thiện → cập nhật end = i. O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ (B3)</strong></a>. dp[i] = tổng lớn nhất đoạn con kết thúc tại i. dp[i] = max(a[i], dp[i-1] + a[i]) — "nối tiếp hay bắt đầu lại?" Nếu dp[i-1] âm thì giữ lại chỉ kéo xuống, bỏ đi bắt đầu mới tại a[i] tốt hơn. Kết quả = max(dp[i]). Lưu thêm chỉ số bắt đầu/kết thúc: khi bắt đầu lại → cập nhật start[i] = i; khi best cải thiện → cập nhật bestL, bestR. O(N).
                         </div>
                     </div>
                 </div>
@@ -951,30 +944,25 @@
 <span class="keyword">int</span> <span class="function">main</span>() {
     ifstream in(<span class="string">"NENNHA.INP"</span>);
     ofstream out(<span class="string">"NENNHA.OUT"</span>);
-    
     <span class="keyword">int</span> n;
     in >> n;
-    
-    <span class="comment">// dp[i][c] = chi phí min sơn nhà 1..i, nhà i màu c (tối ưu bằng pr, pg, pb)</span>
-    <span class="keyword">long long</span> r, g, b;
-    <span class="keyword">long long</span> pr = <span class="number">0</span>, pg = <span class="number">0</span>, pb = <span class="number">0</span>;
-    
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
-        in >> r >> g >> b;
-        <span class="keyword">long long</span> nr = min(pg, pb) + r;
-        <span class="keyword">long long</span> ng = min(pr, pb) + g;
-        <span class="keyword">long long</span> nb = min(pr, pg) + b;
-        pr = nr; pg = ng; pb = nb;
+    vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; cost(n + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(<span class="number">3</span>));
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in >> cost[i][<span class="number">0</span>] >> cost[i][<span class="number">1</span>] >> cost[i][<span class="number">2</span>];
+    <span class="comment">// dp[i][c] = chi phí min sơn nhà 1..i, nhà i màu c</span>
+    vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; dp(n + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(<span class="number">3</span>, <span class="number">0</span>));
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        dp[i][<span class="number">0</span>] = min(dp[i - <span class="number">1</span>][<span class="number">1</span>], dp[i - <span class="number">1</span>][<span class="number">2</span>]) + cost[i][<span class="number">0</span>];
+        dp[i][<span class="number">1</span>] = min(dp[i - <span class="number">1</span>][<span class="number">0</span>], dp[i - <span class="number">1</span>][<span class="number">2</span>]) + cost[i][<span class="number">1</span>];
+        dp[i][<span class="number">2</span>] = min(dp[i - <span class="number">1</span>][<span class="number">0</span>], dp[i - <span class="number">1</span>][<span class="number">1</span>]) + cost[i][<span class="number">2</span>];
     }
-    
-    out << min({pr, pg, pb});
+    out &lt;&lt; min({dp[n][<span class="number">0</span>], dp[n][<span class="number">1</span>], dp[n][<span class="number">2</span>]});
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. dp[i][c] = chi phí nhỏ nhất sơn nhà 1..i với nhà i màu c. 2 nhà liền kề không cùng màu, nên nhà i màu c thì nhà i−1 phải màu khác: dp[i][c] = min(dp[i−1][c']) + cost[i][c] với c'≠c. Chỉ có 3 màu nên lấy min của 2 màu còn lại. Tối ưu: chỉ cần 3 biến (không cần mảng 2D). O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. dp[i][c] = chi phí nhỏ nhất sơn nhà 1..i với nhà i màu c. 2 nhà liền kề không cùng màu, nên nhà i màu c thì nhà i−1 phải màu khác: dp[i][c] = min(dp[i−1][c']) + cost[i][c] với c'≠c. Chỉ có 3 màu nên lấy min của 2 màu còn lại. Kết quả = min(dp[n][0], dp[n][1], dp[n][2]). O(N).
                         </div>
                     </div>
                 </div>
@@ -1957,38 +1945,34 @@ sitting</pre>
                                 <span>📝 Code C++</span>
                                 <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
                             </div>
-                            <pre class="solution-code"><span class="comment">// Bài 19: DAYCON - LIS bằng chặt nhị phân O(NlogN)</span>
+                            <pre class="solution-code"><span class="comment">// Bài 19: DAYCON - LIS bằng QHĐ O(N²)</span>
 <span class="include">#include &lt;bits/stdc++.h&gt;</span>
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> <span class="function">main</span>() {
     ifstream in(<span class="string">"DAYCON.INP"</span>);
     ofstream out(<span class="string">"DAYCON.OUT"</span>);
-    
     <span class="keyword">int</span> n;
     in >> n;
-    
-    vector&lt;<span class="keyword">int</span>&gt; a(n);
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) in >> a[i];
-    
-    <span class="comment">// tail[i] = phần tử nhỏ nhất kết thúc LIS độ dài i+1</span>
-    vector&lt;<span class="keyword">int</span>&gt; tail;
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
-        <span class="keyword">int</span> pos = lower_bound(tail.begin(), tail.end(), a[i]) - tail.begin();
-        <span class="keyword">if</span>(pos == (<span class="keyword">int</span>)tail.size())
-            tail.push_back(a[i]);
-        <span class="keyword">else</span>
-            tail[pos] = a[i];
+    vector&lt;<span class="keyword">int</span>&gt; a(n + <span class="number">1</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in >> a[i];
+    <span class="comment">// dp[i] = độ dài LIS dài nhất kết thúc tại a[i]</span>
+    vector&lt;<span class="keyword">int</span>&gt; dp(n + <span class="number">1</span>, <span class="number">1</span>);
+    <span class="keyword">int</span> ans = <span class="number">1</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; i; j++)
+            <span class="keyword">if</span>(a[j] &lt; a[i])
+                dp[i] = max(dp[i], dp[j] + <span class="number">1</span>);
+        ans = max(ans, dp[i]);
     }
-    
-    out << (<span class="keyword">int</span>)tail.size();
+    out &lt;&lt; ans;
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>LIS với chặt nhị phân (B3)</strong></a>. LIS O(N²) chậm. Cách tối ưu: giữ mảng tail[], với tail[k] = phần tử nhỏ nhất có thể kết thúc dãy tăng độ dài k. Gặp a[i]: tìm vị trí đầu tiên trong tail ≥ a[i] bằng lower_bound, thay vào đó (vì a[i] nhỏ hơn = tốt hơn cho tương lai). Không tìm thấy → a[i] lớn hơn tất cả → nối dài LIS. Độ dài tail = độ dài LIS. O(N log N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. dp[i] = độ dài dãy con tăng dài nhất kết thúc tại a[i]. Cơ sở: dp[i] = 1 (mỗi phần tử tự nó là dãy tăng độ dài 1). Chuyển trạng thái: với mỗi j &lt; i mà a[j] &lt; a[i], dp[i] = max(dp[i], dp[j] + 1) — nối a[i] vào sau dãy kết thúc tại a[j]. Kết quả = max(dp[i]). O(N²).
                         </div>
                     </div>
                 </div>
@@ -2962,55 +2946,49 @@ vector&lt;<span class="keyword">int</span>&gt; children[MAXN];
                                 <span>📝 Code C++</span>
                                 <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
                             </div>
-                            <pre class="solution-code"><span class="comment">// Bài: DUONGCAY - Đường kính cây (Tree DP)</span>
+                            <pre class="solution-code"><span class="comment">// Bài 29: DUONGCAY - Đường kính cây (Tree DP)</span>
 <span class="include">#include &lt;bits/stdc++.h&gt;</span>
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">const int</span> MAXN = <span class="number">100005</span>;
-vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; adj[MAXN]; <span class="comment">// adj[u] = {(v, w)}</span>
-<span class="keyword">long long</span> depth[MAXN]; <span class="comment">// depth[u] = đường đi dài nhất từ u xuống lá</span>
+vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; adj[MAXN];
+<span class="keyword">long long</span> dp[MAXN]; <span class="comment">// dp[u] = đường đi dài nhất từ u xuống cây con</span>
 <span class="keyword">long long</span> ans;
 
 <span class="keyword">void</span> <span class="function">dfs</span>(<span class="keyword">int</span> u, <span class="keyword">int</span> parent) {
-    depth[u] = <span class="number">0</span>;
-    
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < (<span class="keyword">int</span>)adj[u].size(); i++) {
+    dp[u] = <span class="number">0</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)adj[u].size(); i++) {
         <span class="keyword">int</span> v = adj[u][i].first;
         <span class="keyword">int</span> w = adj[u][i].second;
         <span class="keyword">if</span>(v == parent) <span class="keyword">continue</span>;
-        
         dfs(v, u);
         <span class="comment">// Đường kính qua u = nhánh dài nhất + nhánh dài nhì</span>
-        ans = max(ans, depth[u] + depth[v] + w);
-        depth[u] = max(depth[u], depth[v] + w);
+        ans = max(ans, dp[u] + dp[v] + w);
+        dp[u] = max(dp[u], dp[v] + w);
     }
 }
 
 <span class="keyword">int</span> <span class="function">main</span>() {
     ifstream in(<span class="string">"DUONGCAY.INP"</span>);
     ofstream out(<span class="string">"DUONGCAY.OUT"</span>);
-    
     <span class="keyword">int</span> n;
     in >> n;
-    
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n - <span class="number">1</span>; i++) {
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) {
         <span class="keyword">int</span> u, v, w;
         in >> u >> v >> w;
         adj[u].push_back(make_pair(v, w));
         adj[v].push_back(make_pair(u, w));
     }
-    
     ans = <span class="number">0</span>;
     dfs(<span class="number">1</span>, <span class="number">0</span>);
-    out << ans;
-    
+    out &lt;&lt; ans;
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ trên cây (B3)</strong></a>. depth[u] = đường đi dài nhất từ u xuống cây con của u. Với mỗi nút u, đường kính đi qua u = 2 nhánh dài nhất: depth[con1] + w1 + depth[con2] + w2. Khi DFS, mỗi lần xét con v mới, cập nhật đáp án = depth[u] (nhánh dài nhất trước đó) + depth[v] + w (nhánh hiện tại), rồi cập nhật depth[u] = max(depth[u], depth[v]+w). Đáy đệ quy: lá → depth = 0. O(N).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ trên cây (B3)</strong></a>. dp[u] = đường đi dài nhất từ u xuống cây con của u. Với mỗi nút u, đường kính đi qua u = 2 nhánh dài nhất: dp[con1] + w1 + dp[con2] + w2. Khi DFS, mỗi lần xét con v mới, cập nhật đáp án = dp[u] (nhánh dài nhất trước đó) + dp[v] + w (nhánh hiện tại), rồi cập nhật dp[u] = max(dp[u], dp[v]+w). Đáy đệ quy: lá → dp = 0. O(N).
                         </div>
                     </div>
                 </div>
