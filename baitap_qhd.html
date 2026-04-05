@@ -864,6 +864,8 @@
     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in >> a[i];
     <span class="comment">// dp[i] = tổng lớn nhất đoạn con kết thúc tại i</span>
     <span class="comment">// dp[i] = max(a[i], dp[i-1] + a[i])</span>
+    <span class="comment">//   - dp[i-1] + a[i]: nối tiếp đoạn cũ → giữ start</span>
+    <span class="comment">//   - a[i]: bắt đầu đoạn mới → start = i</span>
     dp[<span class="number">1</span>] = a[<span class="number">1</span>];
     vector&lt;<span class="keyword">int</span>&gt; start(n + <span class="number">1</span>);
     start[<span class="number">1</span>] = <span class="number">1</span>;
@@ -871,16 +873,16 @@
     <span class="keyword">long long</span> bestSum = dp[<span class="number">1</span>];
     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
         <span class="keyword">if</span>(dp[i - <span class="number">1</span>] + a[i] >= a[i]) {
-            dp[i] = dp[i - <span class="number">1</span>] + a[i];
-            start[i] = start[i - <span class="number">1</span>];
+            dp[i] = dp[i - <span class="number">1</span>] + a[i]; <span class="comment">// nối tiếp đoạn cũ</span>
+            start[i] = start[i - <span class="number">1</span>]; <span class="comment">// giữ nguyên điểm bắt đầu</span>
         } <span class="keyword">else</span> {
-            dp[i] = a[i];
-            start[i] = i;
+            dp[i] = a[i]; <span class="comment">// bắt đầu đoạn mới tại i</span>
+            start[i] = i; <span class="comment">// cập nhật start = i</span>
         }
-        <span class="keyword">if</span>(dp[i] > bestSum) {
+        <span class="keyword">if</span>(dp[i] > bestSum) { <span class="comment">// tìm được đoạn tốt hơn</span>
             bestSum = dp[i];
-            bestL = start[i];
-            bestR = i;
+            bestL = start[i]; <span class="comment">// ghi nhận L = start đoạn hiện tại</span>
+            bestR = i; <span class="comment">// ghi nhận R = vị trí hiện tại</span>
         }
     }
     out &lt;&lt; bestSum &lt;&lt; <span class="string">"\n"</span>;
