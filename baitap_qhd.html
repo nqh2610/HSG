@@ -1041,22 +1041,26 @@
     <span class="keyword">int</span> n;
     in >> n;
     
-    <span class="comment">// dp[d] = số cách kết thúc bằng chữ số d</span>
+    <span class="comment">// dp[d] = số cách tạo số hợp lệ kết thúc bằng chữ số d</span>
     vector&lt;<span class="keyword">long long</span>&gt; dp(<span class="number">10</span>, <span class="number">0</span>);
-    <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">1</span>; d <= <span class="number">9</span>; d++) dp[d] = <span class="number">1</span>;
+    <span class="comment">// Cơ sở: số 1 chữ số (1→9), không bắt đầu bằng 0</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">1</span>; d &lt;= <span class="number">9</span>; d++) dp[d] = <span class="number">1</span>;
     
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i <= n; i++) {
-        vector&lt;<span class="keyword">long long</span>&gt; ndp(<span class="number">10</span>, <span class="number">0</span>);
-        <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">0</span>; d <= <span class="number">9</span>; d++) {
-            <span class="keyword">for</span>(<span class="keyword">int</span> p = max(<span class="number">0</span>, d - <span class="number">2</span>); p <= min(<span class="number">9</span>, d + <span class="number">2</span>); p++) {
-                ndp[d] = (ndp[d] + dp[p]) % MOD;
-            }
+    <span class="comment">// Thêm từng chữ số (vị trí 2 đến n)</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
+        vector&lt;<span class="keyword">long long</span>&gt; ndp(<span class="number">10</span>, <span class="number">0</span>); <span class="comment">// dp mới sau khi thêm chữ số thứ i</span>
+        <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">0</span>; d &lt;= <span class="number">9</span>; d++) {
+            <span class="comment">// Chữ số thứ i là d, chữ số trước đó p phải thỏa |p-d| ≤ 2</span>
+            <span class="keyword">for</span>(<span class="keyword">int</span> p = <span class="number">0</span>; p &lt;= <span class="number">9</span>; p++)
+                <span class="keyword">if</span>(abs(p - d) &lt;= <span class="number">2</span>)
+                    ndp[d] = (ndp[d] + dp[p]) % MOD; <span class="comment">// cộng dồn số cách từ p → d</span>
         }
-        dp = ndp;
+        dp = ndp; <span class="comment">// cập nhật dp cho vị trí tiếp theo</span>
     }
     
+    <span class="comment">// Đáp án = tổng dp[0..9] (kết thúc bằng bất kỳ chữ số nào)</span>
     <span class="keyword">long long</span> ans = <span class="number">0</span>;
-    <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">0</span>; d <= <span class="number">9</span>; d++) ans = (ans + dp[d]) % MOD;
+    <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">0</span>; d &lt;= <span class="number">9</span>; d++) ans = (ans + dp[d]) % MOD;
     
     out << ans;
     in.close();
@@ -1065,7 +1069,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. dp[d] = số số hợp lệ kết thúc bằng chữ số d. Chữ số tiếp theo chỉ được nằm trong [d−2, d+2] (chênh lệch ≤ 2). VD: đang ở 5 → chữ số sau có thể 3,4,5,6,7. Bước chuyển: dp_mới[d'] += dp_cũ[d] với mọi d' ∈ [d−2, d+2]. Lặp N−1 bước. Đáp án = tổng dp[0..9]. O(N × 10).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. Trạng thái: dp[d] = số số hợp lệ kết thúc bằng chữ số d. Cơ sở: dp[1..9] = 1 (số 1 chữ số), dp[0] = 0 (không bắt đầu bằng 0). Chuyển trạng thái: muốn thêm chữ số d vào cuối → chữ số trước p phải thỏa |p−d| ≤ 2, nên ndp[d] += dp[p] với mọi p mà |p−d| ≤ 2. VD: thêm d=5 → p có thể 3,4,5,6,7. Lặp N−1 bước. Đáp án = tổng dp[0..9]. O(N × 10).
                         </div>
                     </div>
                 </div>
