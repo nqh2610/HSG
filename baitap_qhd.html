@@ -764,19 +764,30 @@
     in >> n;
     vector&lt;<span class="keyword">long long</span>&gt; a(n);
     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
-    <span class="comment">// TH1: Lấy nhà 0, không lấy nhà n-1 → dp trên [0..n-2]</span>
+
+    <span class="comment">// dp[i] = tổng lớn nhất khi xét nhà 0..i</span>
+    <span class="comment">// dp[i] = max(dp[i-1], dp[i-2] + a[i])</span>
+    <span class="comment">//   - dp[i-1]: KHÔNG trộm nhà i → giữ kết quả cũ</span>
+    <span class="comment">//   - dp[i-2] + a[i]: CÓ trộm nhà i → phải bỏ nhà i-1 (lấy từ i-2)</span>
+    <span class="comment">// → 2 nhà liền kề không bao giờ cùng bị trộm</span>
+
+    <span class="comment">// Vì nhà xếp vòng tròn (nhà 0 kề nhà n-1), chia 2 TH:</span>
+
+    <span class="comment">// TH1: Trộm nhà 0 → không được trộm nhà n-1 → xét [0..n-2]</span>
     vector&lt;<span class="keyword">long long</span>&gt; dp1(n);
-    dp1[<span class="number">0</span>] = a[<span class="number">0</span>];
-    dp1[<span class="number">1</span>] = max(a[<span class="number">0</span>], a[<span class="number">1</span>]);
+    dp1[<span class="number">0</span>] = a[<span class="number">0</span>]; <span class="comment">// chỉ có nhà 0, trộm nó</span>
+    dp1[<span class="number">1</span>] = max(a[<span class="number">0</span>], a[<span class="number">1</span>]); <span class="comment">// 2 nhà kề nhau, chọn nhà nào nhiều hơn</span>
     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n - <span class="number">2</span>; i++)
         dp1[i] = max(dp1[i - <span class="number">1</span>], dp1[i - <span class="number">2</span>] + a[i]);
-    <span class="comment">// TH2: Không lấy nhà 0 → dp trên [1..n-1]</span>
+
+    <span class="comment">// TH2: Không trộm nhà 0 → được trộm nhà n-1 → xét [1..n-1]</span>
     vector&lt;<span class="keyword">long long</span>&gt; dp2(n);
     dp2[<span class="number">1</span>] = a[<span class="number">1</span>];
     dp2[<span class="number">2</span>] = max(a[<span class="number">1</span>], a[<span class="number">2</span>]);
     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n - <span class="number">1</span>; i++)
         dp2[i] = max(dp2[i - <span class="number">1</span>], dp2[i - <span class="number">2</span>] + a[i]);
-    out &lt;&lt; max(dp1[n - <span class="number">2</span>], dp2[n - <span class="number">1</span>]);
+
+    out &lt;&lt; max(dp1[n - <span class="number">2</span>], dp2[n - <span class="number">1</span>]); <span class="comment">// lấy max 2 TH</span>
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
