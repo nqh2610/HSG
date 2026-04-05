@@ -1083,8 +1083,8 @@
                 <div class="problem-file">CATSAT.INP / CATSAT.OUT</div>
             </div>
             <div class="problem-content">
-                <p>Một thanh sắt dài L mét. Cửa hàng bán sắt theo các kích thước cố định: thanh dài i mét có giá P<sub>i</sub> đồng (1 ≤ i ≤ L). Nếu không muốn bán nguyên thanh, thợ có thể cắt thanh thành nhiều đoạn nhỏ hơn (chi phí cắt bằng 0).</p>
-                <p>Hãy tìm tổng doanh thu lớn nhất khi bán hết thanh sắt.</p>
+                <p>Một thanh sắt dài L mét. Cửa hàng có bảng giá: thanh dài i mét bán được P<sub>i</sub> đồng (ví dụ thanh 1m giá P<sub>1</sub>, thanh 2m giá P<sub>2</sub>, ..., thanh Lm giá P<sub>L</sub>). Thợ có thể cắt thanh sắt thành nhiều đoạn nhỏ hơn (chi phí cắt bằng 0), mỗi đoạn bán theo bảng giá.</p>
+                <p>Hãy tìm cách cắt để tổng doanh thu bán hết thanh sắt là lớn nhất.</p>
                 
                 <div class="section-title">Dữ liệu vào (CATSAT.INP):</div>
                 <div class="format-box">
@@ -1138,11 +1138,20 @@
     vector&lt;<span class="keyword">long long</span>&gt; p(L + <span class="number">1</span>);
     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= L; i++) in >> p[i];
     
-    <span class="comment">// dp[j] = doanh thu lớn nhất từ thanh dài j</span>
-    vector&lt;<span class="keyword">long long</span>&gt; dp(L + <span class="number">1</span>, <span class="number">0</span>);
+    <span class="comment">// dp[j] = doanh thu lớn nhất từ thanh dài j mét</span>
+    <span class="comment">// Thử cắt mảnh i mét (i=1,2,...,j):</span>
+    <span class="comment">//   bán mảnh i mét được p[i] đồng</span>
+    <span class="comment">//   phần còn lại j-i mét đã tính tối ưu = dp[j-i]</span>
+    <span class="comment">//   → tổng = p[i] + dp[j-i]</span>
+    <span class="comment">// So sánh tất cả cách cắt, giữ cách lời nhất:</span>
+    <span class="comment">//   dp[j] = max(p[i] + dp[j-i]) với i = 1..j</span>
+    vector&lt;<span class="keyword">long long</span>&gt; dp(L + <span class="number">1</span>, <span class="number">0</span>); <span class="comment">// dp[0] = 0 (thanh 0m = 0 đồng)</span>
     
-    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j <= L; j++) {
-        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= j; i++) {
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= L; j++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= j; i++) { <span class="comment">// thử cắt đoạn 1m, 2m, ..., jm</span>
+            <span class="comment">// dp[j] hiện tại = cách tốt nhất đã thử (i trước đó)</span>
+            <span class="comment">// p[i] + dp[j-i] = cách cắt đoạn i mét</span>
+            <span class="comment">// max: cách nào lời hơn thì giữ</span>
             dp[j] = max(dp[j], p[i] + dp[j - i]);
         }
     }
