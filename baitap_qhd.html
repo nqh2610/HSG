@@ -1041,26 +1041,26 @@
     <span class="keyword">int</span> n;
     in >> n;
     
-    <span class="comment">// dp[d] = số cách tạo số hợp lệ kết thúc bằng chữ số d</span>
+    <span class="comment">// dp[j] = số cách tạo số hợp lệ kết thúc bằng chữ số j</span>
     vector&lt;<span class="keyword">long long</span>&gt; dp(<span class="number">10</span>, <span class="number">0</span>);
     <span class="comment">// Cơ sở: số 1 chữ số (1→9), không bắt đầu bằng 0</span>
-    <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">1</span>; d &lt;= <span class="number">9</span>; d++) dp[d] = <span class="number">1</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= <span class="number">9</span>; j++) dp[j] = <span class="number">1</span>;
     
     <span class="comment">// Thêm từng chữ số (vị trí 2 đến n)</span>
     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
         vector&lt;<span class="keyword">long long</span>&gt; ndp(<span class="number">10</span>, <span class="number">0</span>); <span class="comment">// dp mới sau khi thêm chữ số thứ i</span>
-        <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">0</span>; d &lt;= <span class="number">9</span>; d++) {
-            <span class="comment">// Chữ số thứ i là d, chữ số trước đó p phải thỏa |p-d| ≤ 2</span>
-            <span class="keyword">for</span>(<span class="keyword">int</span> p = <span class="number">0</span>; p &lt;= <span class="number">9</span>; p++)
-                <span class="keyword">if</span>(abs(p - d) &lt;= <span class="number">2</span>)
-                    ndp[d] = (ndp[d] + dp[p]) % MOD; <span class="comment">// cộng dồn số cách từ p → d</span>
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= <span class="number">9</span>; j++) {
+            <span class="comment">// Chữ số thứ i là j, chữ số trước đó k phải thỏa |k-j| ≤ 2</span>
+            <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt;= <span class="number">9</span>; k++)
+                <span class="keyword">if</span>(abs(k - j) &lt;= <span class="number">2</span>)
+                    ndp[j] = (ndp[j] + dp[k]) % MOD; <span class="comment">// cộng dồn số cách từ k → j</span>
         }
         dp = ndp; <span class="comment">// cập nhật dp cho vị trí tiếp theo</span>
     }
     
     <span class="comment">// Đáp án = tổng dp[0..9] (kết thúc bằng bất kỳ chữ số nào)</span>
     <span class="keyword">long long</span> ans = <span class="number">0</span>;
-    <span class="keyword">for</span>(<span class="keyword">int</span> d = <span class="number">0</span>; d &lt;= <span class="number">9</span>; d++) ans = (ans + dp[d]) % MOD;
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= <span class="number">9</span>; j++) ans = (ans + dp[j]) % MOD;
     
     out << ans;
     in.close();
@@ -1069,7 +1069,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. Trạng thái: dp[d] = số số hợp lệ kết thúc bằng chữ số d. Cơ sở: dp[1..9] = 1 (số 1 chữ số), dp[0] = 0 (không bắt đầu bằng 0). Chuyển trạng thái: muốn thêm chữ số d vào cuối → chữ số trước p phải thỏa |p−d| ≤ 2, nên ndp[d] += dp[p] với mọi p mà |p−d| ≤ 2. VD: thêm d=5 → p có thể 3,4,5,6,7. Lặp N−1 bước. Đáp án = tổng dp[0..9]. O(N × 10).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ cơ bản (B3)</strong></a>. Trạng thái: dp[j] = số số hợp lệ kết thúc bằng chữ số j. Cơ sở: dp[1..9] = 1 (số 1 chữ số), dp[0] = 0 (không bắt đầu bằng 0). Chuyển trạng thái: muốn thêm chữ số j vào cuối → chữ số trước k phải thỏa |k−j| ≤ 2, nên ndp[j] += dp[k] với mọi k mà |k−j| ≤ 2. VD: thêm j=5 → k có thể 3,4,5,6,7. Lặp N−1 bước. Đáp án = tổng dp[0..9]. O(N × 10).
                         </div>
                     </div>
                 </div>
@@ -1136,23 +1136,23 @@
     in >> L;
     
     vector&lt;<span class="keyword">long long</span>&gt; p(L + <span class="number">1</span>);
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= L; i++) in >> p[i];
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= L; j++) in >> p[j];
     
-    <span class="comment">// dp[j] = doanh thu lớn nhất từ thanh dài j mét</span>
-    <span class="comment">// Thử cắt mảnh i mét (i=1,2,...,j):</span>
-    <span class="comment">//   bán mảnh i mét được p[i] đồng</span>
-    <span class="comment">//   phần còn lại j-i mét đã tính tối ưu = dp[j-i]</span>
-    <span class="comment">//   → tổng = p[i] + dp[j-i]</span>
+    <span class="comment">// dp[i] = doanh thu lớn nhất từ thanh dài i mét</span>
+    <span class="comment">// Thử cắt mảnh j mét (j=1,2,...,i):</span>
+    <span class="comment">//   bán mảnh j mét được p[j] đồng</span>
+    <span class="comment">//   phần còn lại i-j mét đã tính tối ưu = dp[i-j]</span>
+    <span class="comment">//   → tổng = p[j] + dp[i-j]</span>
     <span class="comment">// So sánh tất cả cách cắt, giữ cách lời nhất:</span>
-    <span class="comment">//   dp[j] = max(p[i] + dp[j-i]) với i = 1..j</span>
+    <span class="comment">//   dp[i] = max(p[j] + dp[i-j]) với j = 1..i</span>
     vector&lt;<span class="keyword">long long</span>&gt; dp(L + <span class="number">1</span>, <span class="number">0</span>); <span class="comment">// dp[0] = 0 (thanh 0m = 0 đồng)</span>
     
-    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= L; j++) {
-        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= j; i++) { <span class="comment">// thử cắt đoạn 1m, 2m, ..., jm</span>
-            <span class="comment">// dp[j] hiện tại = cách tốt nhất đã thử (i trước đó)</span>
-            <span class="comment">// p[i] + dp[j-i] = cách cắt đoạn i mét</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= L; i++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i; j++) { <span class="comment">// thử cắt đoạn 1m, 2m, ..., im</span>
+            <span class="comment">// dp[i] hiện tại = cách tốt nhất đã thử (j trước đó)</span>
+            <span class="comment">// p[j] + dp[i-j] = cách cắt đoạn j mét</span>
             <span class="comment">// max: cách nào lời hơn thì giữ</span>
-            dp[j] = max(dp[j], p[i] + dp[j - i]);
+            dp[i] = max(dp[i], p[j] + dp[i - j]);
         }
     }
     
@@ -1163,7 +1163,7 @@
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — Unbounded Knapsack (B3)</strong></a>. dp[j] = doanh thu lớn nhất khi có thanh dài j. Với mỗi cách cắt độ dài i (1 ≤ i ≤ j): cắt ra 1 mảnh dài i bán được p[i], phần còn lại dài j−i tối ưu = dp[j−i]. dp[j] = max(p[i] + dp[j−i]) với mọi i. Cắt không giới hạn số lần → dạng Unbounded Knapsack. O(L²).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — Unbounded Knapsack (B3)</strong></a>. dp[i] = doanh thu lớn nhất khi có thanh dài i. Với mỗi cách cắt độ dài j (1 ≤ j ≤ i): cắt ra 1 mảnh dài j bán được p[j], phần còn lại dài i−j tối ưu = dp[i−j]. dp[i] = max(p[j] + dp[i−j]) với mọi j. Cắt không giới hạn số lần → dạng Unbounded Knapsack. O(L²).
                         </div>
                     </div>
                 </div>
@@ -1236,27 +1236,32 @@
     in >> n >> s;
     
     vector&lt;<span class="keyword">int</span>&gt; c(n);
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) in >> c[i];
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) in >> c[j];
     
-    <span class="comment">// dp[j] = số xu ít nhất để đổi j đồng</span>
-    vector&lt;<span class="keyword">int</span>&gt; dp(s + <span class="number">1</span>, s + <span class="number">1</span>);
-    dp[<span class="number">0</span>] = <span class="number">0</span>;
+    <span class="comment">// dp[i] = số xu ít nhất để đổi i đồng</span>
+    <span class="comment">// Thử dùng xu mệnh giá c[j] (j=0,1,...,n-1):</span>
+    <span class="comment">//   dùng 1 xu c[j] → còn lại i-c[j] đồng → cần dp[i-c[j]] xu nữa</span>
+    <span class="comment">//   tổng xu = dp[i-c[j]] + 1</span>
+    <span class="comment">// So sánh tất cả mệnh giá, giữ cách ít xu nhất:</span>
+    <span class="comment">//   dp[i] = min(dp[i-c[j]] + 1) với mọi c[j] ≤ i</span>
+    vector&lt;<span class="keyword">int</span>&gt; dp(s + <span class="number">1</span>, s + <span class="number">1</span>); <span class="comment">// s+1 = "chưa đổi được" (vì nhiều nhất chỉ cần s xu)</span>
+    dp[<span class="number">0</span>] = <span class="number">0</span>; <span class="comment">// 0 đồng cần 0 xu</span>
     
-    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j <= s; j++) {
-        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
-            <span class="keyword">if</span>(c[i] <= j && dp[j - c[i]] + <span class="number">1</span> < dp[j])
-                dp[j] = dp[j - c[i]] + <span class="number">1</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= s; i++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) { <span class="comment">// thử từng mệnh giá c[j]</span>
+            <span class="keyword">if</span>(c[j] &lt;= i && dp[i - c[j]] + <span class="number">1</span> &lt; dp[i]) <span class="comment">// dùng c[j] có ít xu hơn không?</span>
+                dp[i] = dp[i - c[j]] + <span class="number">1</span>;
         }
     }
     
-    out << (dp[s] > s ? -<span class="number">1</span> : dp[s]);
+    out &lt;&lt; (dp[s] > s ? -<span class="number">1</span> : dp[s]); <span class="comment">// dp[s] > s nghĩa là không đổi được</span>
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — Unbounded Knapsack (B3)</strong></a>. dp[j] = số xu ít nhất để đổi j đồng. Với mỗi mệnh giá c[i]: nếu dùng 1 xu c[i], số tiền còn lại = j−c[i], cần dp[j−c[i]] xu nữa, tổng = dp[j−c[i]]+1. Lấy min qua mọi mệnh giá. Dùng được nhiều xu cùng loại (unbounded) nên duyệt j xuôi. Ban đầu dp[0]=0, dp[khác]=∞. O(N × S).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ — Unbounded Knapsack (B3)</strong></a>. dp[i] = số xu ít nhất để đổi i đồng. Với mỗi mệnh giá c[j]: nếu dùng 1 xu c[j], số tiền còn lại = i−c[j], cần dp[i−c[j]] xu nữa, tổng = dp[i−c[j]]+1. Lấy min qua mọi mệnh giá. Dùng được nhiều xu cùng loại (unbounded) nên duyệt i xuôi. Ban đầu dp[0]=0, dp[khác]=∞. O(N × S).
                         </div>
                     </div>
                 </div>
@@ -2061,43 +2066,43 @@ sitting</pre>
     ifstream in(<span class="string">"CHIANHOM.INP"</span>);
     ofstream out(<span class="string">"CHIANHOM.OUT"</span>);
     
-    <span class="keyword">int</span> n, k;
-    in >> n >> k;
+    <span class="keyword">int</span> n, K;
+    in >> n >> K;
     
     vector&lt;<span class="keyword">int</span>&gt; a(n + <span class="number">1</span>);
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= n; i++) in >> a[i];
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) in >> a[j];
     
-    <span class="comment">// Tính trước cost[i][j] = max - min trong đoạn i..j</span>
+    <span class="comment">// Tính trước cost[j][k] = max - min trong đoạn j..k</span>
     vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; cost(n + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(n + <span class="number">1</span>, <span class="number">0</span>));
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= n; i++) {
-        <span class="keyword">int</span> mn = a[i], mx = a[i];
-        <span class="keyword">for</span>(<span class="keyword">int</span> j = i; j <= n; j++) {
-            mn = min(mn, a[j]);
-            mx = max(mx, a[j]);
-            cost[i][j] = mx - mn;
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) {
+        <span class="keyword">int</span> mn = a[j], mx = a[j];
+        <span class="keyword">for</span>(<span class="keyword">int</span> k = j; k &lt;= n; k++) {
+            mn = min(mn, a[k]);
+            mx = max(mx, a[k]);
+            cost[j][k] = mx - mn;
         }
     }
     
-    <span class="comment">// dp[g][i] = chi phí min chia i người đầu thành g nhóm</span>
-    vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; dp(k + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(n + <span class="number">1</span>, 1e18));
+    <span class="comment">// dp[i][j] = chi phí min chia j người đầu thành i nhóm</span>
+    vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; dp(K + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(n + <span class="number">1</span>, 1e18));
     dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;
     
-    <span class="keyword">for</span>(<span class="keyword">int</span> g = <span class="number">1</span>; g <= k; g++) {
-        <span class="keyword">for</span>(<span class="keyword">int</span> i = g; i <= n; i++) {
-            <span class="keyword">for</span>(<span class="keyword">int</span> j = g - <span class="number">1</span>; j < i; j++) {
-                dp[g][i] = min(dp[g][i], dp[g-<span class="number">1</span>][j] + cost[j+<span class="number">1</span>][i]);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= K; i++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = i; j &lt;= n; j++) {
+            <span class="keyword">for</span>(<span class="keyword">int</span> k = i - <span class="number">1</span>; k &lt; j; k++) {
+                dp[i][j] = min(dp[i][j], dp[i-<span class="number">1</span>][k] + cost[k+<span class="number">1</span>][j]);
             }
         }
     }
     
-    out << dp[k][n];
+    out &lt;&lt; dp[K][n];
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ chia đoạn (B3)</strong></a>. Tính trước cost[i][j] = chi phí nếu các phần tử i..j thuộc 1 nhóm (dùng độ lệch chuẩn, phương sai,...). dp[g][i] = chi phí nhỏ nhất chia i phần tử đầu thành g nhóm. Chuyển tiếp: thử mọi điểm cắt j: g−1 nhóm cho 1..j, nhóm thứ g là j+1..i. dp[g][i] = min(dp[g−1][j] + cost[j+1][i]). Giống bài 25 (Đặt trạm). O(K × N²).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ chia đoạn (B3)</strong></a>. Tính trước cost[j][k] = chi phí nếu các phần tử j..k thuộc 1 nhóm. dp[i][j] = chi phí nhỏ nhất chia j phần tử đầu thành i nhóm. Chuyển tiếp: thử mọi điểm cắt k: i−1 nhóm cho 1..k, nhóm thứ i là k+1..j. dp[i][j] = min(dp[i−1][k] + cost[k+1][j]). Giống bài 25 (Đặt trạm). O(K × N²).
                         </div>
                     </div>
                 </div>
@@ -2565,42 +2570,42 @@ vector&lt;<span class="keyword">int</span>&gt; children[MAXN];
     ifstream in(<span class="string">"TRAM.INP"</span>);
     ofstream out(<span class="string">"TRAM.OUT"</span>);
     
-    <span class="keyword">int</span> n, k;
-    in >> n >> k;
+    <span class="keyword">int</span> n, K;
+    in >> n >> K;
     
     vector&lt;<span class="keyword">long long</span>&gt; x(n + <span class="number">1</span>);
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= n; i++) in >> x[i];
+    <span class="keyword">for</span>(<span class="keyword">int</span> t = <span class="number">1</span>; t <= n; t++) in >> x[t];
     
-    <span class="comment">// cost[i][j] = chi phí đặt 1 trạm phục vụ nhà i..j (đặt ở median)</span>
+    <span class="comment">// cost[j][k] = chi phí đặt 1 trạm phục vụ nhà j..k (đặt ở median)</span>
     vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; cost(n + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(n + <span class="number">1</span>, <span class="number">0</span>));
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= n; i++) {
-        <span class="keyword">for</span>(<span class="keyword">int</span> j = i; j <= n; j++) {
-            <span class="keyword">int</span> mid = (i + j) / <span class="number">2</span>;
-            <span class="keyword">for</span>(<span class="keyword">int</span> t = i; t <= j; t++)
-                cost[i][j] += abs(x[t] - x[mid]);
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j <= n; j++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> k = j; k <= n; k++) {
+            <span class="keyword">int</span> mid = (j + k) / <span class="number">2</span>;
+            <span class="keyword">for</span>(<span class="keyword">int</span> t = j; t <= k; t++)
+                cost[j][k] += abs(x[t] - x[mid]);
         }
     }
     
-    <span class="comment">// dp[g][i] = chi phí min dùng g trạm phục vụ nhà 1..i</span>
-    vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; dp(k + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(n + <span class="number">1</span>, 1e18));
+    <span class="comment">// dp[i][j] = chi phí min dùng i trạm phục vụ nhà 1..j</span>
+    vector&lt;vector&lt;<span class="keyword">long long</span>&gt;&gt; dp(K + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(n + <span class="number">1</span>, 1e18));
     dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;
     
-    <span class="keyword">for</span>(<span class="keyword">int</span> g = <span class="number">1</span>; g <= k; g++) {
-        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= n; i++) {
-            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j < i; j++) {
-                dp[g][i] = min(dp[g][i], dp[g-<span class="number">1</span>][j] + cost[j+<span class="number">1</span>][i]);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i <= K; i++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j <= n; j++) {
+            <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k < j; k++) {
+                dp[i][j] = min(dp[i][j], dp[i-<span class="number">1</span>][k] + cost[k+<span class="number">1</span>][j]);
             }
         }
     }
     
-    out << dp[k][n];
+    out << dp[K][n];
     in.close();
     out.close();
     <span class="keyword">return</span> <span class="number">0</span>;
 }</pre>
                         </div>
                         <div class="solution-note">
-                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ chia đoạn (B3)</strong></a>. Tính trước cost[i][j] = chi phí nếu 1 trạm phục vụ nhà i..j. Đặt trạm ở đâu tốt nhất? Ở trung vị (vị trí giữa) vì tổng khoảng cách nhỏ nhất. dp[g][i] = chi phí tối ưu dùng g trạm cho nhà 1..i. Chuyển tiếp: thử mọi điểm cắt j: g−1 trạm cho nhà 1..j, trạm thứ g cho nhà j+1..i. dp[g][i] = min(dp[g−1][j] + cost[j+1][i]). O(K × N²).
+                            <strong>💡 Ý tưởng:</strong> Dùng <a href="Bi-kip-vo-cong.html#B3"><strong>QHĐ chia đoạn (B3)</strong></a>. Tính trước cost[j][k] = chi phí nếu 1 trạm phục vụ nhà j..k. Đặt trạm ở đâu tốt nhất? Ở trung vị (vị trí giữa) vì tổng khoảng cách nhỏ nhất. dp[i][j] = chi phí tối ưu dùng i trạm cho nhà 1..j. Chuyển tiếp: thử mọi điểm cắt k: i−1 trạm cho nhà 1..k, trạm thứ i cho nhà k+1..j. dp[i][j] = min(dp[i−1][k] + cost[k+1][j]). O(K × N²).
                         </div>
                     </div>
                 </div>
