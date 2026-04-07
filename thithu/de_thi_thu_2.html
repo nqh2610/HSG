@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học — Đề 2</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC — ĐỀ 2</h1>
+            <div class="time">Thời gian làm bài: 180 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 1: TRUNG BÌNH ========= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Trung bình
+            </div>
+            <div class="problem-file">TRUNGBINH.INP / TRUNGBINH.OUT</div>
+            <div class="problem-content">
+                <p>Cho dãy N số nguyên dương A<sub>1</sub>, A<sub>2</sub>, …, A<sub>N</sub> và số nguyên dương K.</p>
+                <p>Một đoạn con liên tiếp [l, r] (1 ≤ l ≤ r ≤ N) có <strong>trung bình cộng</strong> bằng K nếu:</p>
+                <p style="text-align: center; text-indent: 0; font-size: 1.1em;"><strong>(A<sub>l</sub> + A<sub>l+1</sub> + … + A<sub>r</sub>) / (r − l + 1) = K</strong></p>
+                <p><strong>Yêu cầu:</strong> Đếm số lượng đoạn con liên tiếp có trung bình cộng bằng đúng K.</p>
+
+                <div class="section-label">Dữ liệu vào (TRUNGBINH.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và K (1 ≤ N ≤ 10<sup>6</sup>; 1 ≤ K ≤ 10<sup>9</sup>)</li>
+                        <li>Dòng 2: N số nguyên dương A<sub>1</sub>, A<sub>2</sub>, …, A<sub>N</sub> (1 ≤ A<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (TRUNGBINH.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số lượng đoạn con có trung bình cộng bằng K.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>TRUNGBINH.INP</th><th>TRUNGBINH.OUT</th></tr>
+                    <tr>
+                        <td>5 3
+1 3 5 3 2</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>4 3
+1 5 3 3</td>
+                        <td>6</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> 4 đoạn có trung bình = 3: đoạn [3] (vị trí 2), đoạn [3] (vị trí 4), đoạn [1,3,5] (tb = 9/3 = 3), đoạn [1,3,5,3] (tb = 12/4 = 3).<br>
+                    <strong>Giải thích ví dụ 2:</strong> 6 đoạn có trung bình = 3: [3] (vị trí 3), [3] (vị trí 4), [1,5] (tb = 6/2 = 3), [1,5,3] (tb = 9/3 = 3), [3,3] (tb = 6/2 = 3), [1,5,3,3] (tb = 12/4 = 3).
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 1 000</li>
+                        <li>Subtask 2 (70%): N ≤ 10<sup>6</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 2: ĐẾM XÂU CON ======== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Đếm xâu con
+            </div>
+            <div class="problem-file">DEMXAU.INP / DEMXAU.OUT</div>
+            <div class="problem-content">
+                <p>Cho hai xâu S và T gồm các chữ cái in hoa (A–Z). Một <strong>xâu con</strong> (subsequence) của xâu S là xâu thu được bằng cách xóa một số ký tự (có thể không xóa) từ S mà giữ nguyên thứ tự các ký tự còn lại.</p>
+                <p><strong>Yêu cầu:</strong> Đếm số cách chọn xâu con từ S sao cho xâu con đó bằng T. Vì kết quả có thể rất lớn, hãy in phần dư khi chia cho 10<sup>9</sup> + 7.</p>
+
+                <div class="section-label">Dữ liệu vào (DEMXAU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Xâu S (1 ≤ |S| ≤ 5 000)</li>
+                        <li>Dòng 2: Xâu T (1 ≤ |T| ≤ 5 000, |T| ≤ |S|)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DEMXAU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số cách chọn, lấy dư cho 10<sup>9</sup> + 7.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DEMXAU.INP</th><th>DEMXAU.OUT</th></tr>
+                    <tr>
+                        <td>AABBA
+ABA</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>ABAB
+AB</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Có 4 cách chọn xâu con "ABA" từ S = "AABBA":
+                    A<sub>1</sub>B<sub>3</sub>A<sub>5</sub>, A<sub>1</sub>B<sub>4</sub>A<sub>5</sub>, A<sub>2</sub>B<sub>3</sub>A<sub>5</sub>, A<sub>2</sub>B<sub>4</sub>A<sub>5</sub>.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Có 3 cách chọn xâu con "AB" từ S = "ABAB":
+                    A<sub>1</sub>B<sub>2</sub>, A<sub>1</sub>B<sub>4</sub>, A<sub>3</sub>B<sub>4</sub>.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): |S|, |T| ≤ 20</li>
+                        <li>Subtask 2 (60%): |S|, |T| ≤ 5 000</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 3: MÊ CUNG =========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Mê cung
+            </div>
+            <div class="problem-file">MECUNG.INP / MECUNG.OUT</div>
+            <div class="problem-content">
+                <p>Cho lưới N × M ô vuông. Mỗi ô là <strong>trống</strong> (ký tự '<code>.</code>') hoặc <strong>tường</strong> (ký tự '<code>#</code>'). Ô (1, 1) và ô (N, M) luôn trống.</p>
+                <p>Bạn xuất phát từ ô (1, 1) và cần đến ô (N, M). Mỗi bước, bạn đi sang 1 trong 4 ô kề cạnh (trên, dưới, trái, phải). Bạn không thể đi vào ô tường, <strong>trừ khi dùng chìa khóa</strong>.</p>
+                <p>Bạn có <strong>K chìa khóa</strong>. Mỗi chìa khóa cho phép phá đúng 1 bức tường để đi qua (ô tường trở thành ô trống cho lần đi đó).</p>
+                <p><strong>Yêu cầu:</strong> Tìm <strong>số bước ít nhất</strong> để đi từ (1, 1) đến (N, M). Nếu không thể, in −1.</p>
+
+                <div class="section-label">Dữ liệu vào (MECUNG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Ba số nguyên N, M và K (2 ≤ N, M ≤ 1 000; 0 ≤ K ≤ 5)</li>
+                        <li>N dòng tiếp theo: Mỗi dòng gồm M ký tự '<code>.</code>' hoặc '<code>#</code>' mô tả lưới</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (MECUNG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số bước ít nhất, hoặc −1 nếu không thể.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>MECUNG.INP</th><th>MECUNG.OUT</th></tr>
+                    <tr>
+                        <td>5 3 1
+...
+##.
+...
+.##
+...</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>3 4 0
+....
+.##.
+....</td>
+                        <td>5</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Không dùng chìa khóa: đường ngắn nhất phải đi vòng = 10 bước. Dùng 1 chìa khóa phá tường (2,1): đường (1,1)→(2,1)→(3,1)→(4,1)→(5,1)→(5,2)→(5,3) = 6 bước.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Không có chìa khóa (K = 0). Đường ngắn nhất: (1,1)→(1,2)→(1,3)→(1,4)→(2,4)→(3,4) = 5 bước.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): K = 0</li>
+                        <li>Subtask 2 (70%): K ≤ 5</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 2</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 2</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 1: TRUNG BÌNH ========= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Trung bình (TRUNGBINH)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Prefix sum + Map O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 1: TRUNGBINH — Prefix sum + Map</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"TRUNGBINH.INP"</span>);
+    ofstream out(<span class="string">"TRUNGBINH.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    <span class="keyword">long long</span> K;
+    in >> n >> K;
+
+    <span class="keyword">long long</span> prefix = <span class="number">0</span>;
+    map&lt;<span class="keyword">long long</span>, <span class="keyword">long long</span>&gt; cnt;
+    cnt[<span class="number">0</span>] = <span class="number">1</span>;
+    <span class="keyword">long long</span> ans = <span class="number">0</span>;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">long long</span> a;
+        in >> a;
+        prefix += a - K;
+        ans += cnt[prefix];
+        cnt[prefix]++;
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt mọi cặp (l, r), tính tổng đoạn, kiểm tra tổng / (r−l+1) = K. Tương đương kiểm tra tổng = K × (r−l+1). Độ phức tạp O(N²).<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Ý tưởng cốt lõi:</strong> Trung bình đoạn [l, r] = K tương đương tổng (A[i] − K) từ l đến r bằng 0.<br>
+            Đặt b[i] = A[i] − K. Cần đếm số đoạn [l, r] có tổng b[l..r] = 0.<br>
+            Dùng <strong>prefix sum</strong>: P[0] = 0, P[i] = b[1] + ... + b[i]. Tổng b[l..r] = P[r] − P[l−1] = 0 ↔ P[r] = P[l−1].<br>
+            Vậy đếm số cặp (i, j) mà i &lt; j và P[i] = P[j]. Dùng <strong>map</strong> đếm số lần xuất hiện mỗi giá trị prefix sum, chỉ cần 1 vòng lặp.<br>
+            Tổng: O(N log N) với map, hoặc O(N) với unordered_map.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 2: ĐẾM XÂU CON ======== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Đếm xâu con (DEMXAU)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — QHĐ hai chiều O(|S| × |T|)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 2: DEMXAU — Đếm xâu con (Distinct Subsequences)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">const int</span> MOD = <span class="number">1e9</span> + <span class="number">7</span>;
+<span class="keyword">int</span> dp[<span class="number">5001</span>][<span class="number">5001</span>];
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DEMXAU.INP"</span>);
+    ofstream out(<span class="string">"DEMXAU.OUT"</span>);
+
+    string S, T;
+    in >> S >> T;
+    <span class="keyword">int</span> n = S.size(), m = T.size();
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; i++) dp[i][<span class="number">0</span>] = <span class="number">1</span>;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j++) {
+            dp[i][j] = dp[i - <span class="number">1</span>][j];
+            <span class="keyword">if</span> (S[i - <span class="number">1</span>] == T[j - <span class="number">1</span>])
+                dp[i][j] = (dp[i][j] + dp[i - <span class="number">1</span>][j - <span class="number">1</span>]) % MOD;
+        }
+    }
+
+    out &lt;&lt; dp[n][m];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (|S|, |T| ≤ 20):</strong> Sinh tất cả 2<sup>|S|</sup> xâu con của S (≤ 2²⁰ ≈ 10⁶), đếm bao nhiêu xâu bằng T.<br>
+            <strong>Subtask 2 (Full):</strong> Bài toán <strong>Distinct Subsequences</strong>. Gọi dp[i][j] = số cách chọn xâu con từ S[1..i] để tạo thành T[1..j].<br>
+            <strong>Cơ sở:</strong> dp[i][0] = 1 (xâu T rỗng — luôn có đúng 1 cách: không chọn ký tự nào).<br>
+            <strong>Chuyển trạng thái:</strong><br>
+            — Luôn có dp[i][j] = dp[i−1][j] (bỏ qua S[i], không dùng nó).<br>
+            — Nếu S[i] = T[j]: dp[i][j] += dp[i−1][j−1] (dùng S[i] ghép với T[j]).<br>
+            <strong>So sánh với LCS:</strong> Cùng bảng DP 2 chiều trên 2 xâu, nhưng thay vì lấy max thì ta <em>cộng dồn</em> số cách. Đây là biến thể tự nhiên của LCS — chuyển từ "tối ưu" sang "đếm".<br>
+            Đáp án: dp[|S|][|T|] mod (10⁹ + 7). Tổng: O(|S| × |T|). Bộ nhớ: mảng dp[5001][5001] ≈ 100 MB.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 3: MÊ CUNG =========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Mê cung (MECUNG)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — BFS mở rộng trạng thái O(N × M × K)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 3: MECUNG — BFS mở rộng trạng thái</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> m, n, K;
+<span class="keyword">char</span> a[<span class="number">1001</span>][<span class="number">1001</span>];
+<span class="keyword">int</span> dist[<span class="number">1001</span>][<span class="number">1001</span>][<span class="number">6</span>];
+<span class="keyword">int</span> dx[] = {-<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>};
+<span class="keyword">int</span> dy[] = {<span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>, <span class="number">1</span>};
+
+<span class="keyword">struct</span> State {
+    <span class="keyword">int</span> x, y, k;
+};
+
+<span class="keyword">void</span> <span class="function">BFS_Luoi</span>() {
+    memset(dist, -<span class="number">1</span>, <span class="keyword">sizeof</span>(dist));
+    dist[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;
+    queue&lt;State&gt; q;
+    q.push({<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>});
+
+    <span class="keyword">while</span> (!q.empty()) {
+        <span class="keyword">int</span> x = q.front().x, y = q.front().y, k = q.front().k;
+        q.pop();
+        <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">0</span>; d &lt; <span class="number">4</span>; d++) {
+            <span class="keyword">int</span> nx = x + dx[d], ny = y + dy[d];
+            <span class="keyword">if</span> (nx &lt; <span class="number">0</span> || nx >= m || ny &lt; <span class="number">0</span> || ny >= n) <span class="keyword">continue</span>;
+
+            <span class="keyword">if</span> (a[nx][ny] != <span class="string">'#'</span>) {
+                <span class="keyword">if</span> (dist[nx][ny][k] == -<span class="number">1</span>) {
+                    dist[nx][ny][k] = dist[x][y][k] + <span class="number">1</span>;
+                    q.push({nx, ny, k});
+                }
+            } <span class="keyword">else if</span> (k + <span class="number">1</span> &lt;= K &amp;&amp; dist[nx][ny][k + <span class="number">1</span>] == -<span class="number">1</span>) {
+                dist[nx][ny][k + <span class="number">1</span>] = dist[x][y][k] + <span class="number">1</span>;
+                q.push({nx, ny, k + <span class="number">1</span>});
+            }
+        }
+    }
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"MECUNG.INP"</span>);
+    ofstream out(<span class="string">"MECUNG.OUT"</span>);
+    in >> m >> n >> K;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        string row;
+        in >> row;
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++)
+            a[i][j] = row[j];
+    }
+
+    <span class="function">BFS_Luoi</span>();
+
+    <span class="keyword">int</span> ans = -<span class="number">1</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt;= K; k++) {
+        <span class="keyword">if</span> (dist[m-<span class="number">1</span>][n-<span class="number">1</span>][k] != -<span class="number">1</span>) {
+            <span class="keyword">if</span> (ans == -<span class="number">1</span> || dist[m-<span class="number">1</span>][n-<span class="number">1</span>][k] &lt; ans)
+                ans = dist[m-<span class="number">1</span>][n-<span class="number">1</span>][k];
+        }
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (K = 0):</strong> BFS thông thường trên lưới 2D. Trạng thái chỉ cần (hàng, cột). Tìm đường ngắn nhất từ (1,1) đến (N,M), không được đi vào ô tường. Độ phức tạp O(N × M).<br>
+            <strong>Subtask 2 (Full):</strong> <strong>BFS mở rộng trạng thái</strong> — mỗi trạng thái là bộ ba (hàng, cột, số_chìa_đã_dùng).<br>
+            Khi đi vào ô trống '.': chuyển sang (nr, nc, k) — không tốn chìa khóa.<br>
+            Khi đi vào ô tường '#': chuyển sang (nr, nc, k+1) — tốn 1 chìa khóa (chỉ khi k+1 ≤ K).<br>
+            BFS đảm bảo tìm đường ngắn nhất vì mỗi bước tốn đúng 1 đơn vị.<br>
+            Đáp án: min(dist[N][M][k]) với k = 0, 1, …, K.<br>
+            <strong>Không gian trạng thái:</strong> N × M × (K+1) ≤ 1000 × 1000 × 6 = 6 × 10⁶. Bộ nhớ dist ≈ 24 MB.<br>
+            Tổng: O(N × M × K).
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học 12 — 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header .ministry {
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .exam-header .info {
+            font-size: 0.95em;
+            color: #555;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 1</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 1: ĐOẠN ÊM ========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Đoạn êm (DOANEM)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — O(N) Two Pointers + Deque</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 1: DOANEM — Two Pointers + 2 Deque đơn điệu</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DOANEM.INP"</span>);
+    ofstream out(<span class="string">"DOANEM.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    <span class="keyword">long long</span> K;
+    in >> n >> K;
+    vector&lt;<span class="keyword">long long</span>&gt; a(n);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
+
+    <span class="comment">// dqMax: deque giữ chỉ số → a[] giảm dần (front = max)</span>
+    <span class="comment">// dqMin: deque giữ chỉ số → a[] tăng dần (front = min)</span>
+    deque&lt;<span class="keyword">int</span>&gt; dqMax, dqMin;
+    <span class="keyword">long long</span> ans = <span class="number">0</span>;
+    <span class="keyword">int</span> l = <span class="number">0</span>; <span class="comment">// Con trỏ trái</span>
+
+    <span class="keyword">for</span>(<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; n; r++) {
+        <span class="comment">// Thêm a[r] vào 2 deque</span>
+        <span class="keyword">while</span>(!dqMax.empty() && a[dqMax.back()] &lt;= a[r]) dqMax.pop_back();
+        dqMax.push_back(r);
+        <span class="keyword">while</span>(!dqMin.empty() && a[dqMin.back()] >= a[r]) dqMin.pop_back();
+        dqMin.push_back(r);
+
+        <span class="comment">// Thu hẹp [l, r] cho đến khi max - min ≤ K</span>
+        <span class="keyword">while</span>(a[dqMax.front()] - a[dqMin.front()] > K) {
+            l++;
+            <span class="keyword">if</span>(dqMax.front() &lt; l) dqMax.pop_front();
+            <span class="keyword">if</span>(dqMin.front() &lt; l) dqMin.pop_front();
+        }
+
+        <span class="comment">// Mọi đoạn [l, r], [l+1, r], ..., [r, r] đều êm</span>
+        ans += r - l + <span class="number">1</span>;
+    }
+
+    out &lt;&lt; ans;
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 100):</strong> Duyệt mọi cặp (l, r), tìm max/min bằng vòng lặp — O(N³).<br>
+            <strong>Subtask 2 (N ≤ 5000):</strong> Duyệt (l, r), cập nhật max/min khi mở rộng r — O(N²).<br>
+            <strong>Subtask 3 (N ≤ 10⁶):</strong> Nhận xét quan trọng: khi r cố định, nếu [l, r] êm thì [l+1, r], ..., [r, r] cũng êm (thu hẹp đoạn → max giảm hoặc giữ, min tăng hoặc giữ). Dùng <strong>hai con trỏ</strong>: con trỏ l chỉ tiến, con trỏ r quét từ trái sang phải. Duy trì max/min bằng <strong>2 deque đơn điệu</strong>. Mỗi phần tử vào/ra deque đúng 1 lần → O(N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 2: CHIA GIAI ĐOẠN ===== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Chia giai đoạn (CHIAGD)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — O(N²) DP</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 2: CHIAGD — QHĐ chia giai đoạn O(N²)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHIAGD.INP"</span>);
+    ofstream out(<span class="string">"CHIAGD.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    <span class="keyword">long long</span> S;
+    in >> n >> S;
+
+    <span class="comment">// prefix[i] = t[1] + t[2] + ... + t[i]</span>
+    vector&lt;<span class="keyword">long long</span>&gt; prefix(n + <span class="number">1</span>, <span class="number">0</span>);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        <span class="keyword">long long</span> t;
+        in >> t;
+        prefix[i] = prefix[i - <span class="number">1</span>] + t;
+    }
+
+    <span class="comment">// dp[i] = chi phí nhỏ nhất xử lý i công việc đầu</span>
+    <span class="comment">// Đáy: dp[0] = -S (vì giai đoạn đầu tiên không nghỉ trước)</span>
+    <span class="comment">// dp[i] = min(dp[j] + (prefix[i]-prefix[j])² + S) với j = 0..i-1</span>
+    <span class="comment">//   → chia giai đoạn [j+1..i], mệt = (tổng)², cộng S cho lần nghỉ</span>
+    <span class="comment">//   → trick: dp[0] = -S để giai đoạn đầu không tính S thừa</span>
+    vector&lt;<span class="keyword">long long</span>&gt; dp(n + <span class="number">1</span>, <span class="number">1e18</span>);
+    dp[<span class="number">0</span>] = -S; <span class="comment">// Giai đoạn đầu: triệt tiêu +S trong công thức</span>
+
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) {
+            <span class="keyword">long long</span> T = prefix[i] - prefix[j]; <span class="comment">// Tổng giai đoạn [j+1..i]</span>
+            <span class="keyword">long long</span> cost = dp[j] + T * T + S;   <span class="comment">// Mệt + nghỉ</span>
+            dp[i] = min(dp[i], cost);
+        }
+    }
+
+    out &lt;&lt; dp[n];
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 100):</strong> Brute force — thử mọi cách chia bằng đệ quy/quay lui. Hoặc DP O(N²) cũng chạy thoải mái.<br>
+            <strong>Subtask 2 (N ≤ 5000):</strong> DP O(N²). Gọi P[i] = prefix sum. dp[i] = min(dp[j] + (P[i]−P[j])² + S) với j = 0..i−1 — thử mọi điểm cắt j. Trick: dp[0] = −S để giai đoạn đầu không bị cộng thừa S (vì trước giai đoạn đầu không có nghỉ). Với N = 5000, vòng lặp O(N²) ≈ 2.5×10⁷ thao tác, chạy thoải mái.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 3: ĐƯỜNG ĐI ƯU TIÊN === -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Đường đi ưu tiên (DUONGUU)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — 2 lần Dijkstra + duyệt cạnh O(M log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 3: DUONGUU — 2 lần Dijkstra + duyệt cạnh</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> n, m;
+vector&lt;vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;&gt; ke, ke_nguoc;
+vector&lt;<span class="keyword">long long</span>&gt; dist;
+vector&lt;<span class="keyword">bool</span>&gt; Free;
+
+<span class="keyword">void</span> <span class="function">Dijkstra</span>(<span class="keyword">int</span> S) {
+    dist.assign(n + <span class="number">1</span>, LLONG_MAX);
+    Free.assign(n + <span class="number">1</span>, <span class="keyword">true</span>);
+    priority_queue&lt;pair&lt;<span class="keyword">long long</span>,<span class="keyword">int</span>&gt;,
+                   vector&lt;pair&lt;<span class="keyword">long long</span>,<span class="keyword">int</span>&gt;&gt;,
+                   greater&lt;pair&lt;<span class="keyword">long long</span>,<span class="keyword">int</span>&gt;&gt;&gt; pq;
+    dist[S] = <span class="number">0</span>; pq.push(make_pair(<span class="number">0</span>LL, S));
+
+    <span class="keyword">while</span> (!pq.empty()) {
+        <span class="keyword">long long</span> d = pq.top().first; <span class="keyword">int</span> u = pq.top().second; pq.pop();
+        <span class="keyword">if</span> (!Free[u]) <span class="keyword">continue</span>;
+        Free[u] = <span class="keyword">false</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)ke[u].size(); i++) {
+            <span class="keyword">int</span> v = ke[u][i].first, w = ke[u][i].second;
+            <span class="keyword">if</span> (Free[v] &amp;&amp; dist[u] + w &lt; dist[v]) {
+                dist[v] = dist[u] + w;
+                pq.push(make_pair(dist[v], v));
+            }
+        }
+    }
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DUONGUU.INP"</span>);
+    ofstream out(<span class="string">"DUONGUU.OUT"</span>);
+    in >> n >> m;
+
+    ke.assign(n + <span class="number">1</span>, vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;());
+    ke_nguoc.assign(n + <span class="number">1</span>, vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;());
+    vector&lt;<span class="keyword">int</span>&gt; eu(m), ev(m);
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> w;
+        in >> eu[i] >> ev[i] >> w;
+        ke[eu[i]].push_back(make_pair(ev[i], w));
+        ke_nguoc[ev[i]].push_back(make_pair(eu[i], w));
+    }
+
+    <span class="comment">// Dijkstra lần 1: từ đỉnh 1 trên đồ thị gốc</span>
+    <span class="function">Dijkstra</span>(<span class="number">1</span>);
+    vector&lt;<span class="keyword">long long</span>&gt; dist1 = dist;
+
+    <span class="comment">// Dijkstra lần 2: từ đỉnh N trên đồ thị ngược</span>
+    swap(ke, ke_nguoc);
+    <span class="function">Dijkstra</span>(n);
+    <span class="comment">// dist chính là distN</span>
+
+    <span class="comment">// Thử dùng VIP trên từng cạnh u→v: bỏ trọng số w</span>
+    <span class="comment">// Chi phí = dist1[u] + 0 + distN[v]</span>
+    <span class="keyword">long long</span> ans = dist1[n]; <span class="comment">// Không dùng VIP</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">if</span> (dist1[eu[i]] != LLONG_MAX &amp;&amp; dist[ev[i]] != LLONG_MAX)
+            ans = min(ans, dist1[eu[i]] + dist[ev[i]]);
+    }
+
+    <span class="keyword">if</span> (ans == LLONG_MAX) out &lt;&lt; -<span class="number">1</span>;
+    <span class="keyword">else</span> out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Brute force — thử từng cạnh làm VIP (đặt trọng số = 0), mỗi lần chạy Dijkstra từ 1 → N. Độ phức tạp O(M × M log N).<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Ý tưởng cốt lõi:</strong> Nếu dùng VIP trên cạnh u→v, đường đi tối ưu sẽ là: 1 →...→ u → v →...→ N, với đoạn 1→u ngắn nhất và đoạn v→N ngắn nhất.<br>
+            Chạy <strong>Dijkstra lần 1</strong> từ đỉnh 1 trên đồ thị gốc → dist1[u] = khoảng cách ngắn nhất từ 1 đến u.<br>
+            Chạy <strong>Dijkstra lần 2</strong> từ đỉnh N trên đồ thị ngược → distN[v] = khoảng cách ngắn nhất từ v đến N.<br>
+            Duyệt mọi cạnh (u, v): ans = min(dist1[u] + distN[v]).<br>
+            Tổng: O(M log N) — chỉ 2 lần Dijkstra + 1 vòng duyệt cạnh.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>
