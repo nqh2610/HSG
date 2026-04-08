@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 3</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 3</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 1: ĐOẠN NGẮN NHẤT ===== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Đoạn ngắn nhất (DONHAT)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Two Pointers O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 1: DONHAT — Two Pointers</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DONHAT.INP"</span>);
+    ofstream out(<span class="string">"DONHAT.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    <span class="keyword">long long</span> S;
+    in >> n >> S;
+    vector&lt;<span class="keyword">long long</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
+
+    <span class="keyword">int</span> ans = n + <span class="number">1</span>;
+    <span class="keyword">long long</span> sum = <span class="number">0</span>;
+    <span class="keyword">int</span> l = <span class="number">0</span>;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; n; r++) {
+        sum += a[r];
+        <span class="keyword">while</span> (sum >= S) {
+            ans = min(ans, r - l + <span class="number">1</span>);
+            sum -= a[l];
+            l++;
+        }
+    }
+
+    <span class="keyword">if</span> (ans == n + <span class="number">1</span>) out &lt;&lt; -<span class="number">1</span>;
+    <span class="keyword">else</span> out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt mọi cặp (l, r), tính tổng đoạn, cập nhật min độ dài. Độ phức tạp O(N²).<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Hai con trỏ.</strong> Nhận xét: tất cả phần tử dương → khi mở rộng r, tổng tăng; khi thu hẹp l, tổng giảm.<br>
+            Con trỏ r quét từ trái sang phải. Khi sum ≥ S, thu hẹp l (giảm sum) đồng thời cập nhật min(r−l+1). Con trỏ l chỉ tiến, không lùi → mỗi phần tử vào/ra cửa sổ đúng 1 lần → O(N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 2: DÃY BITONIC ======== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Dãy Bitonic (DAYBIT)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — LIS hai chiều O(N²)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 2: DAYBIT — LIS hai chiều</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> a[<span class="number">5001</span>];
+<span class="keyword">int</span> lis[<span class="number">5001</span>], lds[<span class="number">5001</span>];
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DAYBIT.INP"</span>);
+    ofstream out(<span class="string">"DAYBIT.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in >> n;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
+
+    <span class="comment">// LIS kết thúc tại i (quét từ trái sang)</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        lis[i] = <span class="number">1</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++)
+            <span class="keyword">if</span> (a[j] &lt; a[i])
+                lis[i] = max(lis[i], lis[j] + <span class="number">1</span>);
+    }
+
+    <span class="comment">// LDS bắt đầu từ i (quét từ phải sang)</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i >= <span class="number">0</span>; i--) {
+        lds[i] = <span class="number">1</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; n; j++)
+            <span class="keyword">if</span> (a[j] &lt; a[i])
+                lds[i] = max(lds[i], lds[j] + <span class="number">1</span>);
+    }
+
+    <span class="keyword">int</span> ans = <span class="number">1</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)
+        ans = max(ans, lis[i] + lds[i] - <span class="number">1</span>);
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 100):</strong> Brute force — thử mọi tập con, kiểm tra bitonic. Hoặc dùng DP O(N²) cũng chạy thoải mái.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Biến tấu của bài LIS (Dãy Con Tăng Dài Nhất).</strong><br>
+            Tính 2 mảng:<br>
+            — lis[i] = độ dài dãy con tăng nghiêm ngặt dài nhất <em>kết thúc</em> tại vị trí i (quét trái → phải, giống LIS).<br>
+            — lds[i] = độ dài dãy con giảm nghiêm ngặt dài nhất <em>bắt đầu</em> từ vị trí i (quét phải → trái, tức LIS trên dãy đảo).<br>
+            Với mỗi vị trí i làm "đỉnh" bitonic: dãy tăng đến i rồi giảm từ i → độ dài = lis[i] + lds[i] − 1 (trừ 1 vì i đếm 2 lần).<br>
+            Đáp án: max(lis[i] + lds[i] − 1). Tổng: O(N²). Bộ nhớ: 2 mảng O(N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 3: CHẤM BÀI ========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Chấm bài (CHAMBAI)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Chặt nhị phân + Tham lam O(N log S)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 3: CHAMBAI — Chặt nhị phân + Tham lam</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHAMBAI.INP"</span>);
+    ofstream out(<span class="string">"CHAMBAI.OUT"</span>);
+
+    <span class="keyword">int</span> n, K;
+    in >> n >> K;
+    vector&lt;<span class="keyword">long long</span>&gt; a(n);
+    <span class="keyword">long long</span> lo = <span class="number">0</span>, hi = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        in >> a[i];
+        lo = max(lo, a[i]);
+        hi += a[i];
+    }
+
+    <span class="keyword">while</span> (lo &lt; hi) {
+        <span class="keyword">long long</span> mid = (lo + hi) / <span class="number">2</span>;
+        <span class="comment">// Tham lam: chia thành ≤ K đoạn, mỗi đoạn sum ≤ mid?</span>
+        <span class="keyword">int</span> segments = <span class="number">1</span>;
+        <span class="keyword">long long</span> sum = <span class="number">0</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+            <span class="keyword">if</span> (sum + a[i] > mid) {
+                segments++;
+                sum = a[i];
+            } <span class="keyword">else</span> {
+                sum += a[i];
+            }
+        }
+        <span class="keyword">if</span> (segments &lt;= K)
+            hi = mid;
+        <span class="keyword">else</span>
+            lo = mid + <span class="number">1</span>;
+    }
+
+    out &lt;&lt; lo;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 100):</strong> DP O(N² × K). Gọi dp[i][j] = min max tổng đoạn khi chia i phần tử đầu thành j đoạn. Duyệt mọi điểm cắt.<br>
+            <strong>Subtask 2 (Full):</strong> Bài này cần kết hợp <strong>2 kỹ thuật</strong>:<br>
+            <strong>1. Chặt nhị phân trên đáp án:</strong> Đáp án X nằm trong [max(t<sub>i</sub>), Σt<sub>i</sub>]. Dùng binary search tìm X nhỏ nhất mà ta có thể chia thành ≤ K đoạn, mỗi đoạn tổng ≤ X.<br>
+            <strong>2. Tham lam kiểm tra:</strong> Với X cố định, quét trái → phải. Cộng dồn t<sub>i</sub> vào đoạn hiện tại. Khi thêm t<sub>i</sub> vượt X, bắt đầu đoạn mới. Đếm số đoạn → nếu ≤ K thì X khả thi.<br>
+            Khoảng tìm kiếm: [max(t<sub>i</sub>), Σt<sub>i</sub>] ≤ 10<sup>15</sup> → binary search chạy ≤ 50 vòng. Mỗi vòng kiểm tra O(N). Tổng: O(N log S).
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

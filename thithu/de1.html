@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học 12 — 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header .ministry {
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .info {
+            font-size: 0.95em;
+            color: #555;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC — ĐỀ 1</h1>
+            <div class="time">Thời gian làm bài: 180 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 1: ĐOẠN ÊM ========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Đoạn êm
+            </div>
+            <div class="problem-file">DOANEM.INP / DOANEM.OUT</div>
+            <div class="problem-content">
+                <p>Cho dãy N số nguyên dương A<sub>1</sub>, A<sub>2</sub>, …, A<sub>N</sub> và số nguyên không âm K.</p>
+                <p>Một đoạn con liên tiếp [l, r] (1 ≤ l ≤ r ≤ N) được gọi là <strong>"êm"</strong> nếu hiệu giữa phần tử lớn nhất và phần tử nhỏ nhất trong đoạn không vượt quá K, tức là:</p>
+                <p style="text-align: center; text-indent: 0; font-size: 1.1em;"><strong>max(A<sub>l</sub>, …, A<sub>r</sub>) − min(A<sub>l</sub>, …, A<sub>r</sub>) ≤ K</strong></p>
+                <p><strong>Yêu cầu:</strong> Đếm số lượng đoạn con êm của dãy.</p>
+
+                <div class="section-label">Dữ liệu vào (DOANEM.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và K (1 ≤ N ≤ 10<sup>6</sup>; 0 ≤ K ≤ 10<sup>9</sup>)</li>
+                        <li>Dòng 2: N số nguyên dương A<sub>1</sub>, A<sub>2</sub>, …, A<sub>N</sub> (1 ≤ A<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DOANEM.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số lượng đoạn con êm.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DOANEM.INP</th><th>DOANEM.OUT</th></tr>
+                    <tr>
+                        <td>5 2
+1 3 2 4 1</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>4 3
+5 2 7 4</td>
+                        <td>6</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Có 10 đoạn êm: 5 đoạn 1 phần tử (hiệu = 0 ≤ 2), 3 đoạn 2 phần tử ([1,3], [3,2], [2,4] có hiệu ≤ 2; [4,1] có hiệu 3 > 2), 2 đoạn 3 phần tử ([1,3,2] hiệu 2 ≤ 2, [3,2,4] hiệu 2 ≤ 2). Các đoạn dài hơn đều có hiệu > 2.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Có 6 đoạn êm: 4 đoạn 1 phần tử, đoạn [5,2] (hiệu 3 ≤ 3), đoạn [7,4] (hiệu 3 ≤ 3). Các đoạn khác đều có hiệu > 3.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (20%): N ≤ 100</li>
+                        <li>Subtask 2 (30%): N ≤ 5 000</li>
+                        <li>Subtask 3 (50%): N ≤ 10<sup>6</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 2: CHIA GIAI ĐOẠN ===== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Chia giai đoạn
+            </div>
+            <div class="problem-file">CHIAGD.INP / CHIAGD.OUT</div>
+            <div class="problem-content">
+                <p>Có N công việc cần hoàn thành theo đúng thứ tự, công việc thứ i mất t<sub>i</sub> phút. Bạn cần chia N công việc thành một hoặc nhiều <strong>giai đoạn</strong> (mỗi giai đoạn là một đoạn con liên tiếp, các giai đoạn phủ hết N công việc).</p>
+                <p>Nếu một giai đoạn gồm các công việc có tổng thời gian là T, thì <strong>độ mệt mỏi</strong> của giai đoạn đó bằng T<sup>2</sup> (càng làm lâu liên tục càng mệt). Giữa hai giai đoạn liên tiếp, bạn phải nghỉ đúng S phút.</p>
+                <p><strong>Yêu cầu:</strong> Tìm cách chia sao cho <strong>tổng chi phí</strong> = Σ(mệt mỏi các giai đoạn) + S × (số giai đoạn − 1) là <strong>nhỏ nhất</strong>.</p>
+
+                <div class="section-label">Dữ liệu vào (CHIAGD.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và S (1 ≤ N ≤ 5 000; 0 ≤ S ≤ 10<sup>9</sup>)</li>
+                        <li>Dòng 2: N số nguyên dương t<sub>1</sub>, t<sub>2</sub>, …, t<sub>N</sub> (1 ≤ t<sub>i</sub> ≤ 10<sup>4</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (CHIAGD.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là tổng chi phí nhỏ nhất.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>CHIAGD.INP</th><th>CHIAGD.OUT</th></tr>
+                    <tr>
+                        <td>4 10
+1 2 3 4</td>
+                        <td>54</td>
+                    </tr>
+                    <tr>
+                        <td>3 5
+3 1 2</td>
+                        <td>23</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Chia tối ưu: [1, 2] | [3] | [4]. Mệt mỏi = 3² + 3² + 4² = 9 + 9 + 16 = 34. Nghỉ 2 lần × 10 = 20. Tổng = 54.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Chia tối ưu: [3] | [1, 2]. Mệt mỏi = 3² + 3² = 9 + 9 = 18. Nghỉ 1 lần × 5 = 5. Tổng = 23.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 100</li>
+                        <li>Subtask 2 (60%): N ≤ 5 000</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 3: ĐƯỜNG ĐI ƯU TIÊN === -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Đường đi ưu tiên
+            </div>
+            <div class="problem-file">DUONGUU.INP / DUONGUU.OUT</div>
+            <div class="problem-content">
+                <p>Cho đồ thị vô hướng gồm N đỉnh và M cạnh có trọng số dương. Bạn có một <strong>thẻ VIP</strong> cho phép đi <strong>miễn phí</strong> (trọng số = 0) trên đúng <strong>1 cạnh</strong> bất kỳ trong hành trình (hoặc không dùng).</p>
+                <p><strong>Yêu cầu:</strong> Tìm chi phí nhỏ nhất để đi từ đỉnh 1 đến đỉnh N.</p>
+
+                <div class="section-label">Dữ liệu vào (DUONGUU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và M (2 ≤ N ≤ 10<sup>5</sup>; 1 ≤ M ≤ 3 × 10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo: Mỗi dòng ba số u, v, w — cạnh nối u và v có trọng số w (1 ≤ u, v ≤ N; 1 ≤ w ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DUONGUU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là chi phí nhỏ nhất. Nếu không có đường đi, in −1.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DUONGUU.INP</th><th>DUONGUU.OUT</th></tr>
+                    <tr>
+                        <td>5 7
+1 2 5
+1 3 2
+2 3 1
+2 4 6
+3 4 8
+3 5 15
+4 5 3</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>4 5
+1 2 3
+2 3 7
+3 4 2
+1 3 15
+2 4 12</td>
+                        <td>2</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Không dùng VIP: đường ngắn nhất là 1→3→2→4→5 = 2+1+6+3 = 12. Dùng VIP trên cạnh 3–5 (trọng số 15 → 0): đường 1→3→5 = 2+0 = 2.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Không dùng VIP: đường ngắn nhất là 1→2→3→4 = 3+7+2 = 12. Dùng VIP trên cạnh 1–3 (trọng số 15 → 0): đường 1→3→4 = 0+2 = 2.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 1 000, M ≤ 5 000</li>
+                        <li>Subtask 2 (70%): N ≤ 10<sup>5</sup>, M ≤ 3 × 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+    </div>
+
+</body>
+</html>

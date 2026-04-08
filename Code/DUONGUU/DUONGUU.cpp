@@ -2,7 +2,7 @@
 using namespace std;
 
 int n, m;
-vector<vector<pair<int,int>>> ke, ke_nguoc;
+vector<vector<pair<int,int>>> ke;
 vector<long long> dist;
 vector<bool> Free;
 
@@ -34,31 +34,30 @@ int main() {
     in >> n >> m;
 
     ke.assign(n + 1, vector<pair<int,int>>());
-    ke_nguoc.assign(n + 1, vector<pair<int,int>>());
     vector<int> eu(m), ev(m);
 
     for (int i = 0; i < m; i++) {
         int w;
         in >> eu[i] >> ev[i] >> w;
         ke[eu[i]].push_back(make_pair(ev[i], w));
-        ke_nguoc[ev[i]].push_back(make_pair(eu[i], w));
+        ke[ev[i]].push_back(make_pair(eu[i], w));
     }
 
-    // Dijkstra lần 1: từ đỉnh 1 trên đồ thị gốc
+    // Dijkstra lần 1: từ đỉnh 1
     Dijkstra(1);
     vector<long long> dist1 = dist;
 
-    // Dijkstra lần 2: từ đỉnh N trên đồ thị ngược
-    swap(ke, ke_nguoc);
+    // Dijkstra lần 2: từ đỉnh N
     Dijkstra(n);
-    // dist chính là distN
+    vector<long long> distN = dist;
 
-    // Thử dùng VIP trên từng cạnh u→v: bỏ trọng số w
-    // Chi phí = dist1[u] + 0 + distN[v]
+    // Thử dùng VIP trên từng cạnh u-v (cả 2 chiều)
     long long ans = dist1[n]; // không dùng VIP
     for (int i = 0; i < m; i++) {
-        if (dist1[eu[i]] != LLONG_MAX && dist[ev[i]] != LLONG_MAX)
-            ans = min(ans, dist1[eu[i]] + dist[ev[i]]);
+        if (dist1[eu[i]] != LLONG_MAX && distN[ev[i]] != LLONG_MAX)
+            ans = min(ans, dist1[eu[i]] + distN[ev[i]]);
+        if (dist1[ev[i]] != LLONG_MAX && distN[eu[i]] != LLONG_MAX)
+            ans = min(ans, dist1[ev[i]] + distN[eu[i]]);
     }
 
     if (ans == LLONG_MAX) out << -1;

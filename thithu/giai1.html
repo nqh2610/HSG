@@ -258,7 +258,7 @@
 <span class="keyword">using namespace</span> std;
 
 <span class="keyword">int</span> n, m;
-vector&lt;vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;&gt; ke, ke_nguoc;
+vector&lt;vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;&gt; ke;
 vector&lt;<span class="keyword">long long</span>&gt; dist;
 vector&lt;<span class="keyword">bool</span>&gt; Free;
 
@@ -290,31 +290,30 @@ vector&lt;<span class="keyword">bool</span>&gt; Free;
     in >> n >> m;
 
     ke.assign(n + <span class="number">1</span>, vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;());
-    ke_nguoc.assign(n + <span class="number">1</span>, vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt;());
     vector&lt;<span class="keyword">int</span>&gt; eu(m), ev(m);
 
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
         <span class="keyword">int</span> w;
         in >> eu[i] >> ev[i] >> w;
         ke[eu[i]].push_back(make_pair(ev[i], w));
-        ke_nguoc[ev[i]].push_back(make_pair(eu[i], w));
+        ke[ev[i]].push_back(make_pair(eu[i], w));
     }
 
-    <span class="comment">// Dijkstra lần 1: từ đỉnh 1 trên đồ thị gốc</span>
+    <span class="comment">// Dijkstra lần 1: từ đỉnh 1</span>
     <span class="function">Dijkstra</span>(<span class="number">1</span>);
     vector&lt;<span class="keyword">long long</span>&gt; dist1 = dist;
 
-    <span class="comment">// Dijkstra lần 2: từ đỉnh N trên đồ thị ngược</span>
-    swap(ke, ke_nguoc);
+    <span class="comment">// Dijkstra lần 2: từ đỉnh N</span>
     <span class="function">Dijkstra</span>(n);
-    <span class="comment">// dist chính là distN</span>
+    vector&lt;<span class="keyword">long long</span>&gt; distN = dist;
 
-    <span class="comment">// Thử dùng VIP trên từng cạnh u→v: bỏ trọng số w</span>
-    <span class="comment">// Chi phí = dist1[u] + 0 + distN[v]</span>
+    <span class="comment">// Thử dùng VIP trên từng cạnh u-v (cả 2 chiều)</span>
     <span class="keyword">long long</span> ans = dist1[n]; <span class="comment">// Không dùng VIP</span>
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
-        <span class="keyword">if</span> (dist1[eu[i]] != LLONG_MAX &amp;&amp; dist[ev[i]] != LLONG_MAX)
-            ans = min(ans, dist1[eu[i]] + dist[ev[i]]);
+        <span class="keyword">if</span> (dist1[eu[i]] != LLONG_MAX &amp;&amp; distN[ev[i]] != LLONG_MAX)
+            ans = min(ans, dist1[eu[i]] + distN[ev[i]]);
+        <span class="keyword">if</span> (dist1[ev[i]] != LLONG_MAX &amp;&amp; distN[eu[i]] != LLONG_MAX)
+            ans = min(ans, dist1[ev[i]] + distN[eu[i]]);
     }
 
     <span class="keyword">if</span> (ans == LLONG_MAX) out &lt;&lt; -<span class="number">1</span>;
@@ -328,10 +327,15 @@ vector&lt;<span class="keyword">bool</span>&gt; Free;
         <div class="solution-note">
             <strong>💡 Phân tích:</strong><br>
             <strong>Subtask 1 (N ≤ 1000):</strong> Brute force — thử từng cạnh làm VIP (đặt trọng số = 0), mỗi lần chạy Dijkstra từ 1 → N. Độ phức tạp O(M × M log N).<br>
-            <strong>Subtask 2 (Full):</strong> <strong>Ý tưởng cốt lõi:</strong> Nếu dùng VIP trên cạnh u→v, đường đi tối ưu sẽ là: 1 →...→ u → v →...→ N, với đoạn 1→u ngắn nhất và đoạn v→N ngắn nhất.<br>
-            Chạy <strong>Dijkstra lần 1</strong> từ đỉnh 1 trên đồ thị gốc → dist1[u] = khoảng cách ngắn nhất từ 1 đến u.<br>
-            Chạy <strong>Dijkstra lần 2</strong> từ đỉnh N trên đồ thị ngược → distN[v] = khoảng cách ngắn nhất từ v đến N.<br>
-            Duyệt mọi cạnh (u, v): ans = min(dist1[u] + distN[v]).<br>
+            <strong>Subtask 2 (Full):</strong><br><br>
+            <strong>Bước 1 — Phân tích cách dùng VIP.</strong> Ta có M cạnh, được chọn <em>tối đa 1 cạnh</em> để miễn phí. Vậy đáp án = min trong 2 trường hợp:<br>
+            — <em>Không dùng VIP:</em> đường ngắn nhất bình thường từ 1 đến N.<br>
+            — <em>Dùng VIP trên cạnh u–v:</em> vì vô hướng nên đi được cả 2 chiều. Chi phí = min(dist1[u] + distN[v], dist1[v] + distN[u]).<br>
+            Phải thử <strong>tất cả M cạnh</strong> làm VIP → cần biết nhanh: "đi từ 1 đến u tốn bao nhiêu?" và "đi từ v đến N tốn bao nhiêu?" cho <em>mọi</em> đỉnh u, v.<br><br>
+            <strong>Bước 2 — Tại sao cần 2 lần Dijkstra?</strong><br>
+            — "1 đến u" cho mọi u: Chạy <strong>Dijkstra từ đỉnh 1</strong> → dist1[u] = đường ngắn nhất từ 1 đến u.<br>
+            — "v đến N" cho mọi v: Dijkstra từ 1 chỉ cho dist1[v] (khoảng cách 1→v), nhưng ta cần khoảng cách <strong>v→N</strong> — hai giá trị này hoàn toàn khác nhau. Cách giải: chạy <strong>Dijkstra từ đỉnh N</strong> → distN[v] = đường ngắn nhất từ N đến v = đường ngắn nhất từ v đến N (vô hướng).<br><br>
+            <strong>Bước 3 — Tổng hợp đáp án.</strong> Duyệt mọi cạnh (u, v): chi phí = min(dist1[u]+distN[v], dist1[v]+distN[u]). Đáp án = min(dist1[N], min trên tất cả cạnh).<br>
             Tổng: O(M log N) — chỉ 2 lần Dijkstra + 1 vòng duyệt cạnh.
         </div>
 
