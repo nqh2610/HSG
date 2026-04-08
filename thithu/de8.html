@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học — Đề 8</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC — ĐỀ 8</h1>
+            <div class="time">Thời gian làm bài: 180 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: TĂNG ĐIỂM ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Tăng điểm
+            </div>
+            <div class="problem-file">TANGDIEM.INP / TANGDIEM.OUT</div>
+            <div class="problem-content">
+                <p>Thầy giáo quản lí N học sinh đánh số từ 1 đến N. Ban đầu mỗi em đều có 0 điểm thưởng. Qua Q đợt phát thưởng, ở đợt thứ i thầy chọn nhóm học sinh liên tục từ em thứ l đến em thứ r và cộng thêm v điểm cho <strong>mỗi em</strong> trong nhóm.</p>
+                <p><strong>Yêu cầu:</strong> Sau tất cả Q đợt phát thưởng, tìm điểm thưởng <strong>cao nhất</strong> mà một học sinh đạt được.</p>
+
+                <div class="section-label">Dữ liệu vào (TANGDIEM.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và Q (1 ≤ N, Q ≤ 2×10<sup>5</sup>)</li>
+                        <li>Q dòng tiếp theo, dòng thứ i chứa ba số nguyên l<sub>i</sub>, r<sub>i</sub>, v<sub>i</sub> (1 ≤ l<sub>i</sub> ≤ r<sub>i</sub> ≤ N, 1 ≤ v<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (TANGDIEM.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là điểm thưởng cao nhất.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>TANGDIEM.INP</th><th>TANGDIEM.OUT</th></tr>
+                    <tr>
+                        <td>5 3
+1 3 10
+2 4 20
+3 5 15</td>
+                        <td>45</td>
+                    </tr>
+                    <tr>
+                        <td>4 2
+1 4 5
+2 3 10</td>
+                        <td>15</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Sau 3 đợt, điểm mỗi em: [10, 30, 45, 35, 15]. Em thứ 3 được cộng cả 3 đợt: 10+20+15 = 45 là cao nhất.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Điểm mỗi em: [5, 15, 15, 5]. Em thứ 2 và 3 đều đạt 15 (cao nhất).
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N, Q ≤ 1 000</li>
+                        <li>Subtask 2 (70%): N, Q ≤ 2×10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: GIAI THỪA ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Xếp hàng
+            </div>
+            <div class="problem-file">GIAITHUA.INP / GIAITHUA.OUT</div>
+            <div class="problem-content">
+                <p>Trong giờ thể dục, thầy giáo cần xếp N học sinh thành <strong>một hàng dọc</strong>. Mỗi cách xếp khác nhau nếu tồn tại ít nhất một vị trí mà hai cách xếp có học sinh khác nhau.</p>
+                <p><strong>Yêu cầu:</strong> In ra <strong>chính xác</strong> số cách xếp hàng. <em>Lưu ý: kết quả có thể rất lớn (hàng trăm chữ số), cần in đầy đủ, KHÔNG lấy dư.</em></p>
+
+                <div class="section-label">Dữ liệu vào (GIAITHUA.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng duy nhất chứa số nguyên N (1 ≤ N ≤ 1 000)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (GIAITHUA.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số cách xếp hàng (in đầy đủ, không lấy dư).</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>GIAITHUA.INP</th><th>GIAITHUA.OUT</th></tr>
+                    <tr>
+                        <td>5</td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>3628800</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> 5 học sinh xếp hàng: vị trí 1 có 5 cách chọn, vị trí 2 có 4, vị trí 3 có 3, vị trí 4 có 2, vị trí 5 có 1. Tổng cộng 5 × 4 × 3 × 2 × 1 = 120 cách.<br>
+                    <strong>Giải thích ví dụ 2:</strong> 10 × 9 × 8 × … × 1 = 3 628 800 cách.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 20 (kết quả nằm trong phạm vi số nguyên 64 bit)</li>
+                        <li>Subtask 2 (60%): N ≤ 1 000 (kết quả có thể hàng trăm chữ số)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: ỐNG DẪI ============== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Hệ thống ống dẫn
+            </div>
+            <div class="problem-file">ONGDOI.INP / ONGDOI.OUT</div>
+            <div class="problem-content">
+                <p>Nhà máy nước có hệ thống gồm N trạm bơm đánh số từ 1 đến N, nối bởi M ống dẫn <strong>một chiều</strong>. Ống thứ i dẫn nước từ trạm u<sub>i</sub> sang trạm v<sub>i</sub> với lưu lượng tối đa c<sub>i</sub> lít/giây.</p>
+                <p>Nguồn nước bắt đầu từ <strong>trạm 1</strong> và cần đưa đến <strong>trạm N</strong> (điểm phân phối chính).</p>
+                <p><strong>Yêu cầu:</strong> Tìm <strong>lưu lượng nước lớn nhất</strong> (lít/giây) có thể vận chuyển từ trạm 1 đến trạm N.</p>
+
+                <div class="section-label">Dữ liệu vào (ONGDOI.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và M (2 ≤ N ≤ 500, 1 ≤ M ≤ 5 000)</li>
+                        <li>M dòng tiếp theo, dòng thứ i chứa ba số nguyên u<sub>i</sub>, v<sub>i</sub>, c<sub>i</sub> (1 ≤ u<sub>i</sub>, v<sub>i</sub> ≤ N, u<sub>i</sub> ≠ v<sub>i</sub>, 1 ≤ c<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (ONGDOI.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là lưu lượng lớn nhất có thể.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>ONGDOI.INP</th><th>ONGDOI.OUT</th></tr>
+                    <tr>
+                        <td>3 3
+1 2 5
+2 3 3
+1 3 4</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>4 5
+1 2 10
+1 3 8
+2 3 5
+2 4 7
+3 4 10</td>
+                        <td>17</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Đẩy 3 lít qua 1→2→3 và 4 lít qua 1→3. Tổng = 3 + 4 = 7 lít/giây. Ống 1→2 còn dư 2 nhưng ống 2→3 đã đầy (3/3).<br>
+                    <strong>Giải thích ví dụ 2:</strong> Đẩy 7 lít qua 1→2→4, 2 lít qua 1→2→3→4, 8 lít qua 1→3→4. Tổng = 7 + 2 + 8 = 17 lít/giây. Kiểm tra: trạm 2 nhận 9 (≤10), ống 2→4 đẩy 7 (≤7) ✓, ống 2→3 đẩy 2 (≤5) ✓, ống 3→4 đẩy 10 (≤10) ✓.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 10, M ≤ 20</li>
+                        <li>Subtask 2 (70%): N ≤ 500, M ≤ 5 000</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+    </div>
+
+</body>
+</html>

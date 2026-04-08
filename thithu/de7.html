@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học — Đề 7</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC — ĐỀ 7</h1>
+            <div class="time">Thời gian làm bài: 180 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: ĐẾM CẶP MAY MẮN ===== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Cặp may mắn
+            </div>
+            <div class="problem-file">DEMCAP.INP / DEMCAP.OUT</div>
+            <div class="problem-content">
+                <p>Cô giáo tổ chức một trò chơi cho N học sinh. Mỗi em được phát một thẻ ghi số nguyên dương a<sub>i</sub>. Hai em (i, j) được gọi là <strong>"cặp may mắn"</strong> nếu tổng hai số trên thẻ chia hết cho K.</p>
+                <p><strong>Yêu cầu:</strong> Đếm số cặp may mắn (i, j) với i &lt; j.</p>
+
+                <div class="section-label">Dữ liệu vào (DEMCAP.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và K (2 ≤ N ≤ 2×10<sup>5</sup>, 2 ≤ K ≤ 10<sup>6</sup>)</li>
+                        <li>Dòng 2: N số nguyên dương a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DEMCAP.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số cặp may mắn.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DEMCAP.INP</th><th>DEMCAP.OUT</th></tr>
+                    <tr>
+                        <td>5 3
+1 2 3 4 5</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>6 4
+2 3 4 5 6 8</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Có 4 cặp may mắn: (1,2) tổng 3, (1,5) tổng 6, (2,4) tổng 6, (4,5) tổng 9 — tất cả chia hết cho 3.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Có 3 cặp may mắn: (2,6) tổng 8, (3,5) tổng 8, (4,8) tổng 12 — tất cả chia hết cho 4.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 1 000</li>
+                        <li>Subtask 2 (70%): N ≤ 2×10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: NHẬN DỰ ÁN ========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Nhận dự án
+            </div>
+            <div class="problem-file">XEPLICH.INP / XEPLICH.OUT</div>
+            <div class="problem-content">
+                <p>Một lập trình viên freelance nhận được N lời mời dự án. Dự án thứ i có <strong>hạn hoàn thành</strong> là ngày d<sub>i</sub> và trả thù lao v<sub>i</sub> triệu đồng. Mỗi dự án cần đúng <strong>một ngày</strong> để hoàn thành. Mỗi ngày anh ta chỉ làm được <strong>một dự án</strong> (các ngày làm việc là 1, 2, 3, …).</p>
+                <p>Dự án thứ i phải được hoàn thành trước hoặc đúng ngày d<sub>i</sub> (tức là phải xếp vào một ngày t với 1 ≤ t ≤ d<sub>i</sub>).</p>
+                <p><strong>Yêu cầu:</strong> Chọn các dự án và xếp lịch sao cho <strong>tổng thù lao lớn nhất</strong>.</p>
+
+                <div class="section-label">Dữ liệu vào (XEPLICH.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>N dòng tiếp theo, dòng thứ i chứa hai số nguyên d<sub>i</sub> và v<sub>i</sub> (1 ≤ d<sub>i</sub> ≤ N, 1 ≤ v<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (XEPLICH.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là tổng thù lao lớn nhất có thể.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>XEPLICH.INP</th><th>XEPLICH.OUT</th></tr>
+                    <tr>
+                        <td>5
+2 50
+1 10
+2 20
+1 30
+3 40</td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td>4
+1 40
+1 30
+2 50
+2 20</td>
+                        <td>90</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Chọn dự án 1 (v=50, làm ngày 2), dự án 4 (v=30, làm ngày 1), dự án 5 (v=40, làm ngày 3). Tổng = 50 + 30 + 40 = 120. Không thể đạt cao hơn vì chỉ có 3 ngày làm việc.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Chọn dự án 1 (v=40, làm ngày 1), dự án 3 (v=50, làm ngày 2). Tổng = 40 + 50 = 90. Dự án 2 (v=30) có hạn ngày 1 nhưng ngày 1 đã dùng cho dự án có giá trị cao hơn.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 1 000</li>
+                        <li>Subtask 2 (70%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: XƯỞNG SỬA XE ======== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Xưởng sửa xe
+            </div>
+            <div class="problem-file">THUEVIEC.INP / THUEVIEC.OUT</div>
+            <div class="problem-content">
+                <p>Một xưởng sửa xe tiếp nhận N đơn hàng. Đơn hàng thứ i cần thực hiện <strong>liên tục</strong> từ ngày s<sub>i</sub> đến ngày e<sub>i</sub> (bao gồm cả hai ngày) và trả tiền công p<sub>i</sub> đồng.</p>
+                <p>Xưởng chỉ có <strong>một đội thợ</strong>, tại mỗi thời điểm chỉ làm được <strong>một đơn hàng</strong>. Hai đơn hàng có thể nhận nếu khoảng thời gian không chồng lấn: đơn kết thúc ngày e thì đơn kế tiếp sớm nhất bắt đầu ngày e + 1.</p>
+                <p><strong>Yêu cầu:</strong> Chọn các đơn hàng để nhận sao cho <strong>tổng tiền công lớn nhất</strong>.</p>
+
+                <div class="section-label">Dữ liệu vào (THUEVIEC.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 2×10<sup>5</sup>)</li>
+                        <li>N dòng tiếp theo, dòng thứ i chứa ba số nguyên s<sub>i</sub>, e<sub>i</sub>, p<sub>i</sub> (1 ≤ s<sub>i</sub> ≤ e<sub>i</sub> ≤ 10<sup>9</sup>, 1 ≤ p<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (THUEVIEC.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là tổng tiền công lớn nhất có thể.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>THUEVIEC.INP</th><th>THUEVIEC.OUT</th></tr>
+                    <tr>
+                        <td>4
+1 3 50
+2 5 20
+4 6 70
+7 9 60</td>
+                        <td>180</td>
+                    </tr>
+                    <tr>
+                        <td>5
+1 2 30
+3 4 40
+1 4 60
+5 7 50
+6 8 35</td>
+                        <td>120</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Chọn đơn 1 (ngày 1–3, p=50), đơn 3 (ngày 4–6, p=70), đơn 4 (ngày 7–9, p=60). Kết thúc ngày 3 &lt; bắt đầu ngày 4 ✓, kết thúc ngày 6 &lt; bắt đầu ngày 7 ✓. Tổng = 50+70+60 = 180.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Chọn đơn 1 (ngày 1–2, p=30), đơn 2 (ngày 3–4, p=40), đơn 4 (ngày 5–7, p=50). Tổng = 30+40+50 = 120. Nếu chọn đơn 3 (ngày 1–4, p=60) + đơn 4 (ngày 5–7, p=50) = 110 &lt; 120.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 1 000</li>
+                        <li>Subtask 2 (70%): N ≤ 2×10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+    </div>
+
+</body>
+</html>

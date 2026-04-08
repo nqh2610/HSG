@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học — Đề 5</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC — ĐỀ 5</h1>
+            <div class="time">Thời gian làm bài: 180 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 1: CỬA SỔ ============= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Cửa sổ
+            </div>
+            <div class="problem-file">CUASO.INP / CUASO.OUT</div>
+            <div class="problem-content">
+                <p>Bạn đi tàu qua một tuyến đường có N điểm tham quan liên tiếp đánh số từ 1 đến N, điểm thứ i có độ hấp dẫn a<sub>i</sub>. Cửa sổ tàu chỉ cho phép nhìn thấy một đoạn các điểm <strong>liên tiếp nhau</strong>.</p>
+                <p><strong>Yêu cầu:</strong> Tìm <strong>cửa sổ nhỏ nhất</strong> (đoạn liên tiếp ít điểm nhất) sao cho tổng độ hấp dẫn các điểm nhìn thấy ≥ S. In 0 nếu tổng toàn bộ N điểm vẫn nhỏ hơn S.</p>
+
+                <div class="section-label">Dữ liệu vào (CUASO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và S (1 ≤ N ≤ 10<sup>6</sup>, 1 ≤ S ≤ 10<sup>15</sup>)</li>
+                        <li>Dòng 2: N số nguyên dương a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (CUASO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số điểm tham quan ít nhất trong cửa sổ, hoặc 0 nếu không tồn tại.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>CUASO.INP</th><th>CUASO.OUT</th></tr>
+                    <tr>
+                        <td>6 7
+2 3 1 2 4 3</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>8 10
+1 2 3 4 5 1 1 1</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Cửa sổ gồm điểm 5 và 6 (độ hấp dẫn 4 + 3 = 7 ≥ 7), chỉ cần 2 điểm. Không điểm đơn lẻ nào có độ hấp dẫn ≥ 7.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Cửa sổ gồm điểm 3, 4, 5 (độ hấp dẫn 3 + 4 + 5 = 12 ≥ 10), cần 3 điểm. Mọi cửa sổ 2 điểm liên tiếp đều có tổng &lt; 10 (lớn nhất là 4 + 5 = 9).
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 1 000</li>
+                        <li>Subtask 2 (70%): N ≤ 10<sup>6</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 2: ĐẾM ƯỚC =========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Đếm ước
+            </div>
+            <div class="problem-file">DEMUOC.INP / DEMUOC.OUT</div>
+            <div class="problem-content">
+                <p>Cho hai số nguyên dương N và K. Gọi d(x) là <strong>số ước</strong> (số lượng ước dương) của x. Ví dụ: d(6) = 4 vì 6 có 4 ước là 1, 2, 3, 6.</p>
+                <p><strong>Yêu cầu:</strong> Đếm có bao nhiêu số nguyên x trong đoạn [1, N] mà d(x) = K.</p>
+
+                <div class="section-label">Dữ liệu vào (DEMUOC.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng chứa hai số nguyên N và K (1 ≤ N ≤ 10<sup>7</sup>, 1 ≤ K ≤ 2000)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DEMUOC.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số lượng số x ∈ [1, N] thỏa d(x) = K.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DEMUOC.INP</th><th>DEMUOC.OUT</th></tr>
+                    <tr>
+                        <td>10 2</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>20 4</td>
+                        <td>5</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Các số trong [1, 10] có đúng 2 ước là các số nguyên tố: 2, 3, 5, 7. Đáp án = 4.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Các số trong [1, 20] có đúng 4 ước: 6 (1,2,3,6), 8 (1,2,4,8), 10 (1,2,5,10), 14 (1,2,7,14), 15 (1,3,5,15). Đáp án = 5.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 10<sup>4</sup></li>
+                        <li>Subtask 2 (60%): N ≤ 10<sup>7</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 3: CHỌN CÂY =========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Chọn cây
+            </div>
+            <div class="problem-file">CHONCAY.INP / CHONCAY.OUT</div>
+            <div class="problem-content">
+                <p>Trong một khu rừng bảo tồn có N cây cổ thụ đánh số từ 1 đến N, cây thứ i có giá trị bảo tồn w<sub>i</sub>. Giữa các cây có N−1 con đường mòn, mỗi con đường nối trực tiếp hai cây. Hệ thống đường mòn đảm bảo giữa hai cây bất kỳ luôn có <strong>đúng một</strong> cách đi (có thể đi qua các cây trung gian).</p>
+                <p>Kiểm lâm muốn chọn một số cây để gắn biển di sản. Tuy nhiên, hai cây nối trực tiếp bởi một đường mòn <strong>không được đồng thời chọn</strong> (để tránh du khách tập trung quá đông trên cùng một đường mòn).</p>
+                <p><strong>Yêu cầu:</strong> Chọn các cây gắn biển sao cho <strong>tổng giá trị bảo tồn lớn nhất</strong>.</p>
+
+                <div class="section-label">Dữ liệu vào (CHONCAY.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên w<sub>1</sub>, w<sub>2</sub>, …, w<sub>N</sub> (1 ≤ w<sub>i</sub> ≤ 10<sup>9</sup>) — giá trị bảo tồn mỗi cây</li>
+                        <li>N−1 dòng tiếp theo, mỗi dòng chứa hai số nguyên u, v (1 ≤ u, v ≤ N) mô tả một đường mòn nối cây u và cây v</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (CHONCAY.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là tổng giá trị bảo tồn lớn nhất có thể.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>CHONCAY.INP</th><th>CHONCAY.OUT</th></tr>
+                    <tr>
+                        <td>5
+1 2 3 4 5
+1 2
+1 3
+2 4
+2 5</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>7
+3 5 2 1 4 6 2
+1 2
+1 3
+2 4
+2 5
+3 6
+3 7</td>
+                        <td>16</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Chọn cây 3, 4, 5 (giá trị 3 + 4 + 5 = 12). Cây 3 nối với 1, cây 4 nối với 2, cây 5 nối với 2 — không có cặp nào chọn mà nối trực tiếp nhau.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Chọn cây 1, 4, 5, 6, 7 (giá trị 3 + 1 + 4 + 6 + 2 = 16). Cây 1 nối trực tiếp với 2, 3 (không chọn). Cây 4, 5 nối với 2 (không chọn). Cây 6, 7 nối với 3 (không chọn).
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 20</li>
+                        <li>Subtask 2 (70%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 7</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 7</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: ĐẾM CẶP MAY MẮN ===== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Cặp may mắn (DEMCAP)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Mảng Counting (đếm số dư) O(N + K)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: DEMCAP — Counting Array (Remainder frequency) O(N + K)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DEMCAP.INP"</span>);
+    ofstream out(<span class="string">"DEMCAP.OUT"</span>);
+
+    <span class="keyword">int</span> n, k;
+    in >> n >> k;
+
+    vector&lt;<span class="keyword">long long</span>&gt; cnt(k, <span class="number">0</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">long long</span> a;
+        in >> a;
+        cnt[a % k]++;
+    }
+
+    <span class="keyword">long long</span> ans = cnt[<span class="number">0</span>] * (cnt[<span class="number">0</span>] - <span class="number">1</span>) / <span class="number">2</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">1</span>; r * <span class="number">2</span> &lt; k; r++) {
+        ans += cnt[r] * cnt[k - r];
+    }
+    <span class="keyword">if</span> (k % <span class="number">2</span> == <span class="number">0</span>) {
+        ans += cnt[k / <span class="number">2</span>] * (cnt[k / <span class="number">2</span>] - <span class="number">1</span>) / <span class="number">2</span>;
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt tất cả cặp (i, j), kiểm tra (a[i]+a[j]) % K == 0: O(N²) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> Kỹ thuật <strong>Mảng Counting (đếm tần suất số dư)</strong>:<br><br>
+            <strong>Nhận xét:</strong> (a[i] + a[j]) chia hết cho K ⟺ (a[i]%K + a[j]%K) % K = 0. Tức là số dư của a[i] và a[j] khi chia cho K phải "bù nhau": r + (K−r) = K, hoặc cả hai có số dư 0.<br><br>
+            <strong>Bước 1:</strong> Tạo mảng cnt[0..K−1], trong đó cnt[r] = số phần tử có a[i] % K = r.<br>
+            <strong>Bước 2:</strong> Đếm cặp:<br>
+            &nbsp;&nbsp;• Cặp (r=0, r=0): C(cnt[0], 2) = cnt[0]×(cnt[0]−1)/2<br>
+            &nbsp;&nbsp;• Cặp (r, K−r) với 1 ≤ r &lt; K−r: cnt[r] × cnt[K−r]<br>
+            &nbsp;&nbsp;• Nếu K chẵn, cặp (K/2, K/2): C(cnt[K/2], 2)<br><br>
+            Tổng: O(N + K) — rất nhanh.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: NHẬN DỰ ÁN ========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Nhận dự án (XEPLICH)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Tham lam (Sắp xếp + Set) O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: XEPLICH — Greedy (Sort by value + Set) O(N log N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"XEPLICH.INP"</span>);
+    ofstream out(<span class="string">"XEPLICH.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in >> n;
+
+    vector&lt;pair&lt;<span class="keyword">long long</span>, <span class="keyword">int</span>&gt; &gt; jobs(n);
+    <span class="keyword">int</span> maxD = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        in >> jobs[i].second >> jobs[i].first; <span class="comment">// deadline, value</span>
+        maxD = max(maxD, jobs[i].second);
+    }
+
+    sort(jobs.begin(), jobs.end(), greater&lt;pair&lt;<span class="keyword">long long</span>, <span class="keyword">int</span>&gt; &gt;());
+
+    set&lt;<span class="keyword">int</span>&gt; avail;
+    <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">1</span>; d &lt;= maxD; d++) avail.insert(d);
+
+    <span class="keyword">long long</span> total = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">int</span> d = jobs[i].second;
+        <span class="keyword">long long</span> v = jobs[i].first;
+        set&lt;<span class="keyword">int</span>&gt;::iterator it = avail.upper_bound(d);
+        <span class="keyword">if</span> (it != avail.begin()) {
+            --it;
+            total += v;
+            avail.erase(it);
+        }
+    }
+
+    out &lt;&lt; total;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Thử tất cả tập con, hoặc DP trạng thái: O(N² × max_d).<br>
+            <strong>Subtask 2 (Full):</strong> Kỹ thuật <strong>Tham lam + Set</strong>:<br><br>
+            <strong>Ý tưởng:</strong> Ưu tiên dự án giá trị cao nhất. Với mỗi dự án, xếp vào <strong>ngày trống muộn nhất</strong> trước hạn (để "dành" ngày sớm cho dự án khác).<br><br>
+            <strong>Bước 1:</strong> Sắp xếp dự án theo giá trị giảm dần.<br>
+            <strong>Bước 2:</strong> Dùng set chứa tất cả ngày trống {1, 2, …, max_d}. Với mỗi dự án (d, v):<br>
+            &nbsp;&nbsp;• Tìm ngày trống lớn nhất ≤ d bằng upper_bound(d) rồi lùi 1 bước.<br>
+            &nbsp;&nbsp;• Nếu tìm được → xếp, cộng v, xóa ngày đó khỏi set.<br>
+            &nbsp;&nbsp;• Nếu không → bỏ qua (không còn ngày trống nào phù hợp).<br><br>
+            <strong>Tại sao đúng?</strong> Dự án giá trị cao được xét trước → luôn được ưu tiên. Chọn ngày muộn nhất → tối đa hóa số ngày sớm còn trống cho dự án có hạn sớm hơn.<br>
+            Tổng: O(N log N) — sort O(N log N) + N lần set operation O(log N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: XƯỞNG SỬA XE ======== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Xưởng sửa xe (THUEVIEC)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Sắp xếp + Chặt nhị phân + QHĐ O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: THUEVIEC — Sort + Binary Search + DP O(N log N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"THUEVIEC.INP"</span>);
+    ofstream out(<span class="string">"THUEVIEC.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in >> n;
+
+    vector&lt;<span class="keyword">int</span>&gt; s(n), e(n);
+    vector&lt;<span class="keyword">long long</span>&gt; p(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> s[i] >> e[i] >> p[i];
+
+    <span class="comment">// Sort by end time</span>
+    vector&lt;<span class="keyword">int</span>&gt; idx(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) idx[i] = i;
+    sort(idx.begin(), idx.end(), [&amp;](<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+        <span class="keyword">return</span> e[a] &lt; e[b];
+    });
+
+    vector&lt;<span class="keyword">int</span>&gt; ends(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) ends[i] = e[idx[i]];
+
+    vector&lt;<span class="keyword">long long</span>&gt; dp(n);
+    dp[<span class="number">0</span>] = p[idx[<span class="number">0</span>]];
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) {
+        <span class="keyword">int</span> si = s[idx[i]];
+        <span class="keyword">long long</span> pi = p[idx[i]];
+
+        <span class="comment">// Find latest j with ends[j] &lt; si</span>
+        <span class="keyword">int</span> lo = <span class="number">0</span>, hi = i - <span class="number">1</span>, j = -<span class="number">1</span>;
+        <span class="keyword">while</span> (lo &lt;= hi) {
+            <span class="keyword">int</span> mid = lo + (hi - lo) / <span class="number">2</span>;
+            <span class="keyword">if</span> (ends[mid] &lt; si) {
+                j = mid;
+                lo = mid + <span class="number">1</span>;
+            } <span class="keyword">else</span> {
+                hi = mid - <span class="number">1</span>;
+            }
+        }
+
+        <span class="keyword">long long</span> take = pi + (j >= <span class="number">0</span> ? dp[j] : <span class="number">0</span>);
+        dp[i] = max(dp[i - <span class="number">1</span>], take);
+    }
+
+    out &lt;&lt; dp[n - <span class="number">1</span>];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Sắp xếp theo thời gian kết thúc, QHĐ O(N²): dp[i] = max(dp[i−1], p[i] + max dp[j] với e[j] &lt; s[i]).<br>
+            <strong>Subtask 2 (Full):</strong> Bài này kết hợp <strong>3 kỹ thuật</strong>:<br><br>
+            <strong>1. Sắp xếp:</strong> Sắp xếp tất cả đơn hàng theo thời gian kết thúc e[i] tăng dần.<br><br>
+            <strong>2. Quy hoạch động:</strong> Gọi dp[i] = lợi nhuận tối đa xét i đơn đầu tiên (sau khi sắp xếp).<br>
+            &nbsp;&nbsp;• Không nhận đơn i: dp[i] = dp[i−1]<br>
+            &nbsp;&nbsp;• Nhận đơn i: dp[i] = p[i] + dp[j], trong đó j là đơn hàng gần nhất kết thúc trước khi đơn i bắt đầu (e[j] &lt; s[i]).<br>
+            &nbsp;&nbsp;• dp[i] = max(dp[i−1], p[i] + dp[j])<br><br>
+            <strong>3. Chặt nhị phân:</strong> Tìm j nhanh bằng chặt nhị phân trên mảng ends[] đã sắp xếp — tìm chỉ số lớn nhất sao cho ends[j] &lt; s[i]. Thay vì duyệt O(N), tìm trong O(log N).<br><br>
+            <strong>Nếu không có chặt nhị phân:</strong> Vòng lặp tìm j là O(N) → tổng O(N²) — chỉ đủ subtask 1.<br>
+            <strong>Với chặt nhị phân:</strong> Tìm j trong O(log N) → tổng O(N log N) — đủ full.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

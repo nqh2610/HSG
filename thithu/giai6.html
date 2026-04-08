@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 6</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 6</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 1: CẶP SỐ ============= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Cặp số (CAPSO)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Sort + Two Pointers O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 1: CAPSO — Sort + Two Pointers O(N log N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CAPSO.INP"</span>);
+    ofstream out(<span class="string">"CAPSO.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    <span class="keyword">long long</span> s;
+    in >> n >> s;
+
+    vector&lt;<span class="keyword">long long</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
+
+    sort(a.begin(), a.end());
+
+    <span class="keyword">long long</span> cnt = <span class="number">0</span>;
+    <span class="keyword">int</span> l = <span class="number">0</span>, r = n - <span class="number">1</span>;
+    <span class="keyword">while</span> (l &lt; r) {
+        <span class="keyword">if</span> (a[l] + a[r] &lt;= s) {
+            cnt += r - l;
+            l++;
+        } <span class="keyword">else</span> {
+            r--;
+        }
+    }
+
+    out &lt;&lt; cnt;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt tất cả cặp (i, j) rồi đếm: O(N²) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> Kỹ thuật <strong>Sort + Two Pointers</strong>:<br><br>
+            <strong>Bước 1:</strong> Sắp xếp mảng tăng dần O(N log N).<br>
+            <strong>Bước 2:</strong> Hai con trỏ l = 0, r = N−1. Nếu a[l] + a[r] ≤ S thì tất cả (l, l+1), (l, l+2), …, (l, r) đều hợp lệ → cộng (r − l) cặp, rồi tăng l. Ngược lại giảm r.<br><br>
+            <strong>Tại sao đúng?</strong> Mảng đã sắp xếp → a[l] nhỏ nhất bên trái, a[r] lớn nhất bên phải. Nếu a[l]+a[r] ≤ S thì a[l] ghép với bất kỳ ai từ l+1 đến r đều ≤ S. Ngược lại, a[r] quá lớn cho a[l] nên cũng quá lớn cho mọi phần tử → loại a[r].<br>
+            Tổng: O(N log N) — sort O(N log N) + two pointers O(N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 2: HÀNH LÝ ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Hành lý thám hiểm (BALO)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — QHĐ Ba lô 2 ràng buộc O(N×W×V)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 2: BALO — DP Knapsack 2D (weight + volume) O(N*W*V)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"BALO.INP"</span>);
+    ofstream out(<span class="string">"BALO.OUT"</span>);
+
+    <span class="keyword">int</span> n, W, V;
+    in >> n >> W >> V;
+
+    vector&lt;<span class="keyword">int</span>&gt; w(n), s(n), p(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> w[i] >> s[i] >> p[i];
+
+    <span class="comment">// dp[j][k] = max value with weight &lt;= j, volume &lt;= k</span>
+    vector&lt;vector&lt;<span class="keyword">long long</span>&gt; &gt; dp(W + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(V + <span class="number">1</span>, <span class="number">0</span>));
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = W; j >= w[i]; j--) {
+            <span class="keyword">for</span> (<span class="keyword">int</span> k = V; k >= s[i]; k--) {
+                dp[j][k] = max(dp[j][k], dp[j - w[i]][k - s[i]] + (<span class="keyword">long long</span>)p[i]);
+            }
+        }
+    }
+
+    out &lt;&lt; dp[W][V];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 20):</strong> Duyệt tất cả 2<sup>N</sup> tập con (≈ 10⁶), kiểm tra cân nặng ≤ W và thể tích ≤ V, lấy max giá trị.<br>
+            <strong>Subtask 2 (Full):</strong> Đây là biến thể <strong>Ba lô 0/1 với 2 ràng buộc</strong>:<br><br>
+            <strong>So với Ba lô thường:</strong> Ba lô chuẩn có 1 ràng buộc → dp[j] 1 chiều. Bài này có 2 ràng buộc (cân nặng + thể tích) → dp[j][k] 2 chiều.<br><br>
+            <strong>Công thức:</strong> dp[j][k] = max value khi tổng cân nặng ≤ j, tổng thể tích ≤ k.<br>
+            Với mỗi vật i, duyệt j từ W→w[i], k từ V→s[i] (ngược để đảm bảo 0/1):<br>
+            &nbsp;&nbsp;dp[j][k] = max(dp[j][k], dp[j−w[i]][k−s[i]] + p[i])<br><br>
+            <strong>Bộ nhớ:</strong> dp[501][501] ≈ 2 MB — vừa đủ.<br>
+            Tổng: O(N × W × V) = 200 × 500 × 500 = 5×10⁷ — chạy vừa trong 1 giây.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 3: VẬN CHUYỂN ========= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Vận chuyển hàng (CAUNOI)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Chặt nhị phân đáp án + BFS O(M log C)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 3: CAUNOI — Binary Search Answer + BFS</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CAUNOI.INP"</span>);
+    ofstream out(<span class="string">"CAUNOI.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    vector&lt;vector&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; &gt; &gt; adj(n + <span class="number">1</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v, c;
+        in >> u >> v >> c;
+        adj[u].push_back(make_pair(v, c));
+        adj[v].push_back(make_pair(u, c));
+    }
+
+    <span class="comment">// Binary search on answer</span>
+    <span class="keyword">int</span> lo = <span class="number">1</span>, hi = <span class="number">1000000000</span>, ans = <span class="number">0</span>;
+    <span class="keyword">while</span> (lo &lt;= hi) {
+        <span class="keyword">int</span> mid = lo + (hi - lo) / <span class="number">2</span>;
+
+        <span class="comment">// BFS: only use edges with capacity &gt;= mid</span>
+        vector&lt;<span class="keyword">bool</span>&gt; visited(n + <span class="number">1</span>, <span class="keyword">false</span>);
+        queue&lt;<span class="keyword">int</span>&gt; q;
+        q.push(<span class="number">1</span>);
+        visited[<span class="number">1</span>] = <span class="keyword">true</span>;
+        <span class="keyword">while</span> (!q.empty()) {
+            <span class="keyword">int</span> u = q.front(); q.pop();
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (<span class="keyword">int</span>)adj[u].size(); j++) {
+                <span class="keyword">int</span> v = adj[u][j].first;
+                <span class="keyword">int</span> c = adj[u][j].second;
+                <span class="keyword">if</span> (!visited[v] &amp;&amp; c >= mid) {
+                    visited[v] = <span class="keyword">true</span>;
+                    q.push(v);
+                }
+            }
+        }
+
+        <span class="keyword">if</span> (visited[n]) {
+            ans = mid;
+            lo = mid + <span class="number">1</span>;
+        } <span class="keyword">else</span> {
+            hi = mid - <span class="number">1</span>;
+        }
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Thử-sai: với mỗi tải trọng T, BFS/DFS chỉ đi cạnh ≥ T, kiểm tra đến được kho N không. Duyệt T từ max(c) xuống 1 → O(C<sub>max</sub> × (N+M)).<br>
+            <strong>Subtask 2 (Full):</strong> Bài này cần kết hợp <strong>2 kỹ thuật</strong>:<br><br>
+            <strong>1. Chặt nhị phân đáp án (Binary Search the Answer):</strong> Đáp án T nằm trong [1, 10⁹]. Nhận xét: nếu xe tải T tấn đi được thì xe T−1 tấn cũng đi được (tính đơn điệu). Do đó chặt nhị phân tìm T lớn nhất mà vẫn đi được.<br><br>
+            <strong>2. BFS kiểm tra:</strong> Với mỗi giá trị mid, chỉ dùng các cạnh có tải trọng ≥ mid. BFS từ kho 1 → kiểm tra đến được kho N không. Nếu được → tăng lo, không → giảm hi.<br><br>
+            <strong>Tại sao không dùng Dijkstra?</strong> Dijkstra tối ưu tổng chi phí. Ở đây ta cần tối ưu min trên đường đi (bottleneck path) — chặt nhị phân + BFS đơn giản và hiệu quả hơn.<br>
+            Tổng: O((N+M) × log C) ≈ (3×10⁵) × 30 ≈ 10⁷ — nhanh.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

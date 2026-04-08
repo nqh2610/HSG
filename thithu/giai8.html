@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 8</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 8</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: TĂNG ĐIỂM ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Tăng điểm (TANGDIEM)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Difference Array O(N + Q)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: TANGDIEM — Difference Array O(N + Q)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"TANGDIEM.INP"</span>);
+    ofstream out(<span class="string">"TANGDIEM.OUT"</span>);
+
+    <span class="keyword">int</span> n, q;
+    in >> n >> q;
+
+    vector&lt;<span class="keyword">long long</span>&gt; d(n + <span class="number">2</span>, <span class="number">0</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; i++) {
+        <span class="keyword">int</span> l, r;
+        <span class="keyword">long long</span> v;
+        in >> l >> r >> v;
+        d[l] += v;
+        d[r + <span class="number">1</span>] -= v;
+    }
+
+    <span class="keyword">long long</span> mx = <span class="number">0</span>, cur = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        cur += d[i];
+        mx = max(mx, cur);
+    }
+
+    out &lt;&lt; mx;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N, Q ≤ 1000):</strong> Với mỗi đợt, duyệt từ l đến r cộng v: O(N×Q) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> Kỹ thuật <strong>Difference Array (Mảng hiệu)</strong>:<br><br>
+            <strong>Ý tưởng:</strong> Thay vì cộng v vào từng phần tử trong [l, r] (tốn O(r−l+1) mỗi lần), chỉ cần đánh dấu 2 điểm:<br>
+            &nbsp;&nbsp;• d[l] += v (bắt đầu cộng)<br>
+            &nbsp;&nbsp;• d[r+1] −= v (kết thúc cộng)<br><br>
+            <strong>Sau tất cả Q đợt:</strong> Duyệt prefix sum trên d[] để khôi phục mảng gốc. Giá trị tại vị trí i = tổng d[1] + d[2] + … + d[i].<br><br>
+            <strong>Tại sao đúng?</strong> Khi cộng v vào d[l] và trừ v khỏi d[r+1], prefix sum tại mọi vị trí từ l đến r sẽ tăng thêm v, còn từ r+1 trở đi bị triệt tiêu.<br>
+            Tổng: O(N + Q) — mỗi đợt O(1), khôi phục O(N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: GIAI THỪA ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Xếp hàng (GIAITHUA)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Xử lí số lớn (Big Number × int) O(N × D)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: GIAITHUA — Big Number Multiply O(N * D)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"GIAITHUA.INP"</span>);
+    ofstream out(<span class="string">"GIAITHUA.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in >> n;
+
+    vector&lt;<span class="keyword">int</span>&gt; result;
+    result.push_back(<span class="number">1</span>);
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
+        <span class="keyword">long long</span> carry = <span class="number">0</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (<span class="keyword">int</span>)result.size(); j++) {
+            <span class="keyword">long long</span> prod = (<span class="keyword">long long</span>)result[j] * i + carry;
+            result[j] = prod % <span class="number">10</span>;
+            carry = prod / <span class="number">10</span>;
+        }
+        <span class="keyword">while</span> (carry > <span class="number">0</span>) {
+            result.push_back(carry % <span class="number">10</span>);
+            carry /= <span class="number">10</span>;
+        }
+    }
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = (<span class="keyword">int</span>)result.size() - <span class="number">1</span>; i >= <span class="number">0</span>; i--)
+        out &lt;&lt; result[i];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 20):</strong> Kết quả nằm trong long long (20! ≈ 2.4×10¹⁸). Tính trực tiếp bằng vòng lặp nhân dần.<br>
+            <strong>Subtask 2 (Full — N ≤ 1000):</strong> 1000! có ~2568 chữ số → cần <strong>xử lí số lớn</strong>:<br><br>
+            <strong>Biểu diễn:</strong> Dùng vector&lt;int&gt; lưu từng chữ số (hàng đơn vị ở vị trí 0, hàng cao nhất ở cuối).<br><br>
+            <strong>Phép nhân số lớn × số nhỏ:</strong><br>
+            &nbsp;&nbsp;1. Duyệt từ chữ số thấp → cao (vị trí 0 → cuối)<br>
+            &nbsp;&nbsp;2. Tại mỗi vị trí j: prod = result[j] × i + carry<br>
+            &nbsp;&nbsp;3. Chữ số mới = prod % 10, carry = prod / 10<br>
+            &nbsp;&nbsp;4. Sau khi hết digits, nếu carry > 0 thì thêm digits mới<br><br>
+            <strong>Ý tưởng chính:</strong> Bắt đầu result = 1, lần lượt nhân với 2, 3, …, N. Đây chính là <strong>phép nhân dây chuyền</strong> giống cách nhân trên giấy.<br>
+            <strong>Chỉ cần 1 phép toán:</strong> nhân số lớn × số nhỏ. Không cần chia, không cần cộng hai số lớn.<br>
+            Tổng: O(N × D) trong đó D là số chữ số kết quả (~2568). Tức ~2.5×10⁶ phép tính — rất nhanh.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: ỐNG DẪI ============== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Hệ thống ống dẫn (ONGDOI)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Luồng cực đại Dinic O(V² × E)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: ONGDOI — Max Flow (Dinic) O(V^2 * E)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">const long long</span> INF = <span class="number">1e18</span>;
+<span class="keyword">const int</span> MAXV = <span class="number">510</span>;
+
+<span class="keyword">struct</span> Edge {
+    <span class="keyword">int</span> to, rev;
+    <span class="keyword">long long</span> cap;
+};
+
+vector&lt;Edge&gt; graph[MAXV];
+<span class="keyword">int</span> level[MAXV], iter_[MAXV];
+
+<span class="keyword">void</span> <span class="function">add_edge</span>(<span class="keyword">int</span> from, <span class="keyword">int</span> to, <span class="keyword">long long</span> cap) {
+    graph[from].push_back({to, (<span class="keyword">int</span>)graph[to].size(), cap});
+    graph[to].push_back({from, (<span class="keyword">int</span>)graph[from].size() - <span class="number">1</span>, <span class="number">0</span>});
+}
+
+<span class="keyword">bool</span> <span class="function">bfs</span>(<span class="keyword">int</span> s, <span class="keyword">int</span> t) {
+    memset(level, -<span class="number">1</span>, <span class="keyword">sizeof</span>(level));
+    queue&lt;<span class="keyword">int</span>&gt; q;
+    level[s] = <span class="number">0</span>;
+    q.push(s);
+    <span class="keyword">while</span> (!q.empty()) {
+        <span class="keyword">int</span> v = q.front(); q.pop();
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)graph[v].size(); i++) {
+            Edge&amp; e = graph[v][i];
+            <span class="keyword">if</span> (e.cap > <span class="number">0</span> &amp;&amp; level[e.to] &lt; <span class="number">0</span>) {
+                level[e.to] = level[v] + <span class="number">1</span>;
+                q.push(e.to);
+            }
+        }
+    }
+    <span class="keyword">return</span> level[t] >= <span class="number">0</span>;
+}
+
+<span class="keyword">long long</span> <span class="function">dfs</span>(<span class="keyword">int</span> v, <span class="keyword">int</span> t, <span class="keyword">long long</span> f) {
+    <span class="keyword">if</span> (v == t) <span class="keyword">return</span> f;
+    <span class="keyword">for</span> (<span class="keyword">int</span>&amp; i = iter_[v]; i &lt; (<span class="keyword">int</span>)graph[v].size(); i++) {
+        Edge&amp; e = graph[v][i];
+        <span class="keyword">if</span> (e.cap > <span class="number">0</span> &amp;&amp; level[v] &lt; level[e.to]) {
+            <span class="keyword">long long</span> d = dfs(e.to, t, min(f, e.cap));
+            <span class="keyword">if</span> (d > <span class="number">0</span>) {
+                e.cap -= d;
+                graph[e.to][e.rev].cap += d;
+                <span class="keyword">return</span> d;
+            }
+        }
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="keyword">long long</span> <span class="function">max_flow</span>(<span class="keyword">int</span> s, <span class="keyword">int</span> t) {
+    <span class="keyword">long long</span> flow = <span class="number">0</span>;
+    <span class="keyword">while</span> (bfs(s, t)) {
+        memset(iter_, <span class="number">0</span>, <span class="keyword">sizeof</span>(iter_));
+        <span class="keyword">long long</span> d;
+        <span class="keyword">while</span> ((d = dfs(s, t, INF)) > <span class="number">0</span>)
+            flow += d;
+    }
+    <span class="keyword">return</span> flow;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"ONGDOI.INP"</span>);
+    ofstream out(<span class="string">"ONGDOI.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in >> n >> m;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        <span class="keyword">long long</span> c;
+        in >> u >> v >> c;
+        add_edge(u, v, c);
+    }
+
+    out &lt;&lt; max_flow(<span class="number">1</span>, n);
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 10):</strong> DFS tìm tất cả đường đi từ 1→N, mỗi lần tìm được thì đẩy luồng dọc đường đi (Ford-Fulkerson đơn giản).<br>
+            <strong>Subtask 2 (Full):</strong> Đây là bài toán <strong>Luồng cực đại (Max Flow)</strong> kinh điển. Dùng thuật toán <strong>Dinic</strong>:<br><br>
+            <strong>Ý tưởng Dinic:</strong><br>
+            &nbsp;&nbsp;1. <strong>BFS phân tầng:</strong> Từ nguồn (trạm 1), BFS gán level cho mỗi đỉnh. Chỉ đi các cạnh còn dung lượng dư.<br>
+            &nbsp;&nbsp;2. <strong>DFS tìm đường tăng luồng:</strong> Chỉ đi theo chiều level tăng (tránh vòng lặp), đẩy luồng tối đa dọc đường. Dùng kỹ thuật <em>iter_</em> để tránh duyệt lại cạnh đã cạn.<br>
+            &nbsp;&nbsp;3. <strong>Lặp:</strong> Quay lại bước 1 cho đến khi BFS không tìm được đường nào từ nguồn đến đích.<br><br>
+            <strong>Đồ thị dư (Residual graph):</strong> Mỗi cạnh (u, v, cap) có cạnh ngược (v, u, 0). Khi đẩy d đơn vị luồng qua cạnh gốc: cap gốc giảm d, cap ngược tăng d. Cạnh ngược cho phép "hủy" luồng đã đẩy sai.<br><br>
+            <strong>Tại sao đúng?</strong> Theo định lý <strong>Max-Flow = Min-Cut</strong>, luồng cực đại = tổng dung lượng lát cắt nhỏ nhất. Khi BFS không tìm được đường → ta đã đạt min-cut → đã đạt max flow.<br>
+            Tổng: O(V² × E). Với N ≤ 500, M ≤ 5000: chạy thoải mái trong 1 giây.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

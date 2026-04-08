@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 5</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 5</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 1: CỬA SỔ ============= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Cửa sổ (CUASO)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Sliding Window O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 1: CUASO — Sliding Window O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CUASO.INP"</span>);
+    ofstream out(<span class="string">"CUASO.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    <span class="keyword">long long</span> s;
+    in >> n >> s;
+
+    vector&lt;<span class="keyword">long long</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
+
+    <span class="keyword">int</span> ans = n + <span class="number">1</span>;
+    <span class="keyword">long long</span> sum = <span class="number">0</span>;
+    <span class="keyword">int</span> left = <span class="number">0</span>;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> right = <span class="number">0</span>; right &lt; n; right++) {
+        sum += a[right];
+        <span class="keyword">while</span> (sum >= s) {
+            ans = min(ans, right - left + <span class="number">1</span>);
+            sum -= a[left];
+            left++;
+        }
+    }
+
+    out &lt;&lt; (ans == n + <span class="number">1</span> ? <span class="number">0</span> : ans);
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt tất cả đoạn con O(N²): với mỗi left, tăng right cho đến khi sum ≥ S, cập nhật min length.<br>
+            <strong>Subtask 2 (Full):</strong> Kỹ thuật <strong>Sliding Window</strong> (cửa sổ trượt):<br><br>
+            Dùng 2 con trỏ left và right. Mở rộng right để thêm phần tử. Khi sum ≥ S, thu hẹp bên trái (tăng left) để tìm đoạn ngắn nhất.<br><br>
+            <strong>Tại sao đúng?</strong> Vì tất cả a[i] > 0, nên khi thu hẹp bên trái, tổng giảm. Khi mở rộng bên phải, tổng tăng. Do đó left chỉ đi sang phải (không quay lại), mỗi phần tử được thêm/bỏ đúng 1 lần → O(N).<br><br>
+            <strong>Lưu ý:</strong> S có thể lên đến 10<sup>15</sup> → cần dùng <code>long long</code> cho sum và S.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 2: ĐẾM ƯỚC =========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Đếm ước (DEMUOC)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Sàng SPF + Đếm ước O(N log log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 2: DEMUOC — Sieve (SPF) + Divisor Count</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DEMUOC.INP"</span>);
+    ofstream out(<span class="string">"DEMUOC.OUT"</span>);
+
+    <span class="keyword">int</span> n, k;
+    in >> n >> k;
+
+    <span class="comment">// Sieve of smallest prime factor</span>
+    vector&lt;<span class="keyword">int</span>&gt; spf(n + <span class="number">1</span>, <span class="number">0</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
+        <span class="keyword">if</span> (spf[i] == <span class="number">0</span>) {
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt;= n; j += i) {
+                <span class="keyword">if</span> (spf[j] == <span class="number">0</span>) spf[j] = i;
+            }
+        }
+    }
+
+    <span class="keyword">int</span> cnt = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">1</span>; x &lt;= n; x++) {
+        <span class="comment">// Compute number of divisors from prime factorization</span>
+        <span class="keyword">int</span> d = <span class="number">1</span>;
+        <span class="keyword">int</span> tmp = x;
+        <span class="keyword">while</span> (tmp > <span class="number">1</span>) {
+            <span class="keyword">int</span> p = spf[tmp];
+            <span class="keyword">int</span> e = <span class="number">0</span>;
+            <span class="keyword">while</span> (tmp % p == <span class="number">0</span>) {
+                tmp /= p;
+                e++;
+            }
+            d *= (e + <span class="number">1</span>);
+        }
+        <span class="keyword">if</span> (d == k) cnt++;
+    }
+
+    out &lt;&lt; cnt;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 10<sup>4</sup>):</strong> Với mỗi x, đếm ước bằng cách duyệt từ 1 đến √x. Tổng: O(N√N) ≈ 10<sup>6</sup>.<br>
+            <strong>Subtask 2 (N ≤ 10<sup>7</sup>):</strong> O(N√N) ≈ 3×10<sup>10</sup> — quá chậm! Cần <strong>Sàng ước số nguyên tố nhỏ nhất (SPF Sieve)</strong>:<br><br>
+            <strong>Bước 1 — Sàng SPF:</strong> Với mỗi số nguyên tố p (phát hiện khi spf[p] = 0), đánh dấu spf[j] = p cho mọi bội j của p chưa được đánh dấu. Giống sàng Eratosthenes nhưng lưu ước nguyên tố nhỏ nhất thay vì chỉ đánh dấu.<br><br>
+            <strong>Bước 2 — Phân tích nhanh:</strong> Với mỗi x, chia liên tục cho spf[x] để lấy phân tích thừa số nguyên tố: x = p₁<sup>e₁</sup> × p₂<sup>e₂</sup> × … Mỗi bước chia mất O(1) tra bảng → phân tích x mất O(log x).<br><br>
+            <strong>Bước 3 — Công thức ước:</strong> Nếu x = p₁<sup>e₁</sup> × p₂<sup>e₂</sup> × … × p<sub>k</sub><sup>e<sub>k</sub></sup> thì d(x) = (e₁+1)(e₂+1)…(e<sub>k</sub>+1). So sánh d(x) với K.<br><br>
+            Tổng: O(N log log N) cho sàng + O(N log N) cho phân tích tất cả số.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 3: CHỌN CÂY =========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Chọn cây (CHONCAY)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — DFS + QHĐ trên cây O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 3: CHONCAY — DFS (BFS order) + Tree DP</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHONCAY.INP"</span>);
+    ofstream out(<span class="string">"CHONCAY.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in >> n;
+
+    vector&lt;<span class="keyword">long long</span>&gt; w(n + <span class="number">1</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in >> w[i];
+
+    vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; adj(n + <span class="number">1</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) {
+        <span class="keyword">int</span> u, v;
+        in >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    <span class="comment">// BFS to get traversal order + parent</span>
+    vector&lt;<span class="keyword">int</span>&gt; order, par(n + <span class="number">1</span>, <span class="number">0</span>);
+    vector&lt;<span class="keyword">bool</span>&gt; visited(n + <span class="number">1</span>, <span class="keyword">false</span>);
+    queue&lt;<span class="keyword">int</span>&gt; q;
+    q.push(<span class="number">1</span>);
+    visited[<span class="number">1</span>] = <span class="keyword">true</span>;
+    <span class="keyword">while</span> (!q.empty()) {
+        <span class="keyword">int</span> u = q.front(); q.pop();
+        order.push_back(u);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)adj[u].size(); i++) {
+            <span class="keyword">int</span> v = adj[u][i];
+            <span class="keyword">if</span> (!visited[v]) {
+                visited[v] = <span class="keyword">true</span>;
+                par[v] = u;
+                q.push(v);
+            }
+        }
+    }
+
+    <span class="comment">// Process in reverse BFS order (leaves first)</span>
+    vector&lt;<span class="keyword">long long</span>&gt; dp0(n + <span class="number">1</span>, <span class="number">0</span>), dp1(n + <span class="number">1</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) dp1[i] = w[i];
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = (<span class="keyword">int</span>)order.size() - <span class="number">1</span>; i >= <span class="number">0</span>; i--) {
+        <span class="keyword">int</span> u = order[i];
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (<span class="keyword">int</span>)adj[u].size(); j++) {
+            <span class="keyword">int</span> v = adj[u][j];
+            <span class="keyword">if</span> (v == par[u]) <span class="keyword">continue</span>;
+            dp0[u] += max(dp0[v], dp1[v]);
+            dp1[u] += dp0[v];
+        }
+    }
+
+    out &lt;&lt; max(dp0[<span class="number">1</span>], dp1[<span class="number">1</span>]);
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 20):</strong> Duyệt tất cả 2<sup>N</sup> tập con, kiểm tra không có cặp kề nhau, lấy max tổng trọng số.<br>
+            <strong>Subtask 2 (Full):</strong> Bài này cần kết hợp <strong>2 kỹ thuật</strong>:<br><br>
+            <strong>1. DFS/BFS duyệt cây:</strong> Chọn gốc (đỉnh 1), BFS lấy thứ tự duyệt + xác định cha mỗi đỉnh. Duyệt ngược (lá trước, gốc sau) để đảm bảo khi xử lý đỉnh u, tất cả con đã được xử lý.<br><br>
+            <strong>2. QHĐ trên cây (Tree DP):</strong> Với mỗi đỉnh u, lưu 2 trạng thái:<br>
+            &nbsp;&nbsp;• <strong>dp0[u]</strong> = tổng max khi <em>không chọn</em> u → mỗi con v được chọn hoặc không: dp0[u] = Σ max(dp0[v], dp1[v])<br>
+            &nbsp;&nbsp;• <strong>dp1[u]</strong> = tổng max khi <em>chọn</em> u → tất cả con v không được chọn: dp1[u] = w[u] + Σ dp0[v]<br><br>
+            Đáp án = max(dp0[1], dp1[1]).<br><br>
+            <strong>Tại sao dùng BFS thay DFS đệ quy?</strong> Với N ≤ 10<sup>5</sup>, cây có thể là đường thẳng (sâu 10<sup>5</sup> mức) → DFS đệ quy tràn stack. BFS + duyệt ngược an toàn hơn, vẫn O(N).<br>
+            Tổng: O(N) — BFS O(N) + DP O(N).
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>
