@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học — Đề 4</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC — ĐỀ 4</h1>
+            <div class="time">Thời gian làm bài: 180 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 1: XÂU NGOẶC ========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Xâu ngoặc hợp lệ
+            </div>
+            <div class="problem-file">NGOAC.INP / NGOAC.OUT</div>
+            <div class="problem-content">
+                <p>Cho xâu S chỉ gồm các ký tự <strong>'('</strong> và <strong>')'</strong>.</p>
+                <p>Một xâu ngoặc được gọi là <strong>hợp lệ</strong> nếu mỗi dấu mở '(' đều có dấu đóng ')' tương ứng và các cặp ngoặc lồng nhau đúng quy tắc. Ví dụ: "()", "(())", "()()" là hợp lệ; ")(" , "(()" là không hợp lệ.</p>
+                <p><strong>Yêu cầu:</strong> Tìm <strong>độ dài xâu con liên tiếp dài nhất</strong> (substring) của S mà tạo thành xâu ngoặc hợp lệ.</p>
+
+                <div class="section-label">Dữ liệu vào (NGOAC.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng chứa xâu S (1 ≤ |S| ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (NGOAC.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là độ dài xâu con liên tiếp hợp lệ dài nhất. Nếu không có xâu con hợp lệ nào, in 0.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>NGOAC.INP</th><th>NGOAC.OUT</th></tr>
+                    <tr>
+                        <td>(()()</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>(()))(</td>
+                        <td>4</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Xâu con liên tiếp hợp lệ dài nhất là "()()" (vị trí 2 đến 5), độ dài 4. Toàn bộ xâu "(()()" không hợp lệ vì thừa '(' ở đầu.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Xâu con liên tiếp hợp lệ dài nhất là "(())" (vị trí 1 đến 4), độ dài 4. Ký tự ')' ở vị trí 5 và '(' ở vị trí 6 không ghép được thêm.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): |S| ≤ 1 000</li>
+                        <li>Subtask 2 (70%): |S| ≤ 10<sup>6</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 2: XÂU ĐỐI XỨNG ===== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Xâu đối xứng
+            </div>
+            <div class="problem-file">DOIXUNG.INP / DOIXUNG.OUT</div>
+            <div class="problem-content">
+                <p>Cho xâu S gồm N ký tự in thường ('a'–'z'). Bạn được phép <strong>chèn thêm</strong> ký tự bất kỳ vào bất kỳ vị trí nào trong xâu (đầu, cuối, hoặc giữa các ký tự).</p>
+                <p><strong>Yêu cầu:</strong> Tìm <strong>số ký tự ít nhất</strong> cần chèn để xâu S trở thành <strong>xâu đối xứng</strong> (palindrome — đọc xuôi ngược giống nhau).</p>
+
+                <div class="section-label">Dữ liệu vào (DOIXUNG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng chứa xâu S (1 ≤ |S| ≤ 5 000)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DOIXUNG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số ký tự ít nhất cần chèn.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DOIXUNG.INP</th><th>DOIXUNG.OUT</th></tr>
+                    <tr>
+                        <td>abca</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>abcd</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Chèn 'b' vào cuối: "abca" → "abcba" (đối xứng). Chỉ cần 1 ký tự.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Chèn 3 ký tự: "abcd" → "abcdcba" (đối xứng). Không thể ít hơn 3.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): |S| ≤ 20</li>
+                        <li>Subtask 2 (60%): |S| ≤ 5 000</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 3: CÔNG VIỆC ========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Công việc
+            </div>
+            <div class="problem-file">CONGVIEC.INP / CONGVIEC.OUT</div>
+            <div class="problem-content">
+                <p>Một công ty nhận được N đơn hàng. Đơn hàng thứ i cần thực hiện từ thời điểm s<sub>i</sub> đến thời điểm e<sub>i</sub> và mang lại lợi nhuận w<sub>i</sub>. Công ty chỉ có một nhóm nhân viên nên tại mỗi thời điểm chỉ thực hiện được <strong>một</strong> đơn hàng. Hai đơn hàng i, j <strong>không chồng chéo</strong> khi e<sub>i</sub> ≤ s<sub>j</sub> hoặc e<sub>j</sub> ≤ s<sub>i</sub>.</p>
+                <p><strong>Yêu cầu:</strong> Chọn một tập các đơn hàng không chồng chéo sao cho <strong>tổng lợi nhuận lớn nhất</strong>.</p>
+
+                <div class="section-label">Dữ liệu vào (CONGVIEC.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>N dòng tiếp theo, dòng thứ i chứa ba số nguyên s<sub>i</sub>, e<sub>i</sub>, w<sub>i</sub> (0 ≤ s<sub>i</sub> &lt; e<sub>i</sub> ≤ 10<sup>9</sup>, 1 ≤ w<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (CONGVIEC.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là tổng lợi nhuận lớn nhất có thể.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>CONGVIEC.INP</th><th>CONGVIEC.OUT</th></tr>
+                    <tr>
+                        <td>4
+1 3 5
+2 5 6
+4 6 5
+6 8 4</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>5
+1 4 3
+3 5 4
+0 6 2
+5 7 7
+8 9 2</td>
+                        <td>13</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Chọn đơn 1 (1→3, lời 5), đơn 3 (4→6, lời 5), đơn 4 (6→8, lời 4). Không chồng chéo. Tổng = 5 + 5 + 4 = 14.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Chọn đơn 2 (3→5, lời 4), đơn 4 (5→7, lời 7), đơn 5 (8→9, lời 2). Không chồng chéo. Tổng = 4 + 7 + 2 = 13.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 1 000</li>
+                        <li>Subtask 2 (70%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+    </div>
+
+</body>
+</html>

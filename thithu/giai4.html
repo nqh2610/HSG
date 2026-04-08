@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 4</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 4</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 1: XÂU NGOẶC ========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Xâu ngoặc hợp lệ (NGOAC)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Stack O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 1: NGOAC — Stack O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"NGOAC.INP"</span>);
+    ofstream out(<span class="string">"NGOAC.OUT"</span>);
+
+    string s;
+    in >> s;
+    <span class="keyword">int</span> n = s.size();
+
+    stack&lt;<span class="keyword">int</span>&gt; st;
+    st.push(-<span class="number">1</span>); <span class="comment">// sentinel — đánh dấu biên trái</span>
+    <span class="keyword">int</span> ans = <span class="number">0</span>;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">if</span> (s[i] == <span class="string">'('</span>) {
+            st.push(i);
+        } <span class="keyword">else</span> {
+            st.pop();
+            <span class="keyword">if</span> (st.empty()) {
+                st.push(i); <span class="comment">// ')' thừa → đặt biên mới</span>
+            } <span class="keyword">else</span> {
+                ans = max(ans, i - st.top());
+            }
+        }
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (|S| ≤ 1000):</strong> Duyệt mọi cặp (l, r), kiểm tra xâu S[l..r] có hợp lệ không (dùng biến đếm): nếu mở '(' cộng 1, đóng ')' trừ 1, không bao giờ âm, cuối = 0 → hợp lệ. Cập nhật max(r−l+1). Độ phức tạp O(N²).<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Kỹ thuật Stack.</strong><br>
+            Ý tưởng: Dùng stack lưu <strong>chỉ số</strong> (index) các ký tự chưa ghép được. Ban đầu đẩy −1 vào stack làm "biên trái" (sentinel).<br>
+            — Gặp '(': đẩy chỉ số vào stack (chờ ghép).<br>
+            — Gặp ')': pop stack. Nếu stack rỗng → ')' thừa, đẩy chỉ số hiện tại làm biên mới. Nếu stack không rỗng → đoạn hợp lệ từ (top+1) đến i, độ dài = i − st.top().<br>
+            Mỗi ký tự vào/ra stack đúng 1 lần → O(N). Bộ nhớ O(N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 2: XÂU ĐỐI XỨNG ===== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Xâu đối xứng (DOIXUNG)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — DP Palindrome O(N²)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 2: DOIXUNG — DP Palindrome O(N²)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> dp[<span class="number">5001</span>][<span class="number">5001</span>]; <span class="comment">// dp[i][j] = LPS of s[i..j]</span>
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DOIXUNG.INP"</span>);
+    ofstream out(<span class="string">"DOIXUNG.OUT"</span>);
+
+    string s;
+    in >> s;
+    <span class="keyword">int</span> n = s.size();
+
+    <span class="comment">// Base: dp[i][i] = 1 (1 ký tự là palindrome)</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) dp[i][i] = <span class="number">1</span>;
+
+    <span class="comment">// Điền bảng theo độ dài tăng dần</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> len = <span class="number">2</span>; len &lt;= n; len++) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n - len; i++) {
+            <span class="keyword">int</span> j = i + len - <span class="number">1</span>;
+            <span class="keyword">if</span> (s[i] == s[j]) {
+                dp[i][j] = dp[i + <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">2</span>;
+            } <span class="keyword">else</span> {
+                dp[i][j] = max(dp[i + <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]);
+            }
+        }
+    }
+
+    <span class="comment">// Đáp án = |S| − LPS(S)</span>
+    out &lt;&lt; n - dp[<span class="number">0</span>][n - <span class="number">1</span>];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (|S| ≤ 20):</strong> Brute force — thử mọi cách chèn hoặc dùng DP O(N²) cũng chạy thoải mái.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>QHĐ trên đoạn (Interval DP) — Dãy con đối xứng dài nhất (LPS).</strong><br>
+            Nhận xét quan trọng: <em>Số ký tự cần chèn = |S| − LPS(S)</em>, với LPS(S) = Longest Palindromic Subsequence. Vì dãy con đối xứng dài nhất chính là phần "khung" không cần thêm gì, chỉ cần chèn để bổ sung các ký tự còn lại.<br><br>
+            Gọi dp[i][j] = độ dài LPS của xâu con S[i..j]:<br>
+            — Nếu S[i] = S[j]: dp[i][j] = dp[i+1][j−1] + 2 (hai đầu ghép cặp).<br>
+            — Nếu S[i] ≠ S[j]: dp[i][j] = max(dp[i+1][j], dp[i][j−1]) (bỏ đầu hoặc bỏ cuối).<br>
+            Base: dp[i][i] = 1.<br>
+            Đáp án: N − dp[0][N−1]. Độ phức tạp O(N²) thời gian và bộ nhớ.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ========== BÀI 3: CÔNG VIỆC ========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Công việc (CONGVIEC)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Sắp xếp + QHĐ O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bài 3: CONGVIEC — Sorting + DP (Weighted Job Scheduling)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">struct</span> Job {
+    <span class="keyword">int</span> s, e;
+    <span class="keyword">long long</span> w;
+};
+
+<span class="keyword">bool</span> <span class="function">cmp</span>(<span class="keyword">const</span> Job &amp;a, <span class="keyword">const</span> Job &amp;b) {
+    <span class="keyword">return</span> a.e &lt; b.e;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CONGVIEC.INP"</span>);
+    ofstream out(<span class="string">"CONGVIEC.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in >> n;
+
+    vector&lt;Job&gt; job(n + <span class="number">1</span>);
+    job[<span class="number">0</span>].s = <span class="number">0</span>; job[<span class="number">0</span>].e = <span class="number">0</span>; job[<span class="number">0</span>].w = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)
+        in >> job[i].s >> job[i].e >> job[i].w;
+
+    sort(job.begin() + <span class="number">1</span>, job.end(), cmp);
+
+    <span class="comment">// dp[i] = max profit considering jobs 1..i (sorted by end)</span>
+    vector&lt;<span class="keyword">long long</span>&gt; dp(n + <span class="number">1</span>, <span class="number">0</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        <span class="comment">// Binary search: latest j with job[j].e &lt;= job[i].s</span>
+        <span class="keyword">int</span> lo = <span class="number">0</span>, hi = i - <span class="number">1</span>, best = <span class="number">0</span>;
+        <span class="keyword">while</span> (lo &lt;= hi) {
+            <span class="keyword">int</span> mid = (lo + hi) / <span class="number">2</span>;
+            <span class="keyword">if</span> (job[mid].e &lt;= job[i].s) {
+                best = mid;
+                lo = mid + <span class="number">1</span>;
+            } <span class="keyword">else</span> {
+                hi = mid - <span class="number">1</span>;
+            }
+        }
+        dp[i] = max(dp[i - <span class="number">1</span>], job[i].w + dp[best]);
+    }
+
+    out &lt;&lt; dp[n];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Sắp xếp theo thời gian kết thúc. DP: dp[i] = max(dp[i−1], w[i] + dp[j]) với j là công việc gần nhất không chồng chéo. Tìm j bằng duyệt tuyến tính → O(N²).<br>
+            <strong>Subtask 2 (Full):</strong> Bài này cần kết hợp <strong>2 kỹ thuật</strong>:<br><br>
+            <strong>1. Sắp xếp (Sorting):</strong> Sắp xếp N công việc theo thời gian kết thúc e[i] tăng dần. Nhờ đó, mảng e[] đã có thứ tự → dùng được tìm kiếm nhị phân.<br><br>
+            <strong>2. Quy hoạch động (DP):</strong> Gọi dp[i] = lợi nhuận lớn nhất khi xét i công việc đầu (đã sắp xếp). Với mỗi công việc i, có 2 lựa chọn:<br>
+            &nbsp;&nbsp;• <em>Không chọn i:</em> dp[i] = dp[i−1]<br>
+            &nbsp;&nbsp;• <em>Chọn i:</em> dp[i] = w[i] + dp[j], trong đó j là công việc cuối cùng kết thúc trước khi i bắt đầu (e[j] ≤ s[i]). Tìm j bằng <strong>binary search</strong> trên mảng e[] đã sắp xếp → O(log N).<br><br>
+            <strong>Tại sao Greedy không đúng?</strong> Bài Activity Selection (không trọng số) dùng greedy chọn việc kết thúc sớm nhất. Nhưng ở đây mỗi việc có lợi nhuận khác nhau — việc kết thúc sớm có thể lợi nhuận thấp hơn việc dài nhưng lời nhiều. Cần DP để cân nhắc tất cả phương án.<br>
+            Tổng: O(N log N) — sắp xếp O(N log N) + DP N bước × binary search O(log N) = O(N log N).
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

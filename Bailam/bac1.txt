@@ -1,0 +1,162 @@
+bài 1:
+#include<bits/stdc++.h>
+using namespace std;
+ifstream in("input.inp");
+ofstream out("output.out");
+using ll=long long;
+#define nl '\n'
+#define pu push_back
+
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    if(!in) return 0;
+
+    int n,k;
+    in>>n>>k;
+
+    vector<long>a(n);
+    for(long &i:a) in>>i;
+
+    deque<int>dq_max,dq_min;
+    int l=0;
+    int ans=0;
+    for(int r=0;r<n;r++){
+        while(!dq_max.empty()&&a[dq_max.back()]<=a[r]) dq_max.pop_back();
+        dq_max.pu(r);
+        while(!dq_min.empty()&&a[dq_min.back()]>=a[r]) dq_min.pop_back();
+        dq_min.pu(r);
+
+        while(a[dq_max.front()]-a[dq_min.front()]>k){
+            if(dq_max.front()==l) dq_max.pop_front();
+            else if(dq_min.front()==l) dq_min.pop_front();
+            l++;
+        }
+        ans+=r-l+1;
+
+
+    }
+    cout<<ans;
+    in.close();
+    out.close();
+    return 0;
+}
+
+
+bài 2:
+#include<bits/stdc++.h>
+using namespace std;
+ifstream in("input.inp");
+ofstream out("output.out");
+using ll=long long;
+#define nl '\n'
+#define pu push_back
+const int inf=INT_MAX;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    if(!in) return 0;
+
+    int n,s;
+    in>>n>>s;
+    vector<int>a(n+1),pre(n+1,0);
+    for(int i=1;i<=n;i++){
+        in>>a[i];
+        pre[i]=pre[i-1]+a[i];
+    }
+
+    //goi dp[i] la chi phi nho nhat de hoan thanh i cong viec dau tine
+    //out la dp n
+    vector<int>dp(n+1,inf);
+    dp[0]=0;
+    dp[1]=a[1]*a[1];
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=i;j++){
+            int t=0;
+            for(int k=j;k<=i;k++){
+                t+=a[k];
+            }
+            //
+            int cost=0;
+            if(j==1){
+                cost=t*t;
+            }else {
+                cost=dp[j-1]+s+(t*t);
+            }
+            dp[i]=min(dp[i],cost);
+        }
+    }
+    cout<<dp[n];
+    in.close();
+    out.close();
+    return 0;
+}
+
+bài 3
+#include<bits/stdc++.h>
+using namespace std;
+ifstream in("input.inp");
+ofstream out("output.out");
+using ll=long long;
+#define nl '\n'
+#define pu push_back
+const ll inf=LLONG_MAX;
+struct edge{
+    int u,v;
+    ll w;
+};
+int n,m;
+ vector<vector<pair<ll,int>>>a;
+    vector<edge>t;
+ll min_path(int special_u=-1,int speacial_v=-1){
+    vector<ll>dist(n+1,inf);
+    priority_queue<pair<ll,int>,vector<pair<ll,int>>,greater<pair<ll,int>>>pq;
+    dist[1]=0;
+    pq.push({dist[1],1});
+
+    while(!pq.empty()){
+        auto [d,u]=pq.top();
+        pq.pop();
+        if(d>dist[u]) continue;
+
+        for(auto [v,w]:a[u]){
+                if(u==special_u&&v==speacial_v||u==speacial_v&&v==special_u){
+                    w=0;
+                }
+
+            //
+            if(dist[v]>d+w){
+                dist[v]=d+w;
+                pq.push({dist[v],v});
+            }
+        }
+    }
+    return dist[n];
+}
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    if(!in) return 0;
+
+
+    in>>n>>m;
+   a.resize(n+1);
+    for(int i=0;i<m;i++){
+        int u,v,w;
+        in>>u>>v>>w;
+        a[u].pu({v,w});
+        a[v].pu({u,w});
+        t.pu({u,v,w});
+    }
+    ll ans=min_path();
+
+    for(auto [u,v,w]:t){
+        ans=min(ans,min_path(u,v));
+    }
+    cout<<ans;
+    in.close();
+    out.close();
+    return 0;
+}
