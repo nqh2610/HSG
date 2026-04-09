@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 12</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 12</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: DOANH SỐ ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Lợi nhuận (DOANHSO)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Kadane's Algorithm O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: DOANHSO — Kadane Max Subarray Sum O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DOANHSO.INP"</span>);
+    ofstream out(<span class="string">"DOANHSO.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+    <span class="keyword">long long</span> x, maxEnd, maxSoFar;
+    in &gt;&gt; x;
+    maxEnd = maxSoFar = x;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) {
+        in &gt;&gt; x;
+        maxEnd = <span class="function">max</span>(x, maxEnd + x);
+        maxSoFar = <span class="function">max</span>(maxSoFar, maxEnd);
+    }
+
+    out &lt;&lt; maxSoFar;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt mọi cặp (l, r): tính tổng a[l..r], cập nhật max. Dùng prefix sum có thể tính tổng O(1). Tổng O(N²) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Thuật toán Kadane O(N)</strong>:<br><br>
+            <strong>Ý tưởng:</strong> Duy trì 2 biến:<br>
+            &nbsp;&nbsp;• <em>maxEnd</em> = tổng lớn nhất của đoạn con <strong>kết thúc</strong> tại vị trí hiện tại<br>
+            &nbsp;&nbsp;• <em>maxSoFar</em> = tổng lớn nhất toàn bộ (đáp án)<br><br>
+            <strong>Chuyển trạng thái:</strong> Tại vị trí i, đoạn con kết thúc tại i hoặc:<br>
+            &nbsp;&nbsp;• Nối tiếp đoạn trước: maxEnd + a[i]<br>
+            &nbsp;&nbsp;• Bắt đầu đoạn mới từ a[i]: a[i]<br>
+            → maxEnd = max(a[i], maxEnd + a[i])<br><br>
+            <strong>Tại sao đúng?</strong> Nếu maxEnd &lt; 0, đoạn cũ chỉ "kéo giảm" tổng → bắt đầu lại từ a[i] tốt hơn. Ngược lại, maxEnd ≥ 0 → nối thêm a[i] chỉ có lợi hoặc không thay đổi.<br><br>
+            <strong>Lưu ý:</strong> Dùng <code>long long</code> vì tổng có thể đạt 10⁵ × 10⁹ = 10¹⁴.<br>
+            <strong>Độ phức tạp:</strong> O(N) thời gian, O(1) bộ nhớ phụ.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: XẾP SỐ ============== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Cân bằng (XEPSO)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Subset Sum DP O(N×S)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: XEPSO — Subset Sum DP O(N*S)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"XEPSO.INP"</span>);
+    ofstream out(<span class="string">"XEPSO.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+    vector&lt;<span class="keyword">int</span>&gt; a(n);
+    <span class="keyword">int</span> S = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) { in &gt;&gt; a[i]; S += a[i]; }
+
+    <span class="keyword">int</span> half = S / <span class="number">2</span>;
+    vector&lt;<span class="keyword">bool</span>&gt; dp(half + <span class="number">1</span>, <span class="keyword">false</span>);
+    dp[<span class="number">0</span>] = <span class="keyword">true</span>;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = half; j &gt;= a[i]; j--) {
+            <span class="keyword">if</span> (dp[j - a[i]]) dp[j] = <span class="keyword">true</span>;
+        }
+    }
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = half; j &gt;= <span class="number">0</span>; j--) {
+        <span class="keyword">if</span> (dp[j]) {
+            out &lt;&lt; S - <span class="number">2</span> * j;
+            <span class="keyword">break</span>;
+        }
+    }
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 20):</strong> Duyệt toàn bộ 2<sup>N</sup> ≈ 10⁶ tập con, tính tổng mỗi tập, tìm độ chênh lệch nhỏ nhất.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>QHĐ Tổng tập con (Subset Sum DP)</strong>:<br><br>
+            <strong>Nhận xét:</strong> Gọi S = tổng tất cả. Nếu một nhóm có tổng = j thì nhóm còn lại có tổng = S − j. Chênh lệch = |S − 2j|. Để minimize chênh lệch → cần j <strong>gần S/2 nhất</strong> có thể.<br><br>
+            <strong>Bài toán quy về:</strong> Tìm giá trị j lớn nhất ≤ S/2 sao cho tồn tại tập con có tổng đúng bằng j.<br><br>
+            <strong>Công thức QHĐ:</strong><br>
+            &nbsp;&nbsp;• dp[j] = true/false — có tồn tại tập con nào có tổng đúng bằng j?<br>
+            &nbsp;&nbsp;• Cơ sở: dp[0] = true (tập rỗng có tổng 0)<br>
+            &nbsp;&nbsp;• Chuyển trạng thái: Với mỗi phần tử a[i], duyệt j <strong>giảm dần</strong> từ half xuống a[i]:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Nếu dp[j − a[i]] = true → dp[j] = true<br><br>
+            <strong>Tại sao duyệt giảm?</strong> Đảm bảo mỗi phần tử chỉ dùng tối đa 1 lần (0/1 Knapsack). Nếu duyệt tăng, một phần tử có thể bị "cộng nhiều lần" (Unbounded Knapsack).<br><br>
+            <strong>Đáp án:</strong> Tìm j lớn nhất ≤ S/2 mà dp[j] = true. Chênh lệch = S − 2j.<br>
+            <strong>Độ phức tạp:</strong> O(N × S) với S ≤ 100 × 1000 = 10⁵. Tổng ≈ 10⁷ — nhanh.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: ĐẾM ĐƯỜNG =========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Đếm đường đi (DEMDUONG)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Grid DP + Big Number Addition O(N×M×digits)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: DEMDUONG — Grid DP + Big Number Addition O(N*M*digits)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+string <span class="function">addBig</span>(<span class="keyword">const</span> string&amp; a, <span class="keyword">const</span> string&amp; b) {
+    <span class="keyword">if</span> (a == <span class="string">"0"</span>) <span class="keyword">return</span> b;
+    <span class="keyword">if</span> (b == <span class="string">"0"</span>) <span class="keyword">return</span> a;
+    string res;
+    <span class="keyword">int</span> carry = <span class="number">0</span>, i = a.<span class="function">size</span>() - <span class="number">1</span>, j = b.<span class="function">size</span>() - <span class="number">1</span>;
+    <span class="keyword">while</span> (i &gt;= <span class="number">0</span> || j &gt;= <span class="number">0</span> || carry) {
+        <span class="keyword">int</span> s = carry;
+        <span class="keyword">if</span> (i &gt;= <span class="number">0</span>) s += a[i--] - <span class="string">'0'</span>;
+        <span class="keyword">if</span> (j &gt;= <span class="number">0</span>) s += b[j--] - <span class="string">'0'</span>;
+        res += (<span class="keyword">char</span>)(<span class="string">'0'</span> + s % <span class="number">10</span>);
+        carry = s / <span class="number">10</span>;
+    }
+    <span class="function">reverse</span>(res.<span class="function">begin</span>(), res.<span class="function">end</span>());
+    <span class="keyword">return</span> res;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DEMDUONG.INP"</span>);
+    ofstream out(<span class="string">"DEMDUONG.OUT"</span>);
+
+    <span class="keyword">int</span> n, m, k;
+    in &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+
+    vector&lt;vector&lt;<span class="keyword">bool</span>&gt;&gt; blk(n + <span class="number">1</span>, vector&lt;<span class="keyword">bool</span>&gt;(m + <span class="number">1</span>, <span class="keyword">false</span>));
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) {
+        <span class="keyword">int</span> r, c; in &gt;&gt; r &gt;&gt; c;
+        blk[r][c] = <span class="keyword">true</span>;
+    }
+
+    vector&lt;string&gt; prev(m + <span class="number">1</span>, <span class="string">"0"</span>), curr(m + <span class="number">1</span>, <span class="string">"0"</span>);
+
+    <span class="keyword">if</span> (!blk[<span class="number">1</span>][<span class="number">1</span>]) prev[<span class="number">1</span>] = <span class="string">"1"</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">2</span>; j &lt;= m; j++) {
+        <span class="keyword">if</span> (!blk[<span class="number">1</span>][j]) prev[j] = prev[j - <span class="number">1</span>];
+    }
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= m; j++) curr[j] = <span class="string">"0"</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j++) {
+            <span class="keyword">if</span> (blk[i][j]) <span class="keyword">continue</span>;
+            curr[j] = prev[j];
+            <span class="keyword">if</span> (j &gt; <span class="number">1</span>) curr[j] = <span class="function">addBig</span>(curr[j], curr[j - <span class="number">1</span>]);
+        }
+        <span class="function">swap</span>(prev, curr);
+    }
+
+    out &lt;&lt; prev[m];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N, M ≤ 20):</strong> DP trên lưới bình thường, dùng <code>long long</code> (C(38, 19) ≈ 3.5 × 10¹⁰ — vẫn vừa long long). Không cần số lớn.<br>
+            <strong>Subtask 2 (Full):</strong> Cần kết hợp <strong>2 kĩ thuật: QHĐ trên lưới + Cộng xâu số lớn</strong>:<br><br>
+            <strong>Kĩ thuật 1 — QHĐ trên lưới:</strong><br>
+            &nbsp;&nbsp;• dp[i][j] = số đường đi từ (1,1) đến (i,j)<br>
+            &nbsp;&nbsp;• Cơ sở: dp[1][1] = 1 (nếu không bị chặn)<br>
+            &nbsp;&nbsp;• Chuyển trạng thái: dp[i][j] = dp[i−1][j] + dp[i][j−1] (nếu ô không bị chặn)<br>
+            &nbsp;&nbsp;• Nếu ô (i,j) bị chặn: dp[i][j] = 0<br>
+            &nbsp;&nbsp;• Tối ưu bộ nhớ: chỉ cần 2 hàng (prev, curr) → O(M) space<br><br>
+            <strong>Kĩ thuật 2 — Cộng xâu số lớn:</strong><br>
+            Với N, M = 500, kết quả là C(998, 499) ≈ 10²⁹⁹ (khoảng 300 chữ số) — vượt xa long long (≈ 9.2 × 10¹⁸). Mỗi ô dp cần lưu dưới dạng <strong>string</strong> và phép cộng thực hiện bằng <strong>cộng xâu số lớn</strong>.<br><br>
+            <strong>Hàm addBig(a, b):</strong><br>
+            &nbsp;&nbsp;• Duyệt từ cuối cả 2 xâu about cùng lúc, cộng từng chữ số + carry<br>
+            &nbsp;&nbsp;• Xây chuỗi kết quả ngược, cuối cùng reverse<br>
+            &nbsp;&nbsp;• Tối ưu: nếu a hoặc b là "0", trả ngay xâu kia (tránh copy thừa)<br><br>
+            <strong>Tại sao khó?</strong> Phải nắm vững DP lưới, xử lý ô bị chặn, rolling array, <em>và</em> cài đặt cộng xâu số lớn chính xác. Sai bất kỳ phần nào cũng cho kết quả sai.<br><br>
+            <strong>Độ phức tạp:</strong> O(N × M × D) với D ≈ 300 chữ số. Tổng ≈ 500 × 500 × 300 = 7.5 × 10⁷ — chạy tốt trong 2 giây.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

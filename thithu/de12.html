@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học — Đề 12</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC — ĐỀ 12</h1>
+            <div class="time">Thời gian làm bài: 180 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: DOANH SỐ ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Lợi nhuận
+            </div>
+            <div class="problem-file">DOANHSO.INP / DOANHSO.OUT</div>
+            <div class="problem-content">
+                <p>Cửa hàng ghi nhận lợi nhuận trong N ngày liên tiếp. Ngày thứ i lợi nhuận là a<sub>i</sub> đồng (a<sub>i</sub> có thể âm nếu ngày đó bị lỗ).</p>
+                <p><strong>Yêu cầu:</strong> Tìm một đoạn ngày liên tiếp (ít nhất 1 ngày) sao cho <strong>tổng lợi nhuận đạt giá trị lớn nhất</strong>.</p>
+
+                <div class="section-label">Dữ liệu vào (DOANHSO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub> (|a<sub>i</sub>| ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DOANHSO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là tổng lợi nhuận lớn nhất của một đoạn ngày liên tiếp.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DOANHSO.INP</th><th>DOANHSO.OUT</th></tr>
+                    <tr>
+                        <td>6
+-2 1 -3 4 -1 2</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>4
+3 -1 -1 4</td>
+                        <td>5</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Chọn đoạn ngày 4 đến ngày 6: lợi nhuận 4 + (−1) + 2 = 5. Không tồn tại đoạn nào có tổng lớn hơn.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Chọn cả 4 ngày: 3 + (−1) + (−1) + 4 = 5. Đây là tổng lớn nhất.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 1 000</li>
+                        <li>Subtask 2 (70%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: XẾP SỐ ============== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Cân bằng
+            </div>
+            <div class="problem-file">XEPSO.INP / XEPSO.OUT</div>
+            <div class="problem-content">
+                <p>Thầy giáo có N quả cân với khối lượng lần lượt là a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub>. Thầy muốn chia N quả cân thành <strong>2 nhóm</strong>, đặt lên 2 đĩa của một chiếc cân sao cho <strong>độ chênh lệch</strong> khối lượng giữa 2 đĩa là <strong>nhỏ nhất</strong> có thể.</p>
+                <p>Mỗi quả cân phải được đặt lên đúng một đĩa (có thể có đĩa trống).</p>
+                <p><strong>Yêu cầu:</strong> Tìm giá trị nhỏ nhất có thể của |tổng đĩa 1 − tổng đĩa 2|.</p>
+
+                <div class="section-label">Dữ liệu vào (XEPSO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 100)</li>
+                        <li>Dòng 2: N số nguyên a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub> (1 ≤ a<sub>i</sub> ≤ 1 000)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (XEPSO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là độ chênh lệch nhỏ nhất.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>XEPSO.INP</th><th>XEPSO.OUT</th></tr>
+                    <tr>
+                        <td>4
+1 5 6 11</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>3
+1 2 3</td>
+                        <td>0</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Đặt {1, 11} lên đĩa 1 (tổng 12) và {5, 6} lên đĩa 2 (tổng 11). Chênh lệch = |12 − 11| = 1. Không thể chia tốt hơn.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Đặt {3} lên đĩa 1 (tổng 3) và {1, 2} lên đĩa 2 (tổng 3). Chênh lệch = 0.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N ≤ 20</li>
+                        <li>Subtask 2 (70%): N ≤ 100</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: ĐẾM ĐƯỜNG =========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Đếm đường đi
+            </div>
+            <div class="problem-file">DEMDUONG.INP / DEMDUONG.OUT</div>
+            <div class="problem-content">
+                <p>Thành phố có N×M ô vuông xếp thành lưới gồm N hàng và M cột. Ô nằm ở hàng i, cột j được gọi là ô (i, j).</p>
+                <p>Một người đi bộ muốn đi từ ô (1, 1) ở góc trên bên trái đến ô (N, M) ở góc dưới bên phải. Mỗi bước, người đó chỉ có thể đi sang <strong>ô bên phải</strong> hoặc đi xuống <strong>ô bên dưới</strong>. Có K ô bị chặn không thể đi qua.</p>
+                <p><strong>Yêu cầu:</strong> Đếm <strong>số đường đi</strong> khác nhau từ ô (1, 1) đến ô (N, M).</p>
+                <p><em>Chú ý: Kết quả có thể rất lớn, vượt quá phạm vi kiểu long long. Cần sử dụng kĩ thuật cộng xâu số lớn.</em></p>
+
+                <div class="section-label">Dữ liệu vào (DEMDUONG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Ba số nguyên N, M, K (1 ≤ N, M ≤ 500; 0 ≤ K &lt; N×M)</li>
+                        <li>K dòng tiếp theo, mỗi dòng chứa hai số nguyên r, c — tọa độ ô bị chặn (1 ≤ r ≤ N; 1 ≤ c ≤ M). Đảm bảo ô (1, 1) và ô (N, M) không bị chặn.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DEMDUONG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số đường đi. In ra <strong>0</strong> nếu không tồn tại đường đi nào.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DEMDUONG.INP</th><th>DEMDUONG.OUT</th></tr>
+                    <tr>
+                        <td>3 3 1
+2 2</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>2 3 0</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Lưới 3×3, ô (2,2) bị chặn. Chỉ có 2 đường đi:<br>
+                    &nbsp;&nbsp;• (1,1) → (1,2) → (1,3) → (2,3) → (3,3)<br>
+                    &nbsp;&nbsp;• (1,1) → (2,1) → (3,1) → (3,2) → (3,3)<br><br>
+                    <strong>Giải thích ví dụ 2:</strong> Lưới 2×3, không có ô bị chặn. Có 3 đường đi:<br>
+                    &nbsp;&nbsp;• (1,1) → (1,2) → (1,3) → (2,3)<br>
+                    &nbsp;&nbsp;• (1,1) → (1,2) → (2,2) → (2,3)<br>
+                    &nbsp;&nbsp;• (1,1) → (2,1) → (2,2) → (2,3)
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (30%): N, M ≤ 20 (kết quả vừa trong kiểu long long)</li>
+                        <li>Subtask 2 (70%): N, M ≤ 500 (cần cộng xâu số lớn)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+    </div>
+</body>
+</html>

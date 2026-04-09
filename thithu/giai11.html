@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 11</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 11</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: CHIA VIỆC ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Phân công nhóm (CHIAVIEC)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Binary Search on Answer O(N log S)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: CHIAVIEC — Binary Search on Answer O(N log S)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHIAVIEC.INP"</span>);
+    ofstream out(<span class="string">"CHIAVIEC.OUT"</span>);
+
+    <span class="keyword">int</span> n, k;
+    in &gt;&gt; n &gt;&gt; k;
+    vector&lt;<span class="keyword">long long</span>&gt; a(n);
+    <span class="keyword">long long</span> lo = <span class="number">0</span>, hi = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        in &gt;&gt; a[i];
+        lo = <span class="function">max</span>(lo, a[i]);
+        hi += a[i];
+    }
+
+    <span class="keyword">while</span> (lo &lt; hi) {
+        <span class="keyword">long long</span> mid = (lo + hi) / <span class="number">2</span>;
+        <span class="keyword">int</span> cnt = <span class="number">1</span>;
+        <span class="keyword">long long</span> sum = <span class="number">0</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+            <span class="keyword">if</span> (sum + a[i] &gt; mid) {
+                cnt++;
+                sum = a[i];
+            } <span class="keyword">else</span> {
+                sum += a[i];
+            }
+        }
+        <span class="keyword">if</span> (cnt &lt;= k) hi = mid;
+        <span class="keyword">else</span> lo = mid + <span class="number">1</span>;
+    }
+
+    out &lt;&lt; lo;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Quy hoạch động O(N²K): dp[i][j] = tổng max nhỏ nhất khi chia i phần tử đầu thành j nhóm. Chậm nhưng đúng.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Chặt nhị phân đáp án (Binary Search on Answer)</strong>:<br><br>
+            <strong>Nhận xét quan trọng:</strong> Đáp án T (tổng lớn nhất nhỏ nhất) thoả mãn: nếu chia được với giới hạn T thì cũng chia được với T+1, T+2,… → tính chất đơn điệu → dùng chặt nhị phân!<br><br>
+            <strong>Khoảng chặt nhị phân:</strong><br>
+            &nbsp;&nbsp;• lo = max(a<sub>i</sub>) — mỗi nhóm phải chứa ít nhất phần tử lớn nhất<br>
+            &nbsp;&nbsp;• hi = sum(a<sub>i</sub>) — trường hợp K = 1, chỉ có 1 nhóm<br><br>
+            <strong>Hàm kiểm tra check(mid):</strong> Với giới hạn mid, duyệt tham lam từ trái sang phải: cộng dồn a[i] vào nhóm hiện tại, nếu tổng vượt mid thì mở nhóm mới. Đếm số nhóm cần dùng. Nếu ≤ K → mid khả thi.<br><br>
+            <strong>Tại sao tham lam đúng?</strong> Nếu giới hạn mid khả thi, việc "nhồi tối đa" vào nhóm hiện tại là tốt nhất vì nhường dư lượng cho các nhóm sau.<br><br>
+            <strong>Độ phức tạp:</strong> O(N × log(S)) với S = sum(a<sub>i</sub>) ≤ 10<sup>14</sup> → log(S) ≈ 47. Tổng ≈ 5 × 10⁶ — rất nhanh.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: XÂU ĐỐI XỨNG ======= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Xâu đối xứng (XAUDX)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — LCS(S, rev(S)) + Rolling Array O(N²)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: XAUDX — Min insertions = |S| - LCS(S, rev(S)), O(N^2) time O(N) space</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"XAUDX.INP"</span>);
+    ofstream out(<span class="string">"XAUDX.OUT"</span>);
+
+    string s;
+    in &gt;&gt; s;
+    <span class="keyword">int</span> n = s.<span class="function">size</span>();
+    string t = s;
+    <span class="function">reverse</span>(t.<span class="function">begin</span>(), t.<span class="function">end</span>());
+
+    vector&lt;<span class="keyword">int</span>&gt; prev(n + <span class="number">1</span>, <span class="number">0</span>), curr(n + <span class="number">1</span>, <span class="number">0</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) {
+            <span class="keyword">if</span> (s[i - <span class="number">1</span>] == t[j - <span class="number">1</span>]) curr[j] = prev[j - <span class="number">1</span>] + <span class="number">1</span>;
+            <span class="keyword">else</span> curr[j] = <span class="function">max</span>(prev[j], curr[j - <span class="number">1</span>]);
+        }
+        <span class="function">swap</span>(prev, curr);
+        <span class="function">fill</span>(curr.<span class="function">begin</span>(), curr.<span class="function">end</span>(), <span class="number">0</span>);
+    }
+
+    out &lt;&lt; n - prev[n];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (|S| ≤ 1000):</strong> DP bảng 2 chiều dp[N+1][N+1] chiếm ~4MB, chạy nhanh.<br>
+            <strong>Subtask 2 (Full):</strong> Cùng thuật toán nhưng <strong>tối ưu bộ nhớ</strong> bằng rolling array.<br><br>
+            <strong>Mấu chốt:</strong> Số kí tự cần chèn ít nhất = |S| − LPS(S), với LPS(S) là <strong>dãy con đối xứng dài nhất</strong> (Longest Palindromic Subsequence).<br><br>
+            <strong>Tại sao?</strong> Dãy con đối xứng dài nhất đã "đối xứng sẵn" — phần còn lại (|S| − LPS) cần được "nhân đôi" bằng cách chèn kí tự đối xứng tương ứng.<br><br>
+            <strong>Quy về LCS:</strong> LPS(S) = LCS(S, reverse(S)).<br>
+            <em>Chứng minh:</em> Dãy con đối xứng của S cũng là dãy con chung của S và reverse(S), và ngược lại. Vậy LPS(S) = LCS(S, T) với T = reverse(S).<br><br>
+            <strong>Công thức LCS:</strong><br>
+            &nbsp;&nbsp;• dp[i][j] = LCS(S[1..i], T[1..j])<br>
+            &nbsp;&nbsp;• Nếu S[i] == T[j]: dp[i][j] = dp[i−1][j−1] + 1<br>
+            &nbsp;&nbsp;• Ngược lại: dp[i][j] = max(dp[i−1][j], dp[i][j−1])<br><br>
+            <strong>Đáp án:</strong> N − dp[N][N].<br><br>
+            <strong>Rolling array:</strong> dp[i][j] chỉ phụ thuộc hàng i−1 → giữ 2 vector prev, curr. Bộ nhớ O(N) thay vì O(N²).<br>
+            Tổng: O(N²) ≈ 2.5 × 10⁷ cho N = 5000 — chạy tốt trong 1 giây.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: CẤP NƯỚC ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Hệ thống cấp nước (CAPNUOC)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Pre-merge Sources + Kruskal MST O(M log M)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: CAPNUOC — Pre-merge sources + Kruskal MST O(M log M)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">struct</span> Edge { <span class="keyword">int</span> u, v; <span class="keyword">long long</span> w; };
+
+<span class="keyword">int</span> par[<span class="number">100005</span>], rnk[<span class="number">100005</span>];
+
+<span class="keyword">int</span> <span class="function">find</span>(<span class="keyword">int</span> x) { <span class="keyword">return</span> par[x] == x ? x : par[x] = <span class="function">find</span>(par[x]); }
+
+<span class="keyword">bool</span> <span class="function">unite</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+    a = <span class="function">find</span>(a); b = <span class="function">find</span>(b);
+    <span class="keyword">if</span> (a == b) <span class="keyword">return false</span>;
+    <span class="keyword">if</span> (rnk[a] &lt; rnk[b]) <span class="function">swap</span>(a, b);
+    par[b] = a;
+    <span class="keyword">if</span> (rnk[a] == rnk[b]) rnk[a]++;
+    <span class="keyword">return true</span>;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CAPNUOC.INP"</span>);
+    ofstream out(<span class="string">"CAPNUOC.OUT"</span>);
+
+    <span class="keyword">int</span> n, m, k;
+    in &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) { par[i] = i; rnk[i] = <span class="number">0</span>; }
+
+    vector&lt;<span class="keyword">int</span>&gt; src(k);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) in &gt;&gt; src[i];
+
+    <span class="comment">// Pre-merge all source cities</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; k; i++) <span class="function">unite</span>(src[<span class="number">0</span>], src[i]);
+
+    vector&lt;Edge&gt; edges(m);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) in &gt;&gt; edges[i].u &gt;&gt; edges[i].v &gt;&gt; edges[i].w;
+
+    <span class="function">sort</span>(edges.<span class="function">begin</span>(), edges.<span class="function">end</span>(),
+        [](<span class="keyword">const</span> Edge&amp; a, <span class="keyword">const</span> Edge&amp; b) { <span class="keyword">return</span> a.w &lt; b.w; });
+
+    <span class="keyword">long long</span> totalCost = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">if</span> (<span class="function">unite</span>(edges[i].u, edges[i].v)) {
+            totalCost += edges[i].w;
+        }
+    }
+
+    <span class="comment">// Check if all connected</span>
+    <span class="keyword">int</span> root = <span class="function">find</span>(<span class="number">1</span>);
+    <span class="keyword">bool</span> connected = <span class="keyword">true</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
+        <span class="keyword">if</span> (<span class="function">find</span>(i) != root) { connected = <span class="keyword">false</span>; <span class="keyword">break</span>; }
+    }
+
+    <span class="keyword">if</span> (connected) out &lt;&lt; totalCost;
+    <span class="keyword">else</span> out &lt;&lt; <span class="number">-1</span>;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N, M ≤ 1000):</strong> Prim hoặc Kruskal cơ bản — O(M log M) hoặc O(N²).<br>
+            <strong>Subtask 2 (N, M ≤ 10000):</strong> Kruskal + DSU, vẫn nhanh.<br>
+            <strong>Subtask 3 (Full):</strong> <strong>Pre-merge + Kruskal</strong>:<br><br>
+            <strong>Biến đổi so với MST truyền thống:</strong><br>
+            Bài MST thông thường nối tất cả N đỉnh thành 1 thành phần liên thông. Ở đây, các nguồn nước đã "tương đương" nhau — chỉ cần mỗi thành phố nối được đến <em>ít nhất một</em> nguồn.<br><br>
+            <strong>Ý tưởng chính:</strong> Gộp trước (pre-merge) tất cả K nguồn nước vào cùng một thành phần liên thông trong DSU (chi phí 0). Sau đó chạy Kruskal như bình thường — các cạnh nối giữa hai nguồn sẽ tự động bị bỏ qua (vì đã cùng tập hợp).<br><br>
+            <strong>Tại sao đúng?</strong> Việc gộp K nguồn nước tương đương với thêm một "siêu đỉnh ảo" nối đến tất cả K nguồn bằng cạnh chi phí 0, rồi tìm MST trên đồ thị mở rộng. Kết quả chính là MST bỏ các cạnh chi phí 0 → đúng tổng chi phí thực tế.<br><br>
+            <strong>Thuật toán:</strong><br>
+            &nbsp;&nbsp;1. Khởi tạo DSU cho N đỉnh<br>
+            &nbsp;&nbsp;2. Union tất cả K nguồn nước (chi phí 0)<br>
+            &nbsp;&nbsp;3. Sort M cạnh theo chi phí tăng dần<br>
+            &nbsp;&nbsp;4. Kruskal: duyệt cạnh, nếu nối 2 thành phần khác nhau → thêm vào MST<br>
+            &nbsp;&nbsp;5. Kiểm tra liên thông: nếu tất cả cùng find → in tổng, ngược lại → -1<br><br>
+            <strong>Độ phức tạp:</strong> O(M log M) cho sort + O(M × α(N)) cho DSU ≈ <strong>O(M log M)</strong>. Với M = 2 × 10⁵ → rất nhanh.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>
