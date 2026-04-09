@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học K10 — Đề 1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC K10 — ĐỀ 1</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: GHÉP CẶP ============= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Ghép cặp thi đấu (GHEPCAP)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Sort + Greedy O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: GHEPCAP — Sort + Greedy O(N log N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"GHEPCAP.INP"</span>);
+    ofstream out(<span class="string">"GHEPCAP.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in >> n;
+    vector&lt;<span class="keyword">int</span>&gt; a(<span class="number">2</span> * n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span> * n; i++) in >> a[i];
+
+    sort(a.begin(), a.end());
+
+    <span class="keyword">long long</span> ans = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span> * n; i += <span class="number">2</span>)
+        ans += a[i + <span class="number">1</span>] - a[i];
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 8):</strong> Duyệt tất cả cách ghép cặp. Với 2N=16 người, số cách ghép = (2N−1)!! = 15×13×…×1 ≈ 2 triệu. Dùng đệ quy: mỗi bước chọn người đầu tiên chưa ghép, duyệt tất cả đối thủ còn lại.<br>
+            <strong>Subtask 2 (Full):</strong> Nhận xét quan trọng: <strong>sort tăng dần rồi ghép cặp liền kề</strong> luôn cho kết quả tối ưu.<br><br>
+            <strong>Tại sao đúng?</strong> Giả sử có 4 người a ≤ b ≤ c ≤ d. So sánh 2 cách ghép:<br>
+            &nbsp;&nbsp;• Ghép liền kề: (a,b) + (c,d) = (b−a) + (d−c)<br>
+            &nbsp;&nbsp;• Ghép chéo: (a,c) + (b,d) = (c−a) + (d−b) = d + c − a − b ≥ (b−a) + (d−c)<br>
+            &nbsp;&nbsp;→ Ghép liền kề luôn ≤ ghép chéo. Quy nạp cho N cặp → sort + ghép liền kề tối ưu.<br>
+            Tổng: O(N log N) cho sort, O(N) cho tính tổng.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: DOANH THU ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Doanh thu mùa hè (TONGMAX)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Kadane O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: TONGMAX — Kadane O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"TONGMAX.INP"</span>);
+    ofstream out(<span class="string">"TONGMAX.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in >> n;
+
+    <span class="keyword">long long</span> cur = <span class="number">0</span>, ans;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">long long</span> x;
+        in >> x;
+        cur += x;
+        <span class="keyword">if</span> (i == <span class="number">0</span>) ans = cur;
+        <span class="keyword">else</span> ans = max(ans, cur);
+        <span class="keyword">if</span> (cur &lt; <span class="number">0</span>) cur = <span class="number">0</span>;
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt tất cả cặp (l, r): tổng = prefix[r] − prefix[l−1]. Hai vòng for O(N²) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> Thuật toán <strong>Kadane</strong> — DP 1 biến:<br><br>
+            <strong>Ý tưởng:</strong> Duy trì biến <em>cur</em> = tổng đoạn con kết thúc tại vị trí hiện tại. Tại mỗi bước:<br>
+            &nbsp;&nbsp;1. Cộng a[i] vào cur<br>
+            &nbsp;&nbsp;2. Cập nhật ans = max(ans, cur)<br>
+            &nbsp;&nbsp;3. Nếu cur &lt; 0 → reset cur = 0 (bỏ đoạn cũ, bắt đầu đoạn mới từ vị trí sau)<br><br>
+            <strong>Tại sao đúng?</strong> Nếu tổng tích lũy âm thì không bao giờ có lợi khi giữ lại, vì bắt đầu đoạn mới từ vị trí kế tiếp luôn tốt hơn.<br>
+            <strong>Lưu ý:</strong> Khi dãy toàn âm, ans sẽ là phần tử lớn nhất (ít âm nhất). Vì ta cập nhật ans TRƯỚC khi reset cur.<br>
+            Tổng: O(N) — chỉ duyệt 1 lần.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: THU HOẠCH VÀNG ======= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Thu hoạch vàng (THUVANG)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — DP 1D O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: THUVANG — DP 1D O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"THUVANG.INP"</span>);
+    ofstream out(<span class="string">"THUVANG.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in >> n;
+    vector&lt;<span class="keyword">long long</span>&gt; a(n + <span class="number">1</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) in >> a[i];
+
+    vector&lt;<span class="keyword">long long</span>&gt; dp(n + <span class="number">1</span>, <span class="number">0</span>);
+    dp[<span class="number">1</span>] = a[<span class="number">1</span>];
+    <span class="keyword">if</span> (n >= <span class="number">2</span>) dp[<span class="number">2</span>] = a[<span class="number">1</span>] + a[<span class="number">2</span>];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++)
+        dp[i] = a[i] + max(dp[i - <span class="number">1</span>], dp[i - <span class="number">2</span>]);
+
+    out &lt;&lt; dp[n];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 20):</strong> Đệ quy thử tất cả đường đi. Tại mỗi ô, có 2 lựa chọn (nhảy 1 hoặc 2) → tối đa 2²⁰ ≈ 10⁶ trạng thái.<br>
+            <strong>Subtask 2 (Full):</strong> Quy hoạch động 1 chiều:<br><br>
+            <strong>Định nghĩa:</strong> dp[i] = tổng vàng lớn nhất khi đi từ ô 1 đến ô i.<br>
+            <strong>Cơ sở:</strong><br>
+            &nbsp;&nbsp;• dp[1] = a[1] (bắt buộc xuất phát tại ô 1)<br>
+            &nbsp;&nbsp;• dp[2] = a[1] + a[2] (chỉ có một cách: 1→2)<br>
+            <strong>Chuyển trạng thái (i ≥ 3):</strong><br>
+            &nbsp;&nbsp;• dp[i] = a[i] + max(dp[i−1], dp[i−2])<br>
+            &nbsp;&nbsp;• Ý nghĩa: đến ô i phải đi qua ô i (thu a[i]), và trước đó ta ở ô i−1 hoặc ô i−2 (chọn cái nào tốt hơn).<br><br>
+            <strong>Kết quả:</strong> dp[N].<br>
+            Tổng: O(N) — duyệt 1 lần từ 3 đến N.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

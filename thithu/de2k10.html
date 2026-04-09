@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học K10 — Đề 2</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC KHỐI 10 — ĐỀ 2</h1>
+            <div class="time">Thời gian làm bài: 150 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: ĐẾM SỐ NGUYÊN TỐ ==== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Đếm số may mắn
+            </div>
+            <div class="problem-file">DEMSO.INP / DEMSO.OUT</div>
+            <div class="problem-content">
+                <p>Trong giờ Toán, thầy giáo gọi các <strong>số nguyên tố</strong> là "số may mắn". Thầy cho hai số nguyên L và R, yêu cầu học sinh đếm xem trong đoạn từ L đến R (gồm cả L và R) có bao nhiêu số may mắn.</p>
+                <p><em>Nhắc lại: Số nguyên tố là số nguyên lớn hơn 1, chỉ chia hết cho 1 và chính nó.</em></p>
+                <p><strong>Yêu cầu:</strong> Đếm số lượng số nguyên tố trong đoạn [L, R].</p>
+
+                <div class="section-label">Dữ liệu vào (DEMSO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng duy nhất chứa hai số nguyên L và R (1 ≤ L ≤ R ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DEMSO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số lượng số nguyên tố trong đoạn [L, R].</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DEMSO.INP</th><th>DEMSO.OUT</th></tr>
+                    <tr>
+                        <td>1 10</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>10 20</td>
+                        <td>4</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Trong đoạn [1, 10], các số nguyên tố là: 2, 3, 5, 7. Tổng cộng 4 số.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Trong đoạn [10, 20], các số nguyên tố là: 11, 13, 17, 19. Tổng cộng 4 số.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): R ≤ 1 000</li>
+                        <li>Subtask 2 (60%): R ≤ 10<sup>6</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: ĐOẠN ĐẸP ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Chọn nhóm bạn
+            </div>
+            <div class="problem-file">DOANDEP.INP / DOANDEP.OUT</div>
+            <div class="problem-content">
+                <p>Trong lớp học có N bạn ngồi thành một hàng ngang, đánh số từ 1 đến N. Bạn thứ i mang theo a<sub>i</sub> cái kẹo.</p>
+                <p>Cô giáo muốn chọn một <strong>nhóm bạn ngồi liên tiếp</strong> (từ bạn thứ l đến bạn thứ r, 1 ≤ l ≤ r ≤ N) để tham gia trò chơi. Điều kiện: tổng số kẹo của nhóm <strong>không vượt quá</strong> K.</p>
+                <p><strong>Yêu cầu:</strong> Đếm số <strong>cách chọn nhóm</strong> thỏa mãn điều kiện trên.</p>
+
+                <div class="section-label">Dữ liệu vào (DOANDEP.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và K (1 ≤ N ≤ 10<sup>5</sup>; 1 ≤ K ≤ 10<sup>14</sup>)</li>
+                        <li>Dòng 2: N số nguyên dương a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DOANDEP.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số cách chọn nhóm.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DOANDEP.INP</th><th>DOANDEP.OUT</th></tr>
+                    <tr>
+                        <td>5 7
+2 1 3 4 1</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>4 3
+1 1 1 1</td>
+                        <td>9</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> 10 nhóm thỏa mãn: 5 nhóm 1 bạn (tổng ≤ 7), 4 nhóm 2 bạn liên tiếp ([2,1]=3, [1,3]=4, [3,4]=7, [4,1]=5, đều ≤ 7). 1 nhóm 3 bạn [2,1,3]=6 ≤ 7. Các nhóm dài hơn đều có tổng &gt; 7.<br>
+                    <strong>Giải thích ví dụ 2:</strong> 4 nhóm 1 bạn (tổng 1 ≤ 3), 3 nhóm 2 bạn (tổng 2 ≤ 3), 2 nhóm 3 bạn (tổng 3 ≤ 3). Nhóm 4 bạn tổng 4 &gt; 3. Tổng = 4 + 3 + 2 = 9.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 1 000</li>
+                        <li>Subtask 2 (60%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: SỬA NGOẶC =========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Sửa biểu thức
+            </div>
+            <div class="problem-file">SUANGOAC.INP / SUANGOAC.OUT</div>
+            <div class="problem-content">
+                <p>Cho một xâu S chỉ gồm các kí tự '<strong>(</strong>' và '<strong>)</strong>'. Một xâu ngoặc được gọi là <strong>hợp lệ</strong> nếu:</p>
+                <p style="text-indent: 0;">
+                    &nbsp;&nbsp;• Xâu rỗng là hợp lệ.<br>
+                    &nbsp;&nbsp;• Nếu A hợp lệ thì (A) hợp lệ.<br>
+                    &nbsp;&nbsp;• Nếu A, B hợp lệ thì AB hợp lệ.
+                </p>
+                <p>Ví dụ: "()", "(())", "()()" là hợp lệ. Còn ")(", "(()", "))" là không hợp lệ.</p>
+                <p>Bạn được phép <strong>thêm</strong> các kí tự '(' hoặc ')' vào <strong>bất kỳ vị trí nào</strong> trong xâu (đầu, cuối, hoặc giữa).</p>
+                <p><strong>Yêu cầu:</strong> Tìm số kí tự <strong>ít nhất</strong> cần thêm để xâu S trở thành xâu ngoặc hợp lệ.</p>
+
+                <div class="section-label">Dữ liệu vào (SUANGOAC.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng duy nhất chứa xâu S (1 ≤ |S| ≤ 10<sup>5</sup>; S chỉ gồm '(' và ')')</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (SUANGOAC.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số kí tự ít nhất cần thêm.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>SUANGOAC.INP</th><th>SUANGOAC.OUT</th></tr>
+                    <tr>
+                        <td>(())</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>)()( </td>
+                        <td>2</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Xâu "(())" đã hợp lệ, không cần thêm gì.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Xâu ")()(": dấu ')' ở đầu thiếu '(' phía trước, dấu '(' ở cuối thiếu ')' phía sau. Thêm 1 kí tự '(' vào đầu và 1 kí tự ')' vào cuối: "()()()" → hợp lệ. Tối thiểu cần thêm 2.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): |S| ≤ 100</li>
+                        <li>Subtask 2 (60%): |S| ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+    </div>
+
+</body>
+</html>

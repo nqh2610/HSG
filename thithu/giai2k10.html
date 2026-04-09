@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học K10 — Đề 2</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC K10 — ĐỀ 2</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: ĐẾM SỐ NGUYÊN TỐ ==== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Đếm số may mắn (DEMSO)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Sàng Eratosthenes O(R log log R)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: DEMSO — Sieve of Eratosthenes O(R log log R)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DEMSO.INP"</span>);
+    ofstream out(<span class="string">"DEMSO.OUT"</span>);
+
+    <span class="keyword">int</span> l, r;
+    in >> l >> r;
+
+    vector&lt;<span class="keyword">bool</span>&gt; sieve(r + <span class="number">1</span>, <span class="keyword">true</span>);
+    sieve[<span class="number">0</span>] = sieve[<span class="number">1</span>] = <span class="keyword">false</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; (<span class="keyword">long long</span>)i * i &lt;= r; i++)
+        <span class="keyword">if</span> (sieve[i])
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = i * i; j &lt;= r; j += i)
+                sieve[j] = <span class="keyword">false</span>;
+
+    <span class="keyword">int</span> cnt = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = l; i &lt;= r; i++)
+        <span class="keyword">if</span> (sieve[i]) cnt++;
+
+    out &lt;&lt; cnt;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (R ≤ 1000):</strong> Kiểm tra từng số x trong [L, R]: duyệt ước từ 2 đến √x, nếu không chia hết → nguyên tố. Tổng O((R−L) × √R) ≈ 30 000.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Sàng Eratosthenes</strong>:<br><br>
+            <strong>Ý tưởng:</strong> Tạo mảng boolean sieve[0..R], ban đầu tất cả = true (giả sử nguyên tố).<br>
+            &nbsp;&nbsp;1. Đánh dấu sieve[0] = sieve[1] = false (0 và 1 không phải nguyên tố)<br>
+            &nbsp;&nbsp;2. Duyệt i từ 2 đến √R: nếu sieve[i] = true, thì đánh dấu tất cả bội của i (i², i²+i, i²+2i, …) = false<br>
+            &nbsp;&nbsp;3. Sau sàng, đếm các sieve[i] = true trong đoạn [L, R]<br><br>
+            <strong>Tại sao bắt đầu từ i²?</strong> Vì các bội nhỏ hơn i² (như 2i, 3i, …) đã bị đánh dấu bởi các số nguyên tố nhỏ hơn i rồi.<br>
+            Tổng: O(R log log R) ≈ 4 × 10⁶ — rất nhanh cho R ≤ 10⁶.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: ĐOẠN ĐẸP ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Chọn nhóm bạn (DOANDEP)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Two Pointers O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: DOANDEP — Two Pointers O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DOANDEP.INP"</span>);
+    ofstream out(<span class="string">"DOANDEP.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    <span class="keyword">long long</span> k;
+    in >> n >> k;
+
+    vector&lt;<span class="keyword">long long</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in >> a[i];
+
+    <span class="keyword">long long</span> ans = <span class="number">0</span>, sum = <span class="number">0</span>;
+    <span class="keyword">int</span> l = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; n; r++) {
+        sum += a[r];
+        <span class="keyword">while</span> (sum > k) {
+            sum -= a[l];
+            l++;
+        }
+        ans += r - l + <span class="number">1</span>;
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt tất cả cặp (l, r): tính tổng bằng prefix sum, đếm nếu tổng ≤ K. Tổng O(N²) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Kỹ thuật Hai con trỏ (Two Pointers)</strong>:<br><br>
+            <strong>Nhận xét:</strong> Vì a[i] &gt; 0 nên khi mở rộng đoạn (tăng r) → tổng tăng, thu hẹp (tăng l) → tổng giảm. Tính chất đơn điệu này cho phép dùng 2 con trỏ.<br><br>
+            <strong>Thuật toán:</strong> Duy trì cửa sổ [l, r] với tổng sum ≤ K:<br>
+            &nbsp;&nbsp;1. Tăng r, cộng a[r] vào sum<br>
+            &nbsp;&nbsp;2. Nếu sum &gt; K, tăng l (trừ a[l]) cho đến khi sum ≤ K<br>
+            &nbsp;&nbsp;3. Lúc này tất cả đoạn kết thúc tại r có l' ∈ [l, r] đều thỏa mãn → đếm (r − l + 1) đoạn<br><br>
+            <strong>Tại sao đúng?</strong> Vì dãy toàn dương, nếu [l, r] thỏa mãn thì mọi đoạn con [l', r] với l' ≥ l cũng thỏa.<br>
+            <strong>Lưu ý:</strong> l chỉ tăng chứ không giảm → mỗi phần tử bị thêm vào 1 lần, bị bỏ ra tối đa 1 lần → tổng O(N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: SỬA NGOẶC =========== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Sửa biểu thức (SUANGOAC)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Greedy O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: SUANGOAC — Greedy O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"SUANGOAC.INP"</span>);
+    ofstream out(<span class="string">"SUANGOAC.OUT"</span>);
+
+    string s;
+    in >> s;
+
+    <span class="keyword">int</span> open = <span class="number">0</span>, add = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">char</span> c : s) {
+        <span class="keyword">if</span> (c == <span class="string">'('</span>) open++;
+        <span class="keyword">else</span> {
+            <span class="keyword">if</span> (open > <span class="number">0</span>) open--;
+            <span class="keyword">else</span> add++;
+        }
+    }
+
+    out &lt;&lt; open + add;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (|S| ≤ 100):</strong> Mô phỏng: lặp lại quá trình "tìm cặp () hợp lệ → xóa" cho đến khi không còn cặp nào. Số kí tự còn lại chính là số cần thêm.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Tham lam (Greedy)</strong> với 2 biến đếm:<br><br>
+            <strong>Ý tưởng:</strong> Duy trì biến <em>open</em> = số dấu '(' chưa được ghép.<br>
+            &nbsp;&nbsp;• Gặp '(' → open++ (thêm 1 ngoặc mở chờ ghép)<br>
+            &nbsp;&nbsp;• Gặp ')' → nếu có '(' chờ (open &gt; 0) thì ghép: open--. Nếu không có '(' nào chờ → ')' này thừa, cần thêm 1 dấu '(' → add++.<br><br>
+            <strong>Sau khi duyệt xong:</strong><br>
+            &nbsp;&nbsp;• <em>open</em> = số '(' chưa được ghép → cần thêm <em>open</em> dấu ')'<br>
+            &nbsp;&nbsp;• <em>add</em> = số ')' thừa → cần thêm <em>add</em> dấu '('<br>
+            &nbsp;&nbsp;• Kết quả = open + add<br><br>
+            <strong>Ví dụ ")()(":</strong> ')' → add=1, '(' → open=1, ')' → ghép open=0, '(' → open=1. Kết quả = 1+1 = 2 ✅<br>
+            Tổng: O(N) — duyệt 1 lần.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>
