@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 14</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 14</h1>
+        </div>
+
+        <!-- ======== BÀI 1: MÃ HÓA ============ -->
+        <div class="problem-title">Bài 1: Mã hóa (MAHOA)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Xử lý xâu nén O(|S|)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: MAHOA — String RLE decode, find char at position K</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"MAHOA.INP"</span>);
+    ofstream out(<span class="string">"MAHOA.OUT"</span>);
+
+    string s;
+    <span class="keyword">long long</span> k;
+    in &gt;&gt; s &gt;&gt; k;
+
+    <span class="keyword">int</span> i = <span class="number">0</span>;
+    <span class="keyword">long long</span> pos = <span class="number">0</span>;
+    <span class="keyword">while</span> (i &lt; (<span class="keyword">int</span>)s.size()) {
+        <span class="keyword">char</span> ch = s[i];
+        i++;
+        <span class="keyword">long long</span> num = <span class="number">0</span>;
+        <span class="keyword">while</span> (i &lt; (<span class="keyword">int</span>)s.size() &amp;&amp; s[i] &gt;= <span class="string">'0'</span> &amp;&amp; s[i] &lt;= <span class="string">'9'</span>) {
+            num = num * <span class="number">10</span> + (s[i] - <span class="string">'0'</span>);
+            i++;
+        }
+        <span class="keyword">if</span> (num == <span class="number">0</span>) num = <span class="number">1</span>;
+        <span class="keyword">if</span> (pos + num &gt;= k) {
+            out &lt;&lt; ch;
+            in.close();
+            out.close();
+            <span class="keyword">return</span> <span class="number">0</span>;
+        }
+        pos += num;
+    }
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (xâu giải nén ≤ 10⁶):</strong> Giải nén thật ra string rồi lấy ký tự tại vị trí K. Đơn giản nhưng tốn bộ nhớ.<br>
+            <strong>Subtask 2 (K ≤ 10¹⁸):</strong> <strong>KHÔNG được giải nén</strong> — xâu có thể dài hàng tỷ tỷ ký tự!<br><br>
+            <strong>Ý tưởng:</strong> Duyệt qua xâu nén, đọc từng cặp (ký tự, số lần). Duy trì biến <em>pos</em> = số ký tự đã "đi qua".<br>
+            &nbsp;&nbsp;• Đọc ký tự ch và số lần num<br>
+            &nbsp;&nbsp;• Nếu pos + num ≥ K → ký tự thứ K chính là ch → xuất và dừng<br>
+            &nbsp;&nbsp;• Ngược lại: pos += num, tiếp tục<br><br>
+            <strong>Kỹ thuật parse:</strong> Về xâu "x10y5": ký tự 'x' theo sau bởi "10" (2 chữ số). Phải đọc hết chữ số: num = num × 10 + (s[i] − '0').<br><br>
+            <strong>Tại sao dùng long long?</strong> K có thể đạt 10¹⁸, vượt xa int (≈ 2 × 10⁹). Biến pos và num phải là <code>long long</code>.<br><br>
+            <strong>Độ phức tạp:</strong> O(|S|) — duyệt xâu nén đúng 1 lần, không giải nén.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ======== BÀI 2: CỨU HỘ ============ -->
+        <div class="problem-title">Bài 2: Cứu hộ (CUUHO)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Re-rooting DP on Tree O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: CUUHO — Re-rooting DP on Tree O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> n;
+vector&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">long long</span>&gt; &gt; adj[<span class="number">100001</span>];
+<span class="keyword">long long</span> sz[<span class="number">100001</span>], dist_arr[<span class="number">100001</span>], dp[<span class="number">100001</span>];
+
+<span class="keyword">void</span> <span class="function">dfs1</span>(<span class="keyword">int</span> u, <span class="keyword">int</span> p, <span class="keyword">long long</span> d) {
+    sz[u] = <span class="number">1</span>;
+    dist_arr[u] = d;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)adj[u].size(); i++) {
+        <span class="keyword">int</span> v = adj[u][i].first;
+        <span class="keyword">long long</span> w = adj[u][i].second;
+        <span class="keyword">if</span> (v != p) {
+            <span class="function">dfs1</span>(v, u, d + w);
+            sz[u] += sz[v];
+        }
+    }
+}
+
+<span class="keyword">void</span> <span class="function">dfs2</span>(<span class="keyword">int</span> u, <span class="keyword">int</span> p) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)adj[u].size(); i++) {
+        <span class="keyword">int</span> v = adj[u][i].first;
+        <span class="keyword">long long</span> w = adj[u][i].second;
+        <span class="keyword">if</span> (v != p) {
+            dp[v] = dp[u] + (n - <span class="number">2</span> * sz[v]) * w;
+            <span class="function">dfs2</span>(v, u);
+        }
+    }
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CUUHO.INP"</span>);
+    ofstream out(<span class="string">"CUUHO.OUT"</span>);
+
+    in &gt;&gt; n;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) {
+        <span class="keyword">int</span> u, v;
+        <span class="keyword">long long</span> w;
+        in &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+        adj[u].push_back(<span class="function">make_pair</span>(v, w));
+        adj[v].push_back(<span class="function">make_pair</span>(u, w));
+    }
+
+    <span class="function">dfs1</span>(<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>);
+    dp[<span class="number">1</span>] = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) dp[<span class="number">1</span>] += dist_arr[i];
+    <span class="function">dfs2</span>(<span class="number">1</span>, <span class="number">0</span>);
+
+    <span class="keyword">long long</span> ans = dp[<span class="number">1</span>];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) ans = <span class="function">min</span>(ans, dp[i]);
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> BFS/DFS từ mỗi đỉnh, tính tổng khoảng cách. O(N²) ≈ 10⁶ — đủ nhanh.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Kỹ thuật Re-rooting (đổi gốc) trên cây O(N)</strong>:<br><br>
+            <strong>Bước 1 — DFS từ gốc (dfs1):</strong><br>
+            &nbsp;&nbsp;• Chọn gốc = 1, tính dist_arr[v] = khoảng cách từ 1 đến v, và sz[v] = số đỉnh trong cây con gốc v<br>
+            &nbsp;&nbsp;• dp[1] = tổng dist_arr[i] ∀ i = tổng khoảng cách từ gốc 1<br><br>
+            <strong>Bước 2 — Re-rooting (dfs2):</strong><br>
+            Khi "chuyển gốc" từ u sang con v (cạnh u–v trọng số w):<br>
+            &nbsp;&nbsp;• sz[v] đỉnh trong cây con v → <strong>gần hơn w</strong> khi gốc chuyển sang v<br>
+            &nbsp;&nbsp;• (n − sz[v]) đỉnh còn lại → <strong>xa hơn w</strong><br>
+            → dp[v] = dp[u] − sz[v] × w + (n − sz[v]) × w = dp[u] + (n − 2 × sz[v]) × w<br><br>
+            <strong>Ví dụ:</strong> Cây 5 đỉnh, gốc 1: dp[1] = 9. Chuyển sang gốc 2 (w=1, sz[2]=3): dp[2] = 9 + (5 − 6) × 1 = 8. Đúng!<br><br>
+            <strong>Tại sao đúng?</strong> Khi gốc dời từ u sang v, mỗi đỉnh trong subtree(v) giảm w, mỗi đỉnh ngoài subtree(v) tăng w. Tổng thay đổi = (n − 2 × sz[v]) × w.<br><br>
+            <strong>Đáp án:</strong> min(dp[i]) ∀ i.<br>
+            <strong>Độ phức tạp:</strong> O(N) — 2 lần DFS, mỗi lần O(N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ======== BÀI 3: MỞ ĐƯỜNG ============ -->
+        <div class="problem-title">Bài 3: Mở đường (MODUONG)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — 0-1 BFS O(N×M)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: MODUONG — 0-1 BFS O(N*M)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"MODUONG.INP"</span>);
+    ofstream out(<span class="string">"MODUONG.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in &gt;&gt; n &gt;&gt; m;
+    vector&lt;string&gt; grid(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in &gt;&gt; grid[i];
+
+    vector&lt;vector&lt;<span class="keyword">int</span>&gt; &gt; d(n, vector&lt;<span class="keyword">int</span>&gt;(m, <span class="number">1000000</span>));
+    deque&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; &gt; dq;
+    d[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;
+    dq.push_front(<span class="function">make_pair</span>(<span class="number">0</span>, <span class="number">0</span>));
+
+    <span class="keyword">int</span> dx[] = {<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>};
+    <span class="keyword">int</span> dy[] = {<span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>};
+
+    <span class="keyword">while</span> (!dq.empty()) {
+        <span class="keyword">int</span> x = dq.front().first, y = dq.front().second;
+        dq.pop_front();
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) {
+            <span class="keyword">int</span> nx = x + dx[i], ny = y + dy[i];
+            <span class="keyword">if</span> (nx &lt; <span class="number">0</span> || nx &gt;= n || ny &lt; <span class="number">0</span> || ny &gt;= m) <span class="keyword">continue</span>;
+            <span class="keyword">int</span> w = (grid[nx][ny] == <span class="string">'#'</span>) ? <span class="number">1</span> : <span class="number">0</span>;
+            <span class="keyword">if</span> (d[x][y] + w &lt; d[nx][ny]) {
+                d[nx][ny] = d[x][y] + w;
+                <span class="keyword">if</span> (w == <span class="number">0</span>) dq.push_front(<span class="function">make_pair</span>(nx, ny));
+                <span class="keyword">else</span> dq.push_back(<span class="function">make_pair</span>(nx, ny));
+            }
+        }
+    }
+
+    out &lt;&lt; d[n - <span class="number">1</span>][m - <span class="number">1</span>];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N, M ≤ 50):</strong> Dijkstra trên lưới. Mỗi ô là đỉnh, cạnh trọng 0 (đường) hoặc 1 (tường). O(NM × log(NM)) ≈ 10⁴ × 13 ≈ 10⁵.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>0-1 BFS</strong> — BFS biến thể với deque cho đồ thị có trọng số 0 hoặc 1:<br><br>
+            <strong>Ý tưởng:</strong> Thay vì priority queue (Dijkstra), dùng <strong>deque</strong>:<br>
+            &nbsp;&nbsp;• Cạnh trọng 0 (ô trống) → đẩy vào <strong>đầu</strong> deque (push_front)<br>
+            &nbsp;&nbsp;• Cạnh trọng 1 (phá tường) → đẩy vào <strong>cuối</strong> deque (push_back)<br><br>
+            <strong>Tại sao đúng?</strong> Deque luôn giữ thứ tự tăng dần: các đỉnh chi phí nhỏ ở đầu, chi phí lớn ở cuối. Lấy từ đầu → đảm bảo xử lý đỉnh theo thứ tự chi phí tăng dần (giống Dijkstra).<br><br>
+            <strong>So sánh hiệu năng:</strong><br>
+            &nbsp;&nbsp;• Dijkstra: O(NM × log(NM)) — priority queue overhead<br>
+            &nbsp;&nbsp;• 0-1 BFS: O(NM) — deque, mỗi ô vào/ra tối đa 1 lần<br>
+            → Nhanh hơn Dijkstra vì trọng số chỉ có 0 và 1.<br><br>
+            <strong>Ví dụ:</strong> Lưới 3×3a ".#. / ### / .#.": phải phá ít nhất 2 bức tường. Deque BFS tìm ra d[2][2] = 2.<br><br>
+            <strong>Lưu ý:</strong> Ô (1,1) luôn là '.' → d[0][0] = 0. Không cần kiểm tra ô ban đầu.<br>
+            <strong>Độ phức tạp:</strong> O(N × M) ≈ 10⁶ — rất nhanh.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">— HẾT LỜI GIẢI —</div>
+        <div style="text-align: center; color: #888; font-size: 0.85em; margin-top: 15px; font-style: italic;">Trưởng môn nhân: <strong>Hùng Thất Công</strong> — Môn phái <strong>Code Lụi</strong></div>
+    </div>
+
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

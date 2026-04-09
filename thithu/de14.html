@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học — Đề 14</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Times New Roman', serif; background: #f5f5f5; min-height: 100vh; padding: 20px; line-height: 1.7; font-size: 16px; }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 40px 50px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .exam-header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #333; padding-bottom: 15px; }
+        .exam-header h1 { font-size: 1.5em; text-transform: uppercase; color: #c0392b; margin: 10px 0 5px; }
+        .exam-header .time { font-style: italic; font-size: 0.9em; margin-top: 5px; }
+        .problem { margin: 30px 0; page-break-inside: avoid; }
+        .problem-title { font-size: 1.25em; font-weight: bold; color: #c0392b; margin-bottom: 5px; }
+        .problem-file { font-style: italic; color: #666; font-size: 0.9em; margin-bottom: 10px; }
+        .problem-content { text-align: justify; }
+        .problem-content p { margin-bottom: 10px; text-indent: 2em; }
+        .problem-content p:first-child { text-indent: 0; }
+        .section-label { font-weight: bold; font-style: italic; text-decoration: underline; margin-top: 15px; margin-bottom: 8px; color: #2c3e50; }
+        .format-box { background: #fafafa; padding: 12px 18px; margin: 8px 0; border-left: 3px solid #333; font-size: 0.95em; }
+        .format-box ul { margin-left: 20px; list-style: disc; }
+        .format-box li { margin-bottom: 4px; }
+        .example-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        .example-table th { background: #ecf0f1; padding: 8px 15px; border: 1px solid #bbb; font-weight: bold; width: 50%; }
+        .example-table td { padding: 8px 15px; border: 1px solid #bbb; font-family: 'Consolas', monospace; vertical-align: top; white-space: pre; }
+        .subtask { margin-top: 12px; }
+        .subtask ul { margin-left: 25px; list-style: disc; }
+        .subtask li { margin-bottom: 3px; }
+        .explain { margin-top: 10px; padding: 10px 15px; background: #fef9e7; border-left: 3px solid #f39c12; font-size: 0.92em; }
+        .separator { border: none; border-top: 1px dashed #aaa; margin: 25px 0; }
+        @media print { body { background: white; padding: 0; } .container { box-shadow: none; padding: 20px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC — ĐỀ 14</h1>
+            <div class="time">Thời gian làm bài: 120 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- BÀI 1: MÃ HÓA -->
+        <div class="problem">
+            <div class="problem-title">Bài 1: Mã hóa</div>
+            <div class="problem-file">MAHOA.INP / MAHOA.OUT</div>
+            <div class="problem-content">
+                <p>Một hệ thống truyền tin sử dụng phương pháp nén xâu: mỗi kí tự được ghi kèm số lần lặp liên tiếp. Ví dụ, xâu <code>"aaabbccccc"</code> được nén thành <code>"a3b2c5"</code>.</p>
+                <p>Cho xâu nén S và một số nguyên K. Tìm <strong>kí tự thứ K</strong> (đánh số từ 1) trong xâu gốc sau khi giải nén.</p>
+
+                <div class="section-label">Dữ liệu vào (MAHOA.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Xâu S (chỉ gồm chữ cái thường và chữ số, |S| ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: Số nguyên K (1 ≤ K ≤ 10<sup>18</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (MAHOA.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một kí tự duy nhất — kí tự thứ K trong xâu sau giải nén.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>MAHOA.INP</th><th>MAHOA.OUT</th></tr>
+                    <tr>
+                        <td>a3b2c5
+6</td>
+                        <td>c</td>
+                    </tr>
+                    <tr>
+                        <td>x10y5
+12</td>
+                        <td>y</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Xâu gốc = "aaabbccccc" (độ dài 10). Kí tự thứ 6 = 'c'.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Xâu gốc = "xxxxxxxxxxyyyyy" (10 chữ 'x' + 5 chữ 'y' = 15 kí tự). Kí tự thứ 12 = 'y'.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): Xâu sau giải nén có độ dài ≤ 10<sup>6</sup></li>
+                        <li>Subtask 2 (60%): K ≤ 10<sup>18</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- BÀI 2: CỨU HỘ -->
+        <div class="problem">
+            <div class="problem-title">Bài 2: Cứu hộ</div>
+            <div class="problem-file">CUUHO.INP / CUUHO.OUT</div>
+            <div class="problem-content">
+                <p>Thành phố có N khu dân cư đánh số từ 1 đến N, nối với nhau bởi N−1 con đường (mỗi đường nối 2 khu, có chiều dài dương). Từ bất kỳ khu dân cư nào cũng có thể đi đến bất kỳ khu nào khác.</p>
+                <p>Chính quyền muốn đặt <strong>đúng một trạm cứu hộ</strong> tại một khu dân cư. Khi có sự cố, đội cứu hộ phải di chuyển từ trạm đến nơi xảy ra sự cố.</p>
+                <p><strong>Yêu cầu:</strong> Chọn khu dân cư đặt trạm sao cho <strong>tổng khoảng cách</strong> từ trạm đến tất cả các khu dân cư còn lại là <strong>nhỏ nhất</strong>. In tổng khoảng cách nhỏ nhất đó.</p>
+
+                <div class="section-label">Dữ liệu vào (CUUHO.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>N−1 dòng tiếp theo, mỗi dòng chứa ba số u, v, w — đường nối khu u và khu v, chiều dài w (1 ≤ w ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (CUUHO.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là tổng khoảng cách nhỏ nhất.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>CUUHO.INP</th><th>CUUHO.OUT</th></tr>
+                    <tr>
+                        <td>5
+1 2 1
+1 3 2
+2 4 3
+2 5 1</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>3
+1 2 5
+2 3 3</td>
+                        <td>8</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Đặt trạm tại khu 2: khoảng cách đến 1 = 1, đến 3 = 3, đến 4 = 3, đến 5 = 1. Tổng = 8. Không có vị trí nào cho tổng nhỏ hơn.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Đặt tại khu 2: khoảng cách đến 1 = 5, đến 3 = 3. Tổng = 8.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 1 000</li>
+                        <li>Subtask 2 (60%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- BÀI 3: MỞ ĐƯỜNG -->
+        <div class="problem">
+            <div class="problem-title">Bài 3: Mở đường</div>
+            <div class="problem-file">MODUONG.INP / MODUONG.OUT</div>
+            <div class="problem-content">
+                <p>Một khu đô thị được quy hoạch dạng lưới ô vuông N hàng, M cột. Mỗi ô vuông hoặc là <strong>đường đi</strong> (kí hiệu <code>'.'</code>) hoặc là <strong>bức tường</strong> (kí hiệu <code>'#'</code>).</p>
+                <p>Người dân muốn đi bộ từ ô góc trái trên <strong>(1, 1)</strong> đến ô góc phải dưới <strong>(N, M)</strong>. Từ một ô, có thể di chuyển sang ô kề cạnh (lên, xuống, trái, phải). Di chuyển vào ô <code>'.'</code> không tốn chi phí. Để đi qua ô <code>'#'</code>, cần <strong>phá tường</strong> tốn 1 đơn vị chi phí.</p>
+                <p>Ô (1, 1) luôn là <code>'.'</code>.</p>
+                <p><strong>Yêu cầu:</strong> Tìm <strong>chi phí nhỏ nhất</strong> để đi từ (1, 1) đến (N, M).</p>
+
+                <div class="section-label">Dữ liệu vào (MODUONG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và M (1 ≤ N, M ≤ 1 000)</li>
+                        <li>N dòng tiếp theo, mỗi dòng chứa M kí tự <code>'.'</code> hoặc <code>'#'</code></li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (MODUONG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là chi phí nhỏ nhất.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>MODUONG.INP</th><th>MODUONG.OUT</th></tr>
+                    <tr>
+                        <td>3 3
+.#.
+###
+.#.</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>3 4
+..#.
+.##.
+.#..</td>
+                        <td>1</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Đi (1,1)→(2,1)→(3,1)→(3,2)→(3,3): phá 2 tường tại (2,1) và (3,2). Hoặc (1,1)→(1,2)→(1,3)→(2,3)→(3,3): phá 2 tường tại (1,2) và (2,3). Chi phí tối thiểu = 2.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Đi (1,1)→(2,1)→(3,1)→phá (3,2)→(3,3)→(3,4). Chi phí = 1.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N, M ≤ 50</li>
+                        <li>Subtask 2 (60%): N, M ≤ 1 000</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">— HẾT —</div>
+        <div style="text-align: center; color: #888; font-size: 0.85em; margin-top: 15px; font-style: italic;">Trưởng môn nhân: <strong>Hùng Thất Công</strong> — Môn phái <strong>Code Lụi</strong></div>
+    </div>
+</body>
+</html>

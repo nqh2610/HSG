@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 15</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 15</h1>
+        </div>
+
+        <!-- ======== BÀI 1: CHUYẾN XE ============ -->
+        <div class="problem-title">Bài 1: Chuyến xe liên tỉnh (CHUYENXE)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Floyd-Warshall O(N³)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: CHUYENXE — Floyd-Warshall O(N^3)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHUYENXE.INP"</span>);
+    ofstream out(<span class="string">"CHUYENXE.OUT"</span>);
+
+    <span class="keyword">int</span> n, m, q;
+    in &gt;&gt; n &gt;&gt; m &gt;&gt; q;
+
+    <span class="keyword">const long long</span> INF = <span class="number">1e18</span>;
+    vector&lt;vector&lt;<span class="keyword">long long</span>&gt; &gt; d(n + <span class="number">1</span>, vector&lt;<span class="keyword">long long</span>&gt;(n + <span class="number">1</span>, INF));
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) d[i][i] = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        <span class="keyword">long long</span> w;
+        in &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+        d[u][v] = <span class="function">min</span>(d[u][v], w);
+    }
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= n; k++)
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)
+                <span class="keyword">if</span> (d[i][k] &lt; INF &amp;&amp; d[k][j] &lt; INF)
+                    d[i][j] = <span class="function">min</span>(d[i][j], d[i][k] + d[k][j]);
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; i++) {
+        <span class="keyword">int</span> s, t;
+        in &gt;&gt; s &gt;&gt; t;
+        <span class="keyword">if</span> (d[s][t] &gt;= INF) out &lt;&lt; -<span class="number">1</span>;
+        <span class="keyword">else</span> out &lt;&lt; d[s][t];
+        out &lt;&lt; <span class="string">"\n"</span>;
+    }
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 50, Q ≤ 100):</strong> Chạy Dijkstra cho mỗi truy vấn. O(Q × (M + N log N)) ≈ 100 × (2500 + 300) ≈ 3 × 10⁵.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Floyd-Warshall — Tìm đường ngắn nhất mọi cặp đỉnh</strong>:<br><br>
+            <strong>Ý tưởng:</strong> Xây ma trận khoảng cách d[i][j] cho MỌI cặp (i, j). Sau đó mỗi truy vấn chỉ cần tra bảng O(1).<br><br>
+            <strong>Thuật toán Floyd (3 vòng lặp):</strong><br>
+            &nbsp;&nbsp;<code>for k = 1 → N: for i = 1 → N: for j = 1 → N:</code><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<code>d[i][j] = min(d[i][j], d[i][k] + d[k][j])</code><br><br>
+            <strong>Ý nghĩa:</strong> Vòng k xét nút trung gian k. Nếu đi i → k → j rẻ hơn đường hiện tại i → j, thì cập nhật.<br><br>
+            <strong>Tại sao k ở ngoài cùng?</strong> Đảm bảo khi xét k, tất cả đường qua {1, 2, …, k−1} đã được tính. Đây là bản chất QHĐ: d<sub>k</sub>[i][j] = đường ngắn nhất i→j chỉ qua trung gian ∈ {1,…,k}.<br><br>
+            <strong>Kiểm tra INF:</strong> Trước khi cộng d[i][k] + d[k][j], kiểm tra cả hai &lt; INF để tránh tràn số.<br><br>
+            <strong>Tại sao không dùng Dijkstra?</strong> Dijkstra cho 1 nguồn → chạy N lần = O(N × (M + N log N)). Với N = 400: 400 × (160000 + 3500) ≈ 6.5 × 10⁷. Floyd: 400³ = 6.4 × 10⁷. Tương đương, nhưng Floyd code đơn giản hơn nhiều.<br><br>
+            <strong>Tại sao không dùng BFS?</strong> Đồ thị có trọng số → BFS thuần không áp dụng được.<br>
+            <strong>Độ phức tạp:</strong> Tiền xử lý O(N³), mỗi query O(1). Tổng O(N³ + Q).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ======== BÀI 2: CHIA ĐÔI ============ -->
+        <div class="problem-title">Bài 2: Chia đôi (CHIADOI)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Bipartite BFS O(N+M)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: CHIADOI — Bipartite BFS O(N+M)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"CHIADOI.INP"</span>);
+    ofstream out(<span class="string">"CHIADOI.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in &gt;&gt; n &gt;&gt; m;
+    vector&lt;vector&lt;<span class="keyword">int</span>&gt; &gt; adj(n + <span class="number">1</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> u, v;
+        in &gt;&gt; u &gt;&gt; v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector&lt;<span class="keyword">int</span>&gt; color(n + <span class="number">1</span>, -<span class="number">1</span>);
+    <span class="keyword">bool</span> ok = <span class="keyword">true</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> s = <span class="number">1</span>; s &lt;= n &amp;&amp; ok; s++) {
+        <span class="keyword">if</span> (color[s] != -<span class="number">1</span>) <span class="keyword">continue</span>;
+        queue&lt;<span class="keyword">int</span>&gt; q;
+        color[s] = <span class="number">1</span>;
+        q.push(s);
+        <span class="keyword">while</span> (!q.empty() &amp;&amp; ok) {
+            <span class="keyword">int</span> u = q.front();
+            q.pop();
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (<span class="keyword">int</span>)adj[u].size(); j++) {
+                <span class="keyword">int</span> v = adj[u][j];
+                <span class="keyword">if</span> (color[v] == -<span class="number">1</span>) {
+                    color[v] = <span class="number">3</span> - color[u];
+                    q.push(v);
+                } <span class="keyword">else if</span> (color[v] == color[u]) {
+                    ok = <span class="keyword">false</span>;
+                }
+            }
+        }
+    }
+
+    <span class="keyword">if</span> (!ok) {
+        out &lt;&lt; <span class="string">"NO"</span>;
+    } <span class="keyword">else</span> {
+        out &lt;&lt; <span class="string">"YES"</span> &lt;&lt; <span class="string">"\n"</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+            <span class="keyword">if</span> (i &gt; <span class="number">1</span>) out &lt;&lt; <span class="string">" "</span>;
+            out &lt;&lt; color[i];
+        }
+    }
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N, M ≤ 1000):</strong> BFS/DFS tô màu. Cùng thuật toán, subtask chỉ khác ràng buộc.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Kiểm tra đồ thị 2 phía (Bipartite Check) bằng BFS tô 2 màu</strong>:<br><br>
+            <strong>Định lý:</strong> Đồ thị chia được 2 nhóm thỏa mãn ⟺ đồ thị là <strong>đồ thị 2 phía</strong> (bipartite) ⟺ <strong>không có chu trình lẻ</strong>.<br><br>
+            <strong>Thuật toán:</strong><br>
+            &nbsp;&nbsp;1. Khởi tạo color[] = −1 (chưa tô)<br>
+            &nbsp;&nbsp;2. Với mỗi đỉnh chưa tô s: tô color[s] = 1, BFS mở rộng<br>
+            &nbsp;&nbsp;3. Khi xét cạnh u → v:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• Nếu v chưa tô: color[v] = 3 − color[u] (đổi màu: 1↔2)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• Nếu v <strong>cùng màu</strong> u: phát hiện chu trình lẻ → <strong>không thể chia</strong> → "NO"<br>
+            &nbsp;&nbsp;4. Nếu BFS hoàn tất không mâu thuẫn → "YES" + xuất color[]<br><br>
+            <strong>Tại sao "3 − color[u]"?</strong> Nếu u màu 1 → v màu 2. Nếu u màu 2 → v màu 1. Phép 3 − x đổi giữa 1 và 2.<br><br>
+            <strong>Xử lý đồ thị không liên thông:</strong> Vòng <code>for s = 1 → N</code> đảm bảo mọi thành phần liên thông đều được kiểm tra.<br><br>
+            <strong>Ví dụ 1:</strong> Chu trình 4 đỉnh (1–2–3–4–1) là chu trình chẵn → bipartite: {1,3} vs {2,4}.<br>
+            <strong>Ví dụ 2:</strong> Tam giác (1–2–3–1) là chu trình lẻ → không bipartite → "NO".<br><br>
+            <strong>Độ phức tạp:</strong> O(N + M) — BFS chuẩn.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ======== BÀI 3: GIẢM GIÁ ============ -->
+        <div class="problem-title">Bài 3: Giảm giá (GIAMGIA)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Bellman-Ford O(N×M)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: GIAMGIA — Bellman-Ford O(N*M)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"GIAMGIA.INP"</span>);
+    ofstream out(<span class="string">"GIAMGIA.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in &gt;&gt; n &gt;&gt; m;
+
+    vector&lt;<span class="keyword">int</span>&gt; eu(m), ev(m);
+    vector&lt;<span class="keyword">long long</span>&gt; ew(m);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)
+        in &gt;&gt; eu[i] &gt;&gt; ev[i] &gt;&gt; ew[i];
+
+    <span class="keyword">const long long</span> INF = <span class="number">1e18</span>;
+    vector&lt;<span class="keyword">long long</span>&gt; d(n + <span class="number">1</span>, INF);
+    d[<span class="number">1</span>] = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) {
+        <span class="keyword">bool</span> updated = <span class="keyword">false</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++) {
+            <span class="keyword">if</span> (d[eu[j]] &lt; INF &amp;&amp; d[eu[j]] + ew[j] &lt; d[ev[j]]) {
+                d[ev[j]] = d[eu[j]] + ew[j];
+                updated = <span class="keyword">true</span>;
+            }
+        }
+        <span class="keyword">if</span> (!updated) <span class="keyword">break</span>;
+    }
+
+    <span class="keyword">if</span> (d[n] &gt;= INF) out &lt;&lt; -<span class="number">1</span>;
+    <span class="keyword">else</span> out &lt;&lt; d[n];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (w ≥ 0, N ≤ 100):</strong> Dijkstra chuẩn. O(M + N log N) ≈ 5000 + 700 ≈ 6000. Hoặc thậm chí BFS nếu trọng số bằng nhau.<br>
+            <strong>Subtask 2 (w có thể âm):</strong> <strong>Dijkstra KHÔNG hoạt động với cạnh âm!</strong> Phải dùng <strong>Bellman-Ford</strong>:<br><br>
+            <strong>Tại sao Dijkstra sai với cạnh âm?</strong> Dijkstra greedy: đỉnh đã lấy ra khỏi PQ coi là "tối ưu". Nhưng cạnh âm có thể giảm khoảng cách <em>sau khi</em> đỉnh đã bị đánh dấu → sai.<br><br>
+            <strong>Thuật toán Bellman-Ford:</strong><br>
+            &nbsp;&nbsp;1. Khởi tạo: d[1] = 0, d[i] = +∞ ∀ i ≠ 1<br>
+            &nbsp;&nbsp;2. Lặp N−1 lần: duyệt toàn bộ M cạnh, <strong>relax</strong> mỗi cạnh (u, v, w):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Nếu d[u] + w &lt; d[v] → d[v] = d[u] + w<br>
+            &nbsp;&nbsp;3. Đáp án = d[N]<br><br>
+            <strong>Tại sao N−1 lần?</strong> Đường ngắn nhất có tối đa N−1 cạnh. Sau lần lặp thứ k, d[v] chính xác cho mọi đường qua ≤ k cạnh. Sau N−1 lần → chính xác hoàn toàn.<br><br>
+            <strong>Tối ưu early termination:</strong> Nếu một lần lặp không relax được cạnh nào (updated = false) → đã hội tụ → break sớm. Trường hợp tốt nhất chỉ 1 vòng lặp.<br><br>
+            <strong>Ví dụ:</strong> 1→2 = 3, 2→3 = −2, 3→4 = 2. Đường 1→2→3→4 = 3 + (−2) + 2 = 3. Rẻ hơn 1→2→4 = 9.<br><br>
+            <strong>Lưu ý:</strong> Kiểm tra d[eu[j]] &lt; INF trước khi cộng, tránh tràn số (INF + w có thể overflow).<br>
+            <strong>Độ phức tạp:</strong> O(N × M) = 1000 × 5000 = 5 × 10⁶ — đủ nhanh.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">— HẾT LỜI GIẢI —</div>
+        <div style="text-align: center; color: #888; font-size: 0.85em; margin-top: 15px; font-style: italic;">Trưởng môn nhân: <strong>Hùng Thất Công</strong> — Môn phái <strong>Code Lụi</strong></div>
+    </div>
+
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

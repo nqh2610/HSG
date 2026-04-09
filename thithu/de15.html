@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học — Đề 15</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Times New Roman', serif; background: #f5f5f5; min-height: 100vh; padding: 20px; line-height: 1.7; font-size: 16px; }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 40px 50px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .exam-header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #333; padding-bottom: 15px; }
+        .exam-header h1 { font-size: 1.5em; text-transform: uppercase; color: #c0392b; margin: 10px 0 5px; }
+        .exam-header .time { font-style: italic; font-size: 0.9em; margin-top: 5px; }
+        .problem { margin: 30px 0; page-break-inside: avoid; }
+        .problem-title { font-size: 1.25em; font-weight: bold; color: #c0392b; margin-bottom: 5px; }
+        .problem-file { font-style: italic; color: #666; font-size: 0.9em; margin-bottom: 10px; }
+        .problem-content { text-align: justify; }
+        .problem-content p { margin-bottom: 10px; text-indent: 2em; }
+        .problem-content p:first-child { text-indent: 0; }
+        .section-label { font-weight: bold; font-style: italic; text-decoration: underline; margin-top: 15px; margin-bottom: 8px; color: #2c3e50; }
+        .format-box { background: #fafafa; padding: 12px 18px; margin: 8px 0; border-left: 3px solid #333; font-size: 0.95em; }
+        .format-box ul { margin-left: 20px; list-style: disc; }
+        .format-box li { margin-bottom: 4px; }
+        .example-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        .example-table th { background: #ecf0f1; padding: 8px 15px; border: 1px solid #bbb; font-weight: bold; width: 50%; }
+        .example-table td { padding: 8px 15px; border: 1px solid #bbb; font-family: 'Consolas', monospace; vertical-align: top; white-space: pre; }
+        .subtask { margin-top: 12px; }
+        .subtask ul { margin-left: 25px; list-style: disc; }
+        .subtask li { margin-bottom: 3px; }
+        .explain { margin-top: 10px; padding: 10px 15px; background: #fef9e7; border-left: 3px solid #f39c12; font-size: 0.92em; }
+        .separator { border: none; border-top: 1px dashed #aaa; margin: 25px 0; }
+        @media print { body { background: white; padding: 0; } .container { box-shadow: none; padding: 20px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC — ĐỀ 15</h1>
+            <div class="time">Thời gian làm bài: 120 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- BÀI 1: CHUYẾN XE -->
+        <div class="problem">
+            <div class="problem-title">Bài 1: Chuyến xe liên tỉnh</div>
+            <div class="problem-file">CHUYENXE.INP / CHUYENXE.OUT</div>
+            <div class="problem-content">
+                <p>Có N thành phố đánh số từ 1 đến N và M tuyến xe một chiều. Tuyến thứ i đi từ thành phố u<sub>i</sub> đến thành phố v<sub>i</sub> với giá vé w<sub>i</sub>.</p>
+                <p>Có Q truy vấn. Mỗi truy vấn cho hai thành phố s và t, hỏi: <strong>giá vé rẻ nhất</strong> để đi từ s đến t là bao nhiêu? Nếu không thể đi được, trả lời −1.</p>
+
+                <div class="section-label">Dữ liệu vào (CHUYENXE.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Ba số nguyên N, M, Q (1 ≤ N ≤ 400; M ≤ N²; Q ≤ 10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo, mỗi dòng chứa ba số u, v, w (1 ≤ u, v ≤ N; 1 ≤ w ≤ 10<sup>6</sup>)</li>
+                        <li>Q dòng tiếp theo, mỗi dòng chứa hai số s, t</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (CHUYENXE.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Q dòng, mỗi dòng một số nguyên là chi phí rẻ nhất hoặc −1.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>CHUYENXE.INP</th><th>CHUYENXE.OUT</th></tr>
+                    <tr>
+                        <td>4 5 3
+1 2 3
+1 3 7
+2 3 1
+2 4 6
+3 4 2
+1 4
+1 3
+3 1</td>
+                        <td>6
+4
+-1</td>
+                    </tr>
+                    <tr>
+                        <td>3 4 2
+1 2 5
+2 3 3
+3 1 1
+1 3 10
+1 3
+3 2</td>
+                        <td>8
+6</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> 1→4: đi 1→2→3→4 tốn 3+1+2 = 6. 1→3: đi 1→2→3 tốn 3+1 = 4 (rẻ hơn trực tiếp 7). 3→1: không có đường → −1.<br>
+                    <strong>Giải thích ví dụ 2:</strong> 1→3: đi 1→2→3 tốn 5+3 = 8 (rẻ hơn trực tiếp 10). 3→2: đi 3→1→2 tốn 1+5 = 6.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 50, Q ≤ 100</li>
+                        <li>Subtask 2 (60%): N ≤ 400, Q ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- BÀI 2: CHIA ĐÔI -->
+        <div class="problem">
+            <div class="problem-title">Bài 2: Chia đôi</div>
+            <div class="problem-file">CHIADOI.INP / CHIADOI.OUT</div>
+            <div class="problem-content">
+                <p>Lớp có N bạn đánh số từ 1 đến N. Có M cặp bạn <strong>mâu thuẫn</strong> với nhau.</p>
+                <p>Giáo viên muốn chia lớp thành <strong>đúng 2 đội</strong> sao cho mỗi cặp mâu thuẫn thuộc <strong>hai đội khác nhau</strong>.</p>
+                <p><strong>Yêu cầu:</strong> Xác định có thể chia được không. Nếu được, in cách chia.</p>
+
+                <div class="section-label">Dữ liệu vào (CHIADOI.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và M (1 ≤ N, M ≤ 10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo, mỗi dòng chứa hai số u, v — cặp mâu thuẫn (1 ≤ u, v ≤ N; u ≠ v)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (CHIADOI.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: <code>YES</code> hoặc <code>NO</code></li>
+                        <li>Nếu <code>YES</code>, dòng 2: N số, số thứ i là 1 hoặc 2 — đội của bạn thứ i</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>CHIADOI.INP</th><th>CHIADOI.OUT</th></tr>
+                    <tr>
+                        <td>4 4
+1 2
+2 3
+3 4
+4 1</td>
+                        <td>YES
+1 2 1 2</td>
+                    </tr>
+                    <tr>
+                        <td>3 3
+1 2
+2 3
+3 1</td>
+                        <td>NO</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Bạn 1, 3 vào đội 1; bạn 2, 4 vào đội 2. Mọi cặp mâu thuẫn đều khác đội.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Ba bạn 1–2, 2–3, 3–1 tạo "tam giác" mâu thuẫn. Không thể chia 2 đội thỏa mãn.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N, M ≤ 1 000</li>
+                        <li>Subtask 2 (60%): N, M ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- BÀI 3: GIẢM GIÁ -->
+        <div class="problem">
+            <div class="problem-title">Bài 3: Giảm giá</div>
+            <div class="problem-file">GIAMGIA.INP / GIAMGIA.OUT</div>
+            <div class="problem-content">
+                <p>Thành phố có N cửa hàng đánh số từ 1 đến N, nối bởi M con đường <strong>một chiều</strong>. Đường thứ i đi từ cửa hàng u<sub>i</sub> đến v<sub>i</sub> tốn chi phí w<sub>i</sub>. Đặc biệt, một số con đường có chương trình "<strong>giảm giá</strong>" — chi phí di chuyển là số âm (tức được hoàn tiền khi đi qua).</p>
+                <p>Bạn ở cửa hàng 1 và muốn đến cửa hàng N.</p>
+                <p><strong>Yêu cầu:</strong> Tìm <strong>chi phí nhỏ nhất</strong> để đi từ cửa hàng 1 đến cửa hàng N. Nếu không có đường đi, in −1.</p>
+                <p><em>(Dữ liệu bảo đảm không có chu trình âm.)</em></p>
+
+                <div class="section-label">Dữ liệu vào (GIAMGIA.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và M (1 ≤ N ≤ 1 000; 1 ≤ M ≤ 5 000)</li>
+                        <li>M dòng tiếp theo, mỗi dòng chứa ba số u, v, w (1 ≤ u, v ≤ N; −10<sup>6</sup> ≤ w ≤ 10<sup>6</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (GIAMGIA.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là chi phí nhỏ nhất, hoặc −1 nếu không có đường đi.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>GIAMGIA.INP</th><th>GIAMGIA.OUT</th></tr>
+                    <tr>
+                        <td>4 5
+1 2 3
+1 3 5
+2 3 -2
+2 4 6
+3 4 2</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>3 3
+1 2 4
+2 3 -3
+1 3 5</td>
+                        <td>1</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Đi 1→2→3→4: chi phí 3 + (−2) + 2 = 3. Rẻ hơn 1→2→4 (3+6=9) hay 1→3→4 (5+2=7).<br>
+                    <strong>Giải thích ví dụ 2:</strong> Đi 1→2→3: chi phí 4 + (−3) = 1. Rẻ hơn 1→3 trực tiếp (5).
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): w ≥ 0, N ≤ 100</li>
+                        <li>Subtask 2 (60%): −10<sup>6</sup> ≤ w ≤ 10<sup>6</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">— HẾT —</div>
+        <div style="text-align: center; color: #888; font-size: 0.85em; margin-top: 15px; font-style: italic;">Trưởng môn nhân: <strong>Hùng Thất Công</strong> — Môn phái <strong>Code Lụi</strong></div>
+    </div>
+</body>
+</html>
