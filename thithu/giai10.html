@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 10</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 10</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: HÌNH CHỮ NHẬT ======== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Biểu đồ cột (HINCHU)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Monotone Stack O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: HINCHU — Largest Rectangle in Histogram, Mono Stack O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"HINCHU.INP"</span>);
+    ofstream out(<span class="string">"HINCHU.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+    vector&lt;<span class="keyword">int</span>&gt; h(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in &gt;&gt; h[i];
+
+    stack&lt;<span class="keyword">int</span>&gt; st;
+    <span class="keyword">long long</span> ans = <span class="number">0</span>;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; i++) {
+        <span class="keyword">int</span> cur = (i == n) ? <span class="number">0</span> : h[i];
+        <span class="keyword">while</span> (!st.<span class="function">empty</span>() &amp;&amp; h[st.<span class="function">top</span>()] &gt; cur) {
+            <span class="keyword">long long</span> height = h[st.<span class="function">top</span>()]; st.<span class="function">pop</span>();
+            <span class="keyword">long long</span> width = st.<span class="function">empty</span>() ? i : i - st.<span class="function">top</span>() - <span class="number">1</span>;
+            ans = <span class="function">max</span>(ans, height * width);
+        }
+        st.<span class="function">push</span>(i);
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 5000):</strong> Duyệt mọi cặp (l, r): tìm min(h[l..r]) bằng cách cập nhật khi mở rộng r, tính diện tích = min × (r−l+1). Tổng O(N²) ≈ 2.5 × 10⁷.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Monotone Stack (Ngăn xếp đơn điệu)</strong>:<br><br>
+            <strong>Ý tưởng:</strong> Với mỗi cột i, tìm "phạm vi mở rộng" — đoạn liên tiếp mà h[i] là giá trị nhỏ nhất. Diện tích = h[i] × chiều rộng đoạn đó.<br><br>
+            <strong>Thuật toán:</strong> Duy trì stack chứa chỉ số với chiều cao <em>tăng dần</em> từ đáy lên đỉnh:<br>
+            &nbsp;&nbsp;1. Duyệt i = 0 đến N (thêm "cột ảo" h = 0 ở cuối để xả stack)<br>
+            &nbsp;&nbsp;2. Nếu h[i] &lt; h[đỉnh stack]: lấy đỉnh ra, tính hình chữ nhật:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <em>height</em> = chiều cao cột vừa lấy ra<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <em>width</em> = khoảng cách từ phần tử tiếp theo trong stack đến i<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• Cập nhật ans = max(ans, height × width)<br>
+            &nbsp;&nbsp;3. Đẩy i vào stack<br><br>
+            <strong>Tại sao đúng?</strong> Khi cột j bị lấy ra tại vị trí i, nó biết: bên phải bị chặn bởi cột i (thấp hơn), bên trái bị chặn bởi cột ở đỉnh stack mới (thấp hơn hoặc bằng). Vậy đoạn [left+1, i−1] chính là phạm vi mà h[j] có thể mở rộng.<br>
+            Mỗi phần tử được push/pop đúng 1 lần → tổng O(N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: ĐỔI XÂU ============= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Biến đổi xâu (DOIXAU)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Edit Distance DP O(N×M)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: DOIXAU — Edit Distance DP O(N*M), space O(M)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DOIXAU.INP"</span>);
+    ofstream out(<span class="string">"DOIXAU.OUT"</span>);
+
+    string a, b;
+    in &gt;&gt; a &gt;&gt; b;
+
+    <span class="keyword">int</span> n = a.<span class="function">size</span>(), m = b.<span class="function">size</span>();
+    vector&lt;<span class="keyword">int</span>&gt; prev(m + <span class="number">1</span>), curr(m + <span class="number">1</span>);
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= m; j++) prev[j] = j;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        curr[<span class="number">0</span>] = i;
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j++) {
+            <span class="keyword">if</span> (a[i - <span class="number">1</span>] == b[j - <span class="number">1</span>]) curr[j] = prev[j - <span class="number">1</span>];
+            <span class="keyword">else</span> curr[j] = <span class="number">1</span> + <span class="function">min</span>({prev[j - <span class="number">1</span>], prev[j], curr[j - <span class="number">1</span>]});
+        }
+        <span class="function">swap</span>(prev, curr);
+    }
+
+    out &lt;&lt; prev[m];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (|A|, |B| ≤ 1000):</strong> DP 2D bảng dp[N+1][M+1] — chiếm ~4MB, chạy nhanh.<br>
+            <strong>Subtask 2 (Full):</strong> Cùng thuật toán nhưng <strong>tối ưu bộ nhớ</strong> bằng rolling array (chỉ giữ 2 hàng prev, curr).<br><br>
+            <strong>Công thức QHĐ (Edit Distance):</strong><br>
+            Gọi dp[i][j] = số phép biến đổi ít nhất để biến A[1..i] thành B[1..j].<br><br>
+            <strong>Cơ sở:</strong><br>
+            &nbsp;&nbsp;• dp[0][j] = j (chèn j kí tự)<br>
+            &nbsp;&nbsp;• dp[i][0] = i (xóa i kí tự)<br><br>
+            <strong>Chuyển trạng thái:</strong> Với mỗi (i, j):<br>
+            &nbsp;&nbsp;• Nếu A[i] == B[j]: dp[i][j] = dp[i−1][j−1] (không cần thao tác)<br>
+            &nbsp;&nbsp;• Nếu A[i] ≠ B[j]: dp[i][j] = 1 + min(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;dp[i−1][j−1], <span style="color:#888;">← thay A[i] → B[j]</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;dp[i−1][j], <span style="color:#888;">← xóa A[i]</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;dp[i][j−1] <span style="color:#888;">← chèn B[j]</span><br>
+            &nbsp;&nbsp;)<br><br>
+            <strong>Tối ưu bộ nhớ:</strong> dp[i][j] chỉ phụ thuộc hàng i và i−1 → chỉ cần 2 mảng 1 chiều. Bộ nhớ giảm từ O(N×M) xuống O(M).<br>
+            Tổng: O(N×M) thời gian ≈ 2.5 × 10⁷ cho N, M = 5000 — chạy tốt trong 1 giây.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: MẠNG LIÊN LẠC ======= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Mạng liên lạc mật (MANG)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Offline Sort + DSU O((M+Q) log(M+Q))</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: MANG — Offline Sort + DSU O((M+Q) log(M+Q))</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">struct</span> Edge { <span class="keyword">int</span> u, v, w; };
+<span class="keyword">struct</span> Query { <span class="keyword">int</span> u, v, t, idx; };
+
+<span class="keyword">int</span> par[<span class="number">100005</span>], rnk[<span class="number">100005</span>];
+
+<span class="keyword">int</span> <span class="function">find</span>(<span class="keyword">int</span> x) { <span class="keyword">return</span> par[x] == x ? x : par[x] = <span class="function">find</span>(par[x]); }
+
+<span class="keyword">void</span> <span class="function">unite</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+    a = <span class="function">find</span>(a); b = <span class="function">find</span>(b);
+    <span class="keyword">if</span> (a == b) <span class="keyword">return</span>;
+    <span class="keyword">if</span> (rnk[a] &lt; rnk[b]) <span class="function">swap</span>(a, b);
+    par[b] = a;
+    <span class="keyword">if</span> (rnk[a] == rnk[b]) rnk[a]++;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"MANG.INP"</span>);
+    ofstream out(<span class="string">"MANG.OUT"</span>);
+
+    <span class="keyword">int</span> n, m, q;
+    in &gt;&gt; n &gt;&gt; m &gt;&gt; q;
+
+    vector&lt;Edge&gt; edges(m);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) in &gt;&gt; edges[i].u &gt;&gt; edges[i].v &gt;&gt; edges[i].w;
+
+    vector&lt;Query&gt; queries(q);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; i++) {
+        in &gt;&gt; queries[i].u &gt;&gt; queries[i].v &gt;&gt; queries[i].t;
+        queries[i].idx = i;
+    }
+
+    <span class="comment">// Sort edges descending by weight</span>
+    <span class="function">sort</span>(edges.<span class="function">begin</span>(), edges.<span class="function">end</span>(),
+        [](<span class="keyword">const</span> Edge&amp; a, <span class="keyword">const</span> Edge&amp; b) { <span class="keyword">return</span> a.w &gt; b.w; });
+    <span class="comment">// Sort queries descending by threshold</span>
+    <span class="function">sort</span>(queries.<span class="function">begin</span>(), queries.<span class="function">end</span>(),
+        [](<span class="keyword">const</span> Query&amp; a, <span class="keyword">const</span> Query&amp; b) { <span class="keyword">return</span> a.t &gt; b.t; });
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) { par[i] = i; rnk[i] = <span class="number">0</span>; }
+
+    vector&lt;string&gt; ans(q);
+    <span class="keyword">int</span> ei = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; i++) {
+        <span class="keyword">while</span> (ei &lt; m &amp;&amp; edges[ei].w &gt;= queries[i].t) {
+            <span class="function">unite</span>(edges[ei].u, edges[ei].v);
+            ei++;
+        }
+        ans[queries[i].idx] =
+            (<span class="function">find</span>(queries[i].u) == <span class="function">find</span>(queries[i].v)) ? <span class="string">"YES"</span> : <span class="string">"NO"</span>;
+    }
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; i++) out &lt;&lt; ans[i] &lt;&lt; <span class="string">"\n"</span>;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N, M, Q ≤ 1000):</strong> Với mỗi truy vấn (u, v, T): BFS/DFS chỉ đi qua các cạnh có w ≥ T, kiểm tra u và v liên thông. Tổng O(Q × (N+M)) ≈ 3 × 10⁶.<br>
+            <strong>Subtask 2 (N, M, Q ≤ 5000):</strong> Cùng BFS/DFS nhưng chậm hơn. Tổng O(Q × (N+M)) ≈ 5 × 10⁷ — vẫn chấp nhận được.<br>
+            <strong>Subtask 3 (Full):</strong> <strong>Offline Sort + Disjoint Set Union (DSU)</strong>:<br><br>
+            <strong>Biến đổi so với bài duyệt đồ thị truyền thống:</strong><br>
+            Bài BFS/DFS thông thường kiểm tra liên thông trên đồ thị cố định. Ở đây, mỗi truy vấn có ngưỡng T <em>khác nhau</em>, nên đồ thị "thay đổi" theo truy vấn — chỉ giữ cạnh w ≥ T. BFS/DFS mỗi truy vấn → quá chậm O(Q×M).<br><br>
+            <strong>Ý tưởng Offline:</strong> Nếu sắp xếp truy vấn theo T giảm dần, thì khi T giảm, chỉ có thêm cạnh (không mất cạnh). Xử lý giống "thêm cạnh dần vào đồ thị" — DSU hoàn hảo!<br><br>
+            <strong>Thuật toán:</strong><br>
+            &nbsp;&nbsp;1. Sort cạnh theo w giảm dần<br>
+            &nbsp;&nbsp;2. Sort truy vấn theo T giảm dần (lưu index gốc)<br>
+            &nbsp;&nbsp;3. Xử lý truy vấn lần lượt: trước mỗi truy vấn T, thêm tất cả cạnh có w ≥ T vào DSU (con trỏ ei chỉ tiến)<br>
+            &nbsp;&nbsp;4. Kiểm tra find(u) == find(v) → YES/NO<br>
+            &nbsp;&nbsp;5. Ghi đáp án vào vị trí gốc, in theo thứ tự ban đầu<br><br>
+            <strong>Tại sao nhanh?</strong> Mỗi cạnh được thêm đúng 1 lần. Sort: O((M+Q) log(M+Q)). DSU: O((M+Q) × α(N)) ≈ O(M+Q). Tổng: <strong>O((M+Q) log(M+Q))</strong>.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

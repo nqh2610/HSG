@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học — Đề 9</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC — ĐỀ 9</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: DANH SÁCH ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Danh sách nộp bài (DANHSACH)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Nén tọa độ + BIT O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: DANHSACH — Coordinate Compression + BIT O(N log N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">const int</span> MAXN = <span class="number">100005</span>;
+<span class="keyword">int</span> bit[MAXN], sz;
+
+<span class="keyword">void</span> <span class="function">update</span>(<span class="keyword">int</span> i) {
+    <span class="keyword">for</span> (; i &lt;= sz; i += i &amp; (-i)) bit[i]++;
+}
+
+<span class="keyword">int</span> <span class="function">query</span>(<span class="keyword">int</span> i) {
+    <span class="keyword">int</span> s = <span class="number">0</span>;
+    <span class="keyword">for</span> (; i &gt; <span class="number">0</span>; i -= i &amp; (-i)) s += bit[i];
+    <span class="keyword">return</span> s;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DANHSACH.INP"</span>);
+    ofstream out(<span class="string">"DANHSACH.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+    vector&lt;<span class="keyword">int</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in &gt;&gt; a[i];
+
+    <span class="comment">// Coordinate compression</span>
+    vector&lt;<span class="keyword">int</span>&gt; v = a;
+    <span class="function">sort</span>(v.<span class="function">begin</span>(), v.<span class="function">end</span>());
+    v.<span class="function">erase</span>(<span class="function">unique</span>(v.<span class="function">begin</span>(), v.<span class="function">end</span>()), v.<span class="function">end</span>());
+    sz = v.<span class="function">size</span>();
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">int</span> r = <span class="function">lower_bound</span>(v.<span class="function">begin</span>(), v.<span class="function">end</span>(), a[i]) - v.<span class="function">begin</span>() + <span class="number">1</span>;
+        <span class="keyword">if</span> (i) out &lt;&lt; <span class="string">" "</span>;
+        out &lt;&lt; <span class="function">query</span>(r - <span class="number">1</span>);
+        <span class="function">update</span>(r);
+    }
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 5000):</strong> Duyệt trâu: với mỗi i, duyệt j từ 0 đến i−1, đếm a[j] &lt; a[i]. Tổng O(N²) ≈ 2.5 × 10⁷.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Nén tọa độ + Cây chỉ số nhị phân (BIT/Fenwick Tree)</strong>:<br><br>
+            <strong>Vấn đề:</strong> a[i] lên đến 10⁹ → không thể tạo mảng BIT cỡ 10⁹.<br>
+            <strong>Giải pháp — Nén tọa độ:</strong> Thay mỗi giá trị bằng "thứ hạng" trong tập giá trị phân biệt (đã sắp xếp).<br>
+            &nbsp;&nbsp;1. Sao chép mảng, sort, loại trùng bằng unique<br>
+            &nbsp;&nbsp;2. Dùng lower_bound tìm rank của mỗi phần tử (1-indexed)<br>
+            &nbsp;&nbsp;→ Giá trị nén nằm trong [1, K] với K ≤ N → BIT cỡ N là đủ<br><br>
+            <strong>BIT (Binary Indexed Tree):</strong> Duy trì mảng tần suất. Khi xử lý phần tử i:<br>
+            &nbsp;&nbsp;• <strong>query(rank − 1)</strong>: đếm tổng tần suất ở các rank 1..rank−1 = số phần tử đã thêm có giá trị &lt; a[i]<br>
+            &nbsp;&nbsp;• <strong>update(rank)</strong>: tăng tần suất tại rank lên 1<br><br>
+            Mỗi thao tác BIT: O(log N). Tổng: O(N log N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: ĐẾM HẠNH PHÚC ======= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Đếm số hạnh phúc (DEMHP)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Digit DP O(19 × K)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: DEMHP — Digit DP O(19 * K)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> K, len, d[<span class="number">19</span>];
+<span class="keyword">long long</span> memo[<span class="number">19</span>][<span class="number">201</span>][<span class="number">2</span>];
+
+<span class="keyword">long long</span> <span class="function">solve</span>(<span class="keyword">int</span> pos, <span class="keyword">int</span> sum, <span class="keyword">int</span> tight) {
+    <span class="keyword">if</span> (pos == len) <span class="keyword">return</span> sum == <span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>;
+    <span class="keyword">if</span> (memo[pos][sum][tight] != -<span class="number">1</span>) <span class="keyword">return</span> memo[pos][sum][tight];
+    <span class="keyword">int</span> lim = tight ? d[pos] : <span class="number">9</span>;
+    <span class="keyword">long long</span> res = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt;= lim; x++)
+        res += <span class="function">solve</span>(pos + <span class="number">1</span>, (sum + x) % K, tight &amp;&amp; x == lim);
+    <span class="keyword">return</span> memo[pos][sum][tight] = res;
+}
+
+<span class="keyword">long long</span> <span class="function">count</span>(<span class="keyword">long long</span> x) {
+    <span class="keyword">if</span> (x &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;
+    string s = <span class="function">to_string</span>(x);
+    len = s.<span class="function">size</span>();
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) d[i] = s[i] - <span class="string">'0'</span>;
+    <span class="function">memset</span>(memo, -<span class="number">1</span>, <span class="keyword">sizeof</span>(memo));
+    <span class="keyword">return</span> <span class="function">solve</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DEMHP.INP"</span>);
+    ofstream out(<span class="string">"DEMHP.OUT"</span>);
+
+    <span class="keyword">long long</span> L, R;
+    in &gt;&gt; L &gt;&gt; R &gt;&gt; K;
+
+    out &lt;&lt; <span class="function">count</span>(R) - <span class="function">count</span>(L - <span class="number">1</span>);
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (R ≤ 10⁶):</strong> Duyệt từng số x từ L đến R, tính tổng chữ số, kiểm tra chia hết K. Tổng O(R × log₁₀R) ≈ 7 × 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Digit DP (QHĐ trên từng chữ số)</strong>:<br><br>
+            <strong>Bước 1 — Tách bài toán:</strong> Đếm trong [L, R] = f(R) − f(L−1), với f(X) = đếm số trong [0, X] thỏa mãn.<br><br>
+            <strong>Bước 2 — Digit DP:</strong> Xây dựng số từ trái sang phải (chữ số có trọng số lớn → nhỏ).<br>
+            Trạng thái: <em>solve(pos, sum, tight)</em><br>
+            &nbsp;&nbsp;• <em>pos</em>: vị trí chữ số đang xét (0 = chữ số đầu tiên)<br>
+            &nbsp;&nbsp;• <em>sum</em>: tổng chữ số hiện tại mod K<br>
+            &nbsp;&nbsp;• <em>tight</em>: có bị ràng buộc bởi giới hạn trên không?<br><br>
+            <strong>Chuyển trạng thái:</strong> Tại vị trí pos, thử đặt chữ số x từ 0 đến lim:<br>
+            &nbsp;&nbsp;• Nếu tight = true: lim = chữ số tương ứng của X (không được vượt)<br>
+            &nbsp;&nbsp;• Nếu tight = false: lim = 9 (tự do)<br>
+            &nbsp;&nbsp;• Chuyển sang solve(pos+1, (sum+x) % K, tight &amp;&amp; x==lim)<br><br>
+            <strong>Cơ sở:</strong> Khi pos = len (hết chữ số), trả 1 nếu sum == 0 (chia hết K), ngược lại 0.<br>
+            Tổng trạng thái: 19 × 200 × 2 = 7 600. Rất nhanh cho R ≤ 10¹⁸.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: LỊCH HỌP ============= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Lịch họp ngoại khóa (LICHHOP)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Sort + DP + Binary Search O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: LICHHOP — Sort + DP + Binary Search O(N log N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">struct</span> Meeting {
+    <span class="keyword">int</span> s, e;
+    <span class="keyword">long long</span> w;
+};
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"LICHHOP.INP"</span>);
+    ofstream out(<span class="string">"LICHHOP.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+    vector&lt;Meeting&gt; m(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in &gt;&gt; m[i].s &gt;&gt; m[i].e &gt;&gt; m[i].w;
+
+    <span class="comment">// Sort by end time</span>
+    <span class="function">sort</span>(m.<span class="function">begin</span>(), m.<span class="function">end</span>(), [](<span class="keyword">const</span> Meeting&amp; a, <span class="keyword">const</span> Meeting&amp; b) {
+        <span class="keyword">return</span> a.e &lt; b.e;
+    });
+
+    <span class="comment">// dp[i] = max weight considering first i meetings (1-indexed)</span>
+    vector&lt;<span class="keyword">long long</span>&gt; dp(n + <span class="number">1</span>, <span class="number">0</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="comment">// Binary search: largest j with m[j].e &lt;= m[i].s</span>
+        <span class="keyword">int</span> lo = <span class="number">0</span>, hi = i - <span class="number">1</span>, p = -<span class="number">1</span>;
+        <span class="keyword">while</span> (lo &lt;= hi) {
+            <span class="keyword">int</span> mid = (lo + hi) / <span class="number">2</span>;
+            <span class="keyword">if</span> (m[mid].e &lt;= m[i].s) { p = mid; lo = mid + <span class="number">1</span>; }
+            <span class="keyword">else</span> hi = mid - <span class="number">1</span>;
+        }
+        dp[i + <span class="number">1</span>] = <span class="function">max</span>(dp[i], dp[p + <span class="number">1</span>] + m[i].w);
+    }
+
+    out &lt;&lt; dp[n];
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 20):</strong> Duyệt mọi tập con 2<sup>N</sup> ≈ 10⁶, kiểm tra không chồng nhau và tính tổng. O(2<sup>N</sup> × N).<br>
+            <strong>Subtask 2 (N ≤ 5000):</strong> Sort theo thời gian kết thúc. DP: với mỗi buổi i, duyệt tuyến tính tìm buổi gần nhất kết thúc trước khi i bắt đầu. O(N²).<br>
+            <strong>Subtask 3 (Full):</strong> <strong>Sort + DP + Binary Search</strong> — kết hợp 3 kỹ thuật:<br><br>
+            <strong>Bước 1 — Sort:</strong> Sắp xếp N buổi theo thời gian kết thúc e tăng dần.<br><br>
+            <strong>Bước 2 — DP:</strong> Gọi dp[i] = tổng hấp dẫn lớn nhất khi xét i buổi đầu tiên (sau khi sort).<br>
+            Với buổi thứ i, có 2 lựa chọn:<br>
+            &nbsp;&nbsp;• <strong>Bỏ qua buổi i:</strong> dp[i] = dp[i−1]<br>
+            &nbsp;&nbsp;• <strong>Chọn buổi i:</strong> tìm buổi gần nhất p kết thúc ≤ thời điểm bắt đầu s[i]. dp[i] = dp[p] + w[i]<br>
+            &nbsp;&nbsp;→ dp[i] = max(dp[i−1], dp[p] + w[i])<br><br>
+            <strong>Bước 3 — Binary Search:</strong> Vì mảng đã sort theo e, dùng tìm kiếm nhị phân O(log N) để tìm p thay vì duyệt tuyến tính O(N).<br><br>
+            <strong>Tại sao đúng?</strong> Đây là bài toán <em>Weighted Activity Selection</em> kinh điển. Tính chất con tối ưu: lời giải tối ưu cho i buổi đầu hoặc bỏ qua buổi i (→ dùng dp[i−1]) hoặc chọn buổi i rồi dùng lời giải tối ưu cho các buổi kết thúc trước s[i].<br>
+            Tổng: O(N log N) sort + O(N log N) DP×BS = <strong>O(N log N)</strong>.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

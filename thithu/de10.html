@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học — Đề 10</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC — ĐỀ 10</h1>
+            <div class="time">Thời gian làm bài: 180 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: HÌNH CHỮ NHẬT ======== -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Biểu đồ cột
+            </div>
+            <div class="problem-file">HINCHU.INP / HINCHU.OUT</div>
+            <div class="problem-content">
+                <p>Trong giờ Toán, thầy giáo vẽ một biểu đồ cột gồm N cột đứng liền nhau trên bảng. Cột thứ i có chiều rộng 1 đơn vị và chiều cao h<sub>i</sub> đơn vị.</p>
+                <p>Thầy hỏi: <em>"Hãy tìm hình chữ nhật có diện tích lớn nhất, có các cạnh song song với trục tọa độ, nằm hoàn toàn trong vùng biểu đồ cột."</em></p>
+                <p>Nói cách khác, cần tìm đoạn cột liên tiếp từ l đến r và một chiều cao H sao cho H ≤ min(h<sub>l</sub>, h<sub>l+1</sub>, …, h<sub>r</sub>) và diện tích H × (r − l + 1) đạt <strong>giá trị lớn nhất</strong>.</p>
+
+                <div class="section-label">Dữ liệu vào (HINCHU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên h<sub>1</sub>, h<sub>2</sub>, …, h<sub>N</sub> (1 ≤ h<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (HINCHU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là diện tích hình chữ nhật lớn nhất.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>HINCHU.INP</th><th>HINCHU.OUT</th></tr>
+                    <tr>
+                        <td>6
+2 1 5 6 2 3</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>4
+3 3 3 3</td>
+                        <td>12</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Chọn đoạn cột 3 đến cột 4 (chiều cao 5 và 6). Hình chữ nhật cao H = min(5, 6) = 5, rộng 2. Diện tích = 5 × 2 = 10. Không tồn tại hình chữ nhật lớn hơn.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Chọn cả 4 cột, chiều cao H = 3, rộng 4. Diện tích = 3 × 4 = 12.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 5 000</li>
+                        <li>Subtask 2 (60%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: ĐỔI XÂU ============= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Biến đổi xâu
+            </div>
+            <div class="problem-file">DOIXAU.INP / DOIXAU.OUT</div>
+            <div class="problem-content">
+                <p>Bạn Minh đang luyện gõ bàn phím. Trên màn hình hiện xâu A, nhưng Minh cần có xâu B. Mỗi lần, Minh có thể thực hiện <strong>một</strong> trong ba phép biến đổi sau:</p>
+                <p style="text-indent: 0;">
+                    &nbsp;&nbsp;1. <strong>Chèn</strong> một kí tự bất kỳ vào bất kỳ vị trí nào trong xâu.<br>
+                    &nbsp;&nbsp;2. <strong>Xóa</strong> một kí tự bất kỳ khỏi xâu.<br>
+                    &nbsp;&nbsp;3. <strong>Thay thế</strong> một kí tự bằng một kí tự khác.
+                </p>
+                <p><strong>Yêu cầu:</strong> Tìm số phép biến đổi <strong>ít nhất</strong> để biến xâu A thành xâu B.</p>
+
+                <div class="section-label">Dữ liệu vào (DOIXAU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Xâu A (1 ≤ |A| ≤ 5 000; chỉ gồm chữ cái thường)</li>
+                        <li>Dòng 2: Xâu B (1 ≤ |B| ≤ 5 000; chỉ gồm chữ cái thường)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DOIXAU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số phép biến đổi ít nhất.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DOIXAU.INP</th><th>DOIXAU.OUT</th></tr>
+                    <tr>
+                        <td>kitten
+sitting</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>abc
+yabd</td>
+                        <td>2</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> "kitten" → thay k bằng s → "sitten" → thay e bằng i → "sittin" → chèn g vào cuối → "sitting". Tổng 3 phép biến đổi.<br>
+                    <strong>Giải thích ví dụ 2:</strong> "abc" → chèn y vào đầu → "yabc" → thay c bằng d → "yabd". Tổng 2 phép biến đổi.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): |A|, |B| ≤ 1 000</li>
+                        <li>Subtask 2 (60%): |A|, |B| ≤ 5 000</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: MẠNG LIÊN LẠC ======= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Mạng liên lạc mật
+            </div>
+            <div class="problem-file">MANG.INP / MANG.OUT</div>
+            <div class="problem-content">
+                <p>Quân đội có N trạm liên lạc đánh số từ 1 đến N và M kênh truyền tin <strong>hai chiều</strong>. Kênh thứ i nối trạm u<sub>i</sub> và v<sub>i</sub> với chất lượng tín hiệu w<sub>i</sub> (số nguyên dương).</p>
+                <p>Hai trạm a, b có thể <strong>liên lạc</strong> được (trực tiếp hoặc qua các trạm trung gian) nếu tồn tại đường truyền từ a đến b sao cho <strong>mọi kênh</strong> trên đường đều có chất lượng tín hiệu <strong>≥ T</strong> (với T là ngưỡng an toàn cho trước).</p>
+                <p>Cho Q truy vấn, mỗi truy vấn gồm ba số (u, v, T): hỏi trạm u và trạm v có liên lạc được với ngưỡng T hay không?</p>
+
+                <div class="section-label">Dữ liệu vào (MANG.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Ba số nguyên N, M, Q (2 ≤ N ≤ 10<sup>5</sup>; 1 ≤ M ≤ 2×10<sup>5</sup>; 1 ≤ Q ≤ 2×10<sup>5</sup>)</li>
+                        <li>M dòng tiếp theo, dòng thứ i chứa ba số nguyên u<sub>i</sub>, v<sub>i</sub>, w<sub>i</sub> (1 ≤ u<sub>i</sub> &lt; v<sub>i</sub> ≤ N; 1 ≤ w<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                        <li>Q dòng tiếp theo, dòng thứ j chứa ba số nguyên u<sub>j</sub>, v<sub>j</sub>, T<sub>j</sub> (1 ≤ u<sub>j</sub>, v<sub>j</sub> ≤ N; u<sub>j</sub> ≠ v<sub>j</sub>; 1 ≤ T<sub>j</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (MANG.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Q dòng, dòng thứ j in "YES" nếu u<sub>j</sub> và v<sub>j</sub> liên lạc được với ngưỡng T<sub>j</sub>, ngược lại in "NO".</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>MANG.INP</th><th>MANG.OUT</th></tr>
+                    <tr>
+                        <td>4 4 3
+1 2 5
+2 3 3
+3 4 7
+1 4 6
+1 4 4
+2 4 6
+1 3 3</td>
+                        <td>YES
+NO
+YES</td>
+                    </tr>
+                    <tr>
+                        <td>3 2 2
+1 2 10
+2 3 5
+1 3 5
+1 3 8</td>
+                        <td>YES
+NO</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong><br>
+                    &nbsp;&nbsp;• Q1 (1→4, T=4): Các kênh có chất lượng ≥ 4: (1,2,5), (3,4,7), (1,4,6). Trạm 1 nối 4 trực tiếp (w=6 ≥ 4) → <strong>YES</strong>.<br>
+                    &nbsp;&nbsp;• Q2 (2→4, T=6): Các kênh ≥ 6: (3,4,7), (1,4,6). Chỉ nhóm {1,3,4} liên thông: trạm 2 bị cô lập → <strong>NO</strong>.<br>
+                    &nbsp;&nbsp;• Q3 (1→3, T=3): Tất cả 4 kênh đều ≥ 3 → cả 4 trạm liên thông → <strong>YES</strong>.<br><br>
+                    <strong>Giải thích ví dụ 2:</strong><br>
+                    &nbsp;&nbsp;• Q1 (1→3, T=5): Đường 1→2→3, min(10, 5) = 5 ≥ 5 → <strong>YES</strong>.<br>
+                    &nbsp;&nbsp;• Q2 (1→3, T=8): Kênh (2,3) có w=5 &lt; 8. Kênh duy nhất ≥ 8 là (1,2,10). Trạm 3 bị cô lập → <strong>NO</strong>.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (20%): N, M, Q ≤ 1 000</li>
+                        <li>Subtask 2 (30%): N, M, Q ≤ 5 000</li>
+                        <li>Subtask 3 (50%): N ≤ 10<sup>5</sup>; M, Q ≤ 2×10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+    </div>
+
+</body>
+</html>
