@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học K10 — Đề 5</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC KHỐI 10 — ĐỀ 5</h1>
+            <div class="time">Thời gian làm bài: 120 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: THỜI TIẾT ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Thời tiết
+            </div>
+            <div class="problem-file">THOITIET.INP / THOITIET.OUT</div>
+            <div class="problem-content">
+                <p>Trạm khí tượng ghi nhận nhiệt độ trong N ngày liên tiếp. Nhiệt độ ngày thứ i là a<sub>i</sub>.</p>
+                <p>Với mỗi ngày, nhà khí tượng muốn biết: phải chờ bao nhiêu ngày nữa để gặp được một ngày có nhiệt độ <strong>cao hơn</strong> ngày hôm đó. Nếu không có ngày nào phía sau nóng hơn, ghi 0.</p>
+                <p><strong>Yêu cầu:</strong> Với mỗi ngày, in ra số ngày phải chờ.</p>
+
+                <div class="section-label">Dữ liệu vào (THOITIET.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (THOITIET.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một dòng gồm N số nguyên, cách nhau bởi dấu cách.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>THOITIET.INP</th><th>THOITIET.OUT</th></tr>
+                    <tr>
+                        <td>8
+30 25 35 40 28 32 38 26</td>
+                        <td>2 1 1 0 1 1 0 0</td>
+                    </tr>
+                    <tr>
+                        <td>5
+10 20 30 40 50</td>
+                        <td>1 1 1 1 0</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Ngày 1 (30°): ngày gần nhất nóng hơn là ngày 3 (35°), chờ 2 ngày. Ngày 2 (25°): ngày 3 (35°), chờ 1. Ngày 3 (35°): ngày 4 (40°), chờ 1. Ngày 4 (40°): không có ngày nóng hơn → 0. Ngày 5 (28°): ngày 6 (32°), chờ 1. Ngày 6 (32°): ngày 7 (38°), chờ 1. Ngày 7, 8 không có → 0.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Nhiệt độ tăng dần nên mỗi ngày chỉ cần chờ 1 ngày. Ngày cuối không có → 0.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 1 000</li>
+                        <li>Subtask 2 (60%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: THU HOẠCH ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Thu hoạch
+            </div>
+            <div class="problem-file">THUHOACH.INP / THUHOACH.OUT</div>
+            <div class="problem-content">
+                <p>Nông trường có N ruộng lúa xếp thành hàng, đánh số từ 1 đến N. Ruộng thứ i có a<sub>i</sub> tạ lúa.</p>
+                <p>Nông trường phân công K nông dân thu hoạch. Mỗi nông dân được giao một <strong>đoạn ruộng liên tiếp</strong> (mỗi ruộng thuộc đúng một nông dân, tất cả ruộng đều được thu).</p>
+                <p><strong>Yêu cầu:</strong> Hãy phân chia sao cho <strong>tổng lúa nhiều nhất mà một nông dân phải thu</strong> là <strong>nhỏ nhất</strong> có thể.</p>
+
+                <div class="section-label">Dữ liệu vào (THUHOACH.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và K (1 ≤ K ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên dương a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (THUHOACH.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là giá trị nhỏ nhất của tổng lúa lớn nhất mà một nông dân phải thu.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>THUHOACH.INP</th><th>THUHOACH.OUT</th></tr>
+                    <tr>
+                        <td>5 3
+2 3 5 1 4</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>6 2
+1 2 3 4 5 6</td>
+                        <td>11</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Chia thành [2,3], [5], [1,4] → tổng mỗi người: 5, 5, 5. Người vất vả nhất thu 5 tạ. Không tồn tại cách chia tốt hơn (vì ruộng thứ 3 đã có 5 tạ).<br>
+                    <strong>Giải thích ví dụ 2:</strong> Chia thành [1,2,3,4], [5,6] → tổng: 10, 11. Người vất vả nhất thu 11. Không có cách nào đạt max nhỏ hơn 11.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 1 000, a<sub>i</sub> ≤ 1 000</li>
+                        <li>Subtask 2 (60%): N ≤ 10<sup>5</sup>, a<sub>i</sub> ≤ 10<sup>9</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: ĐOẠN PHỦ ============= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Đoạn phủ
+            </div>
+            <div class="problem-file">DOANPHU.INP / DOANPHU.OUT</div>
+            <div class="problem-content">
+                <p>Trên trục số có N đoạn thẳng. Đoạn thứ i nối từ điểm l<sub>i</sub> đến điểm r<sub>i</sub> (có chiều dài r<sub>i</sub> − l<sub>i</sub>).</p>
+                <p>Các đoạn có thể chồng lên nhau. Phần trục số bị nhiều đoạn phủ chỉ được tính <strong>một lần</strong>.</p>
+                <p><strong>Yêu cầu:</strong> Tìm <strong>tổng chiều dài</strong> phần trục số được ít nhất một đoạn phủ.</p>
+
+                <div class="section-label">Dữ liệu vào (DOANPHU.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>N dòng tiếp theo, mỗi dòng chứa hai số nguyên l<sub>i</sub>, r<sub>i</sub> (1 ≤ l<sub>i</sub> &lt; r<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DOANPHU.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là tổng chiều dài phần được phủ.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DOANPHU.INP</th><th>DOANPHU.OUT</th></tr>
+                    <tr>
+                        <td>3
+1 5
+3 8
+10 12</td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        <td>2
+1 10
+3 7</td>
+                        <td>9</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Đoạn [1,5] và [3,8] chồng nhau, hợp lại thành [1,8] có chiều dài 7. Đoạn [10,12] riêng biệt, chiều dài 2. Tổng = 7 + 2 = 9.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Đoạn [3,7] nằm hoàn toàn trong [1,10], nên phần phủ là [1,10] có chiều dài 9.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 1 000, l<sub>i</sub>, r<sub>i</sub> ≤ 10<sup>6</sup></li>
+                        <li>Subtask 2 (60%): N ≤ 10<sup>5</sup>, l<sub>i</sub>, r<sub>i</sub> ≤ 10<sup>9</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+
+        <div style="text-align: center; color: #888; font-size: 0.85em; margin-top: 15px; font-style: italic;">Trưởng môn nhân: <strong>Hùng Thất Công</strong> — Môn phái <strong>Code Lụi</strong></div>
+    </div>
+
+</body>
+</html>

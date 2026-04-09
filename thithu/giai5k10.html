@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học K10 — Đề 5</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC K10 — ĐỀ 5</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: THỜI TIẾT ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Thời tiết (THOITIET)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Monotonic Stack O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: THOITIET — Monotonic Stack O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"THOITIET.INP"</span>);
+    ofstream out(<span class="string">"THOITIET.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+    vector&lt;<span class="keyword">int</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in &gt;&gt; a[i];
+
+    vector&lt;<span class="keyword">int</span>&gt; ans(n, <span class="number">0</span>);
+    stack&lt;<span class="keyword">int</span>&gt; st;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">while</span> (!st.<span class="function">empty</span>() &amp;&amp; a[i] &gt; a[st.<span class="function">top</span>()]) {
+            ans[st.<span class="function">top</span>()] = i - st.<span class="function">top</span>();
+            st.<span class="function">pop</span>();
+        }
+        st.<span class="function">push</span>(i);
+    }
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">if</span> (i) out &lt;&lt; <span class="string">" "</span>;
+        out &lt;&lt; ans[i];
+    }
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Với mỗi ngày i, duyệt j = i+1, i+2, ... tìm ngày đầu tiên a[j] > a[i]. Tổng O(N²) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Ngăn xếp đơn điệu (Monotonic Stack)</strong>:<br><br>
+            <strong>Ý tưởng:</strong> Duy trì stack chứa <em>chỉ số</em> các ngày chưa tìm được câu trả lời, sắp xếp sao cho nhiệt độ tương ứng <strong>giảm dần</strong> từ đáy lên đỉnh.<br><br>
+            <strong>Khi duyệt đến ngày i:</strong><br>
+            &nbsp;&nbsp;• Nếu a[i] > a[st.top()]: ngày st.top() đã tìm được câu trả lời → ans[st.top()] = i − st.top(), pop ra.<br>
+            &nbsp;&nbsp;• Lặp lại cho đến khi stack rỗng hoặc a[st.top()] ≥ a[i].<br>
+            &nbsp;&nbsp;• Đẩy i vào stack.<br><br>
+            <strong>Tại sao đúng?</strong> Mỗi phần tử được push/pop đúng 1 lần, nên tổng thao tác = O(N). Stack luôn giảm dần → khi a[i] lớn hơn đỉnh, tức i là ngày nóng hơn GẦN NHẤT cho đỉnh stack.<br><br>
+            <strong>Các ngày còn lại trong stack</strong> khi duyệt xong: không có ngày nóng hơn → ans = 0 (đã khởi tạo).<br>
+            <strong>Độ phức tạp:</strong> O(N) thời gian, O(N) bộ nhớ.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: THU HOẠCH ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Thu hoạch (THUHOACH)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Binary Search on Answer O(N log S)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: THUHOACH — Binary Search on Answer O(N log S)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> n, k;
+<span class="keyword">long long</span> a[<span class="number">100001</span>];
+
+<span class="keyword">bool</span> <span class="function">check</span>(<span class="keyword">long long</span> mid) {
+    <span class="keyword">int</span> cnt = <span class="number">1</span>;
+    <span class="keyword">long long</span> sum = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">if</span> (sum + a[i] &gt; mid) {
+            cnt++;
+            sum = a[i];
+        } <span class="keyword">else</span> {
+            sum += a[i];
+        }
+    }
+    <span class="keyword">return</span> cnt &lt;= k;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"THUHOACH.INP"</span>);
+    ofstream out(<span class="string">"THUHOACH.OUT"</span>);
+
+    in &gt;&gt; n &gt;&gt; k;
+    <span class="keyword">long long</span> lo = <span class="number">0</span>, hi = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        in &gt;&gt; a[i];
+        <span class="keyword">if</span> (a[i] &gt; lo) lo = a[i];
+        hi += a[i];
+    }
+
+    <span class="keyword">while</span> (lo &lt; hi) {
+        <span class="keyword">long long</span> mid = (lo + hi) / <span class="number">2</span>;
+        <span class="keyword">if</span> (<span class="function">check</span>(mid)) hi = mid;
+        <span class="keyword">else</span> lo = mid + <span class="number">1</span>;
+    }
+
+    out &lt;&lt; lo;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Thử tất cả cách chia bằng QHĐ/brute, hoặc binary search + check O(N). Tổng O(N × K) hoặc O(N log S).<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Tìm kiếm nhị phân trên đáp án (Binary Search on Answer)</strong>:<br><br>
+            <strong>Nhận xét:</strong> Nếu max cho phép mỗi người thu tối đa M tạ, ta kiểm tra "M có đủ để chia N ruộng cho K người không?" bằng <strong>tham lam</strong>: duyệt từ trái sang, cứ gom liên tiếp cho đến khi thêm ruộng kế sẽ vượt M → chuyển người mới.<br><br>
+            <strong>Hàm check(M):</strong> Đếm số người cần thiết. Nếu ≤ K → khả thi (M đủ lớn).<br><br>
+            <strong>Binary search:</strong><br>
+            &nbsp;&nbsp;• lo = max(a<sub>i</sub>) (không thể nhỏ hơn ruộng lớn nhất)<br>
+            &nbsp;&nbsp;• hi = tổng(a<sub>i</sub>) (1 người thu hết)<br>
+            &nbsp;&nbsp;• Nếu check(mid) đúng → thu hẹp hi = mid<br>
+            &nbsp;&nbsp;• Nếu sai → lo = mid + 1<br><br>
+            <strong>Tại sao tham lam đúng?</strong> Nếu M là max cho phép, gom càng nhiều ruộng cho 1 người càng tốt → tiết kiệm người cho các ruộng sau. Nếu tham lam cần > K người → M quá nhỏ.<br><br>
+            <strong>Lưu ý:</strong> Dùng <code>long long</code> vì tổng có thể đạt 10⁵ × 10⁹ = 10¹⁴.<br>
+            <strong>Độ phức tạp:</strong> O(N × log(sum)) ≈ O(N × 47).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: ĐOẠN PHỦ ============= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Đoạn phủ (DOANPHU)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Nén tọa độ + Sweep O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: DOANPHU — Coordinate Compression + Sweep O(N log N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DOANPHU.INP"</span>);
+    ofstream out(<span class="string">"DOANPHU.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+    vector&lt;<span class="keyword">int</span>&gt; l(n), r(n);
+    vector&lt;<span class="keyword">int</span>&gt; coords;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        in &gt;&gt; l[i] &gt;&gt; r[i];
+        coords.<span class="function">push_back</span>(l[i]);
+        coords.<span class="function">push_back</span>(r[i]);
+    }
+
+    <span class="comment">// Nen toa do</span>
+    <span class="function">sort</span>(coords.<span class="function">begin</span>(), coords.<span class="function">end</span>());
+    coords.<span class="function">erase</span>(<span class="function">unique</span>(coords.<span class="function">begin</span>(), coords.<span class="function">end</span>()), coords.<span class="function">end</span>());
+    <span class="keyword">int</span> K = coords.<span class="function">size</span>();
+
+    <span class="comment">// Diff array tren toa do nen</span>
+    vector&lt;<span class="keyword">int</span>&gt; diff(K + <span class="number">1</span>, <span class="number">0</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">int</span> cl = <span class="function">lower_bound</span>(coords.<span class="function">begin</span>(), coords.<span class="function">end</span>(), l[i]) - coords.<span class="function">begin</span>();
+        <span class="keyword">int</span> cr = <span class="function">lower_bound</span>(coords.<span class="function">begin</span>(), coords.<span class="function">end</span>(), r[i]) - coords.<span class="function">begin</span>();
+        diff[cl]++;
+        diff[cr]--;
+    }
+
+    <span class="comment">// Prefix sum, tinh tong chieu dai</span>
+    <span class="keyword">long long</span> ans = <span class="number">0</span>;
+    <span class="keyword">int</span> cnt = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; K - <span class="number">1</span>; i++) {
+        cnt += diff[i];
+        <span class="keyword">if</span> (cnt &gt; <span class="number">0</span>)
+            ans += coords[i + <span class="number">1</span>] - coords[i];
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000, r ≤ 10⁶):</strong> Sắp xếp đoạn theo l, gộp các đoạn chồng nhau, tính tổng chiều dài. O(N²) hoặc O(N log N).<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Nén tọa độ (Coordinate Compression)</strong>:<br><br>
+            <strong>Vấn đề:</strong> Tọa độ lên đến 10⁹ → không thể tạo mảng kích thước 10⁹. Nhưng chỉ có 2N ≤ 2×10⁵ điểm đặc biệt (các đầu mút l<sub>i</sub>, r<sub>i</sub>).<br><br>
+            <strong>Ý tưởng nén:</strong><br>
+            &nbsp;&nbsp;• Bước 1: Thu thập tất cả 2N tọa độ, sắp xếp, loại trùng → K giá trị phân biệt.<br>
+            &nbsp;&nbsp;• Bước 2: Ánh xạ mỗi tọa độ thực → chỉ số nén 0, 1, ..., K−1.<br>
+            &nbsp;&nbsp;• Bước 3: Dùng <strong>mảng hiệu</strong> trên chỉ số nén: diff[nén(l)]++, diff[nén(r)]−−.<br>
+            &nbsp;&nbsp;• Bước 4: Duyệt prefix sum. Với mỗi đoạn giữa 2 tọa độ nén liên tiếp [coords[i], coords[i+1]], nếu đang bị phủ (cnt > 0) → cộng chiều dài thực coords[i+1] − coords[i].<br><br>
+            <strong>Tại sao đúng?</strong> Giữa hai tọa độ nén liên tiếp, không có đầu mút nào → trạng thái phủ là đồng nhất. Ta chỉ cần kiểm tra tại mỗi đoạn con.<br><br>
+            <strong>Cách khác:</strong> Sort + Merge (sắp xếp đoạn theo l, gộp đoạn chồng) cũng O(N log N) và đơn giản hơn. Nhưng nén tọa độ là kỹ thuật tổng quát hơn, áp dụng được cho nhiều bài phức tạp hơn.<br>
+            <strong>Độ phức tạp:</strong> O(N log N) thời gian, O(N) bộ nhớ.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+
+        <div style="text-align: center; color: #888; font-size: 0.85em; margin-top: 15px; font-style: italic;">Trưởng môn nhân: <strong>Hùng Thất Công</strong> — Môn phái <strong>Code Lụi</strong></div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>
