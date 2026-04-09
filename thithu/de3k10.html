@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Thử HSG Tin Học K10 — Đề 3</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #c0392b;
+            margin: 10px 0 5px;
+        }
+        .exam-header .time {
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .problem {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 5px;
+        }
+        .problem-file {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .problem-content {
+            text-align: justify;
+        }
+        .problem-content p {
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .problem-content p:first-child {
+            text-indent: 0;
+        }
+        .section-label {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .format-box {
+            background: #fafafa;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-left: 3px solid #333;
+            font-size: 0.95em;
+        }
+        .format-box ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+        .format-box li {
+            margin-bottom: 4px;
+        }
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .example-table th {
+            background: #ecf0f1;
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-weight: bold;
+            width: 50%;
+        }
+        .example-table td {
+            padding: 8px 15px;
+            border: 1px solid #bbb;
+            font-family: 'Consolas', monospace;
+            vertical-align: top;
+            white-space: pre;
+        }
+        .subtask {
+            margin-top: 12px;
+        }
+        .subtask ul {
+            margin-left: 25px;
+            list-style: disc;
+        }
+        .subtask li {
+            margin-bottom: 3px;
+        }
+        .explain {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef9e7;
+            border-left: 3px solid #f39c12;
+            font-size: 0.92em;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>ĐỀ THI THỬ HỌC SINH GIỎI TIN HỌC KHỐI 10 — ĐỀ 3</h1>
+            <div class="time">Thời gian làm bài: 120 phút (không kể thời gian phát đề)</div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: PHỐ ẨM THỰC ========= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 1: Phố ẩm thực
+            </div>
+            <div class="problem-file">AMTHUC.INP / AMTHUC.OUT</div>
+            <div class="problem-content">
+                <p>Phố ẩm thực có N quán ăn xếp thành một hàng, đánh số từ 1 đến N. Quán thứ i có điểm đánh giá là a<sub>i</sub> (điểm có thể âm nếu quán bị đánh giá kém).</p>
+                <p>Một <strong>chuyến tham quan</strong> là việc ghé thăm một dãy các quán <strong>liên tiếp</strong> từ quán l đến quán r (1 ≤ l ≤ r ≤ N). Tổng điểm của chuyến tham quan là a<sub>l</sub> + a<sub>l+1</sub> + … + a<sub>r</sub>.</p>
+                <p>Một chuyến tham quan được gọi là <strong>cân bằng</strong> nếu tổng điểm đánh giá bằng <strong>đúng 0</strong>.</p>
+                <p><strong>Yêu cầu:</strong> Đếm số chuyến tham quan cân bằng.</p>
+
+                <div class="section-label">Dữ liệu vào (AMTHUC.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Số nguyên N (1 ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub> (|a<sub>i</sub>| ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (AMTHUC.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số chuyến tham quan cân bằng.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>AMTHUC.INP</th><th>AMTHUC.OUT</th></tr>
+                    <tr>
+                        <td>5
+1 -1 2 -2 3</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>4
+2 -1 -1 2</td>
+                        <td>2</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Có 3 chuyến cân bằng: [1, −1] = 0, [2, −2] = 0, và [1, −1, 2, −2] = 0.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Có 2 chuyến cân bằng: [2, −1, −1] = 0 và [−1, −1, 2] = 0.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 1 000</li>
+                        <li>Subtask 2 (60%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: ĐẤU GIAO HỮU ======= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 2: Đấu giao hữu
+            </div>
+            <div class="problem-file">DOITHI.INP / DOITHI.OUT</div>
+            <div class="problem-content">
+                <p>Câu lạc bộ cờ vua có N thành viên, thành viên thứ i có điểm Elo là a<sub>i</sub>. Huấn luyện viên muốn tổ chức các trận đấu giao hữu.</p>
+                <p>Một trận đấu giữa hai thành viên được gọi là <strong>công bằng</strong> nếu chênh lệch điểm Elo giữa họ <strong>không vượt quá</strong> D (tức |a<sub>i</sub> − a<sub>j</sub>| ≤ D).</p>
+                <p><strong>Yêu cầu:</strong> Đếm số cặp thành viên (i, j) với i &lt; j có thể thi đấu công bằng.</p>
+
+                <div class="section-label">Dữ liệu vào (DOITHI.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và D (1 ≤ N ≤ 10<sup>5</sup>; 0 ≤ D ≤ 10<sup>9</sup>)</li>
+                        <li>Dòng 2: N số nguyên dương a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>9</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (DOITHI.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là số cặp thành viên có thể thi đấu công bằng.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>DOITHI.INP</th><th>DOITHI.OUT</th></tr>
+                    <tr>
+                        <td>5 3
+1 5 3 8 2</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>4 2
+1 2 3 10</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> 6 cặp công bằng (chênh lệch ≤ 3): (1,2), (1,3), (2,3), (2,5), (3,5), (5,8). Ví dụ cặp (1,5) chênh lệch 4 &gt; 3 nên không hợp lệ.<br>
+                    <strong>Giải thích ví dụ 2:</strong> 3 cặp: (1,2), (1,3), (2,3). Số 10 chênh lệch ≥ 7 với mọi số khác nên không ghép được.
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 1 000</li>
+                        <li>Subtask 2 (60%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: BỘ SƯU TẬP ========= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem">
+            <div class="problem-title">
+                Bài 3: Bộ sưu tập
+            </div>
+            <div class="problem-file">BSUTAP.INP / BSUTAP.OUT</div>
+            <div class="problem-content">
+                <p>Một cửa hàng trưng bày N món đồ xếp thành một hàng, đánh số từ 1 đến N. Món đồ thứ i thuộc loại a<sub>i</sub>.</p>
+                <p>Khách hàng muốn chọn mua một <strong>dãy các món đồ liên tiếp</strong> (từ vị trí l đến vị trí r) sao cho trong dãy đó có <strong>không quá K loại</strong> khác nhau. Khách muốn dãy được chọn <strong>dài nhất</strong> có thể.</p>
+                <p><strong>Yêu cầu:</strong> Tìm độ dài lớn nhất của dãy liên tiếp chứa không quá K loại khác nhau.</p>
+
+                <div class="section-label">Dữ liệu vào (BSUTAP.INP):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Dòng 1: Hai số nguyên N và K (1 ≤ K ≤ N ≤ 10<sup>5</sup>)</li>
+                        <li>Dòng 2: N số nguyên dương a<sub>1</sub>, a<sub>2</sub>, …, a<sub>N</sub> (1 ≤ a<sub>i</sub> ≤ 10<sup>5</sup>)</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Kết quả ra (BSUTAP.OUT):</div>
+                <div class="format-box">
+                    <ul>
+                        <li>Một số nguyên duy nhất là độ dài lớn nhất của dãy liên tiếp thỏa mãn.</li>
+                    </ul>
+                </div>
+
+                <div class="section-label">Ví dụ:</div>
+                <table class="example-table">
+                    <tr><th>BSUTAP.INP</th><th>BSUTAP.OUT</th></tr>
+                    <tr>
+                        <td>7 2
+1 2 1 2 3 3 1</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>5 3
+1 2 3 1 2</td>
+                        <td>5</td>
+                    </tr>
+                </table>
+
+                <div class="explain">
+                    <strong>Giải thích ví dụ 1:</strong> Dãy dài nhất chứa ≤ 2 loại: chọn từ vị trí 1 đến 4 gồm [1, 2, 1, 2] có 2 loại {1, 2}, độ dài 4. Nếu mở rộng thêm vị trí 5 (loại 3) thì có 3 loại &gt; 2.<br>
+                    <strong>Giải thích ví dụ 2:</strong> Toàn bộ dãy [1, 2, 3, 1, 2] chỉ có 3 loại {1, 2, 3} ≤ 3. Độ dài = 5 (cả dãy).
+                </div>
+
+                <div class="subtask">
+                    <div class="section-label">Subtask:</div>
+                    <ul>
+                        <li>Subtask 1 (40%): N ≤ 1 000</li>
+                        <li>Subtask 2 (60%): N ≤ 10<sup>5</sup></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT —
+        </div>
+
+        <div style="text-align: center; color: #888; font-size: 0.85em; margin-top: 15px; font-style: italic;">Trưởng môn nhân: <strong>Hùng Thất Công</strong> — Môn phái <strong>Code Lụi</strong></div>
+    </div>
+
+</body>
+</html>

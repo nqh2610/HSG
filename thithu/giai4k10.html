@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học K10 — Đề 4</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC K10 — ĐỀ 4</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: TƯỚI CÂY ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Tưới cây (TUOICAY)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Difference Array O(N+M)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: TUOICAY — Difference Array O(N+M)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"TUOICAY.INP"</span>);
+    ofstream out(<span class="string">"TUOICAY.OUT"</span>);
+
+    <span class="keyword">int</span> n, m;
+    in &gt;&gt; n &gt;&gt; m;
+
+    vector&lt;<span class="keyword">long long</span>&gt; diff(n + <span class="number">2</span>, <span class="number">0</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) {
+        <span class="keyword">int</span> l, r;
+        <span class="keyword">long long</span> v;
+        in &gt;&gt; l &gt;&gt; r &gt;&gt; v;
+        diff[l] += v;
+        diff[r + <span class="number">1</span>] -= v;
+    }
+
+    <span class="keyword">long long</span> mx = <span class="number">0</span>, cur = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) {
+        cur += diff[i];
+        mx = <span class="function">max</span>(mx, cur);
+    }
+
+    out &lt;&lt; mx;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N, M ≤ 1000):</strong> Mỗi lần tưới, duyệt từ l đến r, cộng v cho mỗi cây. Tổng O(N × M) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Mảng hiệu (Difference Array)</strong>:<br><br>
+            <strong>Ý tưởng:</strong> Thay vì cộng v cho mỗi phần tử trong [l, r] (tốn O(r−l+1)), ta chỉ cần:<br>
+            &nbsp;&nbsp;• diff[l] += v (đánh dấu "bắt đầu cộng từ đây")<br>
+            &nbsp;&nbsp;• diff[r+1] −= v (đánh dấu "hết cộng sau đây")<br>
+            → Mỗi thao tác chỉ tốn O(1).<br><br>
+            <strong>Khôi phục giá trị thực:</strong> Sau M thao tác, duyệt prefix sum trên mảng diff:<br>
+            &nbsp;&nbsp;cur += diff[i] → cur chính là lượng nước cây i nhận được.<br><br>
+            <strong>Tại sao đúng?</strong> Khi cộng diff[l] = +v, tất cả prefix sum từ vị trí l trở đi đều tăng v. Khi trừ diff[r+1] = −v, từ vị trí r+1 trở đi giảm v, triệt tiêu. Kết quả: chỉ [l, r] tăng v.<br><br>
+            <strong>Lưu ý:</strong> Dùng <code>long long</code> vì tổng có thể đạt M × v = 10⁵ × 10⁹ = 10¹⁴.<br>
+            <strong>Độ phức tạp:</strong> O(N + M) thời gian, O(N) bộ nhớ.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: ĐÔI BẠN ============= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Đôi bạn (DOIBAN)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Đếm tần số O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: DOIBAN — Counting O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DOIBAN.INP"</span>);
+    ofstream out(<span class="string">"DOIBAN.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+
+    <span class="keyword">int</span> freq[<span class="number">100001</span>] = {};
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">int</span> x;
+        in &gt;&gt; x;
+        freq[x]++;
+    }
+
+    <span class="keyword">long long</span> ans = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">1</span>; c &lt;= <span class="number">100000</span>; c++) {
+        <span class="keyword">if</span> (freq[c] &gt;= <span class="number">2</span>)
+            ans += (<span class="keyword">long long</span>)freq[c] * (freq[c] - <span class="number">1</span>) / <span class="number">2</span>;
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt mọi cặp (i, j) với i &lt; j, kiểm tra a[i] = a[j]. Tổng O(N²) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Đếm tần số (Counting)</strong>:<br><br>
+            <strong>Nhận xét:</strong> Nếu sở thích c xuất hiện freq[c] lần, thì số đôi bạn cùng sở thích c = C(freq[c], 2) = freq[c] × (freq[c] − 1) / 2.<br><br>
+            <strong>Cách làm:</strong><br>
+            &nbsp;&nbsp;• Bước 1: Đếm tần số mỗi giá trị bằng mảng freq[100001].<br>
+            &nbsp;&nbsp;• Bước 2: Duyệt qua tất cả giá trị c, cộng C(freq[c], 2) vào đáp án.<br><br>
+            <strong>Tại sao C(f, 2)?</strong> Từ f người cùng sở thích, chọn 2 người bất kỳ = f! / (2! × (f−2)!) = f × (f−1) / 2.<br><br>
+            <strong>Lưu ý:</strong> Đáp án cần <code>long long</code> — trường hợp xấu nhất: tất cả N = 10⁵ người cùng sở thích → C(10⁵, 2) ≈ 5 × 10⁹.<br>
+            <strong>Độ phức tạp:</strong> O(N + max_a) thời gian, O(max_a) bộ nhớ.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: TRẬN ĐẤU ============ -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Trận đấu (TRANDAU)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Kadane's Algorithm O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: TRANDAU — Kadane O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"TRANDAU.INP"</span>);
+    ofstream out(<span class="string">"TRANDAU.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+    <span class="keyword">long long</span> x, maxEnd, maxSoFar;
+    in &gt;&gt; x;
+    maxEnd = maxSoFar = x;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) {
+        in &gt;&gt; x;
+        maxEnd = <span class="function">max</span>(x, maxEnd + x);
+        maxSoFar = <span class="function">max</span>(maxSoFar, maxEnd);
+    }
+
+    out &lt;&lt; maxSoFar;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt mọi cặp (l, r), tính tổng đoạn, cập nhật max. Dùng prefix sum có thể tính tổng O(1). Tổng O(N²) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Thuật toán Kadane O(N)</strong>:<br><br>
+            <strong>Ý tưởng:</strong> Duy trì 2 biến:<br>
+            &nbsp;&nbsp;• <em>maxEnd</em> = tổng lớn nhất của đoạn con <strong>kết thúc</strong> tại vị trí hiện tại<br>
+            &nbsp;&nbsp;• <em>maxSoFar</em> = tổng lớn nhất toàn bộ (đáp án)<br><br>
+            <strong>Chuyển trạng thái:</strong> Tại vị trí i, đoạn con kết thúc tại i hoặc:<br>
+            &nbsp;&nbsp;• Nối tiếp đoạn trước: maxEnd + a[i]<br>
+            &nbsp;&nbsp;• Bắt đầu đoạn mới từ a[i]: a[i]<br>
+            → maxEnd = max(a[i], maxEnd + a[i])<br><br>
+            <strong>Tại sao đúng?</strong> Nếu maxEnd &lt; 0, đoạn cũ chỉ "kéo giảm" tổng → bắt đầu lại từ a[i] tốt hơn. Ngược lại, maxEnd ≥ 0 → nối thêm a[i] chỉ có lợi hoặc không thay đổi.<br><br>
+            <strong>Lưu ý:</strong> Dùng <code>long long</code> vì tổng có thể đạt 10⁵ × 10⁹ = 10¹⁴. Khi tất cả a[i] âm, đáp án là phần tử lớn nhất (ít âm nhất).<br>
+            <strong>Độ phức tạp:</strong> O(N) thời gian, O(1) bộ nhớ phụ.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+
+        <div style="text-align: center; color: #888; font-size: 0.85em; margin-top: 15px; font-style: italic;">Trưởng môn nhân: <strong>Hùng Thất Công</strong> — Môn phái <strong>Code Lụi</strong></div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

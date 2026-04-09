@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Giải — Đề Thi Thử HSG Tin Học K10 — Đề 3</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .exam-header h1 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            color: #27ae60;
+            margin: 10px 0 5px;
+        }
+        .problem-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
+        .separator {
+            border: none;
+            border-top: 1px dashed #aaa;
+            margin: 25px 0;
+        }
+        .solution-box {
+            background: #1e1e2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .solution-header {
+            background: #2d2d3d;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #cdd6f4;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .solution-code {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 0;
+        }
+        .solution-note {
+            background: #f0faf0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .solution-code .keyword { color: #cba6f7; }
+        .solution-code .include { color: #f38ba8; }
+        .solution-code .string { color: #a6e3a1; }
+        .solution-code .comment { color: #6c7086; font-style: italic; }
+        .solution-code .number { color: #fab387; }
+        .solution-code .function { color: #89b4fa; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="exam-header">
+            <h1>LỜI GIẢI — ĐỀ THI THỬ HSG TIN HỌC K10 — ĐỀ 3</h1>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 1: PHỐ ẨM THỰC ========= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 1: Phố ẩm thực (AMTHUC)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Prefix Sum + Map O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 1: AMTHUC — Prefix Sum + Map O(N log N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"AMTHUC.INP"</span>);
+    ofstream out(<span class="string">"AMTHUC.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    in &gt;&gt; n;
+
+    map&lt;<span class="keyword">long long</span>, <span class="keyword">long long</span>&gt; cnt;
+    <span class="keyword">long long</span> prefix = <span class="number">0</span>, ans = <span class="number">0</span>;
+    cnt[<span class="number">0</span>] = <span class="number">1</span>;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">long long</span> x;
+        in &gt;&gt; x;
+        prefix += x;
+        ans += cnt[prefix];
+        cnt[prefix]++;
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt mọi cặp (l, r), tính tổng đoạn, đếm đoạn có tổng = 0. Dùng prefix sum tính tổng O(1). Tổng O(N²) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Prefix Sum + Đếm tần số</strong>:<br><br>
+            <strong>Nhận xét quan trọng:</strong> Gọi prefix[i] = a[1] + a[2] + … + a[i], prefix[0] = 0.<br>
+            Tổng đoạn [l, r] = prefix[r] − prefix[l−1].<br>
+            Đoạn có tổng = 0 ⟺ prefix[r] = prefix[l−1].<br><br>
+            <strong>Bài toán quy về:</strong> Đếm số cặp (i, j) với i &lt; j mà prefix[i] = prefix[j].<br><br>
+            <strong>Cách làm:</strong> Duyệt i từ 0 đến N, dùng <code>map</code> đếm số lần mỗi giá trị prefix đã xuất hiện. Khi gặp prefix[i], cộng thêm số lần giá trị đó đã xuất hiện trước đó vào đáp án.<br><br>
+            <strong>Lưu ý:</strong> Dùng <code>long long</code> cho prefix vì tổng có thể đạt 10⁵ × 10⁹ = 10¹⁴. Đáp án cũng cần <code>long long</code> (tối đa C(N+1, 2) ≈ 5 × 10⁹).<br>
+            <strong>Độ phức tạp:</strong> O(N log N) thời gian (do map), O(N) bộ nhớ.
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 2: ĐẤU GIAO HỮU ======= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 2: Đấu giao hữu (DOITHI)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Sort + Two Pointers O(N log N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 2: DOITHI — Sort + Two Pointers O(N log N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"DOITHI.INP"</span>);
+    ofstream out(<span class="string">"DOITHI.OUT"</span>);
+
+    <span class="keyword">int</span> n;
+    <span class="keyword">long long</span> d;
+    in &gt;&gt; n &gt;&gt; d;
+
+    vector&lt;<span class="keyword">long long</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in &gt;&gt; a[i];
+
+    <span class="function">sort</span>(a.<span class="function">begin</span>(), a.<span class="function">end</span>());
+
+    <span class="keyword">long long</span> ans = <span class="number">0</span>;
+    <span class="keyword">int</span> left = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> right = <span class="number">0</span>; right &lt; n; right++) {
+        <span class="keyword">while</span> (a[right] - a[left] &gt; d) left++;
+        ans += right - left;
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt mọi cặp (i, j), kiểm tra |a[i] − a[j]| ≤ D. Tổng O(N²) ≈ 10⁶.<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Sắp xếp + Hai con trỏ (Two Pointers)</strong>:<br><br>
+            <strong>Bước 1 — Sắp xếp:</strong> Sau khi sắp xếp tăng dần, |a[i] − a[j]| = a[j] − a[i] với j &gt; i.<br><br>
+            <strong>Bước 2 — Hai con trỏ:</strong> Duyệt <em>right</em> từ trái sang phải. Với mỗi right, tìm vị trí <em>left</em> nhỏ nhất sao cho a[right] − a[left] ≤ D.<br>
+            → Tất cả vị trí từ left đến right−1 đều ghép được với right.<br>
+            → Số cặp mới = right − left.<br><br>
+            <strong>Tại sao hiệu quả?</strong> Con trỏ left chỉ tăng (không bao giờ giảm) vì khi right tăng, a[right] tăng → left chỉ có thể tăng hoặc giữ nguyên. Tổng số bước di chuyển của left ≤ N.<br><br>
+            <strong>Lưu ý:</strong> Đáp án cần <code>long long</code> (tối đa C(N, 2) ≈ 5 × 10⁹).<br>
+            <strong>Độ phức tạp:</strong> O(N log N) do sắp xếp, phần two pointers O(N).
+        </div>
+
+        <hr class="separator">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ======== BÀI 3: BỘ SƯU TẬP ========= -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="problem-title">Bài 3: Bộ sưu tập (BSUTAP)</div>
+
+        <div class="solution-box">
+            <div class="solution-header">
+                <span>📝 Code C++ — Sliding Window O(N)</span>
+                <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+            <pre class="solution-code"><span class="comment">// Bai 3: BSUTAP — Sliding Window O(N)</span>
+<span class="include">#include &lt;bits/stdc++.h&gt;</span>
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    ifstream in(<span class="string">"BSUTAP.INP"</span>);
+    ofstream out(<span class="string">"BSUTAP.OUT"</span>);
+
+    <span class="keyword">int</span> n, k;
+    in &gt;&gt; n &gt;&gt; k;
+
+    vector&lt;<span class="keyword">int</span>&gt; a(n);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) in &gt;&gt; a[i];
+
+    <span class="keyword">int</span> freq[<span class="number">100001</span>] = {};
+    <span class="keyword">int</span> distinct = <span class="number">0</span>, ans = <span class="number">0</span>, left = <span class="number">0</span>;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> right = <span class="number">0</span>; right &lt; n; right++) {
+        <span class="keyword">if</span> (freq[a[right]] == <span class="number">0</span>) distinct++;
+        freq[a[right]]++;
+
+        <span class="keyword">while</span> (distinct &gt; k) {
+            freq[a[left]]--;
+            <span class="keyword">if</span> (freq[a[left]] == <span class="number">0</span>) distinct--;
+            left++;
+        }
+
+        <span class="keyword">if</span> (right - left + <span class="number">1</span> &gt; ans) ans = right - left + <span class="number">1</span>;
+    }
+
+    out &lt;&lt; ans;
+
+    in.close();
+    out.close();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+        </div>
+        <div class="solution-note">
+            <strong>💡 Phân tích:</strong><br>
+            <strong>Subtask 1 (N ≤ 1000):</strong> Duyệt mọi đoạn [l, r], đếm số loại khác nhau bằng mảng đánh dấu. Tổng O(N²) hoặc O(N² × max_a).<br>
+            <strong>Subtask 2 (Full):</strong> <strong>Kĩ thuật cửa sổ trượt (Sliding Window)</strong>:<br><br>
+            <strong>Ý tưởng:</strong> Duy trì một "cửa sổ" [left, right] luôn thỏa mãn: số loại khác nhau trong cửa sổ ≤ K.<br><br>
+            <strong>Cách làm:</strong><br>
+            &nbsp;&nbsp;• Mở rộng cửa sổ bằng cách tăng right: thêm a[right] vào cửa sổ, cập nhật tần số.<br>
+            &nbsp;&nbsp;• Nếu số loại distinct &gt; K: thu hẹp cửa sổ bằng cách tăng left, giảm tần số. Khi tần số về 0 thì distinct giảm 1.<br>
+            &nbsp;&nbsp;• Cập nhật ans = max(ans, right − left + 1).<br><br>
+            <strong>Tại sao đúng?</strong> Cửa sổ [left, right] luôn chứa ≤ K loại. Khi right tăng mà vi phạm, ta chỉ cần tăng left vừa đủ để khôi phục điều kiện. Mọi đoạn hợp lệ đều được xét qua.<br><br>
+            <strong>Mảng tần số:</strong> Dùng <code>freq[100001]</code> (vì a[i] ≤ 10⁵) thay cho map để truy cập O(1).<br>
+            <strong>Độ phức tạp:</strong> O(N) thời gian (mỗi phần tử vào/ra cửa sổ tối đa 1 lần), O(max_a) bộ nhớ.
+        </div>
+
+        <hr class="separator">
+
+        <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">
+            — HẾT LỜI GIẢI —
+        </div>
+
+        <div style="text-align: center; color: #888; font-size: 0.85em; margin-top: 15px; font-style: italic;">Trưởng môn nhân: <strong>Hùng Thất Công</strong> — Môn phái <strong>Code Lụi</strong></div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    function copyCode(btn) {
+        const codeBlock = btn.closest('.solution-box').querySelector('.solution-code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>
