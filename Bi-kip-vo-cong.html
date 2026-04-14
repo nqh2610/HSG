@@ -741,12 +741,17 @@ int main() {
 </pre>
 
 <h3 id="A5">A5. Two Pointers — Hai con trỏ</h3>
-<p><em>💡 Hình dung: Prefix Sum tính sẵn bảng rồi hỏi. Nhưng nếu không cần tính sẵn mà chỉ cần <b>quét qua mảng 1 lượt</b>? Hai bạn L và R đứng trên một hàng ghế. R đi sang phải để mở rộng đoạn, nếu đoạn vi phạm điều kiện thì L đi sang phải để thu hẹp. Cả hai chỉ đi về bên phải, không lùi → thay vì thử tất cả các cặp vị trí (rất lâu), ta chỉ cần mỗi người đi qua hàng ghế 1 lần.</em></p>
+<p><em>💡 Hình dung: Dùng <b>2 con trỏ</b> quét qua mảng thay vì thử mọi cặp. Có <strong>2 dạng chính</strong>:<br>
+<b>① Cùng hướng:</b> L và R cùng đứng đầu mảng, R tiến sang phải mở rộng đoạn, L tiến sang phải thu hẹp khi vi phạm điều kiện. Cả hai chỉ tiến, không lùi → O(n). Dùng cho: đoạn con dài/ngắn nhất thỏa điều kiện.<br>
+<b>② Ngược hướng:</b> L đứng đầu, R đứng cuối mảng <b>(đã sort)</b>. Kẹp dần vào giữa: tổng nhỏ → tăng L, tổng lớn → giảm R. Dùng cho: tìm cặp có tổng = K, 3Sum, …</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Thử mọi cặp (L, R) → O(n²). Với n = 10⁵ → <strong>10¹⁰ → TLE</strong>. Dùng Two Pointers → mỗi con trỏ chỉ tiến, tổng O(n).</div>
-<div class="warn"><strong>DẤU HIỆU:</strong> "đoạn con dài nhất có tổng ≤ K", "cặp (i,j) thỏa a[i]+a[j] = k" (mảng đã sort), "đoạn ngắn nhất chứa đủ k giá trị"</div>
-<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Muốn dùng Two Pointers tìm cặp → thường phải <a href="#A9">Sort</a> trước (giống xếp học sinh theo chiều cao rồi mới ghép cặp).<br>• Nếu trong đoạn cần biết thêm ai cao nhất/thấp nhất → gắn thêm <a href="#C2">Deque</a> thành <a href="#A6">Sliding Window</a>.</div>
+<div class="warn"><strong>DẤU HIỆU:</strong><br>
+• <b>Cùng hướng:</b> "đoạn con dài nhất có tổng ≤ K", "đoạn ngắn nhất chứa đủ k giá trị"<br>
+• <b>Ngược hướng:</b> "cặp (i,j) thỏa a[i]+a[j] = K" (mảng đã sort), "3 số có tổng = 0"</div>
+<div class="bad">⚠️ <strong>ĐIỀU KIỆN ÁP DỤNG — Cùng hướng:</strong> Mảng phải có <b>phần tử không âm</b> (a[i] ≥ 0). Vì khi R tiến → sum tăng, L tiến → sum giảm — tính <b>đơn điệu</b> này đảm bảo L không cần lùi. Nếu mảng có số âm, tổng có thể giảm khi R tiến → L không biết nên tiến hay lùi → Two Pointers cùng hướng <b>không áp dụng được</b>, phải dùng Prefix Sum + cấu trúc dữ liệu khác.</div>
+<div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• <b>Ngược hướng</b> → thường phải <a href="#A9">Sort</a> trước (giống xếp học sinh theo chiều cao rồi mới ghép cặp).<br>• <b>Cùng hướng</b> + cần biết thêm max/min trong đoạn → gắn thêm <a href="#C2">Deque</a> thành <a href="#A6">Sliding Window</a>.</div>
 <pre>
-// ═══ TWO POINTERS: Đoạn con dài nhất tổng ≤ K ═══
+// ═══ TWO POINTERS (CÙNG HƯỚNG): Đoạn con dài nhất tổng ≤ K ═══
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
@@ -771,7 +776,7 @@ int main() {
 // ▶ Output: Doan con dai nhat tong &lt;= 7: 3
 </pre>
 <pre>
-// ═══ TWO POINTERS: Đếm cặp (i,j) có a[i]+a[j] = K ═══
+// ═══ TWO POINTERS (NGƯỢC HƯỚNG): Đếm cặp (i,j) có a[i]+a[j] = K ═══
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
@@ -779,28 +784,37 @@ int main() {
     int n = 6, K = 6;
     int a[] = {1, 2, 3, 3, 4, 5};
 
-    // KEY: Sort trước, L từ trái R từ phải, kẹp dần vào giữa
+    // B1: Sort tăng dần → dùng 2 con trỏ kẹp từ 2 đầu
     sort(a, a + n);
-    int L = 0, R = n - 1;
+    int L = 0, R = n - 1;   // L trái, R phải
     long long cnt = 0;
+
     while (L &lt; R) {
         long long s = (long long)a[L] + a[R];
+
         if (s == K) {
+            // TH đặc biệt: a[L] == a[R] → tất cả phần tử giữa đều bằng nhau
+            // Chọn 2 trong len phần tử → C(len,2) = len*(len-1)/2
             if (a[L] == a[R]) {
                 long long len = R - L + 1;
                 cnt += len * (len - 1) / 2;
-                break;
+                break;   // không còn cặp nào khác
             }
+
+            // Đếm số phần tử trùng ở đầu trái (cntL) và đầu phải (cntR)
+            // VD: a[L]=2 xuất hiện 3 lần, a[R]=4 xuất hiện 2 lần → 3×2 = 6 cặp
             int cntL = 1, cntR = 1;
             while (L + cntL &lt; R &amp;&amp; a[L + cntL] == a[L]) cntL++;
             while (R - cntR > L &amp;&amp; a[R - cntR] == a[R]) cntR++;
             cnt += (long long)cntL * cntR;
-            L += cntL;
-            R -= cntR;
+
+            L += cntL;   // nhảy qua nhóm trùng bên trái
+            R -= cntR;   // nhảy qua nhóm trùng bên phải
         }
-        else if (s &lt; K) L++;
-        else             R--;
+        else if (s &lt; K) L++;   // tổng nhỏ → tăng L để tổng lớn hơn
+        else             R--;   // tổng lớn → giảm R để tổng nhỏ hơn
     }
+
     cout &lt;&lt; "So cap co tong = " &lt;&lt; K &lt;&lt; ": " &lt;&lt; cnt &lt;&lt; endl;
     return 0;
 }
@@ -828,12 +842,45 @@ Bước  L  R  sum   Giải thích                           maxLen
 </pre>
 </div>
 
+<div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Đếm cặp (i,j) có a[i]+a[j] = 6 — <b>Ngược hướng</b>
+<pre style="background: #1e1e1e; color: #d4d4d4; border-left: 4px solid #17a2b8;">
+Sau sort: a[] = { 1, 2, 3, 3, 4, 5 },  K = 6
+          L→                      ←R
+
+Bước  L  R  a[L] a[R]  sum  Hành động                         cnt
+  1   0  5   1    5     6   sum == K → cntL=1, cntR=1          +1 = 1
+                             L nhảy→1, R nhảy←4
+  2   1  4   2    4     6   sum == K → cntL=1, cntR=1          +1 = 2
+                             L nhảy→2, R nhảy←3
+  3   2  3   3    3     6   sum == K, a[L]==a[R]!
+                             len = 3-2+1 = 2 → C(2,2) = 1     +1 = 3
+                             break
+
+→ Đáp án: cnt = <strong>3</strong> cặp: (1,5), (2,4), (3,3)
+
+Tại sao ngược hướng hoạt động?
+• Mảng đã sort tăng dần → a[L] nhỏ nhất, a[R] lớn nhất
+• sum < K → cần tăng sum → tăng L (lấy số lớn hơn)
+• sum > K → cần giảm sum → giảm R (lấy số nhỏ hơn)
+• Mỗi bước loại bỏ 1 đầu → L và R tiến vào giữa, gặp nhau thì dừng
+</pre>
+</div>
+
 <!-- A3 -->
 <h3 id="A6">A6. Sliding Window — Cửa sổ trượt</h3>
 <p><em>💡 Hình dung: Two Pointers chỉ nhớ tổng đoạn. Nhưng nếu trong đoạn cần biết thêm "ai cao nhất"? Đó là Sliding Window — như bạn nhìn qua cửa sổ xe buýt, chỉ thấy đúng 3 ngôi nhà. Xe chạy tới — mất 1 nhà bên trái, thêm 1 bên phải. Muốn biết "nhà cao nhất đang thấy" mà không so lại cả 3 nhà mỗi lần → dùng <strong>Deque</strong> giữ sẵn "ứng viên cao nhất".</em></p>
 <div class="bad">⚠️ <strong>NẾU KHÔNG DÙNG:</strong> Mỗi cửa sổ duyệt k phần tử tìm max → O(n×k). Với n = 10⁵, k = 10⁴ → <strong>10⁹ → TLE</strong>. Dùng Sliding Window + Deque → O(n).</div>
-<div class="warn"><strong>DẤU HIỆU:</strong> "max/min trong cửa sổ kích thước k", "đoạn có max - min ≤ K"</div>
-<div class="tip"><strong>Khác Two Pointers:</strong> Sliding Window thường duy trì thêm trạng thái (deque, map, tần suất) bên trong cửa sổ.</div>
+
+<div class="warn"><strong>HAI DẠNG CỬA SỔ:</strong><br>
+<b>① Cửa sổ cố định (Fixed):</b> Kích thước luôn = k. Mỗi bước trượt: thêm 1 phần tử phải, bỏ 1 phần tử trái. Dùng cho: "tổng/max/min của mọi đoạn k phần tử liên tiếp".<br>
+<b>② Cửa sổ co giãn (Variable):</b> Kích thước thay đổi — R mở rộng, L thu hẹp khi vi phạm. Giống Two Pointers cùng hướng nhưng duy trì thêm trạng thái bên trong. Dùng cho: "đoạn dài nhất có ≤ K giá trị khác nhau", "đoạn có max−min ≤ K".</div>
+
+<div class="warn"><strong>DẤU HIỆU — theo CÁCH DUY TRÌ trạng thái:</strong><br>
+• <b>Deque</b> (max/min O(1)): "max trong cửa sổ k", "đoạn có max − min ≤ K"<br>
+• <b>Map / mảng đếm</b> (tần suất): "đoạn dài nhất có ≤ K giá trị khác nhau", "đoạn chứa đủ tất cả kí tự"<br>
+• <b>Biến sum</b> (đơn giản nhất): "tổng đoạn k phần tử", "trung bình cửa sổ"</div>
+
+<div class="tip"><strong>Khác Two Pointers:</strong> Two Pointers chỉ nhớ 1 đại lượng (thường là tổng). Sliding Window duy trì thêm <b>trạng thái phức tạp</b> bên trong cửa sổ (deque cho max/min, map cho tần suất, …). Nếu đề chỉ hỏi về tổng → Two Pointers đủ. Nếu hỏi thêm max/min/distinct → cần Sliding Window.</div>
 <div class="tip">🔗 <strong>LIÊN QUAN:</strong><br>• Giống <a href="#A5">Two Pointers</a> nhưng "cửa sổ" còn nhớ thêm thông tin bên trong (ai cao nhất? xuất hiện mấy lần?).<br>• Muốn biết max/min trong cửa sổ → dùng <a href="#C2">Deque</a> (ống 2 đầu) để luôn giữ sẵn đáp án.</div>
 
 <div class="tip"><strong>📝 VÍ DỤ CHẠY TAY:</strong> Max trong mỗi cửa sổ k=3, mảng [1, 3, 2, 5, 4]
@@ -890,6 +937,71 @@ int main() {
     return 0;
 }
 // ▶ Output: Max moi cua so k=3: 3 5 5
+</pre>
+
+<pre>
+// ═══ SLIDING WINDOW: Đoạn con dài nhất có ≤ K giá trị khác nhau ═══
+// Dùng map đếm tần suất thay vì deque
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 8, K = 2;
+    int a[] = {1, 2, 1, 1, 3, 3, 2, 2};
+
+    // Cửa sổ [L..R]: đếm số giá trị khác nhau bằng map
+    map&lt;int, int&gt; cnt;     // cnt[x] = số lần x xuất hiện trong cửa sổ
+    int L = 0, ans = 0;
+
+    for (int R = 0; R &lt; n; R++) {
+        cnt[a[R]]++;        // Thêm a[R] vào cửa sổ
+
+        // Nếu có hơn K giá trị khác nhau → thu hẹp từ trái
+        while ((int)cnt.size() > K) {
+            cnt[a[L]]--;
+            if (cnt[a[L]] == 0) cnt.erase(a[L]);  // hết → xóa khỏi map
+            L++;
+        }
+
+        ans = max(ans, R - L + 1);  // cập nhật đáp án
+    }
+
+    cout &lt;&lt; "Doan con dai nhat co &lt;= " &lt;&lt; K &lt;&lt; " gia tri khac nhau: " &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output: Doan con dai nhat co &lt;= 2 gia tri khac nhau: 4
+// Đoạn a[4..7] = {3, 3, 2, 2} chỉ có 2 giá trị → dài nhất = 4
+</pre>
+
+<pre>
+// ═══ SLIDING WINDOW: Đếm đoạn con kích thước k có tổng ≥ T ═══
+// Dùng biến sum đơn giản — không cần deque hay map
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n = 6, k = 3, T = 10;
+    int a[] = {2, 5, 3, 1, 4, 6};
+
+    // Tính tổng cửa sổ đầu tiên [0..k-1]
+    long long sum = 0;
+    for (int i = 0; i &lt; k; i++) sum += a[i];
+
+    int cnt = 0;
+    if (sum >= T) cnt++;
+
+    // Trượt cửa sổ: thêm phần tử phải, bỏ phần tử trái
+    for (int i = k; i &lt; n; i++) {
+        sum += a[i];        // thêm phần tử mới vào cửa sổ
+        sum -= a[i - k];    // bỏ phần tử cũ nhất ra
+        if (sum >= T) cnt++;
+    }
+
+    cout &lt;&lt; "So doan con k=" &lt;&lt; k &lt;&lt; " co tong >= " &lt;&lt; T &lt;&lt; ": " &lt;&lt; cnt &lt;&lt; endl;
+    return 0;
+}
+// ▶ Output: So doan con k=3 co tong >= 10: 2
+// [2,5,3]=10 ✓  [5,3,1]=9 ✗  [3,1,4]=8 ✗  [1,4,6]=11 ✓ → 2 đoạn
 </pre>
 
 <!-- A7 -->
